@@ -1,0 +1,354 @@
+{%- liquid
+  assign mask_start = section.settings.mask_start
+  assign img_w = section.settings.image_width
+-%}
+
+{% style %}
+  .pw-hero {
+    position: relative;
+    overflow: hidden;
+    background: var(--page);
+  }
+  .pw-hero__in {
+    position: relative;
+    min-height: {{ section.settings.min_height }}px;
+    padding: 64px 0 60px;
+  }
+  .pw-hero__copy {
+    position: relative;
+    z-index: 2;
+    max-width: 660px;
+  }
+  .pw-hero__head {
+    font-family: var(--font-head);
+    font-weight: 900;
+    color: var(--charcoal);
+    line-height: 0.9;
+    letter-spacing: -1px;
+    margin: 0;
+    font-size: 82px;
+    text-transform: uppercase;
+  }
+  .pw-hero__head .pw-gold { color: var(--gold); }
+  .pw-hero__rule {
+    width: 64px;
+    height: 3px;
+    background: var(--gold);
+    border: 0;
+    margin: 30px 0 24px;
+  }
+  .pw-hero__sub {
+    font-family: var(--font-head);
+    font-weight: 700;
+    font-size: 22px;
+    line-height: 1.35;
+    letter-spacing: 0.3px;
+    color: var(--charcoal);
+    text-transform: uppercase;
+    margin: 0 0 18px;
+  }
+  .pw-hero__scoop {
+    font-family: var(--font-head);
+    font-weight: 800;
+    font-size: 22px;
+    letter-spacing: 0.5px;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin: 0 0 30px;
+  }
+  .pw-hero__actions {
+    display: flex;
+    align-items: center;
+    gap: 26px;
+  }
+  .pw-hero__watch {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    font-family: var(--font-head);
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--charcoal);
+    background: none;
+    border: 0;
+    padding: 0;
+    cursor: pointer;
+  }
+  .pw-hero__play {
+    width: 44px;
+    height: 44px;
+    border: 1.5px solid var(--charcoal);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+  }
+  .pw-hero__shot {
+    position: absolute;
+    z-index: 1;
+    right: 0;
+    top: 0;
+    height: 100%;
+    width: {{ img_w }}px;
+    object-fit: cover;
+    object-position: right center;
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 {{ mask_start }}%);
+    mask-image: linear-gradient(to right, transparent 0%, #000 {{ mask_start }}%);
+  }
+  .pw-hero__placeholder {
+    position: absolute;
+    z-index: 1;
+    right: 0;
+    top: 0;
+    height: 100%;
+    width: {{ img_w }}px;
+    background: linear-gradient(120deg, #E4D8CE, #EFE5DD);
+  }
+
+  .pw-hero__modal[hidden] { display: none; }
+  .pw-hero__modal {
+    position: fixed;
+    inset: 0;
+    z-index: 70;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  .pw-hero__modal-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(20, 23, 26, 0.82);
+  }
+  .pw-hero__modal-inner {
+    position: relative;
+    width: min(100%, 960px);
+    aspect-ratio: 16 / 9;
+    background: #000;
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .pw-hero__modal-inner iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+    display: block;
+  }
+  .pw-hero__modal-close {
+    position: absolute;
+    top: -46px;
+    right: 0;
+    background: none;
+    border: 0;
+    padding: 6px;
+    color: #fff;
+    cursor: pointer;
+    line-height: 0;
+  }
+
+  @media screen and (max-width: 1200px) {
+    .pw-hero__head { font-size: 68px; }
+    .pw-hero__copy { max-width: 54%; }
+    .pw-hero__shot,
+    .pw-hero__placeholder { width: 58%; }
+  }
+
+  @media screen and (max-width: 989px) {
+    .pw-hero__in {
+      min-height: 0;
+      padding: 40px 0 0;
+    }
+    .pw-hero__copy { max-width: 100%; }
+    .pw-hero__head { font-size: 54px; }
+    .pw-hero__shot,
+    .pw-hero__placeholder {
+      position: static;
+      width: 100%;
+      height: auto;
+      margin-top: 28px;
+      -webkit-mask-image: none;
+      mask-image: none;
+    }
+    .pw-hero__placeholder { aspect-ratio: 4 / 3; }
+  }
+
+  @media screen and (max-width: 749px) {
+    .pw-hero__in { padding: 30px 0 0; }
+    .pw-hero__head {
+      font-size: 40px;
+      letter-spacing: -0.5px;
+    }
+    .pw-hero__rule { margin: 22px 0 18px; }
+    .pw-hero__sub { font-size: 18px; }
+    .pw-hero__scoop { font-size: 18px; margin: 0 0 24px; }
+    .pw-hero__actions {
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+    .pw-hero__play { width: 38px; height: 38px; }
+  }
+{% endstyle %}
+
+<section class="pw-hero">
+  <div class="pw-container pw-hero__in">
+    <div class="pw-hero__copy">
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="pw-eyebrow">{{ section.settings.eyebrow | escape }}</p>
+      {%- endif -%}
+
+      <h1 class="pw-hero__head">
+        {{- section.settings.heading | escape | newline_to_br -}}
+        {%- if section.settings.heading_accent != blank -%}
+          <br><span class="pw-gold">{{ section.settings.heading_accent | escape }}</span>
+        {%- endif -%}
+      </h1>
+
+      {%- if section.settings.show_rule -%}
+        <hr class="pw-hero__rule">
+      {%- endif -%}
+
+      {%- if section.settings.subheading != blank -%}
+        <p class="pw-hero__sub">{{ section.settings.subheading | escape | newline_to_br }}</p>
+      {%- endif -%}
+
+      {%- if section.settings.scoop_line != blank -%}
+        <p class="pw-hero__scoop">{{ section.settings.scoop_line | escape }}</p>
+      {%- endif -%}
+
+      <div class="pw-hero__actions">
+        {%- if section.settings.cta_label != blank -%}
+          <a class="pw-btn-gold" href="{{ section.settings.cta_link | default: routes.all_products_collection_url }}">
+            {{ section.settings.cta_label | escape }}
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+              <path d="M5 12h14M13 6l6 6-6 6"/>
+            </svg>
+          </a>
+        {%- endif -%}
+
+        {%- if section.settings.video_url != blank and section.settings.video_label != blank -%}
+          <button type="button" class="pw-hero__watch" data-pw-video-open>
+            <span class="pw-hero__play">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
+                <path d="M8 5v14l11-7z"/>
+              </svg>
+            </span>
+            {{ section.settings.video_label | escape }}
+          </button>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+
+  {%- if section.settings.image != blank -%}
+    {{
+      section.settings.image
+      | image_url: width: 1800
+      | image_tag:
+        class: 'pw-hero__shot',
+        widths: '600,800,1000,1200,1500,1800',
+        sizes: '(min-width: 990px) 58vw, 100vw',
+        alt: section.settings.image.alt,
+        loading: 'eager',
+        fetchpriority: 'high'
+    }}
+  {%- else -%}
+    <div class="pw-hero__placeholder" role="presentation"></div>
+  {%- endif -%}
+</section>
+
+{%- if section.settings.video_url != blank -%}
+  <div class="pw-hero__modal" id="PwHeroVideo-{{ section.id }}" hidden>
+    <div class="pw-hero__modal-overlay" data-pw-video-close></div>
+    <div class="pw-hero__modal-inner" role="dialog" aria-modal="true" aria-label="{{ section.settings.video_label | escape }}">
+      <button type="button" class="pw-hero__modal-close" data-pw-video-close aria-label="Close video">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true" focusable="false">
+          <path d="M6 6l12 12M18 6L6 18" stroke-linecap="round"/>
+        </svg>
+      </button>
+      <div data-pw-video-target></div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var root = document.getElementById('shopify-section-{{ section.id }}');
+      if (!root) return;
+
+      var modal = document.getElementById('PwHeroVideo-{{ section.id }}');
+      var opener = root.querySelector('[data-pw-video-open]');
+      if (!modal || !opener) return;
+
+      var target = modal.querySelector('[data-pw-video-target]');
+      var embed = {{ section.settings.video_url.type | json }};
+      var videoId = {{ section.settings.video_url.id | json }};
+
+      function src() {
+        if (embed === 'youtube') {
+          return 'https://www.youtube.com/embed/' + videoId + '?autoplay=1&rel=0';
+        }
+        return 'https://player.vimeo.com/video/' + videoId + '?autoplay=1';
+      }
+
+      function open() {
+        target.innerHTML =
+          '<iframe src="' + src() + '" title="{{ section.settings.video_label | escape }}" allow="autoplay; encrypted-media; fullscreen" allowfullscreen></iframe>';
+        modal.hidden = false;
+        document.body.style.overflow = 'hidden';
+        modal.querySelector('.pw-hero__modal-close').focus();
+      }
+
+      function close() {
+        modal.hidden = true;
+        target.innerHTML = '';
+        document.body.style.overflow = '';
+        opener.focus();
+      }
+
+      opener.addEventListener('click', open);
+      modal.querySelectorAll('[data-pw-video-close]').forEach(function (el) {
+        el.addEventListener('click', close);
+      });
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && !modal.hidden) close();
+      });
+    })();
+  </script>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Primal hero",
+  "tag": "section",
+  "class": "pw-section pw-hero-section",
+  "settings": [
+    { "type": "header", "content": "Text" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Clean Ingredients. Real Results." },
+    {
+      "type": "textarea",
+      "id": "heading",
+      "label": "Heading",
+      "default": "For Those\nWho Want",
+      "info": "Each new line becomes a new line on the page."
+    },
+    { "type": "text", "id": "heading_accent", "label": "Heading last line (gold)", "default": "To Win." },
+    { "type": "checkbox", "id": "show_rule", "label": "Show gold rule", "default": true },
+    { "type": "textarea", "id": "subheading", "label": "Subheading", "default": "More energy. Sharper focus.\nStronger body. Unstoppable you." },
+    { "type": "text", "id": "scoop_line", "label": "Gold line", "default": "One scoop. Every day." },
+    { "type": "header", "content": "Buttons" },
+    { "type": "text", "id": "cta_label", "label": "Button label", "default": "Get Primal Win" },
+    { "type": "url", "id": "cta_link", "label": "Button link" },
+    { "type": "text", "id": "video_label", "label": "Video link label", "default": "Watch Video" },
+    { "type": "video_url", "id": "video_url", "label": "Video", "accept": ["youtube", "vimeo"], "info": "Leave empty to hide the video link." },
+    { "type": "header", "content": "Image" },
+    { "type": "image_picker", "id": "image", "label": "Hero image" },
+    { "type": "range", "id": "image_width", "label": "Image width (desktop)", "min": 500, "max": 1000, "step": 10, "unit": "px", "default": 770 },
+    { "type": "range", "id": "mask_start", "label": "Image fade", "min": 0, "max": 60, "step": 5, "unit": "%", "default": 30 },
+    { "type": "header", "content": "Layout" },
+    { "type": "range", "id": "min_height", "label": "Minimum height (desktop)", "min": 420, "max": 820, "step": 10, "unit": "px", "default": 620 }
+  ],
+  "presets": [{ "name": "Primal hero" }]
+}
+{% endschema %}

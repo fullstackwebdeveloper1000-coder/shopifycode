@@ -1,0 +1,194 @@
+/* ==========================================================================
+   PRIMAL WIN — brand tokens and shared components
+   Loaded after Dawn's base.css. All custom classes use a pw- prefix so they
+   never collide with Dawn's own classes.
+   ========================================================================== */
+
+:root {
+  --forest: #234B36;
+  --charcoal: #1F2326;
+  --stone: #F7F5F1;
+  --page: #EFE5DD;
+  --gold: #C89A3D;
+  --gold-deep: #B4842E;
+  --slate: #737A80;
+  --moss: #5B7154;
+  --success: #3D8B5A;
+  --white: #FFFFFF;
+  --ink-900: #14171A;
+  --ink-800: #1B1F22;
+  --dark-band: #050606;
+
+  --font-head: 'Montserrat', system-ui, sans-serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+
+  --maxw: 1180px;
+  --gutter: 48px;
+}
+
+body {
+  background: var(--page);
+}
+
+.pw-section,
+.pw-header-section,
+.pw-footer-section {
+  font-family: var(--font-body);
+  color: var(--charcoal);
+}
+
+.pw-container {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+
+.pw-eyebrow {
+  font-family: var(--font-head);
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 2.5px;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin: 0 0 12px;
+}
+
+.pw-gold {
+  color: var(--gold);
+}
+
+.pw-section-head {
+  text-align: center;
+  padding: 56px 0 0;
+}
+
+.pw-section-head h2 {
+  font-family: var(--font-head);
+  font-weight: 800;
+  font-size: 34px;
+  letter-spacing: -0.3px;
+  text-transform: uppercase;
+  color: var(--charcoal);
+  margin: 0 0 10px;
+}
+
+.pw-section-head p {
+  font-family: var(--font-body);
+  font-size: 16px;
+  color: var(--slate);
+  margin: 0;
+}
+
+.pw-btn-gold {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  font-family: var(--font-head);
+  font-weight: 800;
+  font-size: 15px;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  color: var(--ink-900);
+  background: var(--gold);
+  border: 0;
+  border-radius: 10px;
+  padding: 16px 26px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background-color 0.18s ease;
+}
+
+.pw-btn-gold:hover {
+  background: var(--gold-deep);
+  color: var(--ink-900);
+}
+
+.pw-btn-gold svg {
+  stroke: var(--ink-900);
+  flex: 0 0 auto;
+}
+
+.pw-btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  white-space: nowrap;
+  font-family: var(--font-head);
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: var(--gold);
+  background: transparent;
+  border: 1.5px solid var(--gold);
+  border-radius: 8px;
+  padding: 13px 20px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background-color 0.18s ease, color 0.18s ease;
+}
+
+.pw-btn-ghost:hover {
+  background: var(--gold);
+  color: var(--ink-900);
+}
+
+.pw-visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+@media screen and (max-width: 1100px) {
+  :root {
+    --gutter: 34px;
+  }
+}
+
+@media screen and (max-width: 989px) {
+  .pw-section-head {
+    padding: 44px 0 0;
+  }
+
+  .pw-section-head h2 {
+    font-size: 28px;
+  }
+}
+
+@media screen and (max-width: 749px) {
+  :root {
+    --gutter: 22px;
+  }
+
+  .pw-eyebrow {
+    font-size: 12px;
+    letter-spacing: 2px;
+  }
+
+  .pw-section-head {
+    padding: 38px 0 0;
+  }
+
+  .pw-section-head h2 {
+    font-size: 24px;
+  }
+
+  .pw-section-head p {
+    font-size: 15px;
+  }
+
+  .pw-btn-gold {
+    font-size: 14px;
+    padding: 14px 22px;
+    gap: 10px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  :root {
+    --gutter: 20px;
+  }
+}
