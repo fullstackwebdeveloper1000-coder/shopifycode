@@ -373,7 +373,8 @@
 }
 
 .pw-ing .pw-detail {
-  display: block;
+  display: flex;
+  flex-direction: column;
   position: relative;
   min-height: 520px;
   padding: 28px 30px;
@@ -419,10 +420,10 @@
   padding: 7px 12px;
   border-radius: 6px;
   background: rgba(61, 139, 90, 0.12);
-  color: var(--success, #3D8B5A);
+  color: var(--slate, #737A80);
   font-family: var(--font-head, 'Montserrat', system-ui, sans-serif);
   font-weight: 700;
-  font-size: 11px;
+  font-size: 13px;
   letter-spacing: 0.5px;
   text-transform: uppercase;
   white-space: nowrap;
@@ -437,15 +438,16 @@
 
 .pw-ing .pw-detail-body {
   display: grid;
-  grid-template-columns: 0.9fr 1fr 1fr 1.05fr 1.15fr;
-  gap: 22px;
-  margin-bottom: 22px;
+  grid-template-columns: 0.8fr 1fr;
+  gap: 26px;
+  align-items: stretch;
+  flex: 1 1 auto;
 }
 
 .pw-ing .pw-detail-image {
   display: block;
   overflow: hidden;
-  aspect-ratio: 3 / 4;
+  min-height: 300px;
   border-radius: 12px;
   background: linear-gradient(160deg, #33392F, #12160F);
 }
@@ -457,16 +459,30 @@
   object-position: center;
 }
 
+.pw-ing .pw-detail-content {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.pw-ing .pw-detail-pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 22px;
+}
+
 .pw-ing .pw-detail-col { min-width: 0; }
 
 .pw-ing .pw-detail-col h4 {
   margin: 0 0 10px;
+  color: var(--charcoal, #1F2326);
   font-family: var(--font-head, 'Montserrat', system-ui, sans-serif);
   font-weight: 700;
   font-size: 11px;
   letter-spacing: 0.5px;
+  line-height: normal;
   text-transform: uppercase;
-  color: var(--charcoal, #1F2326);
 }
 
 .pw-ing .pw-detail-col p {
@@ -500,40 +516,16 @@
   font-weight: 800;
 }
 
-.pw-ing .pw-typical-form {
-  margin: 0 0 6px;
-  font-size: 13px;
-  line-height: 1.4;
-  color: var(--charcoal, #1F2326);
-}
-
-.pw-ing .pw-typical-dose {
-  display: block;
-  margin: 0 0 8px;
-  font-family: var(--font-head, 'Montserrat', system-ui, sans-serif);
-  font-weight: 800;
-  font-size: 22px;
-  line-height: 1;
-  color: var(--charcoal, #1F2326);
-}
-
-.pw-ing .pw-typical-note {
-  margin: 0;
-  font-size: 13px;
-  line-height: 1.55;
-  color: var(--slate, #737A80);
-}
-
+/* the evidence block sits at the foot of the text column, not under the image */
 .pw-ing .pw-detail-foot {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 24px;
+  margin-top: auto;
   padding-top: 18px;
   border-top: 1px solid rgba(31, 35, 38, 0.1);
 }
 
 .pw-ing .pw-evidence-label {
+  display: block;
+  margin-bottom: 12px;
   font-family: var(--font-head, 'Montserrat', system-ui, sans-serif);
   font-weight: 700;
   font-size: 10px;
@@ -543,9 +535,10 @@
 }
 
 .pw-ing .pw-evidence {
-  display: flex;
-  align-items: center;
+  display: grid;
+  grid-template-columns: 46px minmax(0, 1fr);
   gap: 8px;
+  margin-bottom: 9px;
   font-size: 12px;
   font-weight: 600;
   color: var(--charcoal, #1F2326);
@@ -560,7 +553,7 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  margin-left: auto;
+  margin: 6px 0 0;
   padding: 0;
   border: 0;
   background: transparent;
@@ -921,11 +914,11 @@
   .pw-ing .pw-evidence-label { font-size: 11px; }
 
   .pw-ing .pw-detail-body {
-    grid-template-columns: 1fr 1fr;
-    gap: 18px;
+    grid-template-columns: 1fr;
+    gap: 20px;
   }
   .pw-ing .pw-detail-image {
-    grid-column: 1 / -1;
+    min-height: 0;
     aspect-ratio: 16 / 9;
   }
 
@@ -999,7 +992,7 @@
     width: 100%;
     justify-content: center;
   }
-  .pw-ing .pw-detail-body { grid-template-columns: 1fr; }
+  .pw-ing .pw-detail-pair { grid-template-columns: 1fr; }
   .pw-ing .pw-list { grid-template-columns: 1fr; }
   .pw-ing .pw-detail-head { flex-wrap: wrap; }
   .pw-ing .pw-detail-badge { margin-left: 0; }
@@ -1538,14 +1531,6 @@
 
     var badge = item.badge || item.tag;
 
-    var typical = '';
-    if (item.typicalForm || item.typicalDose || item.typicalNote) {
-      typical =
-        (item.typicalForm ? '<p class="pw-typical-form">' + esc(item.typicalForm) + '</p>' : '') +
-        (item.typicalDose ? '<strong class="pw-typical-dose">' + esc(item.typicalDose) + '</strong>' : '') +
-        (item.typicalNote ? '<p class="pw-typical-note">' + esc(item.typicalNote) + '</p>' : '');
-    }
-
     detailNode.innerHTML =
       '<div class="pw-detail-head">' +
         '<span class="pw-abbr">' + esc(item.abbr) + '</span>' +
@@ -1553,21 +1538,23 @@
         '<small>' + esc(item.type) + '</small></div>' +
         (badge ? '<span class="pw-detail-badge">' + esc(badge) + '</span>' : '') +
       '</div>' +
-      (item.intro ? '<p class="pw-detail-intro">' + esc(item.intro) + '</p>' : '') +
       '<div class="pw-detail-body">' +
         '<div class="pw-detail-image">' + image + '</div>' +
-        '<div class="pw-detail-col"><h4>What It Does</h4>' + copy(item.what) + '</div>' +
-        '<div class="pw-detail-col"><h4>How It Works</h4>' + copy(item.how) + '</div>' +
-        '<div class="pw-detail-col"><h4>Typical Greens Powders</h4>' + (typical || copy('')) + '</div>' +
-        '<div class="pw-detail-col"><h4>Why We Included It</h4>' + copy(item.why) + '</div>' +
-      '</div>' +
-      '<div class="pw-detail-foot">' +
-        '<span class="pw-evidence-label">Scientifically Supported By</span>' +
-        '<span class="pw-evidence"><strong>NIH</strong> National Institutes of Health</span>' +
-        '<span class="pw-evidence"><strong>EFSA</strong> European Food Safety Authority</span>' +
-        '<button type="button" class="pw-reference-button" data-pw-refs>' +
-          esc(REFERENCES_LABEL) + ' <span aria-hidden="true">&rarr;</span>' +
-        '</button>' +
+        '<div class="pw-detail-content">' +
+          '<div class="pw-detail-col"><h4>What It Does</h4>' + copy(item.what) + '</div>' +
+          '<div class="pw-detail-pair">' +
+            '<div class="pw-detail-col"><h4>How It Works</h4>' + copy(item.how) + '</div>' +
+            '<div class="pw-detail-col"><h4>Why We Included It</h4>' + copy(item.why) + '</div>' +
+          '</div>' +
+          '<div class="pw-detail-foot">' +
+            '<span class="pw-evidence-label">Scientifically Supported By</span>' +
+            '<span class="pw-evidence"><strong>NIH</strong> <span>National Institutes of Health</span></span>' +
+            '<span class="pw-evidence"><strong>EFSA</strong> <span>European Food Safety Authority</span></span>' +
+            '<button type="button" class="pw-reference-button" data-pw-refs>' +
+              esc(REFERENCES_LABEL) + ' <span aria-hidden="true">&rarr;</span>' +
+            '</button>' +
+          '</div>' +
+        '</div>' +
       '</div>' +
       '<div class="pw-reference-panel" data-pw-panel hidden>' +
         '<strong>' + esc(item.name) + ' references</strong>' +
