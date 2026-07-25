@@ -30,6 +30,7 @@
 .shopify-section.pw-ingredients-section { margin: 0; }
 
 .pw-ing {
+  --pw-gutter: 48px;
   margin: 0;
   padding-top: var(--pw-pad-top, 0px);
   padding-bottom: var(--pw-pad-bottom, 0px);
@@ -64,7 +65,7 @@
 .pw-ing .pw-clean-inner {
   max-width: var(--maxw, 1180px);
   margin: 0 auto;
-  padding: 0 var(--gutter, 48px);
+  padding: 0 var(--pw-gutter);
 }
 
 /* HERO */
@@ -220,7 +221,7 @@
 .pw-ing .pw-explorer-head {
   max-width: var(--maxw, 1180px);
   margin: 0 auto;
-  padding: 20px 0 24px;
+  padding: 20px var(--pw-gutter) 24px;
   text-align: center;
 }
 
@@ -637,7 +638,7 @@
 .pw-ing .pw-clean-inner {
   max-width: var(--maxw, 1180px);
   margin: 0 auto;
-  padding: 0 var(--gutter, 48px);
+  padding: 0 var(--pw-gutter);
 }
 
 .pw-ing .pw-clean-title {
@@ -830,6 +831,18 @@
 }
 
 /* RESPONSIVE — mirrors ingredients.html */
+@media screen and (max-width: 1100px) {
+  .pw-ing { --pw-gutter: 34px; }
+}
+
+@media screen and (max-width: 749px) {
+  .pw-ing { --pw-gutter: 22px; }
+}
+
+@media screen and (max-width: 480px) {
+  .pw-ing { --pw-gutter: 20px; }
+}
+
 @media screen and (max-width: 1180px) {
   .pw-ing .pw-hero-title { font-size: 5.2vw; }
   .pw-ing .pw-hero-copy { max-width: 56%; }
@@ -837,6 +850,14 @@
 }
 
 @media screen and (max-width: 960px) {
+  .pw-ing .pw-hero {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .pw-ing .pw-hero-inner { order: 1; }
+  .pw-ing .pw-hero-media { order: 2; }
+
   .pw-ing .pw-hero-title { font-size: 42px; }
   .pw-ing .pw-hero-copy { max-width: 100%; }
 
@@ -933,16 +954,22 @@
   .pw-ing .pw-cta-main {
     grid-template-columns: 1fr;
     gap: 22px;
-    padding: 34px var(--gutter, 48px);
+    padding: 34px var(--pw-gutter);
   }
   .pw-ing .pw-trust-inner {
     gap: 14px 26px;
-    padding: 20px var(--gutter, 48px);
+    padding: 20px var(--pw-gutter);
   }
 }
 
 @media screen and (max-width: 560px) {
   .pw-ing .pw-hero-title { font-size: 34px; }
+
+  .pw-ing .pw-purpose {
+    flex-direction: column;
+    gap: 14px;
+    padding: 22px;
+  }
 
   .pw-ing .pw-hero-features {
     flex-wrap: wrap;
