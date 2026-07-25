@@ -566,53 +566,66 @@
 }
 
 /* CLEAN BY DESIGN */
-.pw-ing .pw-clean { padding: 44px 0; }
-
-.pw-ing .pw-clean-grid {
-  display: grid;
-  grid-template-columns: auto 1fr auto 1fr;
-  gap: 26px;
-  align-items: center;
-  padding: 30px;
-  border-radius: 16px;
+.pw-ing .pw-clean {
+  padding: 40px 0 44px;
   background: var(--white, #FFFFFF);
-  box-shadow: 0 16px 40px -30px rgba(0, 0, 0, 0.3);
+}
+
+.pw-ing .pw-clean-inner {
+  max-width: var(--maxw, 1180px);
+  margin: 0 auto;
+  padding: 0 var(--gutter, 48px);
 }
 
 .pw-ing .pw-clean-title {
-  grid-column: 1 / -1;
+  margin: 0 0 26px;
   color: var(--charcoal, #1F2326);
-  margin: 0 0 6px;
   font-family: var(--font-head, 'Montserrat', system-ui, sans-serif);
   font-weight: 800;
   font-size: 22px;
+  letter-spacing: normal;
+  line-height: normal;
   text-align: center;
   text-transform: uppercase;
 }
 
+.pw-ing .pw-clean-grid {
+  display: grid;
+  grid-template-columns: 1.45fr 1px 1fr;
+  gap: 26px;
+  align-items: start;
+}
+
 .pw-ing .pw-clean-label {
-  margin: 0;
+  margin: 0 0 16px;
+  color: var(--slate, #737A80);
   font-family: var(--font-head, 'Montserrat', system-ui, sans-serif);
   font-weight: 700;
   font-size: 12px;
   letter-spacing: 1px;
+  line-height: normal;
   text-transform: uppercase;
-  color: var(--slate, #737A80);
 }
 
 .pw-ing .pw-clean-items {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  justify-content: space-around;
+  display: grid;
+  gap: 10px;
+}
+
+.pw-ing .pw-clean-items--free {
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+}
+
+.pw-ing .pw-clean-items--suitable {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
 }
 
 .pw-ing .pw-clean-item {
   display: flex;
+  min-width: 0;
   flex-direction: column;
   align-items: center;
   gap: 8px;
-  width: 74px;
   text-align: center;
 }
 
@@ -628,17 +641,11 @@
   color: var(--charcoal, #1F2326);
 }
 
-.pw-ing .pw-clean-suitable {
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
-}
-
 .pw-ing .pw-clean-divider {
   display: block;
   width: 1px;
   align-self: stretch;
-  background: rgba(31, 35, 38, 0.12);
+  background: rgba(31, 35, 38, 0.16);
 }
 
 /* BOTTOM CTA */
@@ -799,7 +806,7 @@
 
   .pw-ing .pw-clean-grid {
     grid-template-columns: 1fr;
-    gap: 18px;
+    gap: 26px;
   }
   .pw-ing .pw-clean-divider { display: none; }
 
@@ -828,6 +835,9 @@
   }
 
   .pw-ing .pw-explorer-head h2 { font-size: 23px; }
+
+  .pw-ing .pw-clean-items--free { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .pw-ing .pw-clean-items--suitable { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 
   .pw-ing .pw-detail { padding: 22px 18px; }
   .pw-ing .pw-detail-body { grid-template-columns: 1fr; }
@@ -951,12 +961,13 @@
   {%- if section.settings.show_clean -%}
     <div class="pw-clean">
       <div class="pw-clean-inner">
-        <div class="pw-clean-grid">
-          <h2 class="pw-clean-title">{{ section.settings.clean_heading | escape }}</h2>
+        <h2 class="pw-clean-title">{{ section.settings.clean_heading | escape }}</h2>
 
-          <h3 class="pw-clean-label">Free From</h3>
-          <div class="pw-clean-items">
-            <div class="pw-clean-item">
+        <div class="pw-clean-grid">
+          <div>
+            <h3 class="pw-clean-label">Free From</h3>
+            <div class="pw-clean-items pw-clean-items--free">
+              <div class="pw-clean-item">
               {%- if section.settings.clean_sweeteners != blank -%}
                 {{ section.settings.clean_sweeteners | image_url: width: 60 | image_tag: alt: '', loading: 'lazy' }}
               {%- else -%}
@@ -964,7 +975,7 @@
               {%- endif -%}
               <span>Artificial Sweeteners</span>
             </div>
-            <div class="pw-clean-item">
+              <div class="pw-clean-item">
               {%- if section.settings.clean_flavours != blank -%}
                 {{ section.settings.clean_flavours | image_url: width: 60 | image_tag: alt: '', loading: 'lazy' }}
               {%- else -%}
@@ -972,7 +983,7 @@
               {%- endif -%}
               <span>Artificial Flavours</span>
             </div>
-            <div class="pw-clean-item">
+              <div class="pw-clean-item">
               {%- if section.settings.clean_colours != blank -%}
                 {{ section.settings.clean_colours | image_url: width: 60 | image_tag: alt: '', loading: 'lazy' }}
               {%- else -%}
@@ -980,7 +991,7 @@
               {%- endif -%}
               <span>Artificial Colours</span>
             </div>
-            <div class="pw-clean-item">
+              <div class="pw-clean-item">
               {%- if section.settings.clean_preservatives != blank -%}
                 {{ section.settings.clean_preservatives | image_url: width: 60 | image_tag: alt: '', loading: 'lazy' }}
               {%- else -%}
@@ -988,7 +999,7 @@
               {%- endif -%}
               <span>Preservatives</span>
             </div>
-            <div class="pw-clean-item">
+              <div class="pw-clean-item">
               {%- if section.settings.clean_gluten != blank -%}
                 {{ section.settings.clean_gluten | image_url: width: 60 | image_tag: alt: '', loading: 'lazy' }}
               {%- else -%}
@@ -996,7 +1007,7 @@
               {%- endif -%}
               <span>Gluten</span>
             </div>
-            <div class="pw-clean-item">
+              <div class="pw-clean-item">
               {%- if section.settings.clean_dairy != blank -%}
                 {{ section.settings.clean_dairy | image_url: width: 60 | image_tag: alt: '', loading: 'lazy' }}
               {%- else -%}
@@ -1004,7 +1015,7 @@
               {%- endif -%}
               <span>Dairy</span>
             </div>
-            <div class="pw-clean-item">
+              <div class="pw-clean-item">
               {%- if section.settings.clean_gmos != blank -%}
                 {{ section.settings.clean_gmos | image_url: width: 60 | image_tag: alt: '', loading: 'lazy' }}
               {%- else -%}
@@ -1012,14 +1023,15 @@
               {%- endif -%}
               <span>GMOs</span>
             </div>
+            </div>
           </div>
 
           <div class="pw-clean-divider"></div>
 
-          <div class="pw-clean-suitable">
+          <div>
             <h3 class="pw-clean-label">Suitable For</h3>
-            <div class="pw-clean-items">
-            <div class="pw-clean-item">
+            <div class="pw-clean-items pw-clean-items--suitable">
+              <div class="pw-clean-item">
               {%- if section.settings.clean_vegan != blank -%}
                 {{ section.settings.clean_vegan | image_url: width: 60 | image_tag: alt: '', loading: 'lazy' }}
               {%- else -%}
@@ -1027,7 +1039,7 @@
               {%- endif -%}
               <span>Vegan</span>
             </div>
-            <div class="pw-clean-item">
+              <div class="pw-clean-item">
               {%- if section.settings.clean_vegetarian != blank -%}
                 {{ section.settings.clean_vegetarian | image_url: width: 60 | image_tag: alt: '', loading: 'lazy' }}
               {%- else -%}
@@ -1035,7 +1047,7 @@
               {%- endif -%}
               <span>Vegetarian</span>
             </div>
-            <div class="pw-clean-item">
+              <div class="pw-clean-item">
               {%- if section.settings.clean_keto != blank -%}
                 {{ section.settings.clean_keto | image_url: width: 60 | image_tag: alt: '', loading: 'lazy' }}
               {%- else -%}
@@ -1043,7 +1055,7 @@
               {%- endif -%}
               <span>Keto Friendly</span>
             </div>
-            <div class="pw-clean-item">
+              <div class="pw-clean-item">
               {%- if section.settings.clean_paleo != blank -%}
                 {{ section.settings.clean_paleo | image_url: width: 60 | image_tag: alt: '', loading: 'lazy' }}
               {%- else -%}
@@ -1051,7 +1063,7 @@
               {%- endif -%}
               <span>Paleo Friendly</span>
             </div>
-            <div class="pw-clean-item">
+              <div class="pw-clean-item">
               {%- if section.settings.clean_lowcarb != blank -%}
                 {{ section.settings.clean_lowcarb | image_url: width: 60 | image_tag: alt: '', loading: 'lazy' }}
               {%- else -%}
