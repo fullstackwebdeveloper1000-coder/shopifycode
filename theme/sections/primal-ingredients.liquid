@@ -27,6 +27,18 @@
 .pw-ing button,
 .pw-ing a { font: inherit; }
 
+.pw-ing a { text-decoration: none; }
+
+.pw-ing h1,
+.pw-ing h2,
+.pw-ing h3,
+.pw-ing h4,
+.pw-ing h5 {
+  letter-spacing: normal;
+  line-height: normal;
+  word-break: normal;
+}
+
 .pw-ing .pw-shell,
 .pw-ing .pw-explorer-width,
 .pw-ing .pw-clean-inner {
@@ -120,6 +132,7 @@
 
 .pw-ing .pw-purpose h2 {
   margin: 2px 0 12px;
+  color: var(--charcoal, #1F2326);
   font-family: var(--font-head, 'Montserrat', system-ui, sans-serif);
   font-weight: 800;
   font-size: 18px;
@@ -193,6 +206,7 @@
 
 .pw-ing .pw-explorer-head h2 {
   margin: 0 0 8px;
+  color: var(--charcoal, #1F2326);
   font-family: var(--font-head, 'Montserrat', system-ui, sans-serif);
   font-weight: 800;
   font-size: 30px;
@@ -339,6 +353,7 @@
 }
 
 .pw-ing .pw-detail {
+  display: block;
   position: relative;
   min-height: 520px;
   padding: 28px 30px;
@@ -366,6 +381,7 @@
 
 .pw-ing .pw-detail-title h3 {
   margin: 0;
+  color: var(--charcoal, #1F2326);
   font-family: var(--font-head, 'Montserrat', system-ui, sans-serif);
   font-weight: 800;
   font-size: 26px;
@@ -383,10 +399,10 @@
   padding: 7px 14px;
   border-radius: 20px;
   background: rgba(61, 139, 90, 0.12);
-  color: var(--success, #3D8B5A);
+  color: var(--slate, #737A80);
   font-family: var(--font-head, 'Montserrat', system-ui, sans-serif);
   font-weight: 700;
-  font-size: 11px;
+  font-size: 13px;
   letter-spacing: 0.5px;
   text-transform: uppercase;
   white-space: nowrap;
@@ -400,6 +416,7 @@
 }
 
 .pw-ing .pw-detail-image {
+  display: block;
   overflow: hidden;
   aspect-ratio: 3 / 4;
   border-radius: 12px;
@@ -564,6 +581,7 @@
 
 .pw-ing .pw-clean-title {
   grid-column: 1 / -1;
+  color: var(--charcoal, #1F2326);
   margin: 0 0 6px;
   font-family: var(--font-head, 'Montserrat', system-ui, sans-serif);
   font-weight: 800;
@@ -617,6 +635,7 @@
 }
 
 .pw-ing .pw-clean-divider {
+  display: block;
   width: 1px;
   align-self: stretch;
   background: rgba(31, 35, 38, 0.12);
@@ -640,6 +659,7 @@
 
 .pw-ing .pw-cta-title {
   margin: 0;
+  color: var(--white, #FFFFFF);
   font-family: var(--font-head, 'Montserrat', system-ui, sans-serif);
   font-weight: 900;
   font-size: 34px;
@@ -654,6 +674,33 @@
   font-size: 14px;
   line-height: 1.6;
 }
+
+.pw-ing .pw-cta-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 26px;
+  border: 0;
+  border-radius: 10px;
+  background: var(--gold, #C89A3D);
+  color: var(--ink-900, #14171A);
+  font-family: var(--font-head, 'Montserrat', system-ui, sans-serif);
+  font-weight: 800;
+  font-size: 15px;
+  letter-spacing: 0.6px;
+  line-height: normal;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.18s ease;
+}
+
+.pw-ing .pw-cta-button:hover {
+  background: var(--gold-deep, #B4842E);
+  color: var(--ink-900, #14171A);
+}
+
+.pw-ing .pw-cta-button svg { stroke: var(--ink-900, #14171A); flex: 0 0 auto; }
 
 .pw-ing .pw-cta-action {
   display: flex;
@@ -1027,7 +1074,7 @@
         </h2>
         <p class="pw-cta-copy">{{ section.settings.cta_text | escape | newline_to_br }}</p>
         <div class="pw-cta-action">
-          <a class="pw-btn-gold" href="{{ section.settings.cta_link | default: routes.all_products_collection_url }}">
+          <a class="pw-cta-button" href="{{ section.settings.cta_link | default: routes.all_products_collection_url }}">
             {{ section.settings.cta_label | escape }}
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
           </a>
