@@ -617,6 +617,8 @@
   cursor: pointer;
 }
 
+.pw-ing .pw-list-toggle[hidden] { display: none; }
+
 .pw-ing .pw-list-empty {
   padding: 26px;
   border-radius: 12px;
@@ -1484,7 +1486,7 @@
       } else {
         listNode.classList.remove('pw-list--collapsed');
         moreNode.hidden = !(narrow && list.length > 8);
-        if (!moreNode.hidden) moreNode.textContent = 'Show fewer';
+        moreNode.textContent = 'Show fewer';
       }
     }
 
@@ -1579,6 +1581,17 @@
       expanded = !expanded;
       renderList();
     });
+  }
+
+  var narrowQuery = window.matchMedia('(max-width: 960px)');
+  var onBreakpoint = function () {
+    expanded = false;
+    renderList();
+  };
+  if (narrowQuery.addEventListener) {
+    narrowQuery.addEventListener('change', onBreakpoint);
+  } else if (narrowQuery.addListener) {
+    narrowQuery.addListener(onBreakpoint);
   }
 
   function render() {
