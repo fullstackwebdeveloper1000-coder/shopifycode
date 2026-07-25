@@ -1,0 +1,450 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Get Primal Win — Choose How You Win</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  /* ============================================================
+     PRIMAL WIN — shared design tokens (identical to homepage)
+     ============================================================ */
+  :root{
+    --forest:#234B36;
+    --charcoal:#1F2326;
+    --stone:#F7F5F1;
+    --page:#EFE5DD;
+    --gold:#C89A3D;
+    --gold-deep:#B4842E;
+    --slate:#737A80;
+    --white:#FFFFFF;
+    --ink-900:#14171A;
+    --ink-800:#1B1F22;
+    --font-head:'Montserrat', system-ui, sans-serif;
+    --font-body:'Inter', system-ui, sans-serif;
+    --maxw:1180px;
+    --gutter:48px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{font-family:var(--font-body);color:var(--charcoal);background:var(--page);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+  img{max-width:100%;display:block;}
+  a{text-decoration:none;color:inherit;}
+  .container{max-width:var(--maxw);margin:0 auto;padding:0 var(--gutter);}
+  .gold{color:var(--gold);}
+  .eyebrow{font-family:var(--font-head);font-weight:700;font-size:13px;letter-spacing:2.5px;color:var(--gold);text-transform:uppercase;margin:0 0 12px;}
+
+  /* buttons */
+  .btn-gold{display:inline-flex;align-items:center;justify-content:center;gap:12px;font-family:var(--font-head);font-weight:800;font-size:14px;letter-spacing:0.6px;text-transform:uppercase;color:var(--ink-900);background:var(--gold);border:0;border-radius:10px;padding:16px 26px;cursor:pointer;}
+  .btn-gold svg{stroke:var(--ink-900);}
+  .btn-outline{display:inline-flex;align-items:center;justify-content:center;gap:12px;font-family:var(--font-head);font-weight:800;font-size:14px;letter-spacing:0.6px;text-transform:uppercase;color:var(--gold);background:transparent;border:1.6px solid var(--gold);border-radius:10px;padding:15px 26px;cursor:pointer;}
+
+  /* ---------- Nav (identical site-wide) ---------- */
+  .nav{background:var(--white);border-bottom:1px solid rgba(31,35,38,0.06);}
+  .nav-in{display:flex;align-items:center;gap:36px;height:82px;}
+  .nav .logo{height:44px;width:auto;mix-blend-mode:multiply;}
+  .nav-links{display:flex;gap:40px;margin-left:26px;}
+  .nav-links a{font-family:var(--font-head);font-weight:700;font-size:14px;letter-spacing:1px;text-transform:uppercase;color:var(--charcoal);}
+  .nav-cta{margin-left:auto;display:flex;align-items:center;gap:24px;}
+  .nav-cta .btn-gold{padding:13px 22px;}
+  .nav-icons{display:flex;align-items:center;gap:18px;color:var(--charcoal);}
+  .cart{position:relative;}
+  .cart .badge{position:absolute;top:-8px;right:-9px;background:var(--gold);color:var(--ink-900);font-family:var(--font-head);font-weight:800;font-size:10px;width:16px;height:16px;border-radius:50%;display:flex;align-items:center;justify-content:center;}
+
+  /* ============================================================
+     HERO
+     ============================================================ */
+  .hero{background:linear-gradient(180deg,#F1E9E1,#EBE1D7);overflow:hidden;}
+  .hero-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;padding:56px 0 44px;}
+  .hero-head{font-family:var(--font-head);font-weight:900;font-size:82px;line-height:0.9;letter-spacing:-1.5px;text-transform:uppercase;color:var(--charcoal);margin:0;}
+  .hero-head .sq{color:var(--gold);}
+  .hero-tag{font-family:var(--font-head);font-weight:800;font-size:21px;letter-spacing:0.2px;color:var(--gold);margin:22px 0 0;}
+  .hero-rule{width:60px;height:3px;background:var(--gold);border:0;margin:20px 0 18px;}
+  .hero-sub{font-family:var(--font-head);font-weight:700;font-size:17px;color:var(--charcoal);margin:0 0 26px;}
+  .badges{display:flex;align-items:flex-start;gap:6px;}
+  .badge{display:flex;flex-direction:column;align-items:center;text-align:center;flex:1;gap:10px;}
+  .bcirc{width:64px;height:64px;border-radius:50%;background:var(--ink-900);display:flex;align-items:center;justify-content:center;color:var(--gold);}
+  .badge p{font-family:var(--font-head);font-weight:700;font-size:11px;letter-spacing:0.4px;text-transform:uppercase;color:var(--charcoal);margin:0;line-height:1.25;}
+  .bdiv{width:1px;align-self:stretch;background:rgba(31,35,38,0.15);margin:6px 2px 24px;}
+  .hero-media{display:flex;align-items:center;justify-content:center;}
+  .hero-media img{width:100%;max-width:560px;border-radius:14px;}
+
+  /* ============================================================
+     PILLARS strip
+     ============================================================ */
+  .pillars{background:var(--page);border-top:1px solid rgba(31,35,38,0.08);}
+  .pillars-in{display:flex;align-items:center;justify-content:center;gap:0;padding:26px 0;}
+  .pillar{display:flex;align-items:center;gap:14px;padding:0 40px;}
+  .pillar + .pillar{border-left:1px solid rgba(31,35,38,0.15);}
+  .pillar .ic{color:var(--gold);}
+  .pillar span{font-family:var(--font-head);font-weight:800;font-size:18px;letter-spacing:0.5px;text-transform:uppercase;color:var(--charcoal);}
+
+  /* ============================================================
+     CHOOSE / pricing
+     ============================================================ */
+  .choose{padding:56px 0 64px;}
+  .choose-head{text-align:center;margin-bottom:40px;}
+  .choose-head h2{font-family:var(--font-head);font-weight:900;font-size:40px;letter-spacing:-0.5px;text-transform:uppercase;color:var(--charcoal);margin:0 0 10px;}
+  .choose-head p{font-size:16px;color:var(--slate);margin:0;}
+  .plans{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;align-items:start;}
+  .plan{background:var(--white);border:1px solid rgba(31,35,38,0.08);border-radius:16px;padding:30px 26px 28px;box-shadow:0 20px 50px -34px rgba(0,0,0,0.4);display:flex;flex-direction:column;}
+  .plan.feat{border:2px solid var(--gold);padding-top:0;overflow:hidden;margin-top:-18px;}
+  .ribbon{background:var(--gold);color:var(--ink-900);font-family:var(--font-head);font-weight:800;font-size:12px;letter-spacing:1px;text-transform:uppercase;text-align:center;padding:9px 0;margin:0 -26px 26px;}
+  .plan.feat .plan-pad{padding:0;}
+  .plan.feat > *:not(.ribbon){}
+  .plan h3{font-family:var(--font-head);font-weight:800;font-size:21px;letter-spacing:0.2px;text-transform:uppercase;color:var(--charcoal);margin:0 0 6px;}
+  .plan .lede{font-size:14px;color:var(--slate);margin:0 0 20px;}
+  .plan-media{background:linear-gradient(150deg,#E6E6E8,#CFD0D3);border-radius:12px;aspect-ratio:16/11;display:flex;align-items:center;justify-content:center;overflow:hidden;margin-bottom:20px;}
+  .plan-media img{width:100%;height:100%;object-fit:cover;}
+  .shaker-ph{width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:radial-gradient(circle at 50% 40%,#9a9ca0,#6f7175);}
+  .servings{font-family:var(--font-head);font-weight:700;font-size:12px;letter-spacing:1px;text-transform:uppercase;color:var(--slate);margin:0 0 6px;}
+  .price{font-family:var(--font-head);font-weight:900;font-size:40px;line-height:1;color:var(--charcoal);margin:0 0 4px;}
+  .price .per{font-family:var(--font-head);font-weight:700;font-size:14px;color:var(--slate);letter-spacing:0.3px;}
+  .rrp{font-size:13px;color:var(--slate);text-decoration:line-through;margin:0 0 18px;}
+  .no-rrp{height:14px;margin:0 0 18px;}
+  .feats{list-style:none;margin:0 0 22px;padding:0;display:grid;gap:12px;flex:1;}
+  .feats li{display:flex;align-items:center;gap:11px;font-size:14px;color:var(--charcoal);}
+  .ck{flex:0 0 auto;width:20px;height:20px;border-radius:50%;background:var(--gold);display:flex;align-items:center;justify-content:center;color:var(--ink-900);}
+  .rd{flex:0 0 auto;width:18px;height:18px;border-radius:50%;border:1.6px solid var(--slate);}
+  .plan .foot-note{text-align:center;font-size:12px;color:var(--slate);margin:14px 0 0;}
+  .plan .btn-gold,.plan .btn-outline{width:100%;}
+
+  /* ============================================================
+     COMPARE table (dark)
+     ============================================================ */
+  .compare{background:var(--ink-900);padding:56px 0;}
+  .compare-inner{background:#0E1113;border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:14px 34px;}
+  .ct-row{display:grid;grid-template-columns:1.1fr 1.3fr 1.1fr;gap:20px;padding:18px 0;border-bottom:1px solid rgba(255,255,255,0.08);align-items:center;}
+  .ct-row:last-child{border-bottom:0;}
+  .ct-row.head .c{font-family:var(--font-head);font-weight:800;font-size:15px;letter-spacing:0.6px;text-transform:uppercase;}
+  .ct-row.head .c1{color:var(--white);}
+  .ct-row.head .c2{color:var(--gold);}
+  .ct-row.head .c3{color:var(--white);}
+  .ct-row .lbl{color:#AEB3B6;font-size:15px;}
+  .ct-row .mid{display:flex;align-items:center;gap:10px;color:#E7E9EA;font-size:15px;}
+  .ct-row .mid .ck{width:19px;height:19px;}
+  .ct-row .r{color:#AEB3B6;font-size:15px;}
+
+  /* ============================================================
+     TRUST strip
+     ============================================================ */
+  .trust{background:var(--page);border-top:1px solid rgba(31,35,38,0.08);border-bottom:1px solid rgba(31,35,38,0.08);}
+  .trust-grid{display:grid;grid-template-columns:repeat(4,1fr);}
+  .trust-item{display:flex;gap:16px;padding:34px 30px;}
+  .trust-item + .trust-item{border-left:1px solid rgba(31,35,38,0.12);}
+  .trust-item .ic{flex:0 0 auto;color:var(--gold);}
+  .trust-item h4{font-family:var(--font-head);font-weight:800;font-size:14px;letter-spacing:0.4px;text-transform:uppercase;color:var(--charcoal);margin:0 0 8px;}
+  .trust-item p{font-size:13px;line-height:1.55;color:var(--slate);margin:0;}
+
+  /* ============================================================
+     FINAL CTA banner (dark + mountain)
+     ============================================================ */
+  .final{background:var(--ink-900);color:var(--white);}
+  .final-grid{display:grid;grid-template-columns:0.95fr 1fr auto;gap:34px;align-items:center;padding:26px var(--gutter);max-width:var(--maxw);margin:0 auto;}
+  .final-media{position:relative;border-radius:12px;overflow:hidden;min-height:120px;display:flex;align-items:center;}
+  .final-media img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;}
+  .final-media .cap{position:relative;z-index:1;padding:22px 24px;font-family:var(--font-head);font-weight:900;font-size:30px;line-height:0.95;letter-spacing:0.4px;text-transform:uppercase;color:var(--white);text-shadow:0 2px 12px rgba(0,0,0,0.6);}
+  .final-text{font-size:15px;line-height:1.55;color:#C7CBCE;margin:0;}
+  .final-grid .btn-gold{font-size:16px;padding:20px 30px;white-space:nowrap;}
+
+  /* ---------- Footer (identical site-wide) ---------- */
+  .footer{background:var(--ink-900);color:#C7CBce;padding:56px 0 24px;border-top:1px solid rgba(255,255,255,0.06);}
+  .foot-grid{display:grid;grid-template-columns:1.6fr 1fr 1fr 1.6fr;gap:30px;}
+  .foot-logo-img{height:44px;width:auto;display:block;margin-bottom:18px;}
+  .foot-brand p{font-size:14px;line-height:1.6;margin:0 0 18px;}
+  .socials{display:flex;gap:16px;color:var(--white);}
+  .foot-col h5{font-family:var(--font-head);font-weight:700;font-size:13px;letter-spacing:1px;text-transform:uppercase;color:var(--white);margin:2px 0 16px;}
+  .foot-col a{display:block;font-size:14px;margin-bottom:11px;color:#C7CBce;}
+  .foot-join h5{font-family:var(--font-head);font-weight:700;font-size:13px;letter-spacing:1px;text-transform:uppercase;color:var(--white);margin:2px 0 12px;}
+  .foot-join p{font-size:14px;line-height:1.55;margin:0 0 14px;}
+  .foot-field{display:flex;background:var(--white);border-radius:8px;overflow:hidden;}
+  .foot-field input{flex:1;border:0;padding:13px 16px;font-family:var(--font-body);font-size:14px;color:var(--charcoal);}
+  .foot-field button{border:0;background:var(--gold);color:var(--ink-900);padding:0 16px;cursor:pointer;display:flex;align-items:center;}
+  .foot-bottom{display:flex;align-items:center;justify-content:space-between;border-top:1px solid rgba(255,255,255,0.10);margin-top:40px;padding-top:20px;font-size:13px;color:var(--slate);}
+  .foot-bottom .uk{display:flex;align-items:center;gap:8px;}
+
+  /* ============================================================
+     RESPONSIVE
+     ============================================================ */
+  @media (max-width:1080px){
+    .hero-head{font-size:64px;}
+    .plans{grid-template-columns:1fr;max-width:460px;margin:0 auto;}
+    .plan.feat{margin-top:0;}
+    .final-grid{grid-template-columns:1fr;gap:20px;}
+    .final-media{min-height:140px;}
+  }
+  @media (max-width:860px){
+    .nav-links{display:none;}
+    .hero-grid{grid-template-columns:1fr;gap:28px;padding-top:40px;}
+    .hero-media{order:-1;}
+    .compare-inner{padding:10px 18px;}
+    .ct-row{grid-template-columns:1fr 1.2fr 1fr;gap:12px;}
+    .trust-grid{grid-template-columns:1fr 1fr;}
+    .trust-item:nth-child(3){border-left:0;}
+    .foot-grid{grid-template-columns:1fr 1fr;gap:34px 24px;}
+    .foot-brand,.foot-join{grid-column:1 / -1;}
+  }
+  @media (max-width:560px){
+    :root{--gutter:22px;}
+    .nav-cta .btn-gold{display:none;}
+    .hero-head{font-size:48px;}
+    .pillars-in{flex-direction:column;gap:18px;}
+    .pillar + .pillar{border-left:0;border-top:1px solid rgba(31,35,38,0.12);padding-top:18px;}
+    .choose-head h2{font-size:30px;}
+    .badges{flex-wrap:wrap;gap:16px 6px;}
+    .badge{flex:0 0 40%;}
+    .bdiv{display:none;}
+    .ct-row{font-size:13px;}
+    .ct-row.head .c{font-size:12px;}
+    .trust-grid{grid-template-columns:1fr;}
+    .trust-item + .trust-item{border-left:0;border-top:1px solid rgba(31,35,38,0.12);}
+    .foot-grid{grid-template-columns:1fr;}
+    .foot-bottom{flex-direction:column;gap:12px;align-items:flex-start;}
+  }
+</style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <div class="container nav-in">
+      <a href="index.html"><img class="logo" src="assets/Logo.png" alt="Primal Win — home"></a>
+      <div class="nav-links">
+        <a href="science.html">The Science</a>
+        <a href="ingredients.html">Ingredients</a>
+        <a href="#">Partner With Us</a>
+      </div>
+      <div class="nav-cta">
+        <a class="btn-gold" href="get-primal-win.html">Get Primal Win</a>
+        <div class="nav-icons">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="8" r="4"/><path d="M5 21c0-4 3.5-6 7-6s7 2 7 6"/></svg>
+          <span class="cart">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 6h15l-1.5 9h-12L6 6Z"/><path d="M6 6l-.7-3H2"/><circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/></svg>
+            <span class="badge">0</span>
+          </span>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container hero-grid">
+      <div class="hero-copy">
+        <h1 class="hero-head">For Those<br>Who Want<br>To Win<span class="sq">.</span></h1>
+        <p class="hero-tag">Feel Stronger. Think Sharper. Live Better.</p>
+        <hr class="hero-rule">
+        <p class="hero-sub">Designed for people who want more from life.</p>
+        <div class="badges">
+          <div class="badge">
+            <span class="bcirc"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 19c8 0 14-5 14-14-8 0-14 5-14 14Z"/><path d="M6 18c3-4 6-6 10-8"/></svg></span>
+            <p>Premium<br>Ingredients</p>
+          </div>
+          <span class="bdiv"></span>
+          <div class="badge">
+            <span class="bcirc"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6M10 3v6l-4.5 8A2 2 0 0 0 7.3 20h9.4a2 2 0 0 0 1.8-3L14 9V3"/></svg></span>
+            <p>Science<br>Backed</p>
+          </div>
+          <span class="bdiv"></span>
+          <div class="badge">
+            <span class="bcirc"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 3v5c0 5-3.4 8-8 10-4.6-2-8-5-8-10V6l8-3Z"/><path d="M9 12l2 2 4-4"/></svg></span>
+            <p>Third-Party<br>Tested</p>
+          </div>
+          <span class="bdiv"></span>
+          <div class="badge">
+            <span class="bcirc"><svg width="26" height="18" viewBox="0 0 60 40"><rect width="60" height="40" fill="#0d0f11"/><path d="M0 0l60 40M60 0L0 40" stroke="#C89A3D" stroke-width="6"/><path d="M30 0v40M0 20h60" stroke="#C89A3D" stroke-width="9"/></svg></span>
+            <p>Manufactured<br>In The UK</p>
+          </div>
+        </div>
+      </div>
+      <div class="hero-media">
+        <img src="assets/hero-pouch.png" alt="Primal Win — 40 active ingredients greens &amp; performance formula">
+      </div>
+    </div>
+  </section>
+
+  <!-- PILLARS -->
+  <section class="pillars">
+    <div class="container pillars-in">
+      <div class="pillar"><span class="ic"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 13a6 6 0 0 1 12 0"/><path d="M3 13h14"/><path d="M16 11l4-2 1 2-3 2"/><path d="M9 13v3a2 2 0 0 0 2 2"/></svg></span><span>One Scoop.</span></div>
+      <div class="pillar"><span class="ic"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="5" width="16" height="16" rx="2"/><path d="M4 9h16M8 3v4M16 3v4"/><path d="M9 14l2 2 4-4"/></svg></span><span>Every Day.</span></div>
+      <div class="pillar"><span class="ic"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 4h10v4a5 5 0 0 1-10 0V4Z"/><path d="M17 5h3v2a3 3 0 0 1-3 3M7 5H4v2a3 3 0 0 0 3 3"/><path d="M10 13v3M14 13v3M8 20h8M9 20l1-4M15 20l-1-4"/></svg></span><span>Built To Win.</span></div>
+    </div>
+  </section>
+
+  <!-- CHOOSE / PRICING -->
+  <section class="choose">
+    <div class="container">
+      <div class="choose-head">
+        <h2>Choose How You <span class="gold">Win</span></h2>
+        <p>every scoop delivers the same premium formula.</p>
+      </div>
+      <div class="plans">
+
+        <!-- Plan 1 — Subscribe -->
+        <div class="plan feat">
+          <div class="ribbon">Most Popular — Save 20%</div>
+          <h3>Subscribe &amp; Save</h3>
+          <p class="lede">Never run out. Always perform.</p>
+          <div class="plan-media"><img src="assets/hero-pouch.png" alt="Primal Win pouch"></div>
+          <p class="servings">30 Servings</p>
+          <p class="price">£59.99 <span class="per">/ per month</span></p>
+          <p class="rrp">RRP £74.99</p>
+          <ul class="feats">
+            <li><span class="ck"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l4 4L19 7"/></svg></span>Free Delivery Always</li>
+            <li><span class="ck"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l4 4L19 7"/></svg></span>Cancel or Pause Anytime</li>
+            <li><span class="ck"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l4 4L19 7"/></svg></span>Best Value Guaranteed</li>
+            <li><span class="ck"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l4 4L19 7"/></svg></span>Priority Access to New Releases</li>
+          </ul>
+          <a class="btn-gold" href="#">Choose Subscription</a>
+          <p class="foot-note">Delivered every 30 days. Modify or cancel anytime.</p>
+        </div>
+
+        <!-- Plan 2 — One-time -->
+        <div class="plan">
+          <h3>One-Time Purchase</h3>
+          <p class="lede">One-time payment. Simple choice.</p>
+          <div class="plan-media"><img src="assets/hero-pouch.png" alt="Primal Win pouch"></div>
+          <p class="servings">30 Servings</p>
+          <p class="price">£74.99 <span class="per">/ one-time</span></p>
+          <p class="no-rrp"></p>
+          <ul class="feats">
+            <li><span class="rd"></span>Single Delivery Only</li>
+            <li><span class="rd"></span>No Commitment Required</li>
+            <li><span class="rd"></span>Standard Shipping Fees</li>
+            <li><span class="rd"></span>Standard Dispatch Priority</li>
+          </ul>
+          <a class="btn-outline" href="#">Add to Cart</a>
+          <p class="foot-note">Free shipping on orders above £100</p>
+        </div>
+
+        <!-- Plan 3 — Shaker -->
+        <div class="plan">
+          <h3>Add a Shaker</h3>
+          <p class="lede">The perfect partner for performance.</p>
+          <div class="plan-media">
+            <div class="shaker-ph">
+              <svg width="88" height="150" viewBox="0 0 88 150" fill="none">
+                <rect x="20" y="30" width="48" height="105" rx="10" fill="#1b1f22" stroke="#3a3f44" stroke-width="2"/>
+                <rect x="18" y="18" width="52" height="18" rx="6" fill="#26120a"/>
+                <rect x="30" y="10" width="28" height="12" rx="4" fill="#1b1f22"/>
+                <path d="M35 74h18M35 84h18M35 94h18" stroke="#C89A3D" stroke-width="2" stroke-linecap="round"/>
+                <path d="M44 55l-6 8h12l-6 8" stroke="#C89A3D" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+          </div>
+          <p class="servings">Stainless Steel</p>
+          <p class="price">£14.99 <span class="per">/ add-on</span></p>
+          <p class="no-rrp"></p>
+          <ul class="feats">
+            <li><span class="rd"></span>Double-Wall Insulated</li>
+            <li><span class="rd"></span>Heavy Duty Durable Build</li>
+            <li><span class="rd"></span>BPA Free Materials</li>
+            <li><span class="rd"></span>Primal Win Custom Brand Engraving</li>
+          </ul>
+          <a class="btn-outline" href="#">Add to Cart</a>
+          <p class="foot-note">100% leakproof lock system</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- COMPARE -->
+  <section class="compare">
+    <div class="container">
+      <div class="compare-inner">
+        <div class="ct-row head">
+          <div class="c c1">Why Subscribe?</div>
+          <div class="c c2">Subscribe &amp; Save</div>
+          <div class="c c3">One-Time Purchase</div>
+        </div>
+        <div class="ct-row">
+          <div class="lbl">Price</div>
+          <div class="mid"><span class="ck"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l4 4L19 7"/></svg></span>Save 20% on every order</div>
+          <div class="r">Full price</div>
+        </div>
+        <div class="ct-row">
+          <div class="lbl">Shipping</div>
+          <div class="mid"><span class="ck"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l4 4L19 7"/></svg></span>Always free shipping</div>
+          <div class="r">Standard shipping</div>
+        </div>
+        <div class="ct-row">
+          <div class="lbl">Flexibility</div>
+          <div class="mid"><span class="ck"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l4 4L19 7"/></svg></span>Cancel or pause anytime</div>
+          <div class="r">One purchase</div>
+        </div>
+        <div class="ct-row">
+          <div class="lbl">Convenience</div>
+          <div class="mid"><span class="ck"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l4 4L19 7"/></svg></span>Never run out</div>
+          <div class="r">Reorder manually</div>
+        </div>
+        <div class="ct-row">
+          <div class="lbl">Access</div>
+          <div class="mid"><span class="ck"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l4 4L19 7"/></svg></span>Priority access to new products</div>
+          <div class="r">—</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRUST -->
+  <section class="trust">
+    <div class="container trust-grid">
+      <div class="trust-item"><span class="ic"><svg width="34" height="34" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M8 32c14 0 24-8 24-24C18 8 8 16 8 32Z" stroke-linejoin="round"/><path d="M10 30c5-7 10-10 17-13" stroke-linecap="round"/></svg></span><div><h4>Premium Ingredients</h4><p>Carefully selected. Nothing unnecessary. Everything intentional.</p></div></div>
+      <div class="trust-item"><span class="ic"><svg width="34" height="34" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M16 5h8M17 5v9l-7 13.5A2 2 0 0 0 11.8 31h16.4a2 2 0 0 0 1.8-3.5L23 14V5" stroke-linejoin="round"/></svg></span><div><h4>Science Backed</h4><p>Formulated with evidence. Built on research. Driven by results.</p></div></div>
+      <div class="trust-item"><span class="ic"><svg width="34" height="34" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M20 4l13 5v9c0 8-5.5 13-13 16-7.5-3-13-8-13-16V9l13-5Z" stroke-linejoin="round"/><path d="M15 20l3.5 3.5L26 16" stroke-linecap="round" stroke-linejoin="round"/></svg></span><div><h4>Third-Party Tested</h4><p>Independently tested for purity, potency and quality.</p></div></div>
+      <div class="trust-item"><span class="ic"><svg width="34" height="22" viewBox="0 0 60 40"><rect width="60" height="40" fill="none"/><path d="M0 0l60 40M60 0L0 40" stroke="currentColor" stroke-width="5"/><path d="M30 0v40M0 20h60" stroke="currentColor" stroke-width="8"/></svg></span><div><h4>Made in the UK</h4><p>Manufactured to the highest standards in the United Kingdom.</p></div></div>
+    </div>
+  </section>
+
+  <!-- FINAL CTA -->
+  <section class="final">
+    <div class="final-grid">
+      <div class="final-media">
+        <img src="assets/story/mountain.png" alt="Mountain summit">
+        <div class="cap">One Scoop.<br><span class="gold">Every Day.</span></div>
+      </div>
+      <p class="final-text">A simple daily habit designed to help you feel stronger, think sharper and perform at your best.</p>
+      <a class="btn-gold" href="get-primal-win.html">Get Primal Win Now
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container foot-grid">
+      <div class="foot-brand">
+        <img class="foot-logo-img" src="assets/logo-light.png" alt="Primal Win — Daily Performance Formula">
+        <p>For those who want to win.<br>Clean ingredients.<br>Real results.</p>
+        <div class="socials">
+          <a href="#" aria-label="Instagram"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
+          <a href="#" aria-label="Facebook"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M14 9h3V5h-3c-2.2 0-4 1.8-4 4v2H7v4h3v6h4v-6h3l1-4h-4V9c0-.6.4-1 1-1z"/></svg></a>
+          <a href="#" aria-label="YouTube"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M23 12s0-3.2-.4-4.7c-.2-.9-.9-1.5-1.7-1.7C19.4 5.2 12 5.2 12 5.2s-7.4 0-8.9.4c-.8.2-1.5.8-1.7 1.7C1 8.8 1 12 1 12s0 3.2.4 4.7c.2.9.9 1.5 1.7 1.7 1.5.4 8.9.4 8.9.4s7.4 0 8.9-.4c.8-.2 1.5-.8 1.7-1.7C23 15.2 23 12 23 12zM9.8 15.3V8.7l5.7 3.3-5.7 3.3z"/></svg></a>
+          <a href="#" aria-label="TikTok"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M16 3c.3 2.2 1.6 3.7 3.8 4v3c-1.4 0-2.7-.4-3.8-1.1V15a6 6 0 1 1-6-6c.3 0 .7 0 1 .1v3.1a3 3 0 1 0 2 2.8V3h3z"/></svg></a>
+        </div>
+      </div>
+      <div class="foot-col"><h5>Learn</h5><a href="science.html">The Science</a><a href="ingredients.html">Ingredients</a><a href="our-story.html">Our Story</a><a href="#">FAQs</a></div>
+      <div class="foot-col"><h5>Customer Care</h5><a href="returns.html">Returns</a><a href="#">Terms &amp; Conditions</a><a href="#">Privacy Policy</a></div>
+      <div class="foot-join">
+        <h5>Join The Primal Community</h5>
+        <p>Be the first to know about new drops, offers and performance tips.</p>
+        <form class="foot-field" onsubmit="return false;">
+          <input type="email" placeholder="Enter your email" aria-label="Email">
+          <button type="submit"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+        </form>
+      </div>
+    </div>
+    <div class="container foot-bottom">
+      <span>© 2026 Primal Win. All rights reserved.</span>
+      <span class="uk">Made in the UK
+        <svg width="22" height="14" viewBox="0 0 60 40"><rect width="60" height="40" fill="#012169"/><path d="M0 0l60 40M60 0L0 40" stroke="#fff" stroke-width="6"/><path d="M0 0l60 40M60 0L0 40" stroke="#C8102E" stroke-width="3"/><path d="M30 0v40M0 20h60" stroke="#fff" stroke-width="10"/><path d="M30 0v40M0 20h60" stroke="#C8102E" stroke-width="6"/></svg>
+      </span>
+    </div>
+  </footer>
+
+</body>
+</html>

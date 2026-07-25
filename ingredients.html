@@ -1,0 +1,437 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Primal Win — Ingredients</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --forest:#234B36;--charcoal:#1F2326;--stone:#F7F5F1;--page:#EFE5DD;
+    --gold:#C89A3D;--slate:#737A80;--moss:#5B7154;--white:#FFFFFF;--ink-900:#14171A;--ink-800:#1B1F22;--success:#3D8B5A;
+    --font-head:'Montserrat',system-ui,sans-serif;--font-body:'Inter',system-ui,sans-serif;
+    --maxw:1180px;--gutter:48px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{font-family:var(--font-body);color:var(--charcoal);background:var(--page);-webkit-font-smoothing:antialiased;}
+  img{max-width:100%;display:block;}
+  a{text-decoration:none;color:inherit;}
+  .container{max-width:var(--maxw);margin:0 auto;padding:0 var(--gutter);}
+  .btn-gold{display:inline-flex;align-items:center;gap:14px;font-family:var(--font-head);font-weight:800;font-size:15px;letter-spacing:0.6px;text-transform:uppercase;color:var(--ink-900);background:var(--gold);border:0;border-radius:10px;padding:16px 26px;cursor:pointer;}
+
+  /* NAV (shared) */
+  .nav{background:var(--white);border-bottom:1px solid rgba(31,35,38,0.06);}
+  .nav-in{display:flex;align-items:center;gap:36px;height:82px;}
+  .nav .logo{height:44px;width:auto;mix-blend-mode:multiply;}
+  .nav-links{display:flex;gap:40px;margin-left:26px;}
+  .nav-links a{font-family:var(--font-head);font-weight:700;font-size:14px;letter-spacing:1px;text-transform:uppercase;color:var(--charcoal);}
+  .nav-links a.active{color:var(--gold);border-bottom:2px solid var(--gold);padding-bottom:4px;}
+  .nav-cta{margin-left:auto;display:flex;align-items:center;gap:24px;}
+  .nav-cta .btn-gold{padding:13px 22px;}
+  .nav-icons{display:flex;align-items:center;gap:18px;color:var(--charcoal);}
+  .cart{position:relative;}
+  .cart .badge{position:absolute;top:-8px;right:-9px;background:var(--gold);color:var(--ink-900);font-family:var(--font-head);font-weight:800;font-size:10px;width:16px;height:16px;border-radius:50%;display:flex;align-items:center;justify-content:center;}
+  .nav-burger{display:none;background:none;border:0;color:var(--charcoal);cursor:pointer;}
+
+  /* HERO */
+  .hero{position:relative;overflow:hidden;}
+  .hero-in{position:relative;min-height:560px;padding:52px 0 40px;}
+  .hero-copy{position:relative;z-index:2;max-width:600px;}
+  .hero-head{font-family:var(--font-head);font-weight:900;font-size:62px;line-height:0.96;letter-spacing:-1px;text-transform:uppercase;color:var(--charcoal);margin:0 0 14px;}
+  .hero-head .dot{color:var(--gold);}
+  .hero-lead{font-size:19px;color:var(--charcoal);margin:0 0 26px;}
+  .purpose{border:1px solid rgba(31,35,38,0.16);border-radius:14px;padding:24px 26px;display:flex;gap:20px;max-width:470px;margin-bottom:26px;}
+  .purpose .leaf{flex:0 0 auto;width:52px;height:52px;border:1.5px solid var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--gold);}
+  .purpose h3{font-family:var(--font-head);font-weight:800;font-size:18px;text-transform:uppercase;line-height:1.1;margin:2px 0 12px;}
+  .purpose ul{list-style:none;margin:0;padding:0;display:grid;gap:9px;}
+  .purpose li{display:flex;gap:10px;align-items:flex-start;font-size:13.5px;color:var(--charcoal);}
+  .purpose li .tk{flex:0 0 auto;color:var(--gold);margin-top:1px;}
+  .hero-trust{display:flex;gap:0;}
+  .hero-trust .ht{padding:0 22px;text-align:center;}
+  .hero-trust .ht + .ht{border-left:1px solid rgba(31,35,38,0.14);}
+  .hero-trust .ht:first-child{padding-left:0;}
+  .hero-trust .ic{color:var(--gold);margin-bottom:8px;}
+  .hero-trust h5{font-family:var(--font-head);font-weight:700;font-size:11px;letter-spacing:0.4px;text-transform:uppercase;margin:0;line-height:1.25;}
+  .hero-shot{position:absolute;z-index:1;right:-20px;top:44px;height:420px;width:auto;}
+
+  /* EXPLORE + FILTER */
+  .explore-head{text-align:center;padding:20px 0 24px;}
+  .explore-head h2{font-family:var(--font-head);font-weight:800;font-size:30px;text-transform:uppercase;margin:0 0 8px;}
+  .explore-head p{font-size:15px;color:var(--slate);margin:0;}
+  .filters{display:flex;gap:0;background:var(--white);border-radius:12px;overflow:hidden;box-shadow:0 12px 30px -22px rgba(0,0,0,.25);}
+  .filter{flex:1;background:none;border:0;cursor:pointer;padding:16px 10px;display:flex;flex-direction:column;align-items:center;gap:8px;font-family:var(--font-head);font-weight:700;font-size:11px;letter-spacing:0.4px;text-transform:uppercase;color:var(--charcoal);line-height:1.2;text-align:center;}
+  .filter + .filter{border-left:1px solid rgba(31,35,38,0.08);}
+  .filter .ic{color:var(--gold);}
+  .filter.active{background:var(--ink-900);color:var(--white);border-radius:12px;}
+  .filter.active .ic{color:var(--gold);}
+
+  /* EXPLORER */
+  .explorer{padding:22px 0 56px;}
+  .exp-grid{display:grid;grid-template-columns:300px 1fr;gap:22px;align-items:start;}
+  .side{display:grid;gap:10px;max-height:640px;overflow:auto;padding-right:4px;}
+  .side-item{display:flex;align-items:center;gap:14px;background:var(--white);border:1.5px solid transparent;border-radius:12px;padding:14px 16px;cursor:pointer;text-align:left;width:100%;font-family:inherit;}
+  .side-item.active{border-color:var(--gold);box-shadow:0 8px 22px -14px rgba(200,154,61,.6);}
+  .side-item .abbr{flex:0 0 auto;width:42px;height:42px;border-radius:50%;background:var(--ink-900);color:var(--gold);display:flex;align-items:center;justify-content:center;font-family:var(--font-head);font-weight:800;font-size:14px;}
+  .side-item.active .abbr{background:var(--gold);color:var(--ink-900);}
+  .side-item .meta{flex:1;}
+  .side-item .meta b{display:block;font-family:var(--font-head);font-weight:800;font-size:14px;text-transform:uppercase;}
+  .side-item .meta span{font-size:12px;color:var(--slate);}
+  .side-item .chev{color:var(--slate);}
+
+  .detail{background:var(--white);border-radius:16px;padding:28px 30px;min-height:520px;box-shadow:0 20px 50px -34px rgba(0,0,0,.3);}
+  .d-head{display:flex;align-items:center;gap:16px;margin-bottom:18px;}
+  .d-head .abbr{width:48px;height:48px;border-radius:50%;background:var(--ink-900);color:var(--gold);display:flex;align-items:center;justify-content:center;font-family:var(--font-head);font-weight:800;font-size:16px;}
+  .d-head h3{font-family:var(--font-head);font-weight:800;font-size:26px;text-transform:uppercase;margin:0;line-height:1;}
+  .d-head span{font-size:13px;color:var(--slate);}
+  .d-pill{margin-left:auto;font-family:var(--font-head);font-weight:700;font-size:11px;letter-spacing:0.5px;text-transform:uppercase;color:var(--success);background:rgba(61,139,90,.12);border-radius:20px;padding:7px 14px;}
+  .d-cols{display:grid;grid-template-columns:0.9fr 1fr 1fr 1fr;gap:22px;margin-bottom:22px;}
+  .d-img{aspect-ratio:3/4;border-radius:12px;background:linear-gradient(160deg,#33392f,#12160f);}
+  .d-col h4{font-family:var(--font-head);font-weight:700;font-size:11px;letter-spacing:0.5px;text-transform:uppercase;color:var(--charcoal);margin:0 0 10px;}
+  .d-col p{font-size:13px;line-height:1.55;color:var(--slate);margin:0;}
+  .d-col ul{list-style:none;margin:0;padding:0;display:grid;gap:8px;}
+  .d-col li{display:flex;gap:8px;font-size:13px;color:var(--charcoal);}
+  .d-col li .tk{flex:0 0 auto;color:var(--gold);margin-top:1px;}
+  .d-foot{display:flex;align-items:center;gap:24px;border-top:1px solid rgba(31,35,38,.1);padding-top:18px;flex-wrap:wrap;}
+  .d-foot .sup{font-family:var(--font-head);font-weight:700;font-size:10px;letter-spacing:0.6px;text-transform:uppercase;color:var(--slate);}
+  .d-foot .cert{display:flex;align-items:center;gap:8px;color:var(--charcoal);font-size:12px;font-weight:600;}
+  .d-foot .cert .m{font-family:var(--font-head);font-weight:800;}
+  .d-ref{margin-left:auto;color:var(--gold);font-family:var(--font-head);font-weight:700;font-size:12px;letter-spacing:0.5px;text-transform:uppercase;display:inline-flex;align-items:center;gap:8px;}
+  .side-empty{background:var(--white);border-radius:12px;padding:26px;text-align:center;color:var(--slate);font-size:14px;grid-column:1/-1;}
+
+  /* CLEAN BY DESIGN */
+  .clean{padding:44px 0;}
+  .clean-card{background:var(--white);border-radius:16px;padding:30px;display:grid;grid-template-columns:auto 1fr auto 1fr;gap:26px;align-items:center;box-shadow:0 16px 40px -30px rgba(0,0,0,.3);}
+  .clean h4{writing-mode:horizontal-tb;font-family:var(--font-head);font-weight:700;font-size:12px;letter-spacing:1px;text-transform:uppercase;color:var(--slate);margin:0;}
+  .clean-title{grid-column:1/-1;text-align:center;font-family:var(--font-head);font-weight:800;font-size:22px;text-transform:uppercase;margin:0 0 6px;}
+  .clean-row{display:flex;gap:8px;justify-content:space-around;flex-wrap:wrap;}
+  .cd{display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center;width:74px;}
+  .cd .ic{color:var(--gold);}
+  .cd span{font-size:11px;line-height:1.25;color:var(--charcoal);}
+  .clean-div{width:1px;align-self:stretch;background:rgba(31,35,38,.12);}
+
+  /* BOTTOM CTA */
+  .cta{background:linear-gradient(100deg,#0f1316 0%,#20262a 100%);color:var(--white);}
+  .cta-in{display:grid;grid-template-columns:1fr 1fr 1fr;gap:30px;align-items:center;padding:40px 0;}
+  .cta-l h3{font-family:var(--font-head);font-weight:900;font-size:34px;text-transform:uppercase;margin:0;line-height:0.95;}
+  .cta-l h3 .gold{color:var(--gold);}
+  .cta-mid{font-size:14px;line-height:1.6;}
+  .cta-r{display:flex;flex-direction:column;align-items:flex-start;gap:16px;}
+  .cta-ship{display:flex;align-items:center;gap:12px;color:#C7CBce;font-size:13px;}
+  .cta-ship b{font-family:var(--font-head);font-weight:800;font-size:13px;letter-spacing:0.5px;text-transform:uppercase;color:var(--white);display:block;}
+  .trust-bar{border-top:1px solid rgba(255,255,255,0.10);}
+  .trust-bar-in{display:flex;justify-content:space-between;gap:16px;padding:20px 0;flex-wrap:wrap;}
+  .tb-item{display:flex;align-items:center;gap:10px;color:var(--white);font-family:var(--font-head);font-weight:700;font-size:12px;letter-spacing:0.6px;text-transform:uppercase;}
+  .tb-item .ic{color:var(--gold);}
+
+  /* FOOTER (shared) */
+  .footer{background:var(--ink-900);color:#C7CBce;padding:56px 0 24px;}
+  .foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr 1.4fr;gap:30px;}
+  .foot-logo{display:flex;align-items:center;gap:12px;margin-bottom:16px;}
+  .foot-logo .mono{width:38px;height:38px;flex:0 0 auto;}
+  .foot-logo .wm{font-family:var(--font-head);font-weight:800;font-size:22px;letter-spacing:3px;color:var(--white);text-transform:uppercase;}
+  .foot-brand p{font-size:14px;line-height:1.6;margin:0 0 18px;}
+  .socials{display:flex;gap:16px;color:var(--white);}
+  .foot-col h5{font-family:var(--font-head);font-weight:700;font-size:13px;letter-spacing:1px;text-transform:uppercase;color:var(--white);margin:2px 0 16px;}
+  .foot-col a{display:block;font-size:14px;margin-bottom:11px;color:#C7CBce;}
+  .foot-join h5{font-family:var(--font-head);font-weight:700;font-size:13px;letter-spacing:1px;text-transform:uppercase;color:var(--white);margin:2px 0 12px;}
+  .foot-join p{font-size:14px;line-height:1.55;margin:0 0 14px;}
+  .foot-field{display:flex;background:var(--white);border-radius:8px;overflow:hidden;}
+  .foot-field input{flex:1;border:0;padding:13px 16px;font-family:var(--font-body);font-size:14px;color:var(--charcoal);}
+  .foot-field button{border:0;background:var(--gold);color:var(--ink-900);padding:0 16px;cursor:pointer;display:flex;align-items:center;}
+  .foot-bottom{display:flex;align-items:center;justify-content:space-between;border-top:1px solid rgba(255,255,255,0.10);margin-top:40px;padding-top:20px;font-size:13px;color:var(--slate);}
+  .foot-bottom .uk{display:flex;align-items:center;gap:8px;}
+
+  /* RESPONSIVE */
+  @media (max-width:1180px){
+    :root{--gutter:34px;}
+    .hero-head{font-size:5.2vw;}
+    .hero-copy{max-width:56%;}
+  }
+  @media (max-width:960px){
+    .nav-links,.nav-cta .btn-gold{display:none;}
+    .nav-burger{display:block;margin-left:auto;}
+    .nav-cta{margin-left:0;}
+    .hero-head{font-size:42px;}
+    .hero-copy{max-width:100%;}
+    .hero-shot{position:static;height:auto;max-width:360px;margin:24px auto 0;}
+    .filters{overflow-x:auto;border-radius:12px;}
+    .filter{flex:0 0 auto;min-width:120px;}
+    .exp-grid{grid-template-columns:1fr;}
+    .side{max-height:none;grid-auto-flow:row;}
+    .d-cols{grid-template-columns:1fr 1fr;}
+    .d-img{grid-column:1/-1;aspect-ratio:16/9;}
+    .clean-card{grid-template-columns:1fr;gap:18px;}
+    .clean-div{display:none;}
+    .cta-in{grid-template-columns:1fr;gap:22px;}
+    .trust-bar-in{gap:14px 26px;}
+    .foot-grid{grid-template-columns:1fr 1fr;}
+  }
+  @media (max-width:560px){
+    :root{--gutter:20px;}
+    .hero-head{font-size:34px;}
+    .hero-trust{flex-wrap:wrap;gap:16px 0;}
+    .hero-trust .ht{flex:0 0 50%;border-left:0;padding:0 10px;}
+    .explore-head h2{font-size:23px;}
+    .d-cols{grid-template-columns:1fr;}
+    .d-head{flex-wrap:wrap;}
+    .d-pill{margin-left:0;}
+    .cta-l h3{font-size:28px;}
+    .foot-grid{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <div class="container nav-in">
+      <a href="index.html"><img class="logo" src="assets/Logo.png" alt="Primal Win — home"></a>
+      <div class="nav-links">
+        <a href="science.html">The Science</a>
+        <a class="active" href="ingredients.html">Ingredients</a>
+        <a href="#">Partner With Us</a>
+      </div>
+      <div class="nav-cta">
+        <a class="btn-gold" href="get-primal-win.html">Get Primal Win</a>
+        <div class="nav-icons">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="8" r="4"/><path d="M5 21c0-4 3.5-6 7-6s7 2 7 6"/></svg>
+          <span class="cart"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 6h15l-1.5 9h-12L6 6Z"/><path d="M6 6l-.7-3H2"/><circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/></svg><span class="badge">0</span></span>
+        </div>
+      </div>
+      <button class="nav-burger" aria-label="Menu"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container hero-in">
+      <div class="hero-copy">
+        <h1 class="hero-head">Purpose In<br>Every Ingredient<span class="dot">.</span></h1>
+        <p class="hero-lead">The right ingredients. The right forms. The right doses.</p>
+        <div class="purpose">
+          <span class="leaf"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M5 19c0-8 6-13 14-13 0 8-6 13-14 13Z" stroke-linejoin="round"/><path d="M6 18C9 13 13 10 18 8" stroke-linecap="round"/></svg></span>
+          <div>
+            <h3>Every Ingredient<br>Has A Purpose</h3>
+            <ul>
+              <li><span class="tk"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l4 4L19 7"/></svg></span>Carefully selected for a reason</li>
+              <li><span class="tk"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l4 4L19 7"/></svg></span>No fillers. No shortcuts.</li>
+              <li><span class="tk"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l4 4L19 7"/></svg></span>Effective forms at meaningful doses.</li>
+              <li><span class="tk"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l4 4L19 7"/></svg></span>Designed to help you live, think and perform at your best.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="hero-trust">
+          <div class="ht"><div class="ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M5 19c0-8 6-13 14-13 0 8-6 13-14 13Z" stroke-linejoin="round"/><path d="M6 18C9 13 13 10 18 8" stroke-linecap="round"/></svg></div><h5>Clean<br>Ingredients</h5></div>
+          <div class="ht"><div class="ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="10" cy="10" r="5"/><path d="M14 14l6 6" stroke-linecap="round"/></svg></div><h5>Clinically<br>Studied</h5></div>
+          <div class="ht"><div class="ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 3l7 3v6c0 5-3 8-7 10-4-2-7-5-7-10V6l7-3Z" stroke-linejoin="round"/><path d="M12 9v6M9 12h6" stroke-linecap="round"/></svg></div><h5>Transparent<br>Formulation</h5></div>
+          <div class="ht"><div class="ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6" stroke-linecap="round" stroke-linejoin="round"/></svg></div><h5>Third Party<br>Tested</h5></div>
+        </div>
+      </div>
+    </div>
+    <img class="hero-shot" src="assets/mockup.png" alt="Primal Win pouch">
+  </section>
+
+  <!-- EXPLORE -->
+  <div class="explore-head container">
+    <h2>Explore What Powers Primal Win</h2>
+    <p>Discover the ingredients that support how you live, think and perform.</p>
+  </div>
+  <div class="container">
+    <div class="filters" id="filters"></div>
+  </div>
+
+  <!-- EXPLORER -->
+  <section class="explorer">
+    <div class="container exp-grid">
+      <div class="side" id="side"></div>
+      <div class="detail" id="detail"></div>
+    </div>
+  </section>
+
+  <!-- CLEAN BY DESIGN -->
+  <section class="clean">
+    <div class="container">
+      <div class="clean-card">
+        <p class="clean-title">Clean By Design</p>
+        <h4>Free From</h4>
+        <div class="clean-row" id="freefrom"></div>
+        <div class="clean-div"></div>
+        <div style="display:flex;flex-direction:column;gap:18px">
+          <h4>Suitable For</h4>
+          <div class="clean-row" id="suitable"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BOTTOM CTA -->
+  <section class="cta">
+    <div class="container cta-in">
+      <div class="cta-l"><h3>One Scoop.<br><span class="gold">Every Day.</span></h3></div>
+      <div class="cta-mid"><p>One simple daily habit designed to help you feel stronger, think sharper and perform at your best.</p></div>
+      <div class="cta-r">
+        <a class="btn-gold" href="get-primal-win.html">Get Primal Win <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        <div class="cta-ship"><span><svg width="30" height="30" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 12h18v14H3zM21 17h9l4 5v4h-13z"/><circle cx="11" cy="30" r="2.4"/><circle cx="28" cy="30" r="2.4"/></svg></span><span><b>Free Shipping</b>On all orders over £50</span></div>
+      </div>
+    </div>
+    <div class="trust-bar">
+      <div class="container trust-bar-in">
+        <span class="tb-item"><span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3l7 3v6c0 5-3 8-7 10-4-2-7-5-7-10V6l7-3Z"/><path d="M9 12l2 2 4-4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Third-Party Tested</span>
+        <span class="tb-item"><span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M8 12h8M12 8v8" stroke-linecap="round"/></svg></span>GMP Certified Facility</span>
+        <span class="tb-item"><span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3l2.5 5 5.5.8-4 3.9 1 5.5L12 21l-5-2.3 1-5.5-4-3.9 5.5-.8L12 3Z" stroke-linejoin="round"/></svg></span>Premium Ingredients</span>
+        <span class="tb-item"><span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 3v18M3 12h18M6 6l12 12M18 6L6 18" stroke-width="1"/></svg></span>Made In The UK</span>
+        <span class="tb-item"><span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>30-Day Money Back Guarantee</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container foot-grid">
+      <div class="foot-brand">
+        <div class="foot-logo">
+          <svg class="mono" viewBox="0 0 60 60" fill="none"><g fill="#C89A3D"><path d="M6 40h7l-3.5 8H2.5L6 40Z"/><path d="M14 30h7l-9 18H5l9-18Z"/><path d="M22 12h13c7 0 12 5 12 12s-5 12-12 12h-6v12h-7V12Zm7 6v12h6c3.3 0 6-2.7 6-6s-2.7-6-6-6h-6Z"/></g></svg>
+          <span class="wm">Primal Win</span>
+        </div>
+        <p>For those who want to win.<br>Clean ingredients.<br>Real results.</p>
+        <div class="socials">
+          <a href="#" aria-label="Instagram"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
+          <a href="#" aria-label="Facebook"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M14 9h3V5h-3c-2.2 0-4 1.8-4 4v2H7v4h3v6h4v-6h3l1-4h-4V9c0-.6.4-1 1-1z"/></svg></a>
+          <a href="#" aria-label="YouTube"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M23 12s0-3.2-.4-4.7c-.2-.9-.9-1.5-1.7-1.7C19.4 5.2 12 5.2 12 5.2s-7.4 0-8.9.4c-.8.2-1.5.8-1.7 1.7C1 8.8 1 12 1 12s0 3.2.4 4.7c.2.9.9 1.5 1.7 1.7 1.5.4 8.9.4 8.9.4s7.4 0 8.9-.4c.8-.2 1.5-.8 1.7-1.7C23 15.2 23 12 23 12zM9.8 15.3V8.7l5.7 3.3-5.7 3.3z"/></svg></a>
+          <a href="#" aria-label="TikTok"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M16 3c.3 2.2 1.6 3.7 3.8 4v3c-1.4 0-2.7-.4-3.8-1.1V15a6 6 0 1 1-6-6c.3 0 .7 0 1 .1v3.1a3 3 0 1 0 2 2.8V3h3z"/></svg></a>
+        </div>
+      </div>
+      <div class="foot-col"><h5>Learn</h5><a href="science.html">The Science</a><a href="ingredients.html">Ingredients</a><a href="#">Blog</a><a href="#">FAQs</a></div>
+      <div class="foot-col"><h5>About</h5><a href="#">Our Story</a><a href="#">Primal Collective</a><a href="#">Sustainability</a><a href="#">Contact</a></div>
+      <div class="foot-col"><h5>Customer Care</h5><a href="#">Shipping</a><a href="returns.html">Returns</a><a href="#">Terms &amp; Conditions</a><a href="#">Privacy Policy</a></div>
+      <div class="foot-join">
+        <h5>Join The Primal Community</h5>
+        <p>Be the first to know about new drops, offers and performance tips.</p>
+        <form class="foot-field" onsubmit="return false;"><input type="email" placeholder="Enter your email" aria-label="Email"><button type="submit"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></form>
+      </div>
+    </div>
+    <div class="container foot-bottom">
+      <span>© 2024 Primal Win. All rights reserved.</span>
+      <span class="uk">Made in the UK <svg width="22" height="14" viewBox="0 0 60 40"><rect width="60" height="40" fill="#012169"/><path d="M0 0l60 40M60 0L0 40" stroke="#fff" stroke-width="6"/><path d="M0 0l60 40M60 0L0 40" stroke="#C8102E" stroke-width="3"/><path d="M30 0v40M0 20h60" stroke="#fff" stroke-width="10"/><path d="M30 0v40M0 20h60" stroke="#C8102E" stroke-width="6"/></svg></span>
+    </div>
+  </footer>
+
+<script>
+  const CATS=[
+    {k:'all',label:'All Benefits'},{k:'gut',label:'Gut Health'},{k:'brain',label:'Brain Function'},
+    {k:'energy',label:'Energy & Vitality'},{k:'immune',label:'Immune Support'},{k:'performance',label:'Performance & Recovery'},
+    {k:'skin',label:'Healthy Skin, Hair & Nails'},{k:'overall',label:'Overall Wellbeing'}
+  ];
+  const ING=[
+    {abbr:'Mg',name:'Magnesium',type:'Essential Mineral',tag:'Energy & Vitality',cats:['energy','immune','performance','overall'],
+      what:'Supports over 300 biochemical reactions in the body.',
+      how:['Immune System','Bone Health','Muscle Function','Mood & Wellbeing'],
+      why:'Essential for energy production, muscle function and overall wellbeing.'},
+    {abbr:'D3',name:'Vitamin D3',type:'Essential Vitamin',tag:'Immune Support',cats:['immune','performance','overall'],
+      what:'Supports immune function and helps maintain healthy bones and muscles.',
+      how:'Helps regulate calcium absorption and supports immune cell activity.',
+      why:['Immune System','Bone Health','Muscle Function','Mood & Wellbeing']},
+    {abbr:'K2',name:'Vitamin K2',type:'Essential Vitamin',tag:'Bone & Heart Health',cats:['performance','overall'],
+      what:'Supports normal blood clotting and helps direct calcium to the bones and away from arteries.',
+      how:'Activates proteins that bind calcium in bones and prevents it from building up in soft tissue.',
+      why:['Bone Health','Heart Health','Calcium Utilisation','Arterial Health']},
+    {abbr:'Zn',name:'Zinc',type:'Essential Mineral',tag:'Immune Support',cats:['immune','skin','overall'],
+      what:'Supports immune function and helps protect cells from oxidative stress.',
+      how:'Involved in over 300 enzyme reactions and supports protein synthesis.',
+      why:['Immune System','Skin Health','Wound Healing','Hormone Balance','Antioxidant Protection']},
+    {abbr:'Se',name:'Selenium',type:'Essential Mineral',tag:'Immune Support',cats:['immune','overall'],
+      what:'Supports antioxidant defence and immune function.',
+      how:'Activates antioxidant enzymes that protect cells from oxidative damage.',
+      why:['Immune System','Thyroid Health','Cell Protection','Antioxidant Support']},
+    {abbr:'C',name:'Vitamin C',type:'Essential Vitamin',tag:'Immune Support',cats:['immune','skin','overall'],
+      what:'Supports immune function and helps protect cells from oxidative stress.',
+      how:'Powerful antioxidant that neutralises free radicals and supports collagen formation.',
+      why:['Immune System','Collagen Formation','Skin Health','Iron Absorption','Antioxidant Protection']},
+    {abbr:'B12',name:'Vitamin B12',type:'Essential Vitamin',tag:'Energy & Brain Function',cats:['brain','energy'],
+      what:'Supports energy production and normal function of the nervous system.',
+      how:'Helps red blood cell formation and supports nerve health.',
+      why:['Energy Production','Nervous System Function','Reduces Tiredness & Fatigue','Cognitive Function']},
+    {abbr:'Fo',name:'Folate (5-MTHF)',type:'Essential B Vitamin',tag:'Energy & Brain Function',cats:['brain','energy'],
+      what:'Supports healthy cell division and red blood cell formation.',
+      how:'Helps convert food into DNA and supports methylation processes.',
+      why:['Cell Division','Red Blood Cell Production','Brain Function','Nervous System']},
+    {abbr:'Ash',name:'Ashwagandha',type:'Adaptogenic Herb',tag:'Stress & Recovery',cats:['brain','performance','overall'],
+      what:'Helps the body adapt to stress and supports overall wellbeing.',
+      how:'Modulates cortisol and supports neurotransmitter balance.',
+      why:['Stress Management','Mental Wellbeing','Mood Balance','Recovery','Sleep Quality']},
+    {abbr:'LM',name:"Lion's Mane",type:'Functional Mushroom',tag:'Brain Function',cats:['brain'],
+      what:'Supports cognitive function and memory.',
+      how:'Stimulates nerve growth factor for brain cell health and repair.',
+      why:['Cognitive Function','Long-term Brain Health','Nerve Regeneration','Focus & Clarity']}
+  ];
+
+  const tick='<span class="tk"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l4 4L19 7"/></svg></span>';
+  let activeCat='all', activeIdx=0;
+
+  const filtersEl=document.getElementById('filters');
+  const sideEl=document.getElementById('side');
+  const detailEl=document.getElementById('detail');
+
+  function catIcon(){return '<span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="8"/></svg></span>';}
+
+  function renderFilters(){
+    filtersEl.innerHTML=CATS.map(c=>`<button class="filter ${c.k===activeCat?'active':''}" data-k="${c.k}">${catIcon()}${c.label}</button>`).join('');
+    filtersEl.querySelectorAll('.filter').forEach(b=>b.addEventListener('click',()=>{activeCat=b.dataset.k;activeIdx=0;renderFilters();renderSide();}));
+  }
+
+  function visible(){return ING.map((x,i)=>({x,i})).filter(o=>activeCat==='all'||o.x.cats.includes(activeCat));}
+
+  function renderSide(){
+    const vis=visible();
+    if(!vis.length){sideEl.innerHTML='<div class="side-empty">More ingredients in this category are coming soon.</div>';detailEl.style.display='none';return;}
+    detailEl.style.display='';
+    if(!vis.some(o=>o.i===activeIdx))activeIdx=vis[0].i;
+    sideEl.innerHTML=vis.map(o=>`<button class="side-item ${o.i===activeIdx?'active':''}" data-i="${o.i}">
+      <span class="abbr">${o.x.abbr}</span><span class="meta"><b>${o.x.name}</b><span>${o.x.type}</span></span>
+      <span class="chev"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg></span></button>`).join('');
+    sideEl.querySelectorAll('.side-item').forEach(b=>b.addEventListener('click',()=>{activeIdx=+b.dataset.i;renderSide();renderDetail();}));
+    renderDetail();
+  }
+
+  function col(title,val){
+    const body = Array.isArray(val)
+      ? `<ul>${val.map(v=>`<li>${tick}${v}</li>`).join('')}</ul>`
+      : `<p>${val}</p>`;
+    return `<div class="d-col"><h4>${title}</h4>${body}</div>`;
+  }
+  function renderDetail(){
+    const x=ING[activeIdx];
+    detailEl.innerHTML=`
+      <div class="d-head">
+        <span class="abbr">${x.abbr}</span>
+        <div><h3>${x.name}</h3><span>${x.type}</span></div>
+        <span class="d-pill">${x.tag}</span>
+      </div>
+      <div class="d-cols">
+        <div class="d-img"></div>
+        ${col('What It Does',x.what)}
+        ${col('How It Works',x.how)}
+        ${col('Why We Included It',x.why)}
+      </div>
+      <div class="d-foot">
+        <span class="sup">Scientifically Supported By</span>
+        <span class="cert"><span class="m">NIH</span> National Institutes of Health</span>
+        <span class="cert"><span class="m">EFSA</span> European Food Safety Authority</span>
+        <a class="d-ref" href="#">View References <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </div>`;
+  }
+
+  // Clean by design
+  const FREE=['Artificial Sweeteners','Artificial Flavours','Artificial Colours','Preservatives','Gluten','Dairy','GMOs'];
+  const SUIT=['Vegan','Vegetarian','Keto Friendly','Paleo Friendly','Low Carb'];
+  const cdIcon='<span class="ic"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M7 4h10l-1 3H8L7 4Z"/><path d="M8 7c-1 3-2 7-2 10a4 4 0 0 0 4 4h4a4 4 0 0 0 4-4c0-3-1-7-2-10" stroke-linejoin="round"/></svg></span>';
+  document.getElementById('freefrom').innerHTML=FREE.map(f=>`<div class="cd">${cdIcon}<span>${f}</span></div>`).join('');
+  document.getElementById('suitable').innerHTML=SUIT.map(f=>`<div class="cd">${cdIcon}<span>${f}</span></div>`).join('');
+
+  renderFilters();renderSide();
+</script>
+</body>
+</html>

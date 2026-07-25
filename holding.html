@@ -1,0 +1,501 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Primal Win — Launching Soon</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  /* ============================================================
+     PRIMAL WIN — Design tokens (map 1:1 to Figma styles later)
+     ============================================================ */
+  :root{
+    /* Colour */
+    --forest:#234B36;
+    --charcoal:#1F2326;
+    --stone:#F7F5F1;
+    --page:#EFE5DD;         /* warm cream sampled from product mockup — light bg */
+    --gold:#C89A3D;
+    --slate:#737A80;
+    --moss:#5B7154;
+    --white:#FFFFFF;
+    --ink-900:#14171A;      /* near-black card base */
+    --ink-800:#1B1F22;
+
+    /* Type */
+    --font-head:'Montserrat', system-ui, sans-serif;
+    --font-body:'Inter', system-ui, sans-serif;
+
+    /* Layout */
+    --maxw:1180px;
+    --gutter:48px;
+  }
+
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    font-family:var(--font-body);
+    color:var(--charcoal);
+    background:var(--page);
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+  }
+  .container{max-width:var(--maxw);margin:0 auto;padding:0 var(--gutter);}
+
+  /* ---------- Header ---------- */
+  .site-header{padding:34px 0 10px;}
+  .logo{
+    display:block;height:54px;width:auto;
+    /* Logo.png ships on a solid white bg; multiply drops the white on the cream page */
+    mix-blend-mode:multiply;
+  }
+
+  /* ---------- Hero ---------- */
+  .topwrap{position:relative;}
+  .hero{padding:32px 0 0;}
+  .hero-grid{position:static;}
+  .hero-copy{position:relative;z-index:2;max-width:640px;padding-top:8px;}
+  /* Product image box spans from the logo top down to the "Launching soon." line */
+  .hero-shot-box{position:absolute;z-index:1;top:34px;right:0;bottom:0;}
+  .hero-head{
+    font-family:var(--font-head);
+    font-weight:800;
+    color:var(--charcoal);
+    line-height:0.92;
+    letter-spacing:-0.5px;
+    margin:0;
+  }
+  .hero-head .l1{font-size:88px;display:block;}
+  .hero-head .built{
+    display:block;
+    font-weight:900;
+    font-size:138px;
+    color:var(--gold);
+    line-height:0.9;
+    margin:6px 0 6px;
+  }
+  .hero-head .l3{font-size:74px;display:block;}
+  .hero-head .l4{font-size:54px;display:block;white-space:nowrap;}
+  .hero-head .dot{color:var(--gold);}
+  .hero-rule{width:64px;height:3px;background:var(--gold);border:0;margin:38px 0 30px;}
+  .hero-sub{font-size:23px;line-height:1.75;color:var(--charcoal);margin:0;}
+  .hero-sub .soon{color:var(--gold);font-weight:600;}
+
+  .hero-shot{display:block;height:100%;width:auto;}   /* fills the box; flush to viewport right */
+
+  /* ---------- Trust row ---------- */
+  .trust{padding:60px 0 34px;}
+  .trust-grid{
+    display:grid;grid-template-columns:repeat(3,1fr);
+  }
+  .trust-item{
+    display:flex;gap:18px;align-items:flex-start;
+    padding:6px 34px;
+  }
+  .trust-item + .trust-item{border-left:1px solid rgba(31,35,38,0.14);}
+  .trust-item .ic{flex:0 0 auto;color:var(--charcoal);}
+  .trust-item .ic svg{width:56px;height:56px;}
+  .trust-item h4{
+    font-family:var(--font-head);font-weight:700;
+    font-size:15px;letter-spacing:0.4px;color:var(--charcoal);
+    margin:2px 0 7px;line-height:1.2;text-transform:uppercase;
+  }
+  .trust-item p{font-size:14px;line-height:1.5;color:var(--charcoal);margin:0;}
+
+  /* ---------- Offer card ---------- */
+  .offer{padding:6px 0 30px;}
+  .offer-card{
+    position:relative;
+    background:radial-gradient(120% 140% at 20% 10%, #24282b 0%, var(--ink-900) 55%);
+    border-radius:22px;
+    padding:44px 52px;
+    display:grid;grid-template-columns:1fr 1px 1.25fr;
+    gap:44px;align-items:center;
+    box-shadow:0 30px 70px -30px rgba(0,0,0,0.5);
+  }
+  .offer-div{background:rgba(200,154,61,0.28);width:1px;height:82%;align-self:center;}
+
+  .eyebrow{
+    font-family:var(--font-head);font-weight:700;
+    font-size:13px;letter-spacing:2.5px;color:var(--gold);
+    text-transform:uppercase;margin:0 0 6px;
+  }
+  .big-off{
+    font-family:var(--font-head);font-weight:900;
+    color:var(--gold);line-height:0.9;
+    display:flex;align-items:flex-start;gap:4px;
+    text-shadow:0 0 34px rgba(200,154,61,0.55);
+    margin:2px 0 14px;
+  }
+  .big-off .num{font-size:118px;letter-spacing:-2px;}
+  .big-off .off{font-size:44px;font-weight:800;margin-top:14px;}
+  .offer-cta-label{
+    font-family:var(--font-head);font-weight:700;
+    font-size:24px;line-height:1.15;color:var(--stone);
+    letter-spacing:0.3px;margin:0 0 22px;
+  }
+  .btn-ghost{
+    display:inline-block;
+    font-family:var(--font-head);font-weight:700;
+    font-size:15px;letter-spacing:1px;color:var(--gold);
+    border:1.5px solid var(--gold);border-radius:8px;
+    padding:15px 30px;text-transform:uppercase;text-decoration:none;
+  }
+
+  .offer-right{text-align:center;}
+  .launch-in{
+    font-family:var(--font-head);font-weight:600;
+    font-size:16px;letter-spacing:3px;color:var(--stone);
+    text-transform:uppercase;margin:0 0 16px;
+  }
+  .countdown{
+    display:flex;justify-content:center;align-items:flex-start;
+    gap:0;margin:0 auto 14px;
+  }
+  .cd-cell{padding:0 20px;min-width:78px;}
+  .cd-cell + .cd-cell{border-left:1px solid rgba(200,154,61,0.35);}
+  .cd-num{
+    font-family:var(--font-head);font-weight:800;
+    font-size:52px;line-height:1;color:var(--gold);
+  }
+  .cd-lab{
+    font-family:var(--font-head);font-weight:600;
+    font-size:11px;letter-spacing:1.5px;color:var(--stone);
+    text-transform:uppercase;margin-top:8px;
+  }
+  .launch-date{
+    display:flex;align-items:center;justify-content:center;gap:16px;
+    margin:6px 0 20px;
+  }
+  .launch-date span{
+    font-family:var(--font-head);font-weight:700;
+    font-size:17px;letter-spacing:2px;color:var(--gold);white-space:nowrap;
+  }
+  .launch-date::before,.launch-date::after{
+    content:"";height:1px;flex:1;max-width:70px;background:rgba(200,154,61,0.4);
+  }
+  .field{
+    width:100%;border:0;border-radius:10px;
+    background:var(--stone);color:var(--charcoal);
+    font-family:var(--font-body);font-size:16px;
+    padding:17px 20px;margin-bottom:14px;
+  }
+  .field::placeholder{color:var(--slate);}
+  .btn-gold{
+    width:100%;border:0;cursor:pointer;
+    background:var(--gold);color:var(--ink-900);
+    font-family:var(--font-head);font-weight:800;
+    font-size:16px;letter-spacing:0.8px;text-transform:uppercase;
+    border-radius:10px;padding:0;
+    display:flex;align-items:center;justify-content:center;position:relative;
+    height:56px;
+  }
+  .btn-gold .arw{
+    position:absolute;right:8px;top:8px;bottom:8px;width:44px;
+    border-left:1.5px solid rgba(31,35,38,0.35);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .assurance{
+    display:flex;gap:10px;align-items:flex-start;justify-content:center;
+    margin-top:18px;
+  }
+  .assurance .lk{flex:0 0 auto;color:var(--slate);margin-top:2px;}
+  .assurance p{font-size:13px;line-height:1.55;color:var(--slate);margin:0;text-align:left;max-width:360px;}
+
+  /* ---------- Scientists band (full bleed) ---------- */
+  .scientists{background:var(--ink-900);padding:40px 0 34px;}
+  .sci-head{
+    font-family:var(--font-head);font-weight:900;
+    font-size:40px;letter-spacing:-0.3px;text-align:center;white-space:nowrap;
+    color:var(--white);margin:0 0 26px;text-transform:uppercase;
+  }
+  .sci-head .b{color:var(--gold);}
+  .sci-rule{height:1px;background:rgba(200,154,61,0.35);border:0;margin:0 0 26px;}
+  .sci-grid{
+    display:grid;grid-template-columns:repeat(4,1fr);margin-bottom:24px;
+  }
+  .sci-item{
+    display:flex;gap:12px;align-items:center;justify-content:center;
+    color:var(--white);
+    font-family:var(--font-head);font-weight:700;
+    font-size:15px;letter-spacing:1px;text-transform:uppercase;
+  }
+  .sci-item + .sci-item{border-left:1px solid rgba(255,255,255,0.14);}
+  .sci-item .ic{color:var(--gold);flex:0 0 auto;}
+  .sci-tag{
+    text-align:center;
+    font-family:var(--font-head);font-weight:700;
+    font-size:17px;letter-spacing:2px;color:var(--gold);
+    text-transform:uppercase;margin:0;
+  }
+
+  /* ---------- Legal strip ---------- */
+  .legal{background:var(--page);padding:20px 0 26px;}
+  .legal .container{
+    display:flex;align-items:center;justify-content:center;gap:18px;
+    font-family:var(--font-head);font-weight:700;
+    font-size:14px;letter-spacing:2px;text-transform:uppercase;color:var(--charcoal);
+  }
+  .legal .sep{color:var(--gold);}
+  .legal .muted{color:var(--slate);font-weight:600;}
+
+  /* ============================================================
+     RESPONSIVE — desktop layout above; overrides below
+     ============================================================ */
+
+  /* Tablet / small desktop: scale hero type, keep copy in the left half */
+  @media (max-width:1180px){
+    :root{--gutter:34px;}
+    .hero-head .l1{font-size:7.2vw;}
+    .hero-head .built{font-size:11.4vw;}
+    .hero-head .l3{font-size:6vw;}
+    .hero-head .l4{font-size:4.4vw;}
+    .hero-copy{max-width:53%;}
+    .sci-head{white-space:normal;font-size:34px;}
+    /* keep the countdown inside the narrower offer column */
+    .cd-num{font-size:44px;}
+    .cd-cell{padding:0 13px;min-width:0;}
+  }
+
+  /* Stack the hero and grids */
+  @media (max-width:960px){
+    .hero{padding:20px 0 0;}
+    .hero-copy{max-width:100%;}
+    .hero-head .l1{font-size:64px;}
+    .hero-head .built{font-size:96px;}
+    .hero-head .l3{font-size:52px;}
+    .hero-head .l4{font-size:38px;white-space:normal;}
+    .hero-sub{font-size:20px;line-height:1.65;}
+    /* product drops below the copy, centred */
+    .hero-shot-box{position:static;top:auto;right:auto;bottom:auto;margin-top:26px;text-align:center;}
+    .hero-shot{height:auto;width:auto;max-width:460px;margin:0 auto;}
+
+    .trust-grid{grid-template-columns:1fr;}
+    .trust-item{padding:22px 4px;}
+    .trust-item + .trust-item{border-left:0;border-top:1px solid rgba(31,35,38,0.14);}
+
+    .offer-card{grid-template-columns:1fr;gap:34px;padding:38px 34px;}
+    .offer-div{display:none;}
+    .offer-right{text-align:center;}
+    .assurance{justify-content:center;}
+
+    .sci-head{white-space:normal;font-size:32px;line-height:1.15;}
+    .sci-grid{grid-template-columns:1fr 1fr;gap:20px 0;}
+    .sci-item{justify-content:flex-start;padding:8px 16px;}
+    .sci-item:nth-child(odd){border-left:0;}
+  }
+
+  /* Phone */
+  @media (max-width:560px){
+    :root{--gutter:20px;}
+    .site-header{padding:24px 0 6px;}
+    .logo{height:44px;}
+    .hero-head .l1{font-size:46px;}
+    .hero-head .built{font-size:66px;}
+    .hero-head .l3{font-size:38px;}
+    .hero-head .l4{font-size:28px;}
+    .hero-rule{margin:26px 0 22px;}
+    .hero-sub{font-size:18px;}
+    .hero-shot{max-width:100%;}
+
+    .big-off .num{font-size:80px;}
+    .big-off .off{font-size:30px;margin-top:8px;}
+    .offer-card{padding:30px 22px;}
+    .eyebrow{letter-spacing:1.8px;}
+    .countdown{gap:0;}
+    .cd-cell{padding:0 7px;min-width:0;}
+    .cd-cell + .cd-cell{border-left:1px solid rgba(200,154,61,0.3);}
+    .cd-num{font-size:32px;}
+    .cd-lab{font-size:9px;letter-spacing:1px;margin-top:6px;}
+    .launch-date span{font-size:15px;letter-spacing:1.5px;}
+    .field{font-size:15px;}
+    .btn-gold{font-size:12.5px;letter-spacing:0.2px;padding:0 46px;}
+
+    .sci-head{font-size:24px;}
+    .sci-grid{grid-template-columns:1fr;gap:0;}
+    .sci-item{border-left:0 !important;justify-content:center;padding:14px 0;}
+    .sci-item + .sci-item{border-top:1px solid rgba(255,255,255,0.12);}
+
+    .legal .container{flex-wrap:wrap;gap:4px 12px;text-align:center;font-size:12px;letter-spacing:1.4px;}
+  }
+</style>
+</head>
+<body>
+
+  <div class="topwrap">
+    <header class="site-header">
+      <div class="container">
+        <img class="logo" src="assets/Logo.png" alt="Primal Win — Daily Performance Formula">
+      </div>
+    </header>
+
+    <!-- HERO -->
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <h1 class="hero-head">
+            <span class="l1">PREMIUM<br>DAILY<br>NUTRITION.</span>
+            <span class="built">BUILT</span>
+            <span class="l3">FOR THOSE</span>
+            <span class="l4">WHO WANT TO WIN<span class="dot">.</span></span>
+          </h1>
+          <hr class="hero-rule">
+          <p class="hero-sub">
+            40 active ingredients.<br>
+            Full label transparency.<br>
+            UK manufactured.<br>
+            <span class="soon">Launching soon.</span>
+          </p>
+        </div>
+      </div>
+    </section>
+    <div class="hero-shot-box">
+      <img class="hero-shot" src="assets/MockupHolding.png" alt="Primal Win pouch with greens powder and gold scoop">
+    </div>
+  </div><!-- /topwrap -->
+
+  <main>
+    <!-- TRUST ROW -->
+    <section class="trust">
+      <div class="container trust-grid">
+        <div class="trust-item">
+          <span class="ic">
+            <svg width="42" height="42" viewBox="0 0 42 42" fill="none" stroke="currentColor" stroke-width="1.4">
+              <circle cx="21" cy="21" r="20"/>
+              <path d="M14 27c0-7 6-13 14-13 0 7-6 13-14 13Z" stroke-linejoin="round"/>
+              <path d="M15 27c3-4 6-6 11-8" stroke-linecap="round"/>
+            </svg>
+          </span>
+          <div><h4>40 Active<br>Ingredients</h4><p>Powerful blends for energy, focus and vitality.</p></div>
+        </div>
+        <div class="trust-item">
+          <span class="ic">
+            <svg width="42" height="42" viewBox="0 0 42 42" fill="none" stroke="currentColor" stroke-width="1.4">
+              <circle cx="21" cy="21" r="20"/>
+              <rect x="11" y="14" width="20" height="14" rx="1"/>
+              <path d="M11 14l20 14M31 14L11 28M21 14v14M11 21h20" stroke-width="1.1"/>
+            </svg>
+          </span>
+          <div><h4>UK<br>Manufactured</h4><p>Made in the UK to the highest standards.</p></div>
+        </div>
+        <div class="trust-item">
+          <span class="ic">
+            <svg width="42" height="42" viewBox="0 0 42 42" fill="none" stroke="currentColor" stroke-width="1.4">
+              <circle cx="21" cy="21" r="20"/>
+              <path d="M21 11l7 3v6c0 5-3 8-7 10-4-2-7-5-7-10v-6l7-3Z" stroke-linejoin="round"/>
+              <path d="M18 21l2.2 2.2L25 19" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </span>
+          <div><h4>Full Label<br>Transparency</h4><p>Honest ingredients. Nothing to hide.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- OFFER + COUNTDOWN -->
+    <section class="offer">
+      <div class="container">
+        <div class="offer-card">
+          <div class="offer-left">
+            <p class="eyebrow">Limited Time Pre-Launch Offer</p>
+            <div class="big-off"><span class="num">30%</span><span class="off">OFF</span></div>
+            <p class="offer-cta-label">Your Exclusive<br>Launch Discount Code</p>
+            <a class="btn-ghost" href="#claim">Be The First To Win.</a>
+          </div>
+
+          <div class="offer-div"></div>
+
+          <div class="offer-right">
+            <p class="launch-in">Launching In</p>
+            <div class="countdown" id="countdown">
+              <div class="cd-cell"><div class="cd-num" data-u="weeks">--</div><div class="cd-lab">Weeks</div></div>
+              <div class="cd-cell"><div class="cd-num" data-u="days">--</div><div class="cd-lab">Days</div></div>
+              <div class="cd-cell"><div class="cd-num" data-u="hours">--</div><div class="cd-lab">Hours</div></div>
+              <div class="cd-cell"><div class="cd-num" data-u="minutes">--</div><div class="cd-lab">Minutes</div></div>
+              <div class="cd-cell"><div class="cd-num" data-u="seconds">--</div><div class="cd-lab">Seconds</div></div>
+            </div>
+            <div class="launch-date"><span id="launch-date-label">30TH AUGUST 2025</span></div>
+
+            <form id="claim" onsubmit="return false;">
+              <input class="field" type="email" placeholder="Enter your email address" aria-label="Email address">
+              <button class="btn-gold" type="submit">
+                Claim My 30% Launch Discount
+                <span class="arw">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                </span>
+              </button>
+            </form>
+
+            <div class="assurance">
+              <span class="lk">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>
+              </span>
+              <p>Register now and we will email you your exclusive 30% discount code the moment Primal Win goes live. No spam. Unsubscribe any time.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- SCIENTISTS BAND -->
+  <section class="scientists">
+    <div class="container">
+      <h2 class="sci-head">Developed By Scientists. <span class="b">Built For Life.</span></h2>
+      <hr class="sci-rule">
+      <div class="sci-grid">
+        <div class="sci-item"><span class="ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M8.5 12l2.5 2.5 4.5-5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Science Backed</div>
+        <div class="sci-item"><span class="ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3l7 3v5c0 5-3 8-7 10-4-2-7-5-7-10V6l7-3Z" stroke-linejoin="round"/><path d="M12 8.5l1 2h2l-1.6 1.4.6 2.1-2-1.2-2 1.2.6-2.1L9 10.5h2l1-2Z" stroke-linejoin="round"/></svg></span>Third-Party Tested</div>
+        <div class="sci-item"><span class="ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M10 3h4M11 3v6l-5 8.5A2 2 0 0 0 7.7 21h8.6a2 2 0 0 0 1.7-3.5L13 9V3" stroke-linejoin="round"/></svg></span>Clean &amp; Transparent</div>
+        <div class="sci-item"><span class="ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 3v18M3 12h18M6 6l12 12M18 6L6 18" stroke-width="1.1"/></svg></span>Made In The UK</div>
+      </div>
+      <p class="sci-tag">No Fillers. No Shortcuts. Just Results.</p>
+    </div>
+  </section>
+
+  <!-- LEGAL -->
+  <footer class="legal">
+    <div class="container">
+      <span>Primal Win Ltd.</span><span class="sep">|</span><span class="muted">For Those Who Want To Win.</span>
+    </div>
+  </footer>
+
+<script>
+  /* ============================================================
+     COUNTDOWN — set the real launch date here.
+     Placeholder date below (30 Aug 2025 in the mockup has passed).
+     Change LAUNCH_DATE and the on-page date label updates too.
+     ============================================================ */
+  const LAUNCH_DATE = new Date('2026-08-30T09:00:00Z'); // <-- EDIT ME
+
+  (function(){
+    const label = document.getElementById('launch-date-label');
+    const day = LAUNCH_DATE.getUTCDate();
+    const ord = (d)=>{const s=['TH','ST','ND','RD'],v=d%100;return d+(s[(v-20)%10]||s[v]||s[0]);};
+    const months=['JANUARY','FEBRUARY','MARCH','APRIL','MAY','JUNE','JULY','AUGUST','SEPTEMBER','OCTOBER','NOVEMBER','DECEMBER'];
+    label.textContent = `${ord(day)} ${months[LAUNCH_DATE.getUTCMonth()]} ${LAUNCH_DATE.getUTCFullYear()}`;
+
+    const cells = {};
+    document.querySelectorAll('#countdown [data-u]').forEach(el=>cells[el.dataset.u]=el);
+    const pad = n => String(n).padStart(2,'0');
+
+    function tick(){
+      let diff = Math.max(0, Math.floor((LAUNCH_DATE - new Date())/1000));
+      const weeks = Math.floor(diff / (7*86400)); diff -= weeks*7*86400;
+      const days  = Math.floor(diff / 86400);     diff -= days*86400;
+      const hours = Math.floor(diff / 3600);       diff -= hours*3600;
+      const mins  = Math.floor(diff / 60);         diff -= mins*60;
+      const secs  = diff;
+      cells.weeks.textContent   = pad(weeks);
+      cells.days.textContent    = pad(days);
+      cells.hours.textContent   = pad(hours);
+      cells.minutes.textContent = pad(mins);
+      cells.seconds.textContent = pad(secs);
+    }
+    tick();
+    setInterval(tick,1000);
+  })();
+</script>
+</body>
+</html>
