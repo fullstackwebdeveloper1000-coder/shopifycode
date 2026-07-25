@@ -11,8 +11,28 @@
   assign icon_overall = section.settings.icon_overall
 -%}
 
+{%- comment -%}
+  Brand fonts are loaded here so the section renders correctly even if
+  layout/theme.liquid has not been touched.
+{%- endcomment -%}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link
+  rel="stylesheet"
+  href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800;900&family=Inter:wght@400;500;600&display=swap"
+>
+
 {% style %}
+  #PwIng-{{ section.id }} {
+    --pw-pad-top: {{ section.settings.padding_top }}px;
+    --pw-pad-bottom: {{ section.settings.padding_bottom }}px;
+  }
+.shopify-section.pw-ingredients-section { margin: 0; }
+
 .pw-ing {
+  margin: 0;
+  padding-top: var(--pw-pad-top, 0px);
+  padding-bottom: var(--pw-pad-bottom, 0px);
   color: var(--charcoal, #1F2326);
   background: var(--page, #EFE5DD);
   font-family: var(--font-body, 'Inter', system-ui, sans-serif);
@@ -567,7 +587,7 @@
 
 /* CLEAN BY DESIGN */
 .pw-ing .pw-clean {
-  padding: 40px 0 44px;
+  padding: 44px 0;
   background: var(--white, #FFFFFF);
 }
 
@@ -1506,6 +1526,30 @@
     {
       "type": "paragraph",
       "content": "Benefit filter icons fall back to primal-icon-<name>.svg in assets."
+    },
+    {
+      "type": "header",
+      "content": "Section spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Space above section",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Space below section",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "default": 0
     },
     {
       "type": "image_picker",
