@@ -416,21 +416,28 @@
 
 .pw-ing .pw-detail-badge {
   margin-left: auto;
-  padding: 7px 14px;
-  border-radius: 20px;
+  padding: 7px 12px;
+  border-radius: 6px;
   background: rgba(61, 139, 90, 0.12);
-  color: var(--slate, #737A80);
+  color: var(--success, #3D8B5A);
   font-family: var(--font-head, 'Montserrat', system-ui, sans-serif);
   font-weight: 700;
-  font-size: 13px;
+  font-size: 11px;
   letter-spacing: 0.5px;
   text-transform: uppercase;
   white-space: nowrap;
 }
 
+.pw-ing .pw-detail-intro {
+  margin: 0 0 18px;
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--charcoal, #1F2326);
+}
+
 .pw-ing .pw-detail-body {
   display: grid;
-  grid-template-columns: 0.9fr 1fr 1fr 1fr;
+  grid-template-columns: 0.9fr 1fr 1fr 1.05fr 1.15fr;
   gap: 22px;
   margin-bottom: 22px;
 }
@@ -491,6 +498,30 @@
   left: 0;
   color: var(--gold, #C89A3D);
   font-weight: 800;
+}
+
+.pw-ing .pw-typical-form {
+  margin: 0 0 6px;
+  font-size: 13px;
+  line-height: 1.4;
+  color: var(--charcoal, #1F2326);
+}
+
+.pw-ing .pw-typical-dose {
+  display: block;
+  margin: 0 0 8px;
+  font-family: var(--font-head, 'Montserrat', system-ui, sans-serif);
+  font-weight: 800;
+  font-size: 22px;
+  line-height: 1;
+  color: var(--charcoal, #1F2326);
+}
+
+.pw-ing .pw-typical-note {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--slate, #737A80);
 }
 
 .pw-ing .pw-detail-foot {
@@ -574,6 +605,23 @@
   color: var(--charcoal, #1F2326);
   font-size: 13px;
   text-decoration: none;
+}
+
+.pw-ing .pw-list-toggle {
+  display: none;
+  width: 100%;
+  padding: 14px 20px;
+  border: 1.5px solid var(--gold, #C89A3D);
+  border-radius: 12px;
+  background: transparent;
+  color: var(--gold, #C89A3D);
+  font-family: var(--font-head, 'Montserrat', system-ui, sans-serif);
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.8px;
+  line-height: normal;
+  text-transform: uppercase;
+  cursor: pointer;
 }
 
 .pw-ing .pw-list-empty {
@@ -815,23 +863,48 @@
   .pw-ing .pw-filters { overflow-x: auto; }
   .pw-ing .pw-filter { flex: 0 0 auto; min-width: 120px; }
 
-  .pw-ing .pw-explorer-grid { grid-template-columns: 1fr; }
-
-  /* Forty stacked cards would push the detail panel 3000px down the page, so
-     the list becomes a swipeable row and the panel stays in reach. */
-  .pw-ing .pw-list {
-    grid-auto-flow: column;
-    grid-auto-columns: 230px;
-    grid-template-columns: none;
-    max-height: none;
-    overflow-x: auto;
-    overflow-y: hidden;
-    padding: 0 0 6px;
-    scroll-snap-type: x proximity;
-    -webkit-overflow-scrolling: touch;
+  /* Forty stacked cards would push the panel 3000px down the page. Instead the
+     panel comes first and the list sits under it as a compact two-column grid,
+     so nothing has to be swiped sideways. */
+  .pw-ing .pw-explorer-grid {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 18px;
   }
 
-  .pw-ing .pw-list-item { scroll-snap-align: start; }
+  .pw-ing .pw-detail { order: 1; }
+
+  .pw-ing .pw-list {
+    order: 2;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    max-height: none;
+    overflow: visible;
+    padding: 0;
+  }
+
+  .pw-ing .pw-list-item {
+    gap: 10px;
+    padding: 12px 12px;
+  }
+
+  .pw-ing .pw-list-item .pw-abbr {
+    width: 36px;
+    height: 36px;
+    font-size: 12px;
+  }
+
+  .pw-ing .pw-list-copy strong { font-size: 12.5px; }
+  .pw-ing .pw-list-copy small { font-size: 11px; }
+  .pw-ing .pw-list-chevron { display: none; }
+
+  .pw-ing .pw-list-toggle {
+    display: block;
+    order: 3;
+    min-height: 44px;
+  }
+
+  .pw-ing .pw-list--collapsed .pw-list-item:nth-child(n + 9) { display: none; }
 
   .pw-ing .pw-filters {
     scroll-snap-type: x proximity;
@@ -847,7 +920,10 @@
 
   .pw-ing .pw-evidence-label { font-size: 11px; }
 
-  .pw-ing .pw-detail-body { grid-template-columns: 1fr 1fr; }
+  .pw-ing .pw-detail-body {
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+  }
   .pw-ing .pw-detail-image {
     grid-column: 1 / -1;
     aspect-ratio: 16 / 9;
@@ -893,13 +969,38 @@
     padding: 22px 18px;
   }
 
-  .pw-ing .pw-detail-foot { gap: 14px 24px; }
+  .pw-ing .pw-typical-form {
+  margin: 0 0 6px;
+  font-size: 13px;
+  line-height: 1.4;
+  color: var(--charcoal, #1F2326);
+}
+
+.pw-ing .pw-typical-dose {
+  display: block;
+  margin: 0 0 8px;
+  font-family: var(--font-head, 'Montserrat', system-ui, sans-serif);
+  font-weight: 800;
+  font-size: 22px;
+  line-height: 1;
+  color: var(--charcoal, #1F2326);
+}
+
+.pw-ing .pw-typical-note {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--slate, #737A80);
+}
+
+.pw-ing .pw-detail-foot { gap: 14px 24px; }
 
   .pw-ing .pw-cta-button {
     width: 100%;
     justify-content: center;
   }
   .pw-ing .pw-detail-body { grid-template-columns: 1fr; }
+  .pw-ing .pw-list { grid-template-columns: 1fr; }
   .pw-ing .pw-detail-head { flex-wrap: wrap; }
   .pw-ing .pw-detail-badge { margin-left: 0; }
   .pw-ing .pw-reference-button { margin-left: 0; }
@@ -1012,6 +1113,7 @@
       <div class="pw-filters" data-pw-filters></div>
       <div class="pw-explorer-grid">
         <div class="pw-list" data-pw-list></div>
+        <button type="button" class="pw-list-toggle" data-pw-more hidden></button>
         <div class="pw-detail" data-pw-detail></div>
       </div>
     </div>
@@ -1231,6 +1333,11 @@
           "what": {{ block.settings.what_it_does | json }},
           "how": {{ block.settings.how_it_works | json }},
           "why": {{ block.settings.why_included | json }},
+          "intro": {{ block.settings.intro | json }},
+          "badge": {{ block.settings.detail_badge | json }},
+          "typicalForm": {{ block.settings.typical_form | json }},
+          "typicalDose": {{ block.settings.typical_dose | json }},
+          "typicalNote": {{ block.settings.typical_note | json }},
           "referenceUrl": {{ block.settings.reference_url | json }}
         }{%- unless forloop.last -%},{%- endunless -%}
       {%- endfor -%}
@@ -1246,6 +1353,7 @@
   var dataNode = root.querySelector('[data-pw-data]');
   var filtersNode = root.querySelector('[data-pw-filters]');
   var listNode = root.querySelector('[data-pw-list]');
+  var moreNode = root.querySelector('[data-pw-more]');
   var detailNode = root.querySelector('[data-pw-detail]');
   if (!dataNode || !filtersNode || !listNode || !detailNode) return;
 
@@ -1316,6 +1424,7 @@
   }
 
   var category = 'all';
+  var expanded = false;
   var params = new URLSearchParams(window.location.search);
   var wanted = params.get('ing');
   var active = 0;
@@ -1344,6 +1453,7 @@
     filtersNode.querySelectorAll('[data-category]').forEach(function (button) {
       button.addEventListener('click', function () {
         category = button.dataset.category;
+        expanded = false;
         var list = visible();
         if (list.indexOf(ingredients[active]) === -1) {
           active = list.length ? ingredients.indexOf(list[0]) : -1;
@@ -1371,6 +1481,20 @@
         '<span class="pw-list-chevron" aria-hidden="true">&rsaquo;</span></button>';
     }).join('');
 
+    // On narrow screens only the first eight are shown until asked for more.
+    if (moreNode) {
+      var narrow = window.matchMedia('(max-width: 960px)').matches;
+      if (narrow && list.length > 8 && !expanded) {
+        listNode.classList.add('pw-list--collapsed');
+        moreNode.hidden = false;
+        moreNode.textContent = 'Show all ' + list.length + ' ingredients';
+      } else {
+        listNode.classList.remove('pw-list--collapsed');
+        moreNode.hidden = !(narrow && list.length > 8);
+        if (!moreNode.hidden) moreNode.textContent = 'Show fewer';
+      }
+    }
+
     listNode.querySelectorAll('[data-index]').forEach(function (button) {
       button.addEventListener('click', function () {
         active = Number(button.dataset.index);
@@ -1382,6 +1506,11 @@
         }
         renderList();
         renderDetail();
+
+        // the panel sits above the list on narrow screens, so bring it into view
+        if (window.matchMedia('(max-width: 960px)').matches) {
+          detailNode.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
       });
     });
   }
@@ -1407,17 +1536,29 @@
       ? '<img src="' + esc(item.image) + '" alt="' + esc(item.name) + '" width="620" height="827" loading="lazy">'
       : '';
 
+    var badge = item.badge || item.tag;
+
+    var typical = '';
+    if (item.typicalForm || item.typicalDose || item.typicalNote) {
+      typical =
+        (item.typicalForm ? '<p class="pw-typical-form">' + esc(item.typicalForm) + '</p>' : '') +
+        (item.typicalDose ? '<strong class="pw-typical-dose">' + esc(item.typicalDose) + '</strong>' : '') +
+        (item.typicalNote ? '<p class="pw-typical-note">' + esc(item.typicalNote) + '</p>' : '');
+    }
+
     detailNode.innerHTML =
       '<div class="pw-detail-head">' +
         '<span class="pw-abbr">' + esc(item.abbr) + '</span>' +
         '<div class="pw-detail-title"><h3>' + esc(item.name) + '</h3>' +
         '<small>' + esc(item.type) + '</small></div>' +
-        (item.tag ? '<span class="pw-detail-badge">' + esc(item.tag) + '</span>' : '') +
+        (badge ? '<span class="pw-detail-badge">' + esc(badge) + '</span>' : '') +
       '</div>' +
+      (item.intro ? '<p class="pw-detail-intro">' + esc(item.intro) + '</p>' : '') +
       '<div class="pw-detail-body">' +
         '<div class="pw-detail-image">' + image + '</div>' +
         '<div class="pw-detail-col"><h4>What It Does</h4>' + copy(item.what) + '</div>' +
         '<div class="pw-detail-col"><h4>How It Works</h4>' + copy(item.how) + '</div>' +
+        '<div class="pw-detail-col"><h4>Typical Greens Powders</h4>' + (typical || copy('')) + '</div>' +
         '<div class="pw-detail-col"><h4>Why We Included It</h4>' + copy(item.why) + '</div>' +
       '</div>' +
       '<div class="pw-detail-foot">' +
@@ -1444,6 +1585,13 @@
         panel.hidden = !panel.hidden;
       });
     }
+  }
+
+  if (moreNode) {
+    moreNode.addEventListener('click', function () {
+      expanded = !expanded;
+      renderList();
+    });
   }
 
   function render() {
@@ -1853,6 +2001,18 @@
           "content": "Copy"
         },
         {
+          "type": "text",
+          "id": "detail_badge",
+          "label": "Quality badge",
+          "info": "Green badge, top right. Example: Highly Absorbed. Falls back to the benefit tag."
+        },
+        {
+          "type": "textarea",
+          "id": "intro",
+          "label": "Introduction",
+          "info": "One line under the title, above the columns."
+        },
+        {
           "type": "textarea",
           "id": "what_it_does",
           "label": "What it does"
@@ -1868,6 +2028,28 @@
           "id": "why_included",
           "label": "Why we included it",
           "info": "One line becomes a paragraph. Several lines become a tick list."
+        },
+        {
+          "type": "header",
+          "content": "Typical greens powders"
+        },
+        {
+          "type": "text",
+          "id": "typical_form",
+          "label": "Form used elsewhere",
+          "info": "Example: Magnesium Oxide"
+        },
+        {
+          "type": "text",
+          "id": "typical_dose",
+          "label": "Amount",
+          "info": "Example: 50mg"
+        },
+        {
+          "type": "textarea",
+          "id": "typical_note",
+          "label": "Note",
+          "info": "Example: Lower absorption and bioavailability."
         },
         {
           "type": "url",
