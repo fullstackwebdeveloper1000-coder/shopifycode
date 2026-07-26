@@ -36,7 +36,7 @@
                     <div class="pw-sci-car__img">
                       <div
                         class="pw-sci-car__img-zoom"
-                        style="--pw-scale: {{ block.settings.image_zoom | default: 148 | times: 0.01 }}; --pw-pos-x: {{ block.settings.image_pos_x | default: 50 }}%; --pw-pos-y: {{ block.settings.image_pos_y | default: 50 }}%;"
+                        style="--pw-scale: {{ block.settings.image_zoom | default: 148 }}; --pw-pos-x: {{ block.settings.image_pos_x | default: 50 }}%; --pw-pos-y: {{ block.settings.image_pos_y | default: 50 }}%;"
                       >
                         {%- if block.settings.image != blank -%}
                           {{
@@ -237,7 +237,7 @@
     min-height: 100%;
     object-fit: cover;
     object-position: var(--pw-pos-x, 50%) var(--pw-pos-y, 50%);
-    transform: translate(-50%, -50%) scale(var(--pw-scale, 1.48));
+    transform: translate(-50%, -50%) scale(calc(var(--pw-scale, 148) / 100));
     transform-origin: center center;
     display: block;
     will-change: transform;
