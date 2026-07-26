@@ -42,27 +42,29 @@
   </div>
 
   {%- if section.settings.image != blank -%}
-    {{
-      section.settings.image
-      | image_url: width: 1400
-      | image_tag:
-        class: 'hero-shot',
-        loading: 'eager',
-        fetchpriority: 'high',
-        alt: 'Primal Win pouch',
-        widths: '700,1000,1400',
-        sizes: '500px'
-    }}
+    <div class="hero-shot-box" aria-hidden="true">
+      {{
+        section.settings.image
+        | image_url: width: 1600
+        | image_tag:
+          class: 'hero-shot',
+          loading: 'eager',
+          fetchpriority: 'high',
+          alt: '',
+          widths: '800,1200,1600',
+          sizes: '55vw'
+      }}
+    </div>
   {%- elsif section.settings.fallback_image_url != blank -%}
-    <img
-      class="hero-shot"
-      src="{{ section.settings.fallback_image_url }}"
-      alt="Primal Win pouch"
-      loading="eager"
-      fetchpriority="high"
-      width="500"
-      height="500"
-    >
+    <div class="hero-shot-box" aria-hidden="true">
+      <img
+        class="hero-shot"
+        src="{{ section.settings.fallback_image_url }}"
+        alt=""
+        loading="eager"
+        fetchpriority="high"
+      >
+    </div>
   {%- endif -%}
 </section>
 
@@ -85,6 +87,54 @@
     color: #1f2326;
     font-family: Inter, system-ui, sans-serif;
     -webkit-font-smoothing: antialiased;
+  }
+
+  #PwScienceHero-{{ section.id }}::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background: linear-gradient(
+      90deg,
+      {{ section.settings.background_color }} 0%,
+      {{ section.settings.background_color }} 32%,
+      color-mix(in srgb, {{ section.settings.background_color }} 72%, transparent) 44%,
+      color-mix(in srgb, {{ section.settings.background_color }} 28%, transparent) 56%,
+      transparent 68%
+    );
+  }
+
+  #PwScienceHero-{{ section.id }} .hero-shot-box {
+    position: absolute;
+    z-index: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 58%;
+    max-width: 720px;
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  #PwScienceHero-{{ section.id }} .hero-shot {
+    position: absolute;
+    right: -20px;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 100%;
+    min-height: 520px;
+    width: auto;
+    max-width: none !important;
+    display: block;
+    border: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    background: transparent !important;
+    object-fit: cover;
+    object-position: right center;
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 24%);
+    mask-image: linear-gradient(to right, transparent 0%, #000 24%);
   }
 
   #PwScienceHero-{{ section.id }} .container {
@@ -183,23 +233,7 @@
     padding-left: 0;
   }
 
-  #PwScienceHero-{{ section.id }} .hero-shot {
-    position: absolute;
-    z-index: 1;
-    right: -20px;
-    top: 50%;
-    transform: translateY(-50%);
-    height: 500px;
-    width: auto;
-    max-width: none !important;
-    display: block;
-  }
-
   @media screen and (max-width: 1180px) {
-    #PwScienceHero-{{ section.id }} .container {
-      padding: 0 34px;
-    }
-
     #PwScienceHero-{{ section.id }} .hero-head {
       font-size: 5.6vw;
     }
@@ -218,21 +252,33 @@
       max-width: 100%;
     }
 
+    #PwScienceHero-{{ section.id }}::after {
+      display: none;
+    }
+
+    #PwScienceHero-{{ section.id }} .hero-shot-box {
+      position: static;
+      width: 100%;
+      max-width: none;
+      margin-top: 26px;
+      overflow: visible;
+    }
+
     #PwScienceHero-{{ section.id }} .hero-shot {
       position: static;
       transform: none;
       height: auto;
+      min-height: 0;
       width: auto;
       max-width: 420px !important;
-      margin: 26px auto 0;
+      margin: 0 auto;
+      object-fit: contain;
+      -webkit-mask-image: none;
+      mask-image: none;
     }
   }
 
   @media screen and (max-width: 560px) {
-    #PwScienceHero-{{ section.id }} .container {
-      padding: 0 20px;
-    }
-
     #PwScienceHero-{{ section.id }} .hero-head {
       font-size: 38px;
     }
