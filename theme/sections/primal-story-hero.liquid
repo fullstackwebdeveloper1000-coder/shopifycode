@@ -1,7 +1,3 @@
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-
 <section id="PwStoryHero-{{ section.id }}" class="band band-dark story-hero">
   {%- if section.settings.image != blank -%}
     {{
@@ -10,9 +6,10 @@
       | image_tag:
         class: 'band-img',
         loading: 'eager',
-        fetchpriority: 'high',
         alt: 'Two clinical researchers reviewing formulation notes',
-        widths: '900,1200,1800',
+        width: section.settings.image.width,
+        height: section.settings.image.height,
+        widths: '900, 1200, 1800',
         sizes: '50vw'
     }}
   {%- elsif section.settings.fallback_image_url != blank -%}
@@ -21,7 +18,8 @@
       src="{{ section.settings.fallback_image_url }}"
       alt="Two clinical researchers reviewing formulation notes"
       loading="eager"
-      fetchpriority="high"
+      width="900"
+      height="520"
     >
   {%- endif -%}
 
@@ -30,7 +28,7 @@
       <h1 class="story-title">Our <span class="gold">Story</span></h1>
       <hr class="band-rule">
       <p class="band-lead">We work in healthcare.</p>
-      <p class="body">We've seen what most supplements actually deliver. Not much.</p>
+      <p class="body">We&apos;ve seen what most supplements actually deliver. Not much.</p>
       <p class="body">Impressive labels. Underwhelming doses. Products built to look comprehensive, not to work.</p>
       <p class="story-close">So we built our own.</p>
     </div>
@@ -38,6 +36,8 @@
 </section>
 
 {% style %}
+  @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800;900&family=Inter:wght@400;500;600&display=swap');
+
   #shopify-section-{{ section.id }} {
     margin: 0 !important;
     padding: 0 !important;
@@ -203,14 +203,14 @@
 
 {% schema %}
 {
-  "name": "Story — Hero",
+  "name": "Story Hero",
   "tag": "section",
   "class": "pw-story-hero-section",
   "settings": [
     {
       "type": "image_picker",
       "id": "image",
-      "label": "Hero image — upload doctors.png"
+      "label": "Hero image (upload doctors.png)"
     },
     {
       "type": "text",
@@ -220,7 +220,7 @@
   ],
   "presets": [
     {
-      "name": "Story — Hero"
+      "name": "Story Hero"
     }
   ]
 }
