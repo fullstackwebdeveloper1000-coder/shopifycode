@@ -216,7 +216,7 @@
 }
 
 /* EXPLORER */
-.pw-ing .pw-explorer { padding: 22px 0 56px; }
+.pw-ing .pw-explorer { padding: 22px 0 56px; scroll-margin-top: 90px; }
 
 .pw-ing .pw-explorer-head {
   max-width: var(--maxw, 1180px);
@@ -1123,7 +1123,7 @@
     </div>
   </div>
 
-  <div class="pw-explorer">
+  <div class="pw-explorer" id="pw-ingredients-explorer" data-pw-explorer>
     <div class="pw-explorer-head">
       <h2>{{ section.settings.explore_heading | escape }}</h2>
       {%- if section.settings.explore_text != blank -%}
@@ -1627,6 +1627,23 @@
     renderDetail();
   }
 
+  function scrollToDeepLinkedIngredient() {
+    if (!wanted) return;
+
+    var matched = ingredients.some(function (item) {
+      return item.slug === wanted;
+    });
+    if (!matched) return;
+
+    requestAnimationFrame(function () {
+      var narrow = window.matchMedia('(max-width: 960px)').matches;
+      var target = narrow ? detailNode : root.querySelector('[data-pw-explorer]');
+      if (!target) return;
+
+      target.scrollIntoView({ behavior: 'auto', block: 'start' });
+    });
+  }
+
   document.addEventListener('click', function (event) {
     var panel = detailNode.querySelector('[data-pw-panel]');
     if (panel && !panel.hidden && !panel.contains(event.target)) panel.hidden = true;
@@ -1643,6 +1660,7 @@
   });
 
   render();
+  scrollToDeepLinkedIngredient();
 })();
 </script>
 
