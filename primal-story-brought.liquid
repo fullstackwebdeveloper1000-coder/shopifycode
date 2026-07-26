@@ -1,0 +1,217 @@
+<section id="PwStoryBrought-{{ section.id }}" class="band band-light brought">
+  {%- if section.settings.image != blank -%}
+    {{
+      section.settings.image
+      | image_url: width: 1800
+      | image_tag:
+        class: 'band-img',
+        loading: 'lazy',
+        alt: 'Researcher measuring an ingredient in the lab',
+        width: section.settings.image.width,
+        height: section.settings.image.height,
+        widths: '900, 1200, 1800',
+        sizes: '50vw'
+    }}
+  {%- elsif section.settings.fallback_image_url != blank -%}
+    <img
+      class="band-img"
+      src="{{ section.settings.fallback_image_url }}"
+      alt="Researcher measuring an ingredient in the lab"
+      loading="lazy"
+      width="900"
+      height="400"
+    >
+  {%- endif -%}
+
+  <div class="container band-in">
+    <span class="ic-circle" aria-hidden="true">
+      <svg width="46" height="46" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 6h6M24 6v6"/><path d="M20 12h8v6a4 4 0 0 1-8 0v-6Z"/><path d="M24 24v8"/><path d="M16 40c0-4 3.6-8 8-8s8 4 8 8"/><path d="M13 40h22"/></svg>
+    </span>
+    <div class="copy-block">
+      <p class="body"><b>We brought</b> in PhD nutritionists and clinical researchers who cared about one thing: does this ingredient earn its place, at a real dose, backed by real evidence.</p>
+      <p class="accent">If it didn&apos;t, it didn&apos;t make the formula.</p>
+    </div>
+  </div>
+</section>
+
+{% style %}
+  @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800;900&family=Inter:wght@400;500;600&display=swap');
+
+  #shopify-section-{{ section.id }} {
+    margin: 0 !important;
+    padding: 0 !important;
+    max-width: none !important;
+  }
+
+  #PwStoryBrought-{{ section.id }},
+  #PwStoryBrought-{{ section.id }} * {
+    box-sizing: border-box;
+  }
+
+  #PwStoryBrought-{{ section.id }} {
+    position: relative;
+    overflow: hidden;
+    background: #efe5dd;
+    color: #1f2326;
+    font-family: Inter, system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  #PwStoryBrought-{{ section.id }} .container {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 0 48px;
+  }
+
+  #PwStoryBrought-{{ section.id }} .band-in {
+    position: relative;
+    z-index: 2;
+    min-height: 400px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 30px;
+    padding: 52px 0;
+  }
+
+  #PwStoryBrought-{{ section.id }} .band-img {
+    position: absolute;
+    z-index: 1;
+    right: 0;
+    top: 0;
+    height: 100%;
+    width: 50vw;
+    max-width: 900px;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+    border: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 11%);
+    mask-image: linear-gradient(to right, transparent 0%, #000 11%);
+  }
+
+  #PwStoryBrought-{{ section.id }} .ic-circle {
+    flex: 0 0 auto;
+    width: 92px;
+    height: 92px;
+    border: 2px solid #c89a3d;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #c89a3d;
+  }
+
+  #PwStoryBrought-{{ section.id }} .ic-circle svg {
+    display: block;
+  }
+
+  #PwStoryBrought-{{ section.id }} .copy-block {
+    max-width: 380px;
+  }
+
+  #PwStoryBrought-{{ section.id }} p.body {
+    font-size: 18px;
+    line-height: 1.65;
+    color: #2c322e;
+    margin: 0;
+    max-width: 380px;
+  }
+
+  #PwStoryBrought-{{ section.id }} p.body b {
+    color: #1f2326;
+    font-weight: 700;
+  }
+
+  #PwStoryBrought-{{ section.id }} .accent {
+    color: #c89a3d;
+    font-family: Inter, system-ui, sans-serif;
+    font-weight: 500;
+    margin: 18px 0 0;
+    font-size: 17px;
+  }
+
+  @media screen and (max-width: 1080px) {
+    #PwStoryBrought-{{ section.id }} .band-img {
+      width: 44vw;
+    }
+  }
+
+  @media screen and (max-width: 860px) {
+    #PwStoryBrought-{{ section.id }} .band-img {
+      position: static;
+      width: 100%;
+      height: 280px;
+      max-width: none;
+      margin-top: 8px;
+      -webkit-mask-image: none;
+      mask-image: none;
+    }
+
+    #PwStoryBrought-{{ section.id }} .band-in {
+      flex-direction: row;
+      padding-top: 56px;
+      padding-bottom: 52px;
+    }
+
+    #PwStoryBrought-{{ section.id }} .copy-block,
+    #PwStoryBrought-{{ section.id }} p.body {
+      max-width: none;
+    }
+  }
+
+  @media screen and (max-width: 560px) {
+    #PwStoryBrought-{{ section.id }} .container {
+      padding: 0 22px;
+    }
+
+    #PwStoryBrought-{{ section.id }} .band-in {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 22px;
+    }
+
+    #PwStoryBrought-{{ section.id }} .ic-circle {
+      width: 72px;
+      height: 72px;
+    }
+
+    #PwStoryBrought-{{ section.id }} .ic-circle svg {
+      width: 36px;
+      height: 36px;
+    }
+
+    #PwStoryBrought-{{ section.id }} .band-img {
+      height: 220px;
+    }
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "Story Experts",
+  "tag": "section",
+  "class": "pw-story-brought-section",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Hero image (upload pipette.png)"
+    },
+    {
+      "type": "text",
+      "id": "fallback_image_url",
+      "label": "Or paste image URL"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Story Experts"
+    }
+  ]
+}
+{% endschema %}
