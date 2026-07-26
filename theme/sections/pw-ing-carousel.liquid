@@ -37,11 +37,20 @@
                       {%- if block.settings.image != blank -%}
                         {{
                           block.settings.image
-                          | image_url: width: 600
+                          | image_url: width: 800
                           | image_tag: alt: block.settings.title, loading: 'lazy', class: 'pw-sci-car__img-photo'
                         }}
+                      {%- elsif block.settings.image_fallback != blank -%}
+                        <img
+                          class="pw-sci-car__img-photo"
+                          src="{{ block.settings.image_fallback }}"
+                          alt="{{ block.settings.title | escape }}"
+                          loading="lazy"
+                          width="400"
+                          height="500"
+                        >
                       {%- endif -%}
-                      {%- if block.settings.badge_line_1 != blank or block.settings.badge_line_2 != blank -%}
+                      {%- if block.settings.badge_multiplier != blank or block.settings.badge_line_1 != blank or block.settings.badge_line_2 != blank -%}
                         <span class="pw-sci-car__badge">
                           {%- if block.settings.badge_multiplier != blank -%}
                             <b>{{ block.settings.badge_multiplier }}</b>
@@ -63,8 +72,7 @@
                       {%- endif -%}
                       {%- if block.settings.amount != blank -%}
                         <p class="pw-sci-car__amt">
-                          {{ block.settings.amount }}
-                          {%- if block.settings.amount_unit != blank -%}<span>{{ block.settings.amount_unit }}</span>{%- endif -%}
+                          {{ block.settings.amount }}{%- if block.settings.amount_unit != blank -%}<span>{{ block.settings.amount_unit }}</span>{%- endif -%}
                         </p>
                       {%- endif -%}
                       {%- if block.settings.brand_label != blank -%}
@@ -97,7 +105,11 @@
 
       <div class="pw-sci-car__foot">
         <div class="pw-sci-car__dots" data-carousel-dots></div>
-        <span class="pw-sci-car__count" data-carousel-count>01 / {{ slide_total | prepend: '0' | slice: -2, 2 }}</span>
+        <span
+          class="pw-sci-car__count"
+          data-carousel-count
+          data-counter-total="{{ section.settings.counter_total | default: 10 }}"
+        >01 / {{ section.settings.counter_total | default: 10 | prepend: '0' | slice: -2, 2 }}</span>
       </div>
 
       {%- if section.settings.footnote != blank -%}
@@ -123,6 +135,7 @@
     background: #14171a;
     color: #fff;
     padding: 56px 0 60px;
+    -webkit-font-smoothing: antialiased;
   }
 
   #PwScienceCarousel-{{ section.id }} .pw-sci-car__container {
@@ -181,7 +194,7 @@
   #PwScienceCarousel-{{ section.id }} .pw-sci-car__slide {
     flex: 0 0 100%;
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(3, 1fr);
     gap: 20px;
   }
 
@@ -197,19 +210,25 @@
   #PwScienceCarousel-{{ section.id }} .pw-sci-car__img {
     position: relative;
     flex: 0 0 38%;
+    min-height: 100%;
+    overflow: hidden;
     background: linear-gradient(160deg, #3a4034, #171b16);
   }
 
   #PwScienceCarousel-{{ section.id }} .pw-sci-car__img-photo {
+    position: absolute;
+    inset: 0;
     width: 100%;
     height: 100%;
     object-fit: cover;
+    display: block;
   }
 
   #PwScienceCarousel-{{ section.id }} .pw-sci-car__badge {
     position: absolute;
     left: 50%;
     bottom: 16px;
+    z-index: 2;
     transform: translateX(-50%);
     display: flex;
     width: 92px;
@@ -443,6 +462,7 @@
     const countEl = root.querySelector('[data-carousel-count]');
     const viewport = root.querySelector('[data-carousel-viewport]');
     const slides = track ? track.children.length : 0;
+    const counterTotal = parseInt(countEl?.dataset.counterTotal || String(slides), 10) || slides;
     if (!track || !slides) return;
 
     let index = 0;
@@ -461,7 +481,7 @@
     const render = () => {
       track.style.transform = `translateX(-${index * 100}%)`;
       dots.forEach((dot, n) => dot.classList.toggle('is-active', n === index));
-      if (countEl) countEl.textContent = `${pad(index + 1)} / ${pad(slides)}`;
+      if (countEl) countEl.textContent = `${pad(index + 1)} / ${pad(counterTotal)}`;
     };
 
     const go = (n) => {
@@ -510,11 +530,21 @@
     {
       "type": "range",
       "id": "slide_count",
-      "label": "Number of slides",
+      "label": "Slides",
       "min": 1,
-      "max": 5,
+      "max": 10,
       "step": 1,
       "default": 3
+    },
+    {
+      "type": "range",
+      "id": "counter_total",
+      "label": "Counter total",
+      "info": "Design shows 03 / 10",
+      "min": 1,
+      "max": 10,
+      "step": 1,
+      "default": 10
     },
     {
       "type": "textarea",
@@ -528,17 +558,18 @@
       "type": "ingredient",
       "name": "Ingredient card",
       "settings": [
-        { "type": "range", "id": "slide", "label": "Slide number", "min": 1, "max": 5, "step": 1, "default": 1 },
-        { "type": "image_picker", "id": "image", "label": "Image (optional)" },
-        { "type": "text", "id": "badge_multiplier", "label": "Badge multiplier", "default": "4X" },
+        { "type": "range", "id": "slide", "label": "Slide", "min": 1, "max": 10, "step": 1, "default": 1 },
+        { "type": "image_picker", "id": "image", "label": "Photo" },
+        { "type": "text", "id": "image_fallback", "label": "Photo URL", "info": "Used until you upload a photo" },
+        { "type": "text", "id": "badge_multiplier", "label": "Badge X", "default": "4X" },
         { "type": "text", "id": "badge_line_1", "label": "Badge line 1", "default": "MORE" },
         { "type": "text", "id": "badge_line_2", "label": "Badge line 2", "default": "ABSORBED*" },
         { "type": "text", "id": "title", "label": "Title", "default": "Magnesium" },
-        { "type": "text", "id": "title_suffix", "label": "Title suffix", "info": "e.g. (Vitamin B9)" },
+        { "type": "text", "id": "title_suffix", "label": "Title suffix" },
         { "type": "text", "id": "subtitle", "label": "Subtitle", "default": "Bioavailable Magnesium per serving" },
         { "type": "text", "id": "amount", "label": "Amount", "default": "200" },
-        { "type": "text", "id": "amount_unit", "label": "Amount unit", "default": "mg" },
-        { "type": "text", "id": "brand_label", "label": "Brand label", "default": "Primal Win" },
+        { "type": "text", "id": "amount_unit", "label": "Unit", "default": "mg" },
+        { "type": "text", "id": "brand_label", "label": "Brand", "default": "Primal Win" },
         { "type": "text", "id": "form", "label": "Form", "default": "Magnesium Bisglycinate" },
         { "type": "textarea", "id": "why", "label": "Why it matters", "default": "Supports energy production, muscle function and reduces tiredness." },
         { "type": "text", "id": "typical_label", "label": "Typical label", "default": "Typical Greens Powders" },
@@ -552,16 +583,20 @@
     {
       "name": "PW Ing Carousel",
       "category": "Primal Win",
+      "settings": {
+        "slide_count": 3,
+        "counter_total": 10
+      },
       "blocks": [
-        { "type": "ingredient", "settings": { "slide": 1, "badge_multiplier": "4X", "title": "Magnesium", "subtitle": "Bioavailable Magnesium per serving", "amount": "200", "amount_unit": "mg", "form": "Magnesium Bisglycinate", "why": "Supports energy production, muscle function and reduces tiredness.", "typical_form": "Magnesium Oxide", "typical_amount": "500mg", "typical_note": "Lower absorption and bioavailability." } },
-        { "type": "ingredient", "settings": { "slide": 1, "badge_multiplier": "3.5X", "title": "Vitamin D3", "subtitle": "Bioavailable Vitamin D3 per serving", "amount": "75", "amount_unit": "µg", "form": "D3 Cholecalciferol", "why": "Supports immunity, bone strength and mood regulation.", "typical_form": "Vitamin D3 (Non-Active)", "typical_amount": "20µg", "typical_note": "Lower potency and less effective form." } },
-        { "type": "ingredient", "settings": { "slide": 1, "badge_multiplier": "2X", "title": "Folate", "title_suffix": "(Vitamin B9)", "subtitle": "Bioavailable Folate per serving", "amount": "400", "amount_unit": "µg", "form": "5-MTHF", "why": "Vital for cell division, energy metabolism and mental clarity.", "typical_form": "Folic Acid", "typical_amount": "200µg", "typical_note": "Lower absorption and inactive form." } },
-        { "type": "ingredient", "settings": { "slide": 2, "badge_multiplier": "3X", "title": "Zinc", "subtitle": "Bioavailable Zinc per serving", "amount": "15", "amount_unit": "mg", "form": "Zinc Bisglycinate", "why": "Supports immune function, skin health and normal testosterone levels.", "typical_form": "Zinc Oxide", "typical_amount": "5mg", "typical_note": "Lower absorption and bioavailability." } },
-        { "type": "ingredient", "settings": { "slide": 2, "badge_multiplier": "2.5X", "badge_line_2": "BIOAVAIL.*", "title": "Selenium", "subtitle": "Bioavailable Selenium per serving", "amount": "100", "amount_unit": "µg", "form": "Selenium Yeast", "why": "Supports immune function and protects cells from oxidative stress.", "typical_form": "Sodium Selenite", "typical_amount": "40µg", "typical_note": "Lower absorption and bioavailability." } },
-        { "type": "ingredient", "settings": { "slide": 2, "badge_multiplier": "2.5X", "title": "Vitamin C", "subtitle": "Bioavailable Vitamin C per serving", "amount": "200", "amount_unit": "mg", "form": "Ascorbic Acid", "why": "Supports immunity, collagen formation and antioxidant protection.", "typical_form": "Vitamin C", "typical_amount": "80mg", "typical_note": "Lower dose and bioavailability." } },
-        { "type": "ingredient", "settings": { "slide": 3, "badge_multiplier": "3X", "badge_line_2": "BIOAVAIL.*", "title": "Vitamin K2", "title_suffix": "(MK-7)", "subtitle": "Bioavailable K2 per serving", "amount": "100", "amount_unit": "µg", "form": "MK-7", "why": "Supports bone health and helps direct calcium to where it's needed.", "typical_form": "Vitamin K2", "typical_amount": "15µg", "typical_note": "Lower absorption and bioavailability." } },
-        { "type": "ingredient", "settings": { "slide": 3, "badge_multiplier": "2X", "badge_line_2": "BIOAVAIL.*", "title": "Iodine", "subtitle": "Bioavailable Iodine per serving", "amount": "150", "amount_unit": "µg", "form": "Potassium Iodide", "why": "Supports normal thyroid function and healthy metabolism.", "typical_form": "Iodine", "typical_amount": "75µg", "typical_note": "Lower absorption and bioavailability." } },
-        { "type": "ingredient", "settings": { "slide": 3, "badge_multiplier": "5X", "badge_line_2": "BIOAVAIL.*", "title": "Vitamin B12", "subtitle": "Bioavailable B12 per serving", "amount": "25", "amount_unit": "µg", "form": "Methylcobalamin", "why": "Supports energy production and healthy nerve function.", "typical_form": "Cyanocobalamin", "typical_amount": "5µg", "typical_note": "Lower absorption and inactive form." } }
+        { "type": "ingredient", "settings": { "slide": 1, "image_fallback": "https://images.unsplash.com/photo-1599599810769-bcde5a160d2c?w=800&q=80", "badge_multiplier": "4X", "title": "Magnesium", "subtitle": "Bioavailable Magnesium per serving", "amount": "200", "amount_unit": "mg", "form": "Magnesium Bisglycinate", "why": "Supports energy production, muscle function and reduces tiredness.", "typical_form": "Magnesium Oxide", "typical_amount": "500mg", "typical_note": "Lower absorption and bioavailability." } },
+        { "type": "ingredient", "settings": { "slide": 1, "image_fallback": "https://images.unsplash.com/photo-1470252649378-9c297eb40da7?w=800&q=80", "badge_multiplier": "3.5X", "title": "Vitamin D3", "subtitle": "Bioavailable Vitamin D3 per serving", "amount": "75", "amount_unit": "µg", "form": "D3 Cholecalciferol", "why": "Supports immunity, bone strength and mood regulation.", "typical_form": "Vitamin D3 (Non-Active)", "typical_amount": "20µg", "typical_note": "Lower potency and less effective form." } },
+        { "type": "ingredient", "settings": { "slide": 1, "image_fallback": "https://images.unsplash.com/photo-1512621776951-571b4f4ebd47?w=800&q=80", "badge_multiplier": "2X", "title": "Folate", "title_suffix": "(Vitamin B9)", "subtitle": "Bioavailable Folate per serving", "amount": "400", "amount_unit": "µg", "form": "5-MTHF", "why": "Vital for cell division, energy metabolism and mental clarity.", "typical_form": "Folic Acid", "typical_amount": "200µg", "typical_note": "Lower absorption and inactive form." } },
+        { "type": "ingredient", "settings": { "slide": 2, "image_fallback": "https://images.unsplash.com/photo-1603046890241-4d8e2c4e8b0e?w=800&q=80", "badge_multiplier": "3X", "title": "Zinc", "subtitle": "Bioavailable Zinc per serving", "amount": "15", "amount_unit": "mg", "form": "Zinc Bisglycinate", "why": "Supports immune function, skin health and normal testosterone levels.", "typical_form": "Zinc Oxide", "typical_amount": "5mg", "typical_note": "Lower absorption and bioavailability." } },
+        { "type": "ingredient", "settings": { "slide": 2, "image_fallback": "https://images.unsplash.com/photo-1488477181941-6788b5d2aa55?w=800&q=80", "badge_multiplier": "2.5X", "badge_line_2": "BIOAVAIL.*", "title": "Selenium", "subtitle": "Bioavailable Selenium per serving", "amount": "100", "amount_unit": "µg", "form": "Selenium Yeast", "why": "Supports immune function and protects cells from oxidative stress.", "typical_form": "Sodium Selenite", "typical_amount": "40µg", "typical_note": "Lower absorption and bioavailability." } },
+        { "type": "ingredient", "settings": { "slide": 2, "image_fallback": "https://images.unsplash.com/photo-1546095669-7d2c2b7f0f3e?w=800&q=80", "badge_multiplier": "2.5X", "title": "Vitamin C", "subtitle": "Bioavailable Vitamin C per serving", "amount": "200", "amount_unit": "mg", "form": "Ascorbic Acid", "why": "Supports immunity, collagen formation and antioxidant protection.", "typical_form": "Vitamin C", "typical_amount": "80mg", "typical_note": "Lower dose and bioavailability." } },
+        { "type": "ingredient", "settings": { "slide": 3, "image_fallback": "https://images.unsplash.com/photo-1592417817098-8f0c0c0e0f0f?w=800&q=80", "badge_multiplier": "3X", "badge_line_2": "BIOAVAIL.*", "title": "Vitamin K2", "title_suffix": "(MK-7)", "subtitle": "Bioavailable K2 per serving", "amount": "100", "amount_unit": "µg", "form": "MK-7", "why": "Supports bone health and helps direct calcium to where it's needed.", "typical_form": "Vitamin K2", "typical_amount": "15µg", "typical_note": "Lower absorption and bioavailability." } },
+        { "type": "ingredient", "settings": { "slide": 3, "image_fallback": "https://images.unsplash.com/photo-1553544929-445a5e0b0b0b?w=800&q=80", "badge_multiplier": "2X", "badge_line_2": "BIOAVAIL.*", "title": "Iodine", "subtitle": "Bioavailable Iodine per serving", "amount": "150", "amount_unit": "µg", "form": "Potassium Iodide", "why": "Supports normal thyroid function and healthy metabolism.", "typical_form": "Iodine", "typical_amount": "75µg", "typical_note": "Lower absorption and bioavailability." } },
+        { "type": "ingredient", "settings": { "slide": 3, "image_fallback": "https://images.unsplash.com/photo-1464967764407-93a64182525b?w=800&q=80", "badge_multiplier": "5X", "badge_line_2": "BIOAVAIL.*", "title": "Vitamin B12", "subtitle": "Bioavailable B12 per serving", "amount": "25", "amount_unit": "µg", "form": "Methylcobalamin", "why": "Supports energy production and healthy nerve function.", "typical_form": "Cyanocobalamin", "typical_amount": "5µg", "typical_note": "Lower absorption and inactive form." } }
       ]
     }
   ]
