@@ -1,7 +1,3 @@
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-
 <section id="PwScienceHero-{{ section.id }}" class="hero">
   <div class="container hero-in">
     <div class="hero-copy">
@@ -41,30 +37,36 @@
     </div>
   </div>
 
-  {%- if section.settings.image != blank -%}
-    {{
-      section.settings.image
-      | image_url: width: 1600
-      | image_tag:
-        class: 'hero-shot',
-        loading: 'eager',
-        fetchpriority: 'high',
-        alt: 'Primal Win pouch',
-        widths: '800,1200,1600',
-        sizes: '500px'
-    }}
-  {%- elsif section.settings.fallback_image_url != blank -%}
-    <img
-      class="hero-shot"
-      src="{{ section.settings.fallback_image_url }}"
-      alt="Primal Win pouch"
-      loading="eager"
-      fetchpriority="high"
-    >
-  {%- endif -%}
+  <div class="hero-shot-wrap">
+    {%- if section.settings.image != blank -%}
+      {{
+        section.settings.image
+        | image_url: width: 1600
+        | image_tag:
+          class: 'hero-shot',
+          loading: 'eager',
+          alt: 'Primal Win pouch',
+          width: section.settings.image.width,
+          height: section.settings.image.height,
+          widths: '800, 1200, 1600',
+          sizes: '(min-width: 961px) 500px, 100vw'
+      }}
+    {%- elsif section.settings.fallback_image_url != blank -%}
+      <img
+        class="hero-shot"
+        src="{{ section.settings.fallback_image_url }}"
+        alt="Primal Win pouch"
+        loading="eager"
+        width="500"
+        height="500"
+      >
+    {%- endif -%}
+  </div>
 </section>
 
 {% style %}
+  @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800;900&family=Inter:wght@400;500;600&display=swap');
+
   #shopify-section-{{ section.id }} {
     margin: 0 !important;
     padding: 0 !important;
@@ -79,9 +81,10 @@
   #PwScienceHero-{{ section.id }} {
     position: relative;
     overflow: hidden;
+    min-height: 520px;
     background: {{ section.settings.background_color }};
     color: #1f2326;
-    font-family: Inter, system-ui, sans-serif;
+    font-family: 'Inter', Inter, system-ui, sans-serif;
     -webkit-font-smoothing: antialiased;
   }
 
@@ -110,18 +113,20 @@
 
   #PwScienceHero-{{ section.id }} .hero-in {
     position: relative;
-    min-height: 520px;
-    padding: 56px 0 0;
+    z-index: 2;
+    padding: 56px 0 40px;
   }
 
   #PwScienceHero-{{ section.id }} .hero-copy {
     position: relative;
     z-index: 2;
     max-width: 600px;
+    margin: 0;
+    padding: 0;
   }
 
   #PwScienceHero-{{ section.id }} .hero-head {
-    font-family: Montserrat, system-ui, sans-serif;
+    font-family: 'Montserrat', Montserrat, system-ui, sans-serif;
     font-weight: 900;
     font-size: 66px;
     line-height: 0.98;
@@ -145,6 +150,7 @@
 
   #PwScienceHero-{{ section.id }} .hero-lead {
     font-size: 20px;
+    line-height: 1.4;
     color: #1f2326;
     margin: 0 0 34px;
   }
@@ -177,7 +183,7 @@
   }
 
   #PwScienceHero-{{ section.id }} .hero-feat h4 {
-    font-family: Montserrat, system-ui, sans-serif;
+    font-family: 'Montserrat', Montserrat, system-ui, sans-serif;
     font-weight: 700;
     font-size: 13px;
     letter-spacing: 0.4px;
@@ -198,13 +204,15 @@
     padding-left: 0;
   }
 
-  #PwScienceHero-{{ section.id }} .hero-shot {
+  #PwScienceHero-{{ section.id }} .hero-shot-wrap {
     position: absolute;
     z-index: 0;
     right: -20px;
     bottom: 0;
-    top: auto;
-    transform: none;
+    line-height: 0;
+  }
+
+  #PwScienceHero-{{ section.id }} .hero-shot {
     height: 500px;
     width: auto;
     max-width: none !important;
@@ -218,6 +226,10 @@
   }
 
   @media screen and (max-width: 1180px) {
+    #PwScienceHero-{{ section.id }} .container {
+      padding: 0 34px;
+    }
+
     #PwScienceHero-{{ section.id }} .hero-head {
       font-size: 5.6vw;
     }
@@ -228,6 +240,23 @@
   }
 
   @media screen and (max-width: 960px) {
+    #PwScienceHero-{{ section.id }} {
+      min-height: 0;
+      padding-bottom: 36px;
+    }
+
+    #PwScienceHero-{{ section.id }}::after {
+      display: none;
+    }
+
+    #PwScienceHero-{{ section.id }} .container {
+      padding: 0 22px;
+    }
+
+    #PwScienceHero-{{ section.id }} .hero-in {
+      padding: 40px 0 0;
+    }
+
     #PwScienceHero-{{ section.id }} .hero-head {
       font-size: 44px;
     }
@@ -236,55 +265,93 @@
       max-width: 100%;
     }
 
-    #PwScienceHero-{{ section.id }}::after {
-      display: none;
+    #PwScienceHero-{{ section.id }} .hero-lead {
+      font-size: 18px;
+      margin-bottom: 28px;
+    }
+
+    #PwScienceHero-{{ section.id }} .hero-feats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px 16px;
+    }
+
+    #PwScienceHero-{{ section.id }} .hero-feat {
+      max-width: none;
+      padding: 0;
+      border-left: 0;
+    }
+
+    #PwScienceHero-{{ section.id }} .hero-feat:first-child {
+      padding-left: 0;
+    }
+
+    #PwScienceHero-{{ section.id }} .hero-shot-wrap {
+      position: static;
+      right: auto;
+      bottom: auto;
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 24px 22px 0;
     }
 
     #PwScienceHero-{{ section.id }} .hero-shot {
-      position: static;
-      transform: none;
       height: auto;
-      width: auto;
+      width: 100%;
       max-width: 420px !important;
-      margin: 26px auto 0;
+      margin: 0 auto;
       -webkit-mask-image: none;
       mask-image: none;
     }
   }
 
   @media screen and (max-width: 560px) {
+    #PwScienceHero-{{ section.id }} .hero-in {
+      padding-top: 32px;
+    }
+
     #PwScienceHero-{{ section.id }} .hero-head {
       font-size: 38px;
+      line-height: 1;
+    }
+
+    #PwScienceHero-{{ section.id }} .hero-lead {
+      font-size: 16px;
+      margin-bottom: 24px;
     }
 
     #PwScienceHero-{{ section.id }} .hero-feats {
-      flex-wrap: wrap;
-      gap: 20px 0;
+      gap: 20px 12px;
     }
 
-    #PwScienceHero-{{ section.id }} .hero-feat {
-      max-width: 50%;
-      flex: 0 0 50%;
-      padding: 0 16px;
-      border-left: 0;
+    #PwScienceHero-{{ section.id }} .hero-feat h4 {
+      font-size: 12px;
     }
 
-    #PwScienceHero-{{ section.id }} .hero-feat:nth-child(odd) {
-      padding-left: 0;
+    #PwScienceHero-{{ section.id }} .hero-feat p {
+      font-size: 11.5px;
+    }
+
+    #PwScienceHero-{{ section.id }} .hero-shot-wrap {
+      padding-top: 20px;
+    }
+
+    #PwScienceHero-{{ section.id }} .hero-shot {
+      max-width: 100% !important;
     }
   }
 {% endstyle %}
 
 {% schema %}
 {
-  "name": "Science — Hero",
+  "name": "Science Hero",
   "tag": "section",
   "class": "pw-science-hero-section",
   "settings": [
     {
       "type": "image_picker",
       "id": "image",
-      "label": "Product image — upload mockup.png"
+      "label": "Product image (upload mockup.png)"
     },
     {
       "type": "text",
@@ -300,7 +367,7 @@
   ],
   "presets": [
     {
-      "name": "Science — Hero"
+      "name": "Science Hero"
     }
   ]
 }
