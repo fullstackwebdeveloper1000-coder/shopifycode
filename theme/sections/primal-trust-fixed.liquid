@@ -1,0 +1,593 @@
+{% liquid
+  assign heading_font = section.settings.heading_font
+  assign body_font = section.settings.body_font
+%}
+
+<section
+  id="PrimalTrustFixed-{{ section.id }}"
+  class="primal-trust-fixed"
+  style="
+    --pte-bg: {{ section.settings.background_color }};
+    --pte-heading: {{ section.settings.heading_color }};
+    --pte-body: {{ section.settings.body_color }};
+    --pte-divider: {{ section.settings.divider_color }};
+    --pte-outer-border: {{ section.settings.outer_border_color }};
+  "
+>
+  <div class="pte-shell" data-pte-shell>
+    <div class="pte-stage" data-pte-stage>
+      <div class="pte-container">
+
+        <article class="pte-item pte-item--1">
+          <div class="pte-icon" aria-hidden="true">
+            <img src="{{ 'primal-trust-icon-1.png' | asset_url }}" width="34" height="34" alt="">
+          </div>
+
+          <div class="pte-copy">
+            <h3>
+              <span>{{ section.settings.title_1_line_1 }}</span>
+              <span>{{ section.settings.title_1_line_2 }}</span>
+            </h3>
+
+            <p>{{ section.settings.text_1 | newline_to_br }}</p>
+          </div>
+        </article>
+        <article class="pte-item pte-item--2">
+          <div class="pte-icon" aria-hidden="true">
+            <img src="{{ 'primal-trust-icon-2.png' | asset_url }}" width="34" height="34" alt="">
+          </div>
+
+          <div class="pte-copy">
+            <h3>
+              <span>{{ section.settings.title_2_line_1 }}</span>
+              <span>{{ section.settings.title_2_line_2 }}</span>
+            </h3>
+
+            <p>{{ section.settings.text_2 | newline_to_br }}</p>
+          </div>
+        </article>
+        <article class="pte-item pte-item--3">
+          <div class="pte-icon" aria-hidden="true">
+            <img src="{{ 'primal-trust-icon-3.png' | asset_url }}" width="34" height="34" alt="">
+          </div>
+
+          <div class="pte-copy">
+            <h3>
+              <span>{{ section.settings.title_3_line_1 }}</span>
+              <span>{{ section.settings.title_3_line_2 }}</span>
+            </h3>
+
+            <p>{{ section.settings.text_3 | newline_to_br }}</p>
+          </div>
+        </article>
+        <article class="pte-item pte-item--4">
+          <div class="pte-icon" aria-hidden="true">
+            <img src="{{ 'primal-trust-icon-4.png' | asset_url }}" width="34" height="34" alt="">
+          </div>
+
+          <div class="pte-copy">
+            <h3>
+              <span>{{ section.settings.title_4_line_1 }}</span>
+              <span>{{ section.settings.title_4_line_2 }}</span>
+            </h3>
+
+            <p>{{ section.settings.text_4 | newline_to_br }}</p>
+          </div>
+        </article>
+        <article class="pte-item pte-item--5">
+          <div class="pte-icon" aria-hidden="true">
+            <img src="{{ 'primal-trust-icon-5.png' | asset_url }}" width="34" height="34" alt="">
+          </div>
+
+          <div class="pte-copy">
+            <h3>
+              <span>{{ section.settings.title_5_line_1 }}</span>
+              <span>{{ section.settings.title_5_line_2 }}</span>
+            </h3>
+
+            <p>{{ section.settings.text_5 | newline_to_br }}</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% style %}
+  {{ heading_font | font_face: font_display: 'swap' }}
+  {{ body_font | font_face: font_display: 'swap' }}
+
+  #shopify-section-{{ section.id }} {
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  #PrimalTrustFixed-{{ section.id }} {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background: var(--pte-bg);
+    border-top: 1px solid var(--pte-outer-border);
+    border-bottom: 1px solid var(--pte-outer-border);
+  }
+
+  #PrimalTrustFixed-{{ section.id }} *,
+  #PrimalTrustFixed-{{ section.id }} *::before,
+  #PrimalTrustFixed-{{ section.id }} *::after {
+    box-sizing: border-box;
+  }
+
+  #PrimalTrustFixed-{{ section.id }} .pte-shell {
+    position: relative;
+    width: 100%;
+    height: 182px;
+    overflow: hidden;
+    background: var(--pte-bg);
+  }
+
+  #PrimalTrustFixed-{{ section.id }} .pte-stage {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 1439px;
+    height: 182px;
+    transform-origin: top left;
+    background: var(--pte-bg);
+  }
+
+  #PrimalTrustFixed-{{ section.id }} .pte-container {
+    position: absolute;
+    top: 9.5px;
+    left: 127px;
+    width: 1180px;
+    height: 179.59px;
+  }
+
+  #PrimalTrustFixed-{{ section.id }} .pte-item {
+    position: absolute;
+    top: 6px;
+    height: 146px;
+  }
+
+  #PrimalTrustFixed-{{ section.id }} .pte-item--1 {
+    left: -22px;
+    width: 216px;
+  }
+
+  #PrimalTrustFixed-{{ section.id }} .pte-item--2 {
+    left: 254px;
+    width: 216px;
+    border-left: 1px solid rgba(31, 35, 38, .10);
+  }
+
+  #PrimalTrustFixed-{{ section.id }} .pte-item--3 {
+    left: 484px;
+    width: 215px;
+    border-left: 1px solid rgba(31, 35, 38, .10);
+  }
+
+  #PrimalTrustFixed-{{ section.id }} .pte-item--4 {
+    left: 713px;
+    width: 216px;
+    border-left: 1px solid rgba(31, 35, 38, .10);
+  }
+
+  #PrimalTrustFixed-{{ section.id }} .pte-item--5 {
+    left: 943px;
+    width: 221px;
+    border-left: 1px solid rgba(31, 35, 38, .10);
+  }
+
+  #PrimalTrustFixed-{{ section.id }} .pte-icon {
+    position: absolute;
+    top: 30px;
+    width: 34px;
+    height: 34px;
+  }
+
+  #PrimalTrustFixed-{{ section.id }} .pte-item--1 .pte-icon { left: 26px; }
+  #PrimalTrustFixed-{{ section.id }} .pte-item--2 .pte-icon { left: 26px; }
+  #PrimalTrustFixed-{{ section.id }} .pte-item--3 .pte-icon { left: 14px; }
+  #PrimalTrustFixed-{{ section.id }} .pte-item--4 .pte-icon { left: 16px; }
+  #PrimalTrustFixed-{{ section.id }} .pte-item--5 .pte-icon { left: 23px; }
+
+  #PrimalTrustFixed-{{ section.id }} .pte-icon img {
+    display: block;
+    width: 34px;
+    height: 34px;
+    max-width: none;
+    object-fit: contain;
+  }
+
+  #PrimalTrustFixed-{{ section.id }} .pte-copy {
+    position: absolute;
+    top: 30px;
+    height: 120px;
+  }
+
+  #PrimalTrustFixed-{{ section.id }} .pte-item--1 .pte-copy {
+    left: 74px;
+    width: 160px;
+  }
+
+  #PrimalTrustFixed-{{ section.id }} .pte-item--2 .pte-copy {
+    left: 74px;
+    width: 160px;
+  }
+
+  #PrimalTrustFixed-{{ section.id }} .pte-item--3 .pte-copy {
+    left: 62px;
+    width: 160px;
+  }
+
+  #PrimalTrustFixed-{{ section.id }} .pte-item--4 .pte-copy {
+    left: 64px;
+    width: 155px;
+  }
+
+  #PrimalTrustFixed-{{ section.id }} .pte-item--5 .pte-copy {
+    left: 71px;
+    width: 165px;
+  }
+
+  #PrimalTrustFixed-{{ section.id }} .pte-copy h3 {
+    position: absolute;
+    top: -6.6px;
+    left: 0;
+    margin: 0;
+    padding: 0;
+    color: var(--pte-heading);
+    font-family: {{ heading_font.family }}, sans-serif;
+    font-style: {{ heading_font.style }};
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 23px;
+    letter-spacing: .4px;
+    text-transform: uppercase;
+  }
+
+  #PrimalTrustFixed-{{ section.id }} .pte-copy h3 span {
+    display: block;
+    width: max-content;
+    white-space: nowrap;
+  }
+
+  #PrimalTrustFixed-{{ section.id }} .pte-copy p {
+    position: absolute;
+    top: 50.5px;
+    left: 0;
+    margin: 0;
+    padding: 0;
+    color: var(--pte-body);
+    font-family: {{ body_font.family }}, sans-serif;
+    font-style: {{ body_font.style }};
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 19.5px;
+    white-space: nowrap;
+  }
+
+  #PrimalTrustFixed-{{ section.id }} .pte-item--2 .pte-copy p {
+    left: -6px;
+  }
+
+  @media screen and (max-width: 749px) {
+    #PrimalTrustFixed-{{ section.id }} {
+      overflow: hidden;
+    }
+
+    #PrimalTrustFixed-{{ section.id }} .pte-shell {
+      width: 100%;
+      height: auto !important;
+      overflow: visible;
+    }
+
+    #PrimalTrustFixed-{{ section.id }} .pte-stage {
+      position: relative;
+      width: 100%;
+      height: auto;
+      left: 0 !important;
+      transform: none !important;
+    }
+
+    #PrimalTrustFixed-{{ section.id }} .pte-container {
+      position: relative;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: auto;
+      display: flex;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      padding: 20px 0;
+    }
+
+    #PrimalTrustFixed-{{ section.id }} .pte-container::-webkit-scrollbar {
+      display: none;
+    }
+
+    #PrimalTrustFixed-{{ section.id }} .pte-item {
+      position: relative;
+      top: 0;
+      left: auto !important;
+      flex: 0 0 min(82vw, 300px);
+      width: auto !important;
+      height: auto;
+      min-height: 140px;
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 24px 20px;
+      scroll-snap-align: start;
+      border-left: 0 !important;
+      border-right: 1px solid var(--pte-divider);
+    }
+
+    #PrimalTrustFixed-{{ section.id }} .pte-item:first-child {
+      padding-left: 22px;
+    }
+
+    #PrimalTrustFixed-{{ section.id }} .pte-item:last-child {
+      padding-right: 22px;
+      border-right: 0;
+    }
+
+    #PrimalTrustFixed-{{ section.id }} .pte-icon {
+      position: relative;
+      top: 0;
+      left: 0 !important;
+      flex-shrink: 0;
+    }
+
+    #PrimalTrustFixed-{{ section.id }} .pte-copy {
+      position: relative;
+      top: 0;
+      left: 0 !important;
+      width: auto !important;
+      height: auto;
+      flex: 1;
+      min-width: 0;
+    }
+
+    #PrimalTrustFixed-{{ section.id }} .pte-copy h3 {
+      position: relative;
+      top: 0;
+      font-size: 14px;
+      line-height: 1.25;
+      margin-bottom: 8px;
+    }
+
+    #PrimalTrustFixed-{{ section.id }} .pte-copy h3 span {
+      white-space: normal;
+      width: auto;
+    }
+
+    #PrimalTrustFixed-{{ section.id }} .pte-copy p {
+      position: relative;
+      top: 0;
+      left: 0 !important;
+      white-space: normal;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+  }
+{% endstyle %}
+
+<script>
+  (() => {
+    const section = document.getElementById('PrimalTrustFixed-{{ section.id }}');
+    if (!section || section.dataset.pteFixedReady === 'true') return;
+
+    section.dataset.pteFixedReady = 'true';
+
+    const shell = section.querySelector('[data-pte-shell]');
+    const stage = section.querySelector('[data-pte-stage]');
+    const BASE_WIDTH = 1439;
+    const BASE_HEIGHT = 182;
+
+    const resizeTrust = () => {
+      const width = section.getBoundingClientRect().width;
+
+      if (width <= 749) {
+        shell.style.height = 'auto';
+        stage.style.left = '0px';
+        stage.style.transform = 'none';
+        return;
+      }
+
+      const scale = Math.min(width / BASE_WIDTH, 1);
+      const renderedWidth = BASE_WIDTH * scale;
+      const leftOffset = Math.max((width - renderedWidth) / 2, 0);
+
+      shell.style.height = `${BASE_HEIGHT * scale}px`;
+      stage.style.left = `${leftOffset}px`;
+      stage.style.transform = `scale(${scale})`;
+    };
+
+    resizeTrust();
+
+    if ('ResizeObserver' in window) {
+      const observer = new ResizeObserver(resizeTrust);
+      observer.observe(section);
+    } else {
+      window.addEventListener('resize', resizeTrust);
+    }
+
+    document.addEventListener('shopify:section:load', resizeTrust);
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Primal Trust Fixed",
+  "tag": "section",
+  "class": "section-primal-trust-fixed",
+  "enabled_on": {
+    "templates": [
+      "index"
+    ]
+  },
+  "settings": [
+    {
+      "type": "font_picker",
+      "id": "heading_font",
+      "label": "Heading font",
+      "default": "montserrat_n7"
+    },
+    {
+      "type": "font_picker",
+      "id": "body_font",
+      "label": "Body font",
+      "default": "inter_n4"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading colour",
+      "default": "#1F2326"
+    },
+    {
+      "type": "color",
+      "id": "body_color",
+      "label": "Body colour",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "divider_color",
+      "label": "Divider colour",
+      "default": "#E6E6E6"
+    },
+    {
+      "type": "color",
+      "id": "outer_border_color",
+      "label": "Top and bottom border",
+      "default": "#FAF7F4"
+    },
+    {
+      "type": "header",
+      "content": "Item 1"
+    },
+    {
+      "type": "text",
+      "id": "title_1_line_1",
+      "label": "Heading line 1",
+      "default": "Clean &"
+    },
+    {
+      "type": "text",
+      "id": "title_1_line_2",
+      "label": "Heading line 2",
+      "default": "Transparent"
+    },
+    {
+      "type": "textarea",
+      "id": "text_1",
+      "label": "Description",
+      "default": "No fillers. No shortcuts.\nJust what your body\nneeds to perform."
+    },
+    {
+      "type": "header",
+      "content": "Item 2"
+    },
+    {
+      "type": "text",
+      "id": "title_2_line_1",
+      "label": "Heading line 1",
+      "default": "Science"
+    },
+    {
+      "type": "text",
+      "id": "title_2_line_2",
+      "label": "Heading line 2",
+      "default": "Backed"
+    },
+    {
+      "type": "textarea",
+      "id": "text_2",
+      "label": "Description",
+      "default": "Formulated by experts.\nBuilt on research.\nProven in real life."
+    },
+    {
+      "type": "header",
+      "content": "Item 3"
+    },
+    {
+      "type": "text",
+      "id": "title_3_line_1",
+      "label": "Heading line 1",
+      "default": "Third-Party"
+    },
+    {
+      "type": "text",
+      "id": "title_3_line_2",
+      "label": "Heading line 2",
+      "default": "Tested"
+    },
+    {
+      "type": "textarea",
+      "id": "text_3",
+      "label": "Description",
+      "default": "Independently tested\nfor purity, potency and\nquality."
+    },
+    {
+      "type": "header",
+      "content": "Item 4"
+    },
+    {
+      "type": "text",
+      "id": "title_4_line_1",
+      "label": "Heading line 1",
+      "default": "Made In"
+    },
+    {
+      "type": "text",
+      "id": "title_4_line_2",
+      "label": "Heading line 2",
+      "default": "The UK"
+    },
+    {
+      "type": "textarea",
+      "id": "text_4",
+      "label": "Description",
+      "default": "Manufactured to the\nhighest standards in\nthe United Kingdom."
+    },
+    {
+      "type": "header",
+      "content": "Item 5"
+    },
+    {
+      "type": "text",
+      "id": "title_5_line_1",
+      "label": "Heading line 1",
+      "default": "Performance"
+    },
+    {
+      "type": "text",
+      "id": "title_5_line_2",
+      "label": "Heading line 2",
+      "default": "You Feel"
+    },
+    {
+      "type": "textarea",
+      "id": "text_5",
+      "label": "Description",
+      "default": "Designed to fuel your\nenergy, focus, recovery\nand resilience."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Primal Trust Fixed"
+    }
+  ]
+}
+{% endschema %}
