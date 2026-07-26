@@ -53,6 +53,7 @@
     max-width: 1180px;
     margin: 0 auto;
     padding: 0 48px;
+    align-items: start;
   }
 
   #shopify-section-{{ section.id }} .ing-card {
@@ -72,17 +73,21 @@
     box-shadow: 0 16px 36px -18px rgba(0, 0, 0, 0.3);
   }
 
-  #shopify-section-{{ section.id }} .ing-img {
-    aspect-ratio: 5 / 4;
-    width: 100%;
-    object-fit: cover;
+  #shopify-section-{{ section.id }} .ing-img-wrap {
     display: block;
+    position: relative;
+    width: 100%;
+    aspect-ratio: 5 / 4;
+    overflow: hidden;
+    background: linear-gradient(150deg, #2b3630, #151a17);
   }
 
-  #shopify-section-{{ section.id }} .ing-img--empty {
-    aspect-ratio: 5 / 4;
-    width: 100%;
-    background: linear-gradient(150deg, #2b3630, #151a17);
+  #shopify-section-{{ section.id }} .ing-img-wrap .ing-img {
+    width: 100% !important;
+    height: 100% !important;
+    max-width: none;
+    object-fit: cover;
+    object-position: center;
     display: block;
   }
 
@@ -173,11 +178,11 @@
 <section class="ing">
   <div class="ing-grid">
     <a class="ing-card" href="{{ ing_page }}?ing=magnesium" aria-label="Learn more about Magnesium">
-      {%- if section.settings.image_magnesium != blank -%}
-        {{ section.settings.image_magnesium | image_url: width: 600 | image_tag: class: 'ing-img', widths: '300,400,500,600', sizes: '(min-width: 1100px) 16vw, (min-width: 750px) 30vw, 46vw', alt: 'Magnesium', loading: 'lazy' }}
-      {%- else -%}
-        <span class="ing-img ing-img--empty" aria-hidden="true"></span>
-      {%- endif -%}
+      <span class="ing-img-wrap">
+        {%- if section.settings.image_magnesium != blank -%}
+          {{ section.settings.image_magnesium | image_url: width: 600 | image_tag: class: 'ing-img', widths: '300,400,500,600', sizes: '(min-width: 1100px) 16vw, (min-width: 750px) 30vw, 46vw', alt: 'Magnesium', loading: 'lazy' }}
+        {%- endif -%}
+      </span>
       <div class="ing-body">
         <h3>Magnesium</h3>
         <p>Supports muscle function, energy production and reduces tiredness.</p>
@@ -186,11 +191,11 @@
     </a>
 
     <a class="ing-card" href="{{ ing_page }}?ing=lions-mane" aria-label="Learn more about Lion's Mane">
-      {%- if section.settings.image_lions_mane != blank -%}
-        {{ section.settings.image_lions_mane | image_url: width: 600 | image_tag: class: 'ing-img', widths: '300,400,500,600', sizes: '(min-width: 1100px) 16vw, (min-width: 750px) 30vw, 46vw', alt: "Lion's Mane", loading: 'lazy' }}
-      {%- else -%}
-        <span class="ing-img ing-img--empty" aria-hidden="true"></span>
-      {%- endif -%}
+      <span class="ing-img-wrap">
+        {%- if section.settings.image_lions_mane != blank -%}
+          {{ section.settings.image_lions_mane | image_url: width: 600 | image_tag: class: 'ing-img', widths: '300,400,500,600', sizes: '(min-width: 1100px) 16vw, (min-width: 750px) 30vw, 46vw', alt: "Lion's Mane", loading: 'lazy' }}
+        {%- endif -%}
+      </span>
       <div class="ing-body">
         <h3>Lion's Mane</h3>
         <p>Supports focus, memory and cognitive performance.</p>
@@ -199,11 +204,11 @@
     </a>
 
     <a class="ing-card" href="{{ ing_page }}?ing=creatine" aria-label="Learn more about Creatine">
-      {%- if section.settings.image_creatine != blank -%}
-        {{ section.settings.image_creatine | image_url: width: 600 | image_tag: class: 'ing-img', widths: '300,400,500,600', sizes: '(min-width: 1100px) 16vw, (min-width: 750px) 30vw, 46vw', alt: 'Creatine', loading: 'lazy' }}
-      {%- else -%}
-        <span class="ing-img ing-img--empty" aria-hidden="true"></span>
-      {%- endif -%}
+      <span class="ing-img-wrap">
+        {%- if section.settings.image_creatine != blank -%}
+          {{ section.settings.image_creatine | image_url: width: 600 | image_tag: class: 'ing-img', widths: '300,400,500,600', sizes: '(min-width: 1100px) 16vw, (min-width: 750px) 30vw, 46vw', alt: 'Creatine', loading: 'lazy' }}
+        {%- endif -%}
+      </span>
       <div class="ing-body">
         <h3>Creatine</h3>
         <p>Improves strength, power and physical performance.</p>
@@ -212,11 +217,11 @@
     </a>
 
     <a class="ing-card" href="{{ ing_page }}?ing=ashwagandha" aria-label="Learn more about Ashwagandha">
-      {%- if section.settings.image_ashwagandha != blank -%}
-        {{ section.settings.image_ashwagandha | image_url: width: 600 | image_tag: class: 'ing-img', widths: '300,400,500,600', sizes: '(min-width: 1100px) 16vw, (min-width: 750px) 30vw, 46vw', alt: 'Ashwagandha', loading: 'lazy' }}
-      {%- else -%}
-        <span class="ing-img ing-img--empty" aria-hidden="true"></span>
-      {%- endif -%}
+      <span class="ing-img-wrap">
+        {%- if section.settings.image_ashwagandha != blank -%}
+          {{ section.settings.image_ashwagandha | image_url: width: 600 | image_tag: class: 'ing-img', widths: '300,400,500,600', sizes: '(min-width: 1100px) 16vw, (min-width: 750px) 30vw, 46vw', alt: 'Ashwagandha', loading: 'lazy' }}
+        {%- endif -%}
+      </span>
       <div class="ing-body">
         <h3>Ashwagandha</h3>
         <p>Helps the body adapt to stress and supports mental wellbeing.</p>
@@ -225,11 +230,11 @@
     </a>
 
     <a class="ing-card" href="{{ ing_page }}?ing=black-pepper-extract" aria-label="Learn more about Bioperine">
-      {%- if section.settings.image_bioperine != blank -%}
-        {{ section.settings.image_bioperine | image_url: width: 600 | image_tag: class: 'ing-img', widths: '300,400,500,600', sizes: '(min-width: 1100px) 16vw, (min-width: 750px) 30vw, 46vw', alt: 'Bioperine', loading: 'lazy' }}
-      {%- else -%}
-        <span class="ing-img ing-img--empty" aria-hidden="true"></span>
-      {%- endif -%}
+      <span class="ing-img-wrap">
+        {%- if section.settings.image_bioperine != blank -%}
+          {{ section.settings.image_bioperine | image_url: width: 600 | image_tag: class: 'ing-img', widths: '300,400,500,600', sizes: '(min-width: 1100px) 16vw, (min-width: 750px) 30vw, 46vw', alt: 'Bioperine', loading: 'lazy' }}
+        {%- endif -%}
+      </span>
       <div class="ing-body">
         <h3>Bioperine&reg;</h3>
         <p>Enhances absorption so your body gets more from every ingredient.</p>
@@ -238,11 +243,11 @@
     </a>
 
     <a class="ing-card" href="{{ ing_page }}?ing=vitamin-b12" aria-label="Learn more about Vitamin B12">
-      {%- if section.settings.image_b12 != blank -%}
-        {{ section.settings.image_b12 | image_url: width: 600 | image_tag: class: 'ing-img', widths: '300,400,500,600', sizes: '(min-width: 1100px) 16vw, (min-width: 750px) 30vw, 46vw', alt: 'Vitamin B12', loading: 'lazy' }}
-      {%- else -%}
-        <span class="ing-img ing-img--empty" aria-hidden="true"></span>
-      {%- endif -%}
+      <span class="ing-img-wrap">
+        {%- if section.settings.image_b12 != blank -%}
+          {{ section.settings.image_b12 | image_url: width: 600 | image_tag: class: 'ing-img', widths: '300,400,500,600', sizes: '(min-width: 1100px) 16vw, (min-width: 750px) 30vw, 46vw', alt: 'Vitamin B12', loading: 'lazy' }}
+        {%- endif -%}
+      </span>
       <div class="ing-body">
         <h3>Vitamin B12</h3>
         <p>Supports energy levels, focus and the nervous system.</p>
