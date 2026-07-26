@@ -79,6 +79,7 @@
   #PwScienceHero-{{ section.id }} {
     position: relative;
     overflow: hidden;
+    min-height: 520px;
     background: {{ section.settings.background_color }};
     color: #1f2326;
     font-family: Inter, system-ui, sans-serif;
@@ -110,14 +111,16 @@
 
   #PwScienceHero-{{ section.id }} .hero-in {
     position: relative;
-    min-height: 520px;
-    padding: 56px 0 0;
+    z-index: 2;
+    padding: 56px 0 40px;
   }
 
   #PwScienceHero-{{ section.id }} .hero-copy {
     position: relative;
     z-index: 2;
     max-width: 600px;
+    margin: 0;
+    padding: 0;
   }
 
   #PwScienceHero-{{ section.id }} .hero-head {
