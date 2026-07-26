@@ -98,10 +98,13 @@
     background: linear-gradient(
       90deg,
       {{ section.settings.background_color }} 0%,
-      {{ section.settings.background_color }} 32%,
-      color-mix(in srgb, {{ section.settings.background_color }} 72%, transparent) 44%,
-      color-mix(in srgb, {{ section.settings.background_color }} 28%, transparent) 56%,
-      transparent 68%
+      {{ section.settings.background_color }} 45%,
+      {{ section.settings.background_color | color_modify: 'alpha', 0.96 }} 52%,
+      {{ section.settings.background_color | color_modify: 'alpha', 0.82 }} 60%,
+      {{ section.settings.background_color | color_modify: 'alpha', 0.55 }} 68%,
+      {{ section.settings.background_color | color_modify: 'alpha', 0.28 }} 76%,
+      {{ section.settings.background_color | color_modify: 'alpha', 0.08 }} 84%,
+      transparent 92%
     );
   }
 
@@ -111,10 +114,25 @@
     top: 0;
     right: 0;
     bottom: 0;
-    width: 58%;
-    max-width: 720px;
+    width: 62%;
+    max-width: 760px;
     pointer-events: none;
     overflow: hidden;
+  }
+
+  #PwScienceHero-{{ section.id }} .hero-shot-box::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+    background: linear-gradient(
+      90deg,
+      {{ section.settings.background_color }} 0%,
+      {{ section.settings.background_color | color_modify: 'alpha', 0.88 }} 18%,
+      {{ section.settings.background_color | color_modify: 'alpha', 0.45 }} 32%,
+      transparent 52%
+    );
   }
 
   #PwScienceHero-{{ section.id }} .hero-shot {
@@ -133,8 +151,8 @@
     background: transparent !important;
     object-fit: cover;
     object-position: right center;
-    -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 24%);
-    mask-image: linear-gradient(to right, transparent 0%, #000 24%);
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, transparent 12%, rgba(0, 0, 0, 0.35) 28%, rgba(0, 0, 0, 0.75) 40%, #000 52%);
+    mask-image: linear-gradient(to right, transparent 0%, transparent 12%, rgba(0, 0, 0, 0.35) 28%, rgba(0, 0, 0, 0.75) 40%, #000 52%);
   }
 
   #PwScienceHero-{{ section.id }} .container {
@@ -253,6 +271,10 @@
     }
 
     #PwScienceHero-{{ section.id }}::after {
+      display: none;
+    }
+
+    #PwScienceHero-{{ section.id }} .hero-shot-box::before {
       display: none;
     }
 
