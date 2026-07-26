@@ -1,4 +1,8 @@
-<section id="PwScienceFaq-{{ section.id }}" class="pw-sci-faq">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800;900&family=Inter:wght@400;500;600&display=swap">
+
+<section id="PwScienceFaq-{{ section.id }}" class="pw-sci-faq pw-section">
   <div class="pw-sci-faq__container">
     {%- if section.settings.heading != blank -%}
       <h2>{{ section.settings.heading }}</h2>
@@ -20,8 +24,6 @@
           <div class="pw-sci-faq__ans">
             {%- if block.settings.answer != blank -%}
               {{ block.settings.answer }}
-            {%- else -%}
-              <p><em>Full answer — edit this in Theme Customize → FAQ block → Answer.</em></p>
             {%- endif -%}
           </div>
         </details>
@@ -49,17 +51,35 @@
 </section>
 
 {% style %}
-  #PwScienceFaq-{{ section.id }} { background: #efe5dd; padding: 56px 0 60px; }
-  #PwScienceFaq-{{ section.id }} .pw-sci-faq__container { max-width: 1180px; margin: 0 auto; padding: 0 48px; }
+  @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800;900&family=Inter:wght@400;500;600&display=swap');
+
+  #PwScienceFaq-{{ section.id }} {
+    background: #efe5dd;
+    padding: 56px 0 60px;
+    color: #1f2326;
+    font-family: 'Inter', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  #PwScienceFaq-{{ section.id }} .pw-sci-faq__container {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 0 48px;
+  }
+
   #PwScienceFaq-{{ section.id }} h2 {
     margin: 0 0 30px;
     text-align: center;
-    font-family: Montserrat, Arial, sans-serif;
+    font-family: 'Montserrat', system-ui, sans-serif;
     font-weight: 800;
     font-size: 28px;
+    line-height: 1.1;
+    letter-spacing: 0;
     text-transform: uppercase;
     color: #1f2326;
   }
+
   #PwScienceFaq-{{ section.id }} .pw-sci-faq__grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -67,36 +87,54 @@
     max-width: 960px;
     margin: 0 auto;
   }
+
   #PwScienceFaq-{{ section.id }} .pw-sci-faq__item {
     border: 1px solid rgba(31, 35, 38, 0.10);
     border-radius: 8px;
     background: #fff;
   }
+
   #PwScienceFaq-{{ section.id }} .pw-sci-faq__item summary {
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 12px;
     padding: 16px 18px;
-    font-family: Inter, Arial, sans-serif;
+    font-family: 'Inter', system-ui, sans-serif;
     font-size: 14px;
     font-weight: 500;
+    line-height: 1.4;
+    letter-spacing: 0;
     color: #1f2326;
     cursor: pointer;
     list-style: none;
   }
+
   #PwScienceFaq-{{ section.id }} .pw-sci-faq__item summary::-webkit-details-marker { display: none; }
-  #PwScienceFaq-{{ section.id }} .pw-sci-faq__chev { color: #737a80; transition: transform 0.2s; flex-shrink: 0; }
+
+  #PwScienceFaq-{{ section.id }} .pw-sci-faq__chev {
+    color: #737a80;
+    transition: transform 0.2s;
+    flex-shrink: 0;
+    line-height: 0;
+  }
+
   #PwScienceFaq-{{ section.id }} .pw-sci-faq__item[open] .pw-sci-faq__chev { transform: rotate(180deg); }
+
   #PwScienceFaq-{{ section.id }} .pw-sci-faq__ans {
     padding: 0 18px 16px;
-    font-family: Inter, Arial, sans-serif;
+    font-family: 'Inter', system-ui, sans-serif;
     font-size: 13px;
     line-height: 1.6;
+    letter-spacing: 0;
     color: #737a80;
   }
+
   #PwScienceFaq-{{ section.id }} .pw-sci-faq__ans p { margin: 0; }
+  #PwScienceFaq-{{ section.id }} .pw-sci-faq__ans p + p { margin-top: 10px; }
+
   #PwScienceFaq-{{ section.id }} .pw-sci-faq__cta { margin-top: 30px; text-align: center; }
+
   #PwScienceFaq-{{ section.id }} .pw-sci-faq__btn {
     display: inline-flex;
     align-items: center;
@@ -104,18 +142,21 @@
     padding: 14px 24px;
     border: 1.5px solid #c89a3d;
     border-radius: 8px;
-    font-family: Montserrat, Arial, sans-serif;
+    font-family: 'Montserrat', system-ui, sans-serif;
     font-weight: 700;
     font-size: 13px;
     letter-spacing: 1px;
     text-transform: uppercase;
     color: #c89a3d;
     text-decoration: none;
+    background: transparent;
   }
+
   @media (max-width: 960px) {
     #PwScienceFaq-{{ section.id }} .pw-sci-faq__container { padding: 0 34px; }
     #PwScienceFaq-{{ section.id }} .pw-sci-faq__grid { grid-template-columns: 1fr; }
   }
+
   @media (max-width: 560px) {
     #PwScienceFaq-{{ section.id }} .pw-sci-faq__container { padding: 0 20px; }
   }
@@ -161,8 +202,8 @@
           "type": "richtext",
           "id": "answer",
           "label": "Full answer",
-          "info": "Paste the full FAQ copy here (from your FAQ document). You can add as many FAQ blocks as you need.",
-          "default": "<p>Yes — Primal Win is designed as a daily habit.</p>"
+          "info": "Full FAQ copy from the FAQs document.",
+          "default": "<p>Yes — Primal Win is designed as a daily habit. Take one scoop every day to support your energy, focus, immunity and overall performance. It is formulated for consistent, long-term use as part of a healthy routine that includes balanced nutrition, movement and rest.</p>"
         },
         {
           "type": "checkbox",
@@ -182,42 +223,42 @@
           "type": "faq",
           "settings": {
             "question": "Can I take Primal Win every day?",
-            "answer": "<p>Yes — Primal Win is designed as a daily habit. (Full answer to be pulled from the FAQ copy document.)</p>"
+            "answer": "<p>Yes — Primal Win is designed as a daily habit. Take one scoop every day to support your energy, focus, immunity and overall performance. It is formulated for consistent, long-term use as part of a healthy routine that includes balanced nutrition, movement and rest.</p>"
           }
         },
         {
           "type": "faq",
           "settings": {
             "question": "Can pregnant or breastfeeding women take it?",
-            "answer": "<p>Please consult your doctor first. (Full answer to be pulled from the FAQ copy document.)</p>"
+            "answer": "<p>If you are pregnant, breastfeeding, or planning to become pregnant, please speak to your doctor or midwife before taking Primal Win or any new supplement. They can advise you based on your individual health needs.</p>"
           }
         },
         {
           "type": "faq",
           "settings": {
             "question": "Does Primal Win replace fruit and vegetables?",
-            "answer": "<p>It complements a balanced diet rather than replacing whole foods. (Full answer from the FAQ document.)</p>"
+            "answer": "<p>No — Primal Win does not replace whole foods. It complements a balanced diet by delivering targeted plant-based nutrition in a single daily scoop, especially on days when eating perfectly is not realistic. You should still aim to eat a wide variety of fruits, vegetables and whole foods every day.</p>"
           }
         },
         {
           "type": "faq",
           "settings": {
             "question": "How and when should I take it?",
-            "answer": "<p>One scoop daily, mixed with water. (Full answer from the FAQ document.)</p>"
+            "answer": "<p>Take one scoop daily, mixed with cold water or your preferred drink. Shake or blend well and drink straight away. Many people take it in the morning, but the most important thing is consistency — choose a time that works for you and stick to it.</p>"
           }
         },
         {
           "type": "faq",
           "settings": {
             "question": "Is Primal Win suitable for vegans and vegetarians?",
-            "answer": "<p>Yes. (Full answer from the FAQ document.)</p>"
+            "answer": "<p>Yes — Primal Win is plant-based and suitable for both vegans and vegetarians. It is also free from dairy, gluten, GMOs, artificial sweeteners, flavours, colours and preservatives.</p>"
           }
         },
         {
           "type": "faq",
           "settings": {
             "question": "Can I mix it with other supplements?",
-            "answer": "<p>Generally yes. (Full answer from the FAQ document.)</p>"
+            "answer": "<p>In most cases, yes — Primal Win can be taken alongside other supplements. Because it already contains a comprehensive blend of 40 active ingredients, you may find you need fewer additional products. If you take prescription medication or have a health condition, check with your healthcare provider first.</p>"
           }
         }
       ]
