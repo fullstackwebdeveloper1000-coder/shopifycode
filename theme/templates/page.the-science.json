@@ -33,11 +33,11 @@
       "settings": {}
     },
     "science-faq": {
-      "type": "primal-science-faq",
+      "type": "pw-science-faq",
       "settings": {}
     },
     "science-cta": {
-      "type": "primal-science-cta",
+      "type": "pw-science-cta",
       "settings": {}
     }
   },
