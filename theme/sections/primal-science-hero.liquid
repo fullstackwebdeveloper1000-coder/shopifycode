@@ -42,29 +42,25 @@
   </div>
 
   {%- if section.settings.image != blank -%}
-    <div class="hero-shot-box" aria-hidden="true">
-      {{
-        section.settings.image
-        | image_url: width: 1600
-        | image_tag:
-          class: 'hero-shot',
-          loading: 'eager',
-          fetchpriority: 'high',
-          alt: '',
-          widths: '800,1200,1600',
-          sizes: '55vw'
-      }}
-    </div>
+    {{
+      section.settings.image
+      | image_url: width: 1600
+      | image_tag:
+        class: 'hero-shot',
+        loading: 'eager',
+        fetchpriority: 'high',
+        alt: 'Primal Win pouch',
+        widths: '800,1200,1600',
+        sizes: '500px'
+    }}
   {%- elsif section.settings.fallback_image_url != blank -%}
-    <div class="hero-shot-box" aria-hidden="true">
-      <img
-        class="hero-shot"
-        src="{{ section.settings.fallback_image_url }}"
-        alt=""
-        loading="eager"
-        fetchpriority="high"
-      >
-    </div>
+    <img
+      class="hero-shot"
+      src="{{ section.settings.fallback_image_url }}"
+      alt="Primal Win pouch"
+      loading="eager"
+      fetchpriority="high"
+    >
   {%- endif -%}
 </section>
 
@@ -98,61 +94,12 @@
     background: linear-gradient(
       90deg,
       {{ section.settings.background_color }} 0%,
-      {{ section.settings.background_color }} 45%,
-      {{ section.settings.background_color | color_modify: 'alpha', 0.96 }} 52%,
-      {{ section.settings.background_color | color_modify: 'alpha', 0.82 }} 60%,
-      {{ section.settings.background_color | color_modify: 'alpha', 0.55 }} 68%,
-      {{ section.settings.background_color | color_modify: 'alpha', 0.28 }} 76%,
-      {{ section.settings.background_color | color_modify: 'alpha', 0.08 }} 84%,
-      transparent 92%
+      {{ section.settings.background_color }} 28%,
+      {{ section.settings.background_color | color_modify: 'alpha', 0.72 }} 36%,
+      {{ section.settings.background_color | color_modify: 'alpha', 0.32 }} 44%,
+      {{ section.settings.background_color | color_modify: 'alpha', 0.08 }} 50%,
+      transparent 56%
     );
-  }
-
-  #PwScienceHero-{{ section.id }} .hero-shot-box {
-    position: absolute;
-    z-index: 0;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    width: 62%;
-    max-width: 760px;
-    pointer-events: none;
-    overflow: hidden;
-  }
-
-  #PwScienceHero-{{ section.id }} .hero-shot-box::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    z-index: 2;
-    pointer-events: none;
-    background: linear-gradient(
-      90deg,
-      {{ section.settings.background_color }} 0%,
-      {{ section.settings.background_color | color_modify: 'alpha', 0.88 }} 18%,
-      {{ section.settings.background_color | color_modify: 'alpha', 0.45 }} 32%,
-      transparent 52%
-    );
-  }
-
-  #PwScienceHero-{{ section.id }} .hero-shot {
-    position: absolute;
-    right: -20px;
-    top: 50%;
-    transform: translateY(-50%);
-    height: 100%;
-    min-height: 520px;
-    width: auto;
-    max-width: none !important;
-    display: block;
-    border: 0 !important;
-    border-radius: 0 !important;
-    box-shadow: none !important;
-    background: transparent !important;
-    object-fit: cover;
-    object-position: right center;
-    -webkit-mask-image: linear-gradient(to right, transparent 0%, transparent 12%, rgba(0, 0, 0, 0.35) 28%, rgba(0, 0, 0, 0.75) 40%, #000 52%);
-    mask-image: linear-gradient(to right, transparent 0%, transparent 12%, rgba(0, 0, 0, 0.35) 28%, rgba(0, 0, 0, 0.75) 40%, #000 52%);
   }
 
   #PwScienceHero-{{ section.id }} .container {
@@ -251,6 +198,24 @@
     padding-left: 0;
   }
 
+  #PwScienceHero-{{ section.id }} .hero-shot {
+    position: absolute;
+    z-index: 0;
+    right: -20px;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 500px;
+    width: auto;
+    max-width: none !important;
+    display: block;
+    border: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    background: transparent !important;
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 16%);
+    mask-image: linear-gradient(to right, transparent 0%, #000 16%);
+  }
+
   @media screen and (max-width: 1180px) {
     #PwScienceHero-{{ section.id }} .hero-head {
       font-size: 5.6vw;
@@ -274,27 +239,13 @@
       display: none;
     }
 
-    #PwScienceHero-{{ section.id }} .hero-shot-box::before {
-      display: none;
-    }
-
-    #PwScienceHero-{{ section.id }} .hero-shot-box {
-      position: static;
-      width: 100%;
-      max-width: none;
-      margin-top: 26px;
-      overflow: visible;
-    }
-
     #PwScienceHero-{{ section.id }} .hero-shot {
       position: static;
       transform: none;
       height: auto;
-      min-height: 0;
       width: auto;
       max-width: 420px !important;
-      margin: 0 auto;
-      object-fit: contain;
+      margin: 26px auto 0;
       -webkit-mask-image: none;
       mask-image: none;
     }
