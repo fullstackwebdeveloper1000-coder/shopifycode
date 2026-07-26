@@ -53,11 +53,13 @@
     max-width: 1180px;
     margin: 0 auto;
     padding: 0 48px;
-    align-items: start;
+    align-items: stretch;
   }
 
   #shopify-section-{{ section.id }} .ing-card {
-    display: block;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
     background: #FFFFFF;
     border-radius: 12px;
     overflow: hidden;
@@ -77,6 +79,7 @@
     display: block;
     position: relative;
     width: 100%;
+    flex: 0 0 auto;
     aspect-ratio: 5 / 4;
     overflow: hidden;
     background: linear-gradient(150deg, #2b3630, #151a17);
@@ -92,6 +95,9 @@
   }
 
   #shopify-section-{{ section.id }} .ing-body {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
     padding: 16px 16px 18px;
   }
 
@@ -99,13 +105,16 @@
     font-family: 'Montserrat', system-ui, sans-serif;
     font-weight: 800;
     font-size: 15px;
+    line-height: 1.2;
     letter-spacing: 0.4px;
     text-transform: uppercase;
     color: #1F2326;
     margin: 0 0 8px;
+    min-height: 2.4em;
   }
 
   #shopify-section-{{ section.id }} .ing-body p {
+    flex: 1 1 auto;
     font-size: 13px;
     line-height: 1.5;
     color: #737A80;
@@ -123,6 +132,7 @@
     display: inline-flex;
     align-items: center;
     gap: 8px;
+    margin-top: auto;
   }
 
   #shopify-section-{{ section.id }} .ing-card:hover .learn {
@@ -150,6 +160,9 @@
       grid-template-columns: repeat(2, 1fr);
       gap: 14px;
       padding: 0 22px;
+    }
+    #shopify-section-{{ section.id }} .ing-body h3 {
+      min-height: 0;
     }
     #shopify-section-{{ section.id }} .ing-body p {
       min-height: 0;
