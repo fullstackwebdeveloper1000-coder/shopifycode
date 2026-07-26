@@ -1,0 +1,311 @@
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+{% style %}
+  #shopify-section-{{ section.id }} {
+    background: #EFE5DD;
+    font-family: 'Inter', system-ui, sans-serif;
+    color: #1F2326;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  #shopify-section-{{ section.id }} .section-head {
+    text-align: center;
+    padding: 56px 0 0;
+  }
+
+  #shopify-section-{{ section.id }} .eyebrow {
+    font-family: 'Montserrat', system-ui, sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 2.5px;
+    color: #C89A3D;
+    text-transform: uppercase;
+    margin: 0 0 12px;
+  }
+
+  #shopify-section-{{ section.id }} .section-head h2 {
+    font-family: 'Montserrat', system-ui, sans-serif;
+    font-weight: 800;
+    font-size: 34px;
+    letter-spacing: -0.3px;
+    text-transform: uppercase;
+    color: #1F2326;
+    margin: 0 0 10px;
+  }
+
+  #shopify-section-{{ section.id }} .section-head p {
+    font-size: 16px;
+    color: #737A80;
+    margin: 0;
+  }
+
+  #shopify-section-{{ section.id }} .ing {
+    padding: 34px 0 60px;
+  }
+
+  #shopify-section-{{ section.id }} .ing-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 20px;
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 0 48px;
+  }
+
+  #shopify-section-{{ section.id }} .ing-card {
+    background: #FFFFFF;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 12px 30px -20px rgba(0, 0, 0, 0.25);
+  }
+
+  #shopify-section-{{ section.id }} .ing-img {
+    aspect-ratio: 5 / 4;
+    width: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  #shopify-section-{{ section.id }} .ing-img--empty {
+    aspect-ratio: 5 / 4;
+    width: 100%;
+    background: linear-gradient(150deg, #2b3630, #151a17);
+    display: block;
+  }
+
+  #shopify-section-{{ section.id }} .ing-body {
+    padding: 16px 16px 18px;
+  }
+
+  #shopify-section-{{ section.id }} .ing-body h3 {
+    font-family: 'Montserrat', system-ui, sans-serif;
+    font-weight: 800;
+    font-size: 15px;
+    letter-spacing: 0.4px;
+    text-transform: uppercase;
+    color: #1F2326;
+    margin: 0 0 8px;
+  }
+
+  #shopify-section-{{ section.id }} .ing-body p {
+    font-size: 13px;
+    line-height: 1.5;
+    color: #737A80;
+    margin: 0 0 14px;
+    min-height: 76px;
+  }
+
+  #shopify-section-{{ section.id }} .learn {
+    font-family: 'Montserrat', system-ui, sans-serif;
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #C89A3D;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+  }
+
+  #shopify-section-{{ section.id }} .learn:hover {
+    color: #B4842E;
+  }
+
+  @media screen and (max-width: 1100px) {
+    #shopify-section-{{ section.id }} .ing-grid {
+      grid-template-columns: repeat(3, 1fr);
+      padding: 0 34px;
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    #shopify-section-{{ section.id }} .section-head {
+      padding: 38px 22px 0;
+    }
+    #shopify-section-{{ section.id }} .section-head h2 {
+      font-size: 24px;
+    }
+    #shopify-section-{{ section.id }} .ing {
+      padding: 28px 0 48px;
+    }
+    #shopify-section-{{ section.id }} .ing-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+      padding: 0 22px;
+    }
+    #shopify-section-{{ section.id }} .ing-body p {
+      min-height: 0;
+    }
+  }
+{% endstyle %}
+
+{%- assign ing_page = pages['ingredients'].url | default: '/pages/ingredients' -%}
+
+<div class="section-head">
+  {%- if section.settings.eyebrow != blank -%}
+    <p class="eyebrow">{{ section.settings.eyebrow | escape }}</p>
+  {%- endif -%}
+  {%- if section.settings.heading != blank -%}
+    <h2>{{ section.settings.heading | escape }}</h2>
+  {%- endif -%}
+  {%- if section.settings.subheading != blank -%}
+    <p>{{ section.settings.subheading | escape }}</p>
+  {%- endif -%}
+</div>
+
+<section class="ing">
+  <div class="ing-grid">
+    <div class="ing-card">
+      {%- if section.settings.image_magnesium != blank -%}
+        {{ section.settings.image_magnesium | image_url: width: 600 | image_tag: class: 'ing-img', widths: '300,400,500,600', sizes: '(min-width: 1100px) 16vw, (min-width: 750px) 30vw, 46vw', alt: 'Magnesium', loading: 'lazy' }}
+      {%- else -%}
+        <span class="ing-img ing-img--empty" aria-hidden="true"></span>
+      {%- endif -%}
+      <div class="ing-body">
+        <h3>Magnesium</h3>
+        <p>Supports muscle function, energy production and reduces tiredness.</p>
+        <a class="learn" href="{{ ing_page }}?ing=magnesium">Learn More <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </div>
+    </div>
+
+    <div class="ing-card">
+      {%- if section.settings.image_lions_mane != blank -%}
+        {{ section.settings.image_lions_mane | image_url: width: 600 | image_tag: class: 'ing-img', widths: '300,400,500,600', sizes: '(min-width: 1100px) 16vw, (min-width: 750px) 30vw, 46vw', alt: "Lion's Mane", loading: 'lazy' }}
+      {%- else -%}
+        <span class="ing-img ing-img--empty" aria-hidden="true"></span>
+      {%- endif -%}
+      <div class="ing-body">
+        <h3>Lion's Mane</h3>
+        <p>Supports focus, memory and cognitive performance.</p>
+        <a class="learn" href="{{ ing_page }}?ing=lions-mane">Learn More <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </div>
+    </div>
+
+    <div class="ing-card">
+      {%- if section.settings.image_creatine != blank -%}
+        {{ section.settings.image_creatine | image_url: width: 600 | image_tag: class: 'ing-img', widths: '300,400,500,600', sizes: '(min-width: 1100px) 16vw, (min-width: 750px) 30vw, 46vw', alt: 'Creatine', loading: 'lazy' }}
+      {%- else -%}
+        <span class="ing-img ing-img--empty" aria-hidden="true"></span>
+      {%- endif -%}
+      <div class="ing-body">
+        <h3>Creatine</h3>
+        <p>Improves strength, power and physical performance.</p>
+        <a class="learn" href="{{ ing_page }}?ing=creatine">Learn More <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </div>
+    </div>
+
+    <div class="ing-card">
+      {%- if section.settings.image_ashwagandha != blank -%}
+        {{ section.settings.image_ashwagandha | image_url: width: 600 | image_tag: class: 'ing-img', widths: '300,400,500,600', sizes: '(min-width: 1100px) 16vw, (min-width: 750px) 30vw, 46vw', alt: 'Ashwagandha', loading: 'lazy' }}
+      {%- else -%}
+        <span class="ing-img ing-img--empty" aria-hidden="true"></span>
+      {%- endif -%}
+      <div class="ing-body">
+        <h3>Ashwagandha</h3>
+        <p>Helps the body adapt to stress and supports mental wellbeing.</p>
+        <a class="learn" href="{{ ing_page }}?ing=ashwagandha">Learn More <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </div>
+    </div>
+
+    <div class="ing-card">
+      {%- if section.settings.image_bioperine != blank -%}
+        {{ section.settings.image_bioperine | image_url: width: 600 | image_tag: class: 'ing-img', widths: '300,400,500,600', sizes: '(min-width: 1100px) 16vw, (min-width: 750px) 30vw, 46vw', alt: 'Bioperine', loading: 'lazy' }}
+      {%- else -%}
+        <span class="ing-img ing-img--empty" aria-hidden="true"></span>
+      {%- endif -%}
+      <div class="ing-body">
+        <h3>Bioperine&reg;</h3>
+        <p>Enhances absorption so your body gets more from every ingredient.</p>
+        <a class="learn" href="{{ ing_page }}?ing=black-pepper-extract">Learn More <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </div>
+    </div>
+
+    <div class="ing-card">
+      {%- if section.settings.image_b12 != blank -%}
+        {{ section.settings.image_b12 | image_url: width: 600 | image_tag: class: 'ing-img', widths: '300,400,500,600', sizes: '(min-width: 1100px) 16vw, (min-width: 750px) 30vw, 46vw', alt: 'Vitamin B12', loading: 'lazy' }}
+      {%- else -%}
+        <span class="ing-img ing-img--empty" aria-hidden="true"></span>
+      {%- endif -%}
+      <div class="ing-body">
+        <h3>Vitamin B12</h3>
+        <p>Supports energy levels, focus and the nervous system.</p>
+        <a class="learn" href="{{ ing_page }}?ing=vitamin-b12">Learn More <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Primal home ingredients",
+  "tag": "section",
+  "class": "pw-home-ing-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section heading"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Powered By Purpose"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Ingredients That Make A Difference"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Carefully selected. Purposefully dosed. Backed by science."
+    },
+    {
+      "type": "header",
+      "content": "Card images — upload manually"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_magnesium",
+      "label": "1. Magnesium image"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_lions_mane",
+      "label": "2. Lion's Mane image"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_creatine",
+      "label": "3. Creatine image"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_ashwagandha",
+      "label": "4. Ashwagandha image"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_bioperine",
+      "label": "5. Bioperine image"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_b12",
+      "label": "6. Vitamin B12 image"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Primal home ingredients"
+    }
+  ]
+}
+{% endschema %}
