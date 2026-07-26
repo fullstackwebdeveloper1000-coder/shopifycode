@@ -1,0 +1,78 @@
+<section id="PwScienceFaq-{{ section.id }}" class="pw-sci-faq">
+  <div class="pw-sci-faq__container">
+    {%- if section.settings.heading != blank -%}
+      <h2>{{ section.settings.heading }}</h2>
+    {%- endif -%}
+    <div class="pw-sci-faq__grid">
+      {%- for block in section.blocks -%}
+        <details class="pw-sci-faq__item" {{ block.shopify_attributes }}>
+          <summary>
+            {{ block.settings.question }}
+            <span class="pw-sci-faq__chev" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+            </span>
+          </summary>
+          <div class="pw-sci-faq__ans">{{ block.settings.answer }}</div>
+        </details>
+      {%- endfor -%}
+    </div>
+    {%- if section.settings.button_label != blank -%}
+      <div class="pw-sci-faq__cta">
+        <a class="pw-sci-faq__btn" href="{{ section.settings.button_link | default: '#' }}">
+          {{ section.settings.button_label }}
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% style %}
+  #PwScienceFaq-{{ section.id }} { background: #efe5dd; padding: 56px 0 60px; }
+  #PwScienceFaq-{{ section.id }} .pw-sci-faq__container { max-width: 1180px; margin: 0 auto; padding: 0 48px; }
+  #PwScienceFaq-{{ section.id }} h2 { margin: 0 0 30px; text-align: center; font-family: Montserrat, Arial, sans-serif; font-weight: 800; font-size: 28px; text-transform: uppercase; color: #1f2326; }
+  #PwScienceFaq-{{ section.id }} .pw-sci-faq__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px 24px; max-width: 960px; margin: 0 auto; }
+  #PwScienceFaq-{{ section.id }} .pw-sci-faq__item { border: 1px solid rgba(31,35,38,.10); border-radius: 8px; background: #fff; }
+  #PwScienceFaq-{{ section.id }} .pw-sci-faq__item summary { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 16px 18px; font-family: Inter, Arial, sans-serif; font-size: 14px; font-weight: 500; color: #1f2326; cursor: pointer; list-style: none; }
+  #PwScienceFaq-{{ section.id }} .pw-sci-faq__item summary::-webkit-details-marker { display: none; }
+  #PwScienceFaq-{{ section.id }} .pw-sci-faq__chev { color: #737a80; transition: transform .2s; }
+  #PwScienceFaq-{{ section.id }} .pw-sci-faq__item[open] .pw-sci-faq__chev { transform: rotate(180deg); }
+  #PwScienceFaq-{{ section.id }} .pw-sci-faq__ans { padding: 0 18px 16px; font-family: Inter, Arial, sans-serif; font-size: 13px; line-height: 1.6; color: #737a80; }
+  #PwScienceFaq-{{ section.id }} .pw-sci-faq__cta { margin-top: 30px; text-align: center; }
+  #PwScienceFaq-{{ section.id }} .pw-sci-faq__btn { display: inline-flex; align-items: center; gap: 12px; padding: 14px 24px; border: 1.5px solid #c89a3d; border-radius: 8px; font-family: Montserrat, Arial, sans-serif; font-weight: 700; font-size: 13px; letter-spacing: 1px; text-transform: uppercase; color: #c89a3d; text-decoration: none; }
+  @media (max-width: 960px) {
+    #PwScienceFaq-{{ section.id }} .pw-sci-faq__container { padding: 0 34px; }
+    #PwScienceFaq-{{ section.id }} .pw-sci-faq__grid { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 560px) { #PwScienceFaq-{{ section.id }} .pw-sci-faq__container { padding: 0 20px; } }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "Science — FAQ",
+  "tag": "section",
+  "class": "pw-section",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Frequently Asked Questions" },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "View All FAQs" },
+    { "type": "url", "id": "button_link", "label": "Button link" }
+  ],
+  "blocks": [
+    { "type": "faq", "name": "Question", "settings": [
+      { "type": "text", "id": "question", "label": "Question", "default": "Can I take Primal Win every day?" },
+      { "type": "textarea", "id": "answer", "label": "Answer", "default": "Yes — Primal Win is designed as a daily habit." }
+    ]}
+  ],
+  "presets": [{
+    "name": "Science — FAQ",
+    "blocks": [
+      { "type": "faq", "settings": { "question": "Can I take Primal Win every day?", "answer": "Yes — Primal Win is designed as a daily habit." } },
+      { "type": "faq", "settings": { "question": "Can pregnant or breastfeeding women take it?", "answer": "Please consult your doctor first." } },
+      { "type": "faq", "settings": { "question": "Does Primal Win replace fruit and vegetables?", "answer": "It complements a balanced diet rather than replacing whole foods." } },
+      { "type": "faq", "settings": { "question": "How and when should I take it?", "answer": "One scoop daily, mixed with water." } },
+      { "type": "faq", "settings": { "question": "Is Primal Win suitable for vegans and vegetarians?", "answer": "Yes." } },
+      { "type": "faq", "settings": { "question": "Can I mix it with other supplements?", "answer": "Generally yes — check with your healthcare provider if unsure." } }
+    ]
+  }]
+}
+{% endschema %}

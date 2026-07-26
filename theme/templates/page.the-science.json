@@ -1,0 +1,52 @@
+{
+  "sections": {
+    "science-hero": {
+      "type": "primal-science-hero",
+      "blocks": {
+        "feat-1": { "type": "feature", "settings": { "title": "Science Backed", "text": "Every ingredient is chosen for a reason." } },
+        "feat-2": { "type": "feature", "settings": { "title": "Clinically Inspired", "text": "Formulated using the latest research." } },
+        "feat-3": { "type": "feature", "settings": { "title": "Immunity Support", "text": "Key nutrients for daily defence and vitality." } },
+        "feat-4": { "type": "feature", "settings": { "title": "Focused & Every Scoop", "text": "Superior ingredients that work together." } }
+      },
+      "block_order": ["feat-1", "feat-2", "feat-3", "feat-4"],
+      "settings": {
+        "heading": "<p>Your Potential.<br>Powered By <strong>Science.</strong></p>",
+        "lead": "The right ingredients. The right forms. The right doses.",
+        "background_color": "#EFE5DD"
+      }
+    },
+    "science-carousel": {
+      "type": "primal-science-carousel",
+      "settings": {
+        "heading": "Superior Ingredients. Clinically Effective Doses. Real Results.",
+        "subheading": "We use the most bioavailable forms at clinically effective doses that your body can absorb and use.",
+        "slide_count": 3,
+        "footnote": "*Compared to typical forms used in leading greens powders. Bioavailability may vary based on individual factors."
+      }
+    },
+    "science-optimise": {
+      "type": "primal-science-optimise",
+      "settings": {}
+    },
+    "science-trust": {
+      "type": "primal-science-trust",
+      "settings": {}
+    },
+    "science-faq": {
+      "type": "primal-science-faq",
+      "settings": {}
+    },
+    "science-cta": {
+      "type": "primal-science-cta",
+      "settings": {}
+    }
+  },
+  "order": [
+    "science-hero",
+    "science-carousel",
+    "science-optimise",
+    "science-trust",
+    "science-faq",
+    "science-cta"
+  ]
+}
