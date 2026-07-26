@@ -1,0 +1,271 @@
+{% style %}
+  .pw-footer {
+    background: var(--ink-900);
+    color: #C7CBce;
+    padding: 56px 0 24px;
+    font-family: var(--font-body);
+  }
+  .pw-footer__grid {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr 1fr 1.6fr;
+    gap: 30px;
+  }
+  .pw-footer__logo {
+    height: 44px;
+    width: auto;
+    display: block;
+    margin-bottom: 18px;
+    mix-blend-mode: lighten;
+  }
+  .pw-footer__brand p {
+    font-size: 14px;
+    line-height: 1.6;
+    margin: 0 0 18px;
+  }
+  .pw-footer__socials {
+    display: flex;
+    gap: 16px;
+    color: var(--white);
+  }
+  .pw-footer__socials a {
+    color: inherit;
+    line-height: 0;
+  }
+  .pw-footer__col h5,
+  .pw-footer__join h5 {
+    font-family: var(--font-head);
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--white);
+    margin: 2px 0 16px;
+  }
+  .pw-footer__join h5 {
+    margin-bottom: 12px;
+  }
+  .pw-footer__col a {
+    display: block;
+    font-size: 14px;
+    margin-bottom: 11px;
+    color: #C7CBce;
+    text-decoration: none;
+  }
+  .pw-footer__col a:hover {
+    color: var(--white);
+  }
+  .pw-footer__join p {
+    font-size: 14px;
+    line-height: 1.55;
+    margin: 0 0 14px;
+  }
+  .pw-footer__field {
+    display: flex;
+    background: var(--white);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .pw-footer__field input {
+    flex: 1;
+    min-width: 0;
+    border: 0;
+    padding: 13px 16px;
+    font-family: var(--font-body);
+    font-size: 14px;
+    color: var(--charcoal);
+    background: transparent;
+  }
+  .pw-footer__field button {
+    border: 0;
+    background: var(--gold);
+    color: var(--ink-900);
+    padding: 0 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+  }
+  .pw-footer__success,
+  .pw-footer__error {
+    font-size: 13px;
+    margin-top: 10px;
+  }
+  .pw-footer__success {
+    color: #8fd4a8;
+  }
+  .pw-footer__error {
+    color: #f2a3a3;
+  }
+  .pw-footer__bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    border-top: 1px solid rgba(255, 255, 255, 0.10);
+    margin-top: 40px;
+    padding-top: 20px;
+    font-size: 13px;
+    color: var(--slate);
+  }
+  .pw-footer__uk {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    white-space: nowrap;
+  }
+
+  @media screen and (max-width: 989px) {
+    .pw-footer__grid {
+      grid-template-columns: 1fr 1fr;
+    }
+    .pw-footer__brand,
+    .pw-footer__join {
+      grid-column: 1 / -1;
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    .pw-footer {
+      padding: 44px 0 20px;
+    }
+    .pw-footer__grid {
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+    .pw-footer__bottom {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+{% endstyle %}
+
+<footer class="pw-footer">
+  <div class="pw-container pw-footer__grid">
+    <div class="pw-footer__brand">
+      {%- if section.settings.logo != blank -%}
+        {{
+          section.settings.logo
+          | image_url: width: 400
+          | image_tag: class: 'pw-footer__logo', alt: shop.name, loading: 'lazy'
+        }}
+      {%- endif -%}
+      {%- if section.settings.brand_text != blank -%}
+        <p>{{ section.settings.brand_text | newline_to_br }}</p>
+      {%- endif -%}
+      <div class="pw-footer__socials">
+        {%- if section.settings.instagram_url != blank -%}
+          <a href="{{ section.settings.instagram_url }}" aria-label="Instagram" target="_blank" rel="noopener">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true" focusable="false"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+          </a>
+        {%- endif -%}
+        {%- if section.settings.facebook_url != blank -%}
+          <a href="{{ section.settings.facebook_url }}" aria-label="Facebook" target="_blank" rel="noopener">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M14 9h3V5h-3c-2.2 0-4 1.8-4 4v2H7v4h3v6h4v-6h3l1-4h-4V9c0-.6.4-1 1-1z"/></svg>
+          </a>
+        {%- endif -%}
+        {%- if section.settings.youtube_url != blank -%}
+          <a href="{{ section.settings.youtube_url }}" aria-label="YouTube" target="_blank" rel="noopener">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M23 12s0-3.2-.4-4.7c-.2-.9-.9-1.5-1.7-1.7C19.4 5.2 12 5.2 12 5.2s-7.4 0-8.9.4c-.8.2-1.5.8-1.7 1.7C1 8.8 1 12 1 12s0 3.2.4 4.7c.2.9.9 1.5 1.7 1.7 1.5.4 8.9.4 8.9.4s7.4 0 8.9-.4c.8-.2 1.5-.8 1.7-1.7C23 15.2 23 12 23 12zM9.8 15.3V8.7l5.7 3.3-5.7 3.3z"/></svg>
+          </a>
+        {%- endif -%}
+        {%- if section.settings.tiktok_url != blank -%}
+          <a href="{{ section.settings.tiktok_url }}" aria-label="TikTok" target="_blank" rel="noopener">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M16 3c.3 2.2 1.6 3.7 3.8 4v3c-1.4 0-2.7-.4-3.8-1.1V15a6 6 0 1 1-6-6c.3 0 .7 0 1 .1v3.1a3 3 0 1 0 2 2.8V3h3z"/></svg>
+          </a>
+        {%- endif -%}
+      </div>
+    </div>
+
+    <div class="pw-footer__col">
+      <h5>{{ section.settings.learn_heading | escape }}</h5>
+      {%- for link in linklists[section.settings.learn_menu].links -%}
+        <a href="{{ link.url }}">{{ link.title }}</a>
+      {%- endfor -%}
+    </div>
+
+    <div class="pw-footer__col">
+      <h5>{{ section.settings.care_heading | escape }}</h5>
+      {%- for link in linklists[section.settings.care_menu].links -%}
+        <a href="{{ link.url }}">{{ link.title }}</a>
+      {%- endfor -%}
+    </div>
+
+    <div class="pw-footer__join">
+      <h5>{{ section.settings.newsletter_heading | escape }}</h5>
+      {%- if section.settings.newsletter_text != blank -%}
+        <p>{{ section.settings.newsletter_text | escape }}</p>
+      {%- endif -%}
+
+      {% form 'customer', class: 'pw-footer__newsletter' %}
+        <input type="hidden" name="contact[tags]" value="newsletter">
+        <div class="pw-footer__field">
+          <label class="pw-visually-hidden" for="PwFooterEmail-{{ section.id }}">Email</label>
+          <input
+            id="PwFooterEmail-{{ section.id }}"
+            type="email"
+            name="contact[email]"
+            value="{{ form.email }}"
+            placeholder="{{ section.settings.newsletter_placeholder | escape }}"
+            autocomplete="email"
+            required
+          >
+          <button type="submit" aria-label="Subscribe">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+              <path d="M5 12h14M13 6l6 6-6 6"/>
+            </svg>
+          </button>
+        </div>
+        {%- if form.posted_successfully? -%}
+          <p class="pw-footer__success">{{ section.settings.newsletter_success | escape }}</p>
+        {%- elsif form.errors -%}
+          <p class="pw-footer__error">{{ form.errors.messages.email | default: section.settings.newsletter_error | escape }}</p>
+        {%- endif -%}
+      {% endform %}
+    </div>
+  </div>
+
+  <div class="pw-container pw-footer__bottom">
+    <span>{{ section.settings.copyright | replace: '[year]', 'now' | date: '%Y' }}</span>
+    <span class="pw-footer__uk">
+      {{ section.settings.made_in_label | escape }}
+      <svg width="22" height="14" viewBox="0 0 60 40" aria-hidden="true" focusable="false">
+        <rect width="60" height="40" fill="#012169"/>
+        <path d="M0 0l60 40M60 0L0 40" stroke="#fff" stroke-width="6"/>
+        <path d="M0 0l60 40M60 0L0 40" stroke="#C8102E" stroke-width="3"/>
+        <path d="M30 0v40M0 20h60" stroke="#fff" stroke-width="10"/>
+        <path d="M30 0v40M0 20h60" stroke="#C8102E" stroke-width="6"/>
+      </svg>
+    </span>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Primal footer",
+  "tag": "footer",
+  "class": "pw-footer-section",
+  "settings": [
+    { "type": "image_picker", "id": "logo", "label": "Footer logo" },
+    { "type": "textarea", "id": "brand_text", "label": "Brand text", "default": "For those who want to win.\nClean ingredients.\nReal results." },
+    { "type": "header", "content": "Social links" },
+    { "type": "url", "id": "instagram_url", "label": "Instagram" },
+    { "type": "url", "id": "facebook_url", "label": "Facebook" },
+    { "type": "url", "id": "youtube_url", "label": "YouTube" },
+    { "type": "url", "id": "tiktok_url", "label": "TikTok" },
+    { "type": "header", "content": "Menus" },
+    { "type": "text", "id": "learn_heading", "label": "Learn column heading", "default": "Learn" },
+    { "type": "link_list", "id": "learn_menu", "label": "Learn menu" },
+    { "type": "text", "id": "care_heading", "label": "Customer care heading", "default": "Customer Care" },
+    { "type": "link_list", "id": "care_menu", "label": "Customer care menu" },
+    { "type": "header", "content": "Newsletter" },
+    { "type": "text", "id": "newsletter_heading", "label": "Newsletter heading", "default": "Join The Primal Community" },
+    { "type": "textarea", "id": "newsletter_text", "label": "Newsletter text", "default": "Be the first to know about new drops, offers and performance tips." },
+    { "type": "text", "id": "newsletter_placeholder", "label": "Email placeholder", "default": "Enter your email" },
+    { "type": "text", "id": "newsletter_success", "label": "Success message", "default": "Thanks for subscribing." },
+    { "type": "text", "id": "newsletter_error", "label": "Error message", "default": "Please enter a valid email address." },
+    { "type": "header", "content": "Bottom bar" },
+    { "type": "text", "id": "copyright", "label": "Copyright", "default": "© [year] Primal Win. All rights reserved." },
+    { "type": "text", "id": "made_in_label", "label": "Made in label", "default": "Made in the UK" }
+  ],
+  "presets": [{ "name": "Primal footer" }]
+}
+{% endschema %}

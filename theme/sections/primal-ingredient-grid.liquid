@@ -1,0 +1,182 @@
+{% style %}
+  .pw-ing-grid {
+    padding: 34px 0 60px;
+  }
+  .pw-ing-grid__cards {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 20px;
+  }
+  .pw-ing-grid__card {
+    background: var(--white);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 12px 30px -20px rgba(0, 0, 0, 0.25);
+  }
+  .pw-ing-grid__img {
+    aspect-ratio: 5 / 4;
+    width: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .pw-ing-grid__placeholder {
+    aspect-ratio: 5 / 4;
+    background: linear-gradient(150deg, #2b3630, #151a17);
+    position: relative;
+  }
+  .pw-ing-grid__placeholder::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 50% 45%, rgba(200, 154, 61, 0.16), transparent 60%);
+  }
+  .pw-ing-grid__body {
+    padding: 16px 16px 18px;
+  }
+  .pw-ing-grid__body h3 {
+    font-family: var(--font-head);
+    font-weight: 800;
+    font-size: 15px;
+    letter-spacing: 0.4px;
+    text-transform: uppercase;
+    color: var(--charcoal);
+    margin: 0 0 8px;
+  }
+  .pw-ing-grid__body p {
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--slate);
+    margin: 0 0 14px;
+    min-height: 76px;
+  }
+  .pw-ing-grid__link {
+    font-family: var(--font-head);
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--gold);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+  }
+  .pw-ing-grid__link:hover {
+    color: var(--gold-deep);
+  }
+
+  @media screen and (max-width: 1100px) {
+    .pw-ing-grid__cards {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    .pw-ing-grid {
+      padding: 28px 0 48px;
+    }
+    .pw-ing-grid__cards {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+    }
+    .pw-ing-grid__body p {
+      min-height: 0;
+    }
+  }
+{% endstyle %}
+
+{%- if section.settings.show_heading -%}
+  <div class="pw-section-head">
+    {%- if section.settings.eyebrow != blank -%}
+      <p class="pw-eyebrow">{{ section.settings.eyebrow | escape }}</p>
+    {%- endif -%}
+    {%- if section.settings.heading != blank -%}
+      <h2>{{ section.settings.heading | escape }}</h2>
+    {%- endif -%}
+    {%- if section.settings.subheading != blank -%}
+      <p>{{ section.settings.subheading | escape }}</p>
+    {%- endif -%}
+  </div>
+{%- endif -%}
+
+<section class="pw-ing-grid">
+  <div class="pw-container">
+    <div class="pw-ing-grid__cards">
+      {%- for block in section.blocks -%}
+        <article class="pw-ing-grid__card" {{ block.shopify_attributes }}>
+          {%- if block.settings.image != blank -%}
+            {{
+              block.settings.image
+              | image_url: width: 600
+              | image_tag:
+                class: 'pw-ing-grid__img',
+                widths: '300,400,500,600',
+                sizes: '(min-width: 1100px) 16vw, (min-width: 750px) 30vw, 46vw',
+                alt: block.settings.title,
+                loading: 'lazy'
+            }}
+          {%- else -%}
+            <div class="pw-ing-grid__placeholder" role="presentation"></div>
+          {%- endif -%}
+          <div class="pw-ing-grid__body">
+            {%- if block.settings.title != blank -%}
+              <h3>{{ block.settings.title | escape }}</h3>
+            {%- endif -%}
+            {%- if block.settings.text != blank -%}
+              <p>{{ block.settings.text | escape }}</p>
+            {%- endif -%}
+            {%- if block.settings.link_label != blank -%}
+              <a class="pw-ing-grid__link" href="{{ block.settings.link | default: '/pages/ingredients' }}">
+                {{ block.settings.link_label | escape }}
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+                  <path d="M5 12h14M13 6l6 6-6 6"/>
+                </svg>
+              </a>
+            {%- endif -%}
+          </div>
+        </article>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Primal ingredient grid",
+  "tag": "section",
+  "class": "pw-section pw-ing-grid-section",
+  "max_blocks": 6,
+  "settings": [
+    { "type": "checkbox", "id": "show_heading", "label": "Show section heading", "default": true },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Powered By Purpose" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Ingredients That Make A Difference" },
+    { "type": "text", "id": "subheading", "label": "Subheading", "default": "Carefully selected. Purposefully dosed. Backed by science." }
+  ],
+  "blocks": [
+    {
+      "type": "ingredient",
+      "name": "Ingredient card",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "text", "id": "title", "label": "Title", "default": "Magnesium" },
+        { "type": "textarea", "id": "text", "label": "Description", "default": "Supports muscle function, energy production and reduces tiredness." },
+        { "type": "text", "id": "link_label", "label": "Link label", "default": "Learn More" },
+        { "type": "url", "id": "link", "label": "Link", "default": "/pages/ingredients" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Primal ingredient grid",
+      "blocks": [
+        { "type": "ingredient", "settings": { "title": "Magnesium", "text": "Supports muscle function, energy production and reduces tiredness." } },
+        { "type": "ingredient", "settings": { "title": "Lion's Mane", "text": "Supports focus, memory and cognitive performance." } },
+        { "type": "ingredient", "settings": { "title": "Creatine", "text": "Improves strength, power and physical performance." } },
+        { "type": "ingredient", "settings": { "title": "Ashwagandha", "text": "Helps the body adapt to stress and supports mental wellbeing." } },
+        { "type": "ingredient", "settings": { "title": "Bioperine®", "text": "Enhances absorption so your body gets more from every ingredient." } },
+        { "type": "ingredient", "settings": { "title": "Vitamin B12", "text": "Supports energy levels, focus and the nervous system." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

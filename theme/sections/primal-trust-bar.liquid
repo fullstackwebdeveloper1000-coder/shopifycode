@@ -1,0 +1,137 @@
+{% style %}
+  .pw-trust {
+    background: var(--white);
+    border-top: 1px solid rgba(31, 35, 38, 0.10);
+    border-bottom: 1px solid rgba(31, 35, 38, 0.10);
+  }
+  .pw-trust__grid {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+  .pw-trust__item {
+    display: flex;
+    gap: 14px;
+    padding: 30px 26px;
+    min-width: 0;
+  }
+  .pw-trust__item + .pw-trust__item {
+    border-left: 1px solid rgba(31, 35, 38, 0.10);
+  }
+  .pw-trust__icon {
+    flex: 0 0 auto;
+    color: var(--gold);
+    line-height: 0;
+  }
+  .pw-trust__icon img {
+    width: 34px;
+    height: 34px;
+    display: block;
+  }
+  .pw-trust__item h4 {
+    font-family: var(--font-head);
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 0.4px;
+    text-transform: uppercase;
+    color: var(--charcoal);
+    margin: 0 0 8px;
+    line-height: 1.2;
+  }
+  .pw-trust__item p {
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--slate);
+    margin: 0;
+  }
+
+  @media screen and (max-width: 989px) {
+    .pw-trust__wrap {
+      overflow: hidden;
+    }
+    .pw-trust__grid {
+      display: flex;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+    .pw-trust__grid::-webkit-scrollbar {
+      display: none;
+    }
+    .pw-trust__item {
+      flex: 0 0 min(82vw, 320px);
+      scroll-snap-align: start;
+      border-left: 0;
+      border-right: 1px solid rgba(31, 35, 38, 0.10);
+      padding: 24px 20px;
+    }
+    .pw-trust__item:first-child {
+      padding-left: var(--gutter, 22px);
+    }
+    .pw-trust__item:last-child {
+      padding-right: var(--gutter, 22px);
+      border-right: 0;
+    }
+  }
+{% endstyle %}
+
+<section class="pw-trust">
+  <div class="pw-trust__wrap">
+    <div class="pw-trust__grid">
+      {%- for block in section.blocks -%}
+        <div class="pw-trust__item" {{ block.shopify_attributes }}>
+          <span class="pw-trust__icon">
+            {%- if block.settings.icon != blank -%}
+              {{ block.settings.icon | image_url: width: 80 | image_tag: alt: '', loading: 'lazy' }}
+            {%- else -%}
+              <svg width="34" height="34" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true" focusable="false">
+                <circle cx="20" cy="20" r="19"/>
+                <path d="M13 20.5l4.5 4.5L28 14" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            {%- endif -%}
+          </span>
+          <div>
+            {%- if block.settings.title != blank -%}
+              <h4>{{ block.settings.title }}</h4>
+            {%- endif -%}
+            {%- if block.settings.text != blank -%}
+              <p>{{ block.settings.text }}</p>
+            {%- endif -%}
+          </div>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Primal trust bar",
+  "tag": "section",
+  "class": "pw-section pw-trust-section",
+  "max_blocks": 5,
+  "blocks": [
+    {
+      "type": "item",
+      "name": "Trust item",
+      "settings": [
+        { "type": "image_picker", "id": "icon", "label": "Icon" },
+        { "type": "textarea", "id": "title", "label": "Title", "default": "Clean &\nTransparent" },
+        { "type": "textarea", "id": "text", "label": "Text", "default": "No fillers. No shortcuts. Just what your body needs to perform." }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Primal trust bar",
+      "blocks": [
+        { "type": "item", "settings": { "title": "Clean &\nTransparent", "text": "No fillers. No shortcuts. Just what your body needs to perform." } },
+        { "type": "item", "settings": { "title": "Science\nBacked", "text": "Formulated by experts. Built on research. Proven in real life." } },
+        { "type": "item", "settings": { "title": "Third-Party\nTested", "text": "Independently tested for purity, potency and quality." } },
+        { "type": "item", "settings": { "title": "Made In\nThe UK", "text": "Manufactured to the highest standards in the United Kingdom." } },
+        { "type": "item", "settings": { "title": "Performance\nYou Feel", "text": "Designed to fuel your energy, focus, recovery and resilience." } }
+      ]
+    }
+  ]
+}
+{% endschema %}
