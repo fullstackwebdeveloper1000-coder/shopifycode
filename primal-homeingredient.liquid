@@ -245,13 +245,16 @@
   #PrimalHomeIngredients-{{ section.id }} .ing-body h3 {
     font-family: 'Montserrat', system-ui, sans-serif;
     font-weight: 800;
-    font-size: 15px;
+    font-size: clamp(11px, 0.95vw, 14px);
     line-height: 1.2;
-    letter-spacing: 0.4px;
+    letter-spacing: 0.2px;
     text-transform: uppercase;
     color: #1F2326;
     margin: 0 0 8px;
-    min-height: 2.4em;
+    white-space: nowrap;
+    overflow-wrap: normal;
+    word-break: keep-all;
+    hyphens: manual;
   }
 
   #PrimalHomeIngredients-{{ section.id }} .ing-body p {
@@ -304,7 +307,11 @@
       gap: 14px;
     }
 
-    #PrimalHomeIngredients-{{ section.id }} .ing-body h3,
+    #PrimalHomeIngredients-{{ section.id }} .ing-body h3 {
+      font-size: 12px;
+      letter-spacing: 0.15px;
+    }
+
     #PrimalHomeIngredients-{{ section.id }} .ing-body p {
       min-height: 0;
     }
