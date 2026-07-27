@@ -31,7 +31,6 @@
     --peh-logo-mobile-width: {{ section.settings.logo_width_mobile_v3 }}px;
     --peh-button-radius: {{ section.settings.button_radius }}px;
     --peh-logo-zoom: {{ section.settings.logo_zoom | divided_by: 100.0 }};
-    --peh-scale: 1;
     --peh-stage-height: 74px;
   "
 >
@@ -149,6 +148,13 @@
     max-width: none !important;
   }
 
+  #shopify-section-{{ section.id }} .page-width,
+  #shopify-section-{{ section.id }} > .page-width {
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
   #PrimalExactHeader-{{ section.id }},
   #PrimalExactHeader-{{ section.id }} *,
   #PrimalExactHeader-{{ section.id }} *::before,
@@ -193,8 +199,6 @@
     width: 100%;
     height: 74px;
     overflow: visible;
-    transform: scale(var(--peh-scale));
-    transform-origin: left top;
   }
 
   #PrimalExactHeader-{{ section.id }} .peh__logo-link {
@@ -260,7 +264,7 @@
   #PrimalExactHeader-{{ section.id }} .peh__desktop-nav {
     position: absolute;
     top: 0;
-    left: 278px;
+    left: 21.7%;
     display: flex;
     height: 74px;
     align-items: center;
@@ -308,7 +312,7 @@
   #PrimalExactHeader-{{ section.id }} .peh__cta {
     position: absolute;
     top: 19px;
-    left: 762px;
+    left: 59.4%;
     display: flex;
     width: 162px;
     height: 40px;
@@ -356,12 +360,12 @@
 
   #PrimalExactHeader-{{ section.id }} .peh__account {
     top: 25px;
-    left: 944px;
+    left: 73.6%;
   }
 
   #PrimalExactHeader-{{ section.id }} .peh__cart {
     top: 25px;
-    left: 982px;
+    left: 76.6%;
   }
 
   #PrimalExactHeader-{{ section.id }} .peh__cart-count {
@@ -398,7 +402,6 @@
 
     #PrimalExactHeader-{{ section.id }} .peh__canvas {
       height: 70px;
-      transform: none;
     }
 
     #PrimalExactHeader-{{ section.id }} .peh__logo-link {
@@ -526,39 +529,16 @@
     const header = document.getElementById('PrimalExactHeader-{{ section.id }}');
     if (!header) return;
 
-    const BASE_WIDTH = 1180;
-    const BASE_HEIGHT = 74;
-    const stage = header.querySelector('.peh__stage');
-
-    const resizeHeader = () => {
-      if (!stage) return;
-      const availableWidth = stage.getBoundingClientRect().width;
-
-      if (window.matchMedia('(max-width: 799px)').matches) {
-        header.style.setProperty('--peh-scale', '1');
-        header.style.setProperty('--peh-stage-height', '70px');
-        return;
-      }
-
-      const innerWidth = Math.max(availableWidth - (parseFloat(getComputedStyle(stage).paddingLeft) || 0) - (parseFloat(getComputedStyle(stage).paddingRight) || 0), 1);
-      const scale = Math.min(innerWidth / (BASE_WIDTH - 96), 1);
-      const renderedHeight = BASE_HEIGHT * scale;
-
-      header.style.setProperty('--peh-scale', scale.toFixed(6));
-      header.style.setProperty('--peh-stage-height', `${renderedHeight.toFixed(3)}px`);
+    const setHeaderHeight = () => {
+      header.style.setProperty(
+        '--peh-stage-height',
+        window.matchMedia('(max-width: 799px)').matches ? '70px' : '74px'
+      );
     };
 
-    resizeHeader();
-
-    if ('ResizeObserver' in window) {
-      const observer = new ResizeObserver(resizeHeader);
-      observer.observe(header);
-      if (stage) observer.observe(stage);
-    } else {
-      window.addEventListener('resize', resizeHeader, { passive: true });
-    }
-
-    document.addEventListener('shopify:section:load', resizeHeader);
+    setHeaderHeight();
+    window.addEventListener('resize', setHeaderHeight, { passive: true });
+    document.addEventListener('shopify:section:load', setHeaderHeight);
   })();
 </script>
 
