@@ -137,7 +137,9 @@
 {% style %}
   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@600;700&display=swap');
 
-  {% render 'pw-align-vars' %}
+  #PrimalExactHeader-{{ section.id }} {
+    {% render 'pw-align-vars' %}
+  }
 
   #shopify-section-{{ section.id }} {
     position: relative;
