@@ -1,9 +1,10 @@
 {%- comment -%}
   Primal Win — zoom-safe container (paste inside section {% style %})
   Requires pw-align-vars on same section root or parent.
+  --pw-inner = 1280px content + gutters (not full 1440 section frame).
 {%- endcomment -%}
   width: 100%;
-  max-width: var(--pw-max);
+  max-width: var(--pw-inner);
   margin-inline: auto;
   padding-inline: var(--pw-gutter);
   box-sizing: border-box;

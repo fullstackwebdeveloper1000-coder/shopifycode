@@ -1,13 +1,16 @@
 {%- comment -%}
   Primal Win — shared alignment tokens
-  Site width: 1280px (client standard)
-  Zoom-safe: same max + gutter on every section; no scale-up; no 100vw bleed
+  Section frame: 1440px (outer aligned band / hero bleed)
+  Content column: 1280px (text, cards, nav — logo line)
+  pw-container max = content + gutters (1376px at 48px gutter)
   Wrap inside a section selector in {% style %}:
   #YourSection-{{ section.id }} { {% render 'pw-align-vars' %} }
 {%- endcomment -%}
-  --pw-frame: 1280px;
-  --pw-max: 1280px;
+  --pw-frame: 1440px;
+  --pw-max: 1440px;
+  --pw-content: 1280px;
   --pw-gutter: 48px;
+  --pw-inner: calc(var(--pw-content) + 2 * var(--pw-gutter));
 
   @media screen and (max-width: 1180px) {
     --pw-gutter: 34px;
