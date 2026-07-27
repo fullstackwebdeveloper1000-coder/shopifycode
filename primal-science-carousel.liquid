@@ -129,8 +129,6 @@
 {% style %}
   #PwScienceCarousel-{{ section.id }} {
     {% render 'pw-align-vars' %}
-    --pw-car-arrow-size: 44px;
-    --pw-car-arrow-gap: 12px;
   }
 
   #shopify-section-{{ section.id }} {
@@ -139,7 +137,7 @@
     max-width: none !important;
     margin: 0 !important;
     padding: 0 !important;
-    overflow-x: visible !important;
+    overflow-x: clip !important;
   }
 
   #shopify-section-{{ section.id }} .page-width,
@@ -209,12 +207,9 @@
 
   #PwScienceCarousel-{{ section.id }} .pw-sci-car__wrap {
     position: relative;
-    margin-inline: calc(-1 * var(--pw-gutter));
-    padding-inline: var(--pw-gutter);
   }
 
   #PwScienceCarousel-{{ section.id }} .pw-sci-car__viewport {
-    width: 100%;
     overflow: hidden;
   }
 
@@ -392,32 +387,24 @@
     top: 50%;
     z-index: 3;
     display: flex;
-    width: var(--pw-car-arrow-size);
-    height: var(--pw-car-arrow-size);
+    width: 44px;
+    height: 44px;
     align-items: center;
     justify-content: center;
-    padding: 0;
     border: 1.5px solid #c89a3d;
     border-radius: 50%;
-    background: rgba(0, 0, 0, 0.35);
+    background: rgba(0, 0, 0, 0.2);
     color: #c89a3d;
     cursor: pointer;
     transform: translateY(-50%);
-    transition: background 0.2s ease, border-color 0.2s ease;
-  }
-
-  #PwScienceCarousel-{{ section.id }} .pw-sci-car__arrow:hover {
-    background: rgba(0, 0, 0, 0.55);
-    border-color: #d4ab4a;
-    color: #d4ab4a;
   }
 
   #PwScienceCarousel-{{ section.id }} .pw-sci-car__arrow--prev {
-    left: calc(var(--pw-gutter) - var(--pw-car-arrow-size) - var(--pw-car-arrow-gap));
+    left: calc(-1 * var(--pw-gutter));
   }
 
   #PwScienceCarousel-{{ section.id }} .pw-sci-car__arrow--next {
-    right: calc(var(--pw-gutter) - var(--pw-car-arrow-size) - var(--pw-car-arrow-gap));
+    right: calc(-1 * var(--pw-gutter));
   }
 
   #PwScienceCarousel-{{ section.id }} .pw-sci-car__foot {
@@ -464,16 +451,6 @@
   }
 
   @media screen and (max-width: 960px) {
-    #PwScienceCarousel-{{ section.id }} {
-      --pw-car-arrow-size: 36px;
-      --pw-car-arrow-gap: 10px;
-    }
-
-    #PwScienceCarousel-{{ section.id }} .pw-sci-car__arrow svg {
-      width: 16px;
-      height: 16px;
-    }
-
     #PwScienceCarousel-{{ section.id }} .pw-sci-car__slide {
       grid-template-columns: 1fr;
       gap: 16px;
@@ -482,6 +459,9 @@
     #PwScienceCarousel-{{ section.id }} .pw-sci-car__tile {
       min-height: 0;
     }
+
+    #PwScienceCarousel-{{ section.id }} .pw-sci-car__arrow--prev { left: 2px; }
+    #PwScienceCarousel-{{ section.id }} .pw-sci-car__arrow--next { right: 2px; }
   }
 
   @media screen and (max-width: 560px) {
