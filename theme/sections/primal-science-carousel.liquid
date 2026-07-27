@@ -18,14 +18,12 @@
     </div>
 
     <div class="pw-sci-car__wrap">
-      <button class="pw-sci-car__arrow pw-sci-car__arrow--prev" type="button" aria-label="Previous slide" data-carousel-prev>
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg>
-      </button>
-      <button class="pw-sci-car__arrow pw-sci-car__arrow--next" type="button" aria-label="Next slide" data-carousel-next>
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
-      </button>
+      <div class="pw-sci-car__rail">
+        <button class="pw-sci-car__arrow pw-sci-car__arrow--prev" type="button" aria-label="Previous slide" data-carousel-prev>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg>
+        </button>
 
-      <div class="pw-sci-car__viewport" data-carousel-viewport>
+        <div class="pw-sci-car__viewport" data-carousel-viewport>
         <div class="pw-sci-car__track" data-carousel-track>
           {%- assign slide_total = section.settings.slide_count | default: 3 -%}
           {%- for slide_index in (1..slide_total) -%}
@@ -108,6 +106,11 @@
             </div>
           {%- endfor -%}
         </div>
+        </div>
+
+        <button class="pw-sci-car__arrow pw-sci-car__arrow--next" type="button" aria-label="Next slide" data-carousel-next>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+        </button>
       </div>
 
       <div class="pw-sci-car__foot">
@@ -209,7 +212,15 @@
     position: relative;
   }
 
+  #PwScienceCarousel-{{ section.id }} .pw-sci-car__rail {
+    display: grid;
+    grid-template-columns: 44px minmax(0, 1fr) 44px;
+    align-items: center;
+    gap: 20px;
+  }
+
   #PwScienceCarousel-{{ section.id }} .pw-sci-car__viewport {
+    min-width: 0;
     overflow: hidden;
   }
 
@@ -383,24 +394,26 @@
   }
 
   #PwScienceCarousel-{{ section.id }} .pw-sci-car__arrow {
-    position: absolute;
-    top: 50%;
-    z-index: 3;
     display: flex;
     width: 44px;
     height: 44px;
+    flex-shrink: 0;
     align-items: center;
     justify-content: center;
-    border: 1.5px solid #c89a3d;
+    padding: 0;
+    border: 1.5px solid rgba(255, 255, 255, 0.45);
     border-radius: 50%;
-    background: rgba(0, 0, 0, 0.2);
-    color: #c89a3d;
+    background: transparent;
+    color: rgba(255, 255, 255, 0.72);
     cursor: pointer;
-    transform: translateY(-50%);
+    transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
   }
 
-  #PwScienceCarousel-{{ section.id }} .pw-sci-car__arrow--prev { left: -14px; }
-  #PwScienceCarousel-{{ section.id }} .pw-sci-car__arrow--next { right: -14px; }
+  #PwScienceCarousel-{{ section.id }} .pw-sci-car__arrow:hover {
+    border-color: #c89a3d;
+    color: #c89a3d;
+    background: rgba(0, 0, 0, 0.2);
+  }
 
   #PwScienceCarousel-{{ section.id }} .pw-sci-car__foot {
     display: flex;
@@ -446,6 +459,21 @@
   }
 
   @media screen and (max-width: 960px) {
+    #PwScienceCarousel-{{ section.id }} .pw-sci-car__rail {
+      grid-template-columns: 36px minmax(0, 1fr) 36px;
+      gap: 12px;
+    }
+
+    #PwScienceCarousel-{{ section.id }} .pw-sci-car__arrow {
+      width: 36px;
+      height: 36px;
+    }
+
+    #PwScienceCarousel-{{ section.id }} .pw-sci-car__arrow svg {
+      width: 16px;
+      height: 16px;
+    }
+
     #PwScienceCarousel-{{ section.id }} .pw-sci-car__slide {
       grid-template-columns: 1fr;
       gap: 16px;
@@ -454,9 +482,6 @@
     #PwScienceCarousel-{{ section.id }} .pw-sci-car__tile {
       min-height: 0;
     }
-
-    #PwScienceCarousel-{{ section.id }} .pw-sci-car__arrow--prev { left: 2px; }
-    #PwScienceCarousel-{{ section.id }} .pw-sci-car__arrow--next { right: 2px; }
   }
 
   @media screen and (max-width: 560px) {
