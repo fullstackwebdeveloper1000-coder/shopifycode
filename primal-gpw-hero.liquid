@@ -1,5 +1,5 @@
 <section id="PwGpwHero-{{ section.id }}" class="gpw-hero">
-  <div class="container gpw-hero-grid">
+  <div class="pw-container gpw-hero-grid">
     <div class="gpw-hero-copy">
       <h1 class="gpw-hero-head">For Those<br>Who Want<br>To Win<span class="sq">.</span></h1>
       <p class="gpw-hero-tag">Feel Stronger. Think Sharper. Live Better.</p>
@@ -97,10 +97,14 @@
     -webkit-font-smoothing: antialiased;
   }
 
-  #PwGpwHero-{{ section.id }} .container {
-    max-width: 1180px;
-    margin: 0 auto;
-    padding: 0 48px;
+  {% render 'pw-align-vars' %}
+
+  #PwGpwHero-{{ section.id }} .pw-container {
+    width: 100%;
+    max-width: var(--pw-max);
+    margin-inline: auto;
+    padding-inline: var(--pw-gutter);
+    box-sizing: border-box;
   }
 
   #PwGpwHero-{{ section.id }} .gpw-hero-grid {
@@ -230,9 +234,7 @@
   }
 
   @media screen and (max-width: 560px) {
-    #PwGpwHero-{{ section.id }} .container {
-      padding: 0 22px;
-    }
+    /* gutter handled by --pw-gutter */
 
     #PwGpwHero-{{ section.id }} .gpw-hero-head {
       font-size: 48px !important;

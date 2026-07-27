@@ -1,0 +1,38 @@
+{%- comment -%}
+  ============================================================
+  PRIMAL WIN — SECTION ALIGNMENT STANDARD (paste in every section)
+  ============================================================
+
+  Client rule: logo se footer tak sab ek line par align ho.
+  Figma frame = 1440px. Content line = 1180px (centered).
+  Har section mein yahi 3 cheezein use karo.
+
+  1) HTML wrapper:
+     <div class="pw-container"> ... content ... </div>
+
+  2) Section reset (top of {% style %}):
+     #shopify-section-{{ section.id }} {
+       margin: 0 !important;
+       padding: 0 !important;
+       max-width: none !important;
+     }
+
+  3) Container CSS (section id ke andar):
+     {% render 'pw-align-vars' %}
+
+     #YourSection-{{ section.id }} .pw-container {
+       width: 100%;
+       max-width: var(--pw-max);
+       margin-inline: auto;
+       padding-inline: var(--pw-gutter);
+       box-sizing: border-box;
+     }
+
+  AVOID (zoom par design bigadta hai):
+  - alag max-width (1200, 1280, 100% random)
+  - alag padding (40px, 50px, 60px mixed)
+  - 100vw / negative margin bleed without plan
+  - absolute images jo container se bahar nikal jayein
+
+  Send next section code → align kar dunga.
+{%- endcomment -%}
