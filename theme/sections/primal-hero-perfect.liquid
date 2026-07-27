@@ -2,7 +2,7 @@
   assign heading_font = section.settings.heading_font
   assign display_font = section.settings.display_font
   assign hero_alt = section.settings.hero_image.alt | default: 'Primal Win pouch with greens powder and gold scoop'
-  assign hero_sizes = '(min-width: 1025px) 980px, 100vw'
+  assign hero_sizes = '(min-width: 1440px) 1010px, (min-width: 1025px) 770px, 100%'
   assign hero_widths = '900, 1200, 1600, 1800, 2200'
 %}
 
@@ -96,38 +96,38 @@
         </a>
       </div>
     </div>
+  </div>
 
-    <div class="primal-bg-image-{{ section.id }}">
-      {% if section.settings.hero_image != blank %}
-        {{
-          section.settings.hero_image
-          | image_url: width: 2200
-          | image_tag:
-            class: 'primal-hero-image',
-            loading: 'eager',
-            preload: true,
-            widths: hero_widths,
-            sizes: hero_sizes,
-            width: section.settings.hero_image.width,
-            height: section.settings.hero_image.height,
-            alt: hero_alt
-        }}
-      {% else %}
-        {{
-          'hero-pouch.png'
-          | asset_img_url: width: 2200
-          | image_tag:
-            class: 'primal-hero-image',
-            loading: 'eager',
-            preload: true,
-            widths: hero_widths,
-            sizes: hero_sizes,
-            width: 770,
-            height: 620,
-            alt: hero_alt
-        }}
-      {% endif %}
-    </div>
+  <div class="primal-bg-image-{{ section.id }}">
+    {% if section.settings.hero_image != blank %}
+      {{
+        section.settings.hero_image
+        | image_url: width: 2200
+        | image_tag:
+          class: 'primal-hero-image',
+          loading: 'eager',
+          preload: true,
+          widths: hero_widths,
+          sizes: hero_sizes,
+          width: section.settings.hero_image.width,
+          height: section.settings.hero_image.height,
+          alt: hero_alt
+      }}
+    {% else %}
+      {{
+        'hero-pouch.png'
+        | asset_img_url: width: 2200
+        | image_tag:
+          class: 'primal-hero-image',
+          loading: 'eager',
+          preload: true,
+          widths: hero_widths,
+          sizes: hero_sizes,
+          width: 770,
+          height: 620,
+          alt: hero_alt
+      }}
+    {% endif %}
   </div>
 </section>
 
@@ -157,8 +157,10 @@
   }
 
   #PrimalHeroPerfect-{{ section.id }} {
+    position: relative;
     display: block;
     width: 100%;
+    height: 620px;
     margin: 0;
     padding: 0;
     background: #FAF8F5;
@@ -173,15 +175,16 @@
 
   #PrimalHeroPerfect-{{ section.id }} .pw-container.primal-container-{{ section.id }} {
     position: relative;
+    z-index: 2;
     display: flex;
     align-items: stretch;
     width: 100%;
     max-width: var(--pw-max);
-    height: 620px;
+    height: 100%;
     margin-inline: auto;
     padding-inline: var(--pw-gutter);
     padding-block: 0;
-    overflow: hidden;
+    overflow: visible;
   }
 
   #PrimalHeroPerfect-{{ section.id }} .primal-bg-image-{{ section.id }} {
@@ -189,10 +192,11 @@
     z-index: 1;
     top: 0;
     right: 0;
-    width: 770px;
-    max-width: calc(100% - 48px);
+    width: calc(770px + max(0px, (100vw - var(--pw-max)) / 2));
+    min-width: 52%;
     height: 100%;
     overflow: hidden;
+    pointer-events: none;
   }
 
   #PrimalHeroPerfect-{{ section.id }} .primal-bg-image-{{ section.id }} .primal-hero-image {
@@ -373,9 +377,13 @@
   }
 
   @media screen and (max-width: 1024px) {
+    #PrimalHeroPerfect-{{ section.id }} {
+      height: auto;
+    }
+
     #PrimalHeroPerfect-{{ section.id }} .pw-container.primal-container-{{ section.id }} {
       flex-direction: column-reverse;
-      min-height: 0;
+      height: auto;
       padding-inline: var(--pw-gutter);
     }
 
@@ -383,15 +391,19 @@
       position: relative;
       right: auto;
       width: 100%;
+      min-width: 0;
       height: 400px;
+      pointer-events: auto;
     }
 
-    #PrimalHeroPerfect-{{ section.id }} .primal-bg-image-{{ section.id }}::before {
-      display: none;
+    #PrimalHeroPerfect-{{ section.id }} .primal-bg-image-{{ section.id }} .primal-hero-image {
+      -webkit-mask-image: none;
+      mask-image: none;
     }
 
     #PrimalHeroPerfect-{{ section.id }} .primal-text-col-{{ section.id }} {
       width: 100%;
+      max-width: none;
       padding: 50px 0;
     }
 
