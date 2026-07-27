@@ -37,31 +37,41 @@
     </div>
 
     <div class="gpw-hero-media">
-      <div class="gpw-hero-shot-wrap">
-        {%- if section.settings.image != blank -%}
-          {{
-            section.settings.image
-            | image_url: width: 1600
-            | image_tag:
-              class: 'gpw-hero-shot',
-              loading: 'eager',
-              alt: 'Primal Win pouch with greens powder and gold scoop',
-              width: section.settings.image.width,
-              height: section.settings.image.height,
-              widths: '800, 1200, 1600',
-              sizes: '(min-width: 860px) 620px, 100vw'
-          }}
-        {%- else -%}
-          <img
-            class="gpw-hero-shot"
-            src="{{ 'hero-pouch.png' | asset_url }}"
-            alt="Primal Win pouch with greens powder and gold scoop"
-            loading="eager"
-            width="620"
-            height="520"
-          >
-        {%- endif -%}
-      </div>
+      {%- liquid
+        assign hero_alt = 'Primal Win — 40 active ingredients greens & performance formula'
+        assign hero_sizes = '(min-width: 860px) 560px, 100vw'
+        assign hero_widths = '400, 560, 800, 1200, 1600'
+      -%}
+
+      {%- if section.settings.image != blank -%}
+        {{
+          section.settings.image
+          | image_url: width: 1600
+          | image_tag:
+            class: 'gpw-hero-shot',
+            alt: hero_alt,
+            loading: 'eager',
+            preload: true,
+            widths: hero_widths,
+            sizes: hero_sizes,
+            width: section.settings.image.width,
+            height: section.settings.image.height
+        }}
+      {%- else -%}
+        {{
+          'hero-pouch.png'
+          | asset_img_url: width: 1600
+          | image_tag:
+            class: 'gpw-hero-shot',
+            alt: hero_alt,
+            loading: 'eager',
+            preload: true,
+            widths: hero_widths,
+            sizes: hero_sizes,
+            width: 560,
+            height: 560
+        }}
+      {%- endif -%}
     </div>
   </div>
 </section>
@@ -95,15 +105,10 @@
 
   #PwGpwHero-{{ section.id }} .gpw-hero-grid {
     display: grid;
-    grid-template-columns: 1.05fr 0.95fr;
-    gap: 24px 32px;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
     align-items: center;
     padding: 56px 0 44px;
-  }
-
-  #PwGpwHero-{{ section.id }} .gpw-hero-copy {
-    position: relative;
-    z-index: 2;
   }
 
   #PwGpwHero-{{ section.id }} .gpw-hero-head {
@@ -170,7 +175,6 @@
     align-items: center;
     justify-content: center;
     color: #c89a3d;
-    flex-shrink: 0;
   }
 
   #PwGpwHero-{{ section.id }} .gpw-badge p {
@@ -192,43 +196,24 @@
   }
 
   #PwGpwHero-{{ section.id }} .gpw-hero-media {
-    position: relative;
-    z-index: 1;
     display: flex;
     align-items: center;
-    justify-content: flex-end;
-    min-height: 480px;
-  }
-
-  #PwGpwHero-{{ section.id }} .gpw-hero-shot-wrap {
-    line-height: 0;
-    display: flex;
-    justify-content: flex-end;
-    width: 100%;
+    justify-content: center;
   }
 
   #PwGpwHero-{{ section.id }} .gpw-hero-shot {
-    width: auto;
-    max-width: none !important;
-    height: 500px;
+    width: 100%;
+    max-width: 560px;
+    border-radius: 14px;
     display: block;
-    object-fit: contain;
-    object-position: right center;
     border: 0 !important;
-    border-radius: 0 !important;
     box-shadow: none !important;
-    background: transparent !important;
-    -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 24%);
-    mask-image: linear-gradient(to right, transparent 0%, #000 24%);
+    height: auto;
   }
 
   @media screen and (max-width: 1080px) {
     #PwGpwHero-{{ section.id }} .gpw-hero-head {
       font-size: 64px !important;
-    }
-
-    #PwGpwHero-{{ section.id }} .gpw-hero-shot {
-      height: 420px;
     }
   }
 
@@ -241,22 +226,6 @@
 
     #PwGpwHero-{{ section.id }} .gpw-hero-media {
       order: -1;
-      min-height: 0;
-      justify-content: center;
-    }
-
-    #PwGpwHero-{{ section.id }} .gpw-hero-shot-wrap {
-      justify-content: center;
-    }
-
-    #PwGpwHero-{{ section.id }} .gpw-hero-shot {
-      width: 100%;
-      max-width: 420px !important;
-      height: auto;
-      object-fit: contain;
-      object-position: center;
-      -webkit-mask-image: none;
-      mask-image: none;
     }
   }
 
@@ -294,7 +263,7 @@
       "type": "image_picker",
       "id": "image",
       "label": "Pouch image",
-      "info": "Upload hero-pouch.png here (pouch + scoop on black platform). If empty, theme looks for hero-pouch.png in Assets."
+      "info": "Upload hero-pouch.png here. If empty, theme uses hero-pouch.png from Assets via asset_img_url."
     }
   ],
   "presets": [
