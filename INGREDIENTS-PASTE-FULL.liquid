@@ -1,0 +1,2917 @@
+{%- liquid
+  assign hero = section.settings.hero_image
+
+  assign icon_all = section.settings.icon_all
+  assign icon_gut = section.settings.icon_gut
+  assign icon_brain = section.settings.icon_brain
+  assign icon_energy = section.settings.icon_energy
+  assign icon_immune = section.settings.icon_immune
+  assign icon_performance = section.settings.icon_performance
+  assign icon_skin = section.settings.icon_skin
+  assign icon_overall = section.settings.icon_overall
+-%}
+
+{% style %}
+  #PwIng-{{ section.id }} {
+    {% render 'pw-align-vars' %}
+    --pw-pad-top: {{ section.settings.padding_top }}px;
+    --pw-pad-bottom: {{ section.settings.padding_bottom }}px;
+  }
+
+  #shopify-section-{{ section.id }} {
+    display: block !important;
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow-x: clip;
+  }
+
+  #shopify-section-{{ section.id }} .page-width,
+  #shopify-section-{{ section.id }} > .page-width {
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+.shopify-section.pw-ingredients-section { margin: 0; }
+
+.pw-ing {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding-top: var(--pw-pad-top, 0px);
+  padding-bottom: var(--pw-pad-bottom, 0px);
+  color: var(--charcoal, #1F2326);
+  background: var(--page, #EFE5DD);
+  font-family: var(--font-body, 'Inter', system-ui, sans-serif);
+}
+
+.pw-ing *,
+.pw-ing *::before,
+.pw-ing *::after { box-sizing: border-box; }
+
+.pw-ing img { display: block; max-width: 100%; }
+
+.pw-ing button,
+.pw-ing a { font: inherit; }
+
+.pw-ing a { text-decoration: none; }
+
+.pw-ing h1,
+.pw-ing h2,
+.pw-ing h3,
+.pw-ing h4,
+.pw-ing h5 {
+  letter-spacing: normal;
+  line-height: normal;
+  word-break: normal;
+}
+
+.pw-ing .pw-shell,
+.pw-ing .pw-explorer-width,
+.pw-ing .pw-clean-inner {
+  width: 100%;
+  max-width: var(--pw-inner);
+  margin-inline: auto;
+  padding-inline: var(--pw-gutter);
+}
+
+/* HERO */
+.pw-ing .pw-hero {
+  position: relative;
+  overflow: hidden;
+}
+
+.pw-ing .pw-hero-media {
+  position: absolute;
+  z-index: 1;
+  inset: 0 0 0 auto;
+  width: min(64%, 1000px);
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.pw-ing .pw-hero::after {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    90deg,
+    var(--page, #EFE5DD) 0%,
+    var(--page, #EFE5DD) 34%,
+    rgba(239, 229, 221, 0.96) 43%,
+    rgba(239, 229, 221, 0.5) 57%,
+    rgba(239, 229, 221, 0) 72%
+  );
+}
+
+.pw-ing .pw-hero-inner {
+  position: relative;
+  z-index: 2;
+  min-height: 560px;
+  padding-top: 52px;
+  padding-bottom: 40px;
+}
+
+.pw-ing .pw-hero-copy { max-width: 600px; }
+
+.pw-ing .pw-hero-title {
+  margin: 0 0 14px;
+  font-family: var(--font-head, 'Montserrat', system-ui, sans-serif);
+  font-weight: 900;
+  font-size: 62px;
+  line-height: 0.96;
+  letter-spacing: -1px;
+  text-transform: uppercase;
+  color: var(--charcoal, #1F2326);
+}
+
+.pw-ing .pw-hero-title .pw-dot { color: var(--gold, #C89A3D); }
+
+.pw-ing .pw-hero-lead {
+  margin: 0 0 26px;
+  font-size: 19px;
+  color: var(--charcoal, #1F2326);
+}
+
+.pw-ing .pw-purpose {
+  display: flex;
+  gap: 20px;
+  max-width: 470px;
+  margin-bottom: 26px;
+  padding: 24px 26px;
+  border: 1px solid rgba(31, 35, 38, 0.16);
+  border-radius: 14px;
+}
+
+.pw-ing .pw-purpose-icon {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  border: 1.5px solid var(--gold, #C89A3D);
+  border-radius: 50%;
+  color: var(--gold, #C89A3D);
+}
+
+.pw-ing .pw-purpose h2 {
+  margin: 2px 0 12px;
+  color: var(--charcoal, #1F2326);
+  font-family: var(--font-head, 'Montserrat', system-ui, sans-serif);
+  font-weight: 800;
+  font-size: 18px;
+  line-height: 1.1;
+  text-transform: uppercase;
+}
+
+.pw-ing .pw-purpose ul {
+  display: grid;
+  gap: 9px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.pw-ing .pw-purpose li {
+  position: relative;
+  padding-left: 22px;
+  font-size: 13.5px;
+  line-height: 1.35;
+  color: var(--charcoal, #1F2326);
+}
+
+.pw-ing .pw-purpose li::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  color: var(--gold, #C89A3D);
+  font-weight: 800;
+}
+
+.pw-ing .pw-hero-features { display: flex; }
+
+.pw-ing .pw-hero-feature {
+  padding: 0 22px;
+  text-align: center;
+}
+
+.pw-ing .pw-hero-feature + .pw-hero-feature {
+  border-left: 1px solid rgba(31, 35, 38, 0.14);
+}
+
+.pw-ing .pw-hero-feature:first-child { padding-left: 0; }
+
+.pw-ing .pw-hero-feature svg {
+  width: 34px;
+  height: 34px;
+  margin: 0 auto 8px;
+  color: var(--gold, #C89A3D);
+}
+
+.pw-ing .pw-hero-feature span {
+  display: block;
+  font-family: var(--font-head, 'Montserrat', system-ui, sans-serif);
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.4px;
+  line-height: 1.25;
+  text-transform: uppercase;
+}
+
+/* EXPLORER */
+.pw-ing .pw-explorer { padding: 22px 0 56px; scroll-margin-top: 90px; }
+
+.pw-ing .pw-explorer-head {
+  width: 100%;
+  max-width: var(--pw-inner);
+  margin-inline: auto;
+  padding: 20px var(--pw-gutter) 24px;
+  text-align: center;
+}
+
+.pw-ing .pw-explorer-head h2 {
+  margin: 0 0 8px;
+  color: var(--charcoal, #1F2326);
+  font-family: var(--font-head, 'Montserrat', system-ui, sans-serif);
+  font-weight: 800;
+  font-size: 30px;
+  text-transform: uppercase;
+}
+
+.pw-ing .pw-explorer-head p {
+  margin: 0;
+  font-size: 15px;
+  color: var(--slate, #737A80);
+}
+
+.pw-ing .pw-filters {
+  display: flex;
+  gap: 0;
+  overflow: hidden;
+  margin-bottom: 22px;
+  border-radius: 12px;
+  background: var(--white, #FFFFFF);
+  box-shadow: 0 12px 30px -22px rgba(0, 0, 0, 0.25);
+}
+
+.pw-ing .pw-filter {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 16px 10px;
+  border: 0;
+  background: none;
+  color: var(--charcoal, #1F2326);
+  font-family: var(--font-head, 'Montserrat', system-ui, sans-serif);
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.4px;
+  line-height: 1.2;
+  text-align: center;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.pw-ing .pw-filter + .pw-filter {
+  border-left: 1px solid rgba(31, 35, 38, 0.08);
+}
+
+.pw-ing .pw-filter img {
+  width: 26px;
+  height: 26px;
+  object-fit: contain;
+}
+
+.pw-ing .pw-filter.is-active {
+  border-radius: 12px;
+  background: var(--ink-900, #14171A);
+  color: var(--white, #FFFFFF);
+}
+
+.pw-ing .pw-explorer-grid {
+  display: grid;
+  grid-template-columns: 300px minmax(0, 1fr);
+  gap: 22px;
+  align-items: start;
+}
+
+.pw-ing .pw-list {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 10px;
+  max-height: 640px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.pw-ing .pw-list-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  padding: 14px 16px;
+  border: 1.5px solid transparent;
+  border-radius: 12px;
+  background: var(--white, #FFFFFF);
+  color: var(--charcoal, #1F2326);
+  font-family: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.pw-ing .pw-list-item.is-active {
+  border-color: var(--gold, #C89A3D);
+  box-shadow: 0 8px 22px -14px rgba(200, 154, 61, 0.6);
+}
+
+.pw-ing .pw-abbr {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: var(--ink-900, #14171A);
+  color: var(--gold, #C89A3D);
+  font-family: var(--font-head, 'Montserrat', system-ui, sans-serif);
+  font-weight: 800;
+  font-size: 14px;
+}
+
+.pw-ing .pw-list-item.is-active .pw-abbr {
+  background: var(--gold, #C89A3D);
+  color: var(--ink-900, #14171A);
+}
+
+.pw-ing .pw-list-copy {
+  flex: 1;
+  min-width: 0;
+}
+
+.pw-ing .pw-list-copy strong {
+  display: block;
+  overflow: hidden;
+  font-family: var(--font-head, 'Montserrat', system-ui, sans-serif);
+  font-weight: 800;
+  font-size: 14px;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.pw-ing .pw-list-copy small {
+  display: block;
+  overflow: hidden;
+  font-size: 12px;
+  color: var(--slate, #737A80);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.pw-ing .pw-list-chevron {
+  color: var(--slate, #737A80);
+  font-size: 18px;
+  line-height: 1;
+}
+
+.pw-ing .pw-detail {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  min-height: 520px;
+  padding: 28px 30px;
+  border-radius: 16px;
+  background: var(--white, #FFFFFF);
+  box-shadow: 0 20px 50px -34px rgba(0, 0, 0, 0.3);
+}
+
+.pw-ing .pw-detail-head {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+
+.pw-ing .pw-detail-head .pw-abbr {
+  width: 48px;
+  height: 48px;
+  font-size: 16px;
+  background: var(--ink-900, #14171A);
+  color: var(--gold, #C89A3D);
+}
+
+.pw-ing .pw-detail-title { min-width: 0; }
+
+.pw-ing .pw-detail-title h3 {
+  margin: 0;
+  color: var(--charcoal, #1F2326);
+  font-family: var(--font-head, 'Montserrat', system-ui, sans-serif);
+  font-weight: 800;
+  font-size: 26px;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.pw-ing .pw-detail-title small {
+  font-size: 13px;
+  color: var(--slate, #737A80);
+}
+
+.pw-ing .pw-detail-badge {
+  margin-left: auto;
+  padding: 7px 12px;
+  border-radius: 6px;
+  background: rgba(61, 139, 90, 0.12);
+  color: var(--slate, #737A80);
+  font-family: var(--font-head, 'Montserrat', system-ui, sans-serif);
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.pw-ing .pw-detail-intro {
+  margin: 0 0 18px;
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--charcoal, #1F2326);
+}
+
+.pw-ing .pw-detail-body {
+  display: grid;
+  grid-template-columns: 0.8fr 1fr;
+  gap: 26px;
+  align-items: stretch;
+  flex: 1 1 auto;
+}
+
+.pw-ing .pw-detail-image {
+  display: block;
+  overflow: hidden;
+  min-height: 300px;
+  border-radius: 12px;
+  background: linear-gradient(160deg, #33392F, #12160F);
+}
+
+.pw-ing .pw-detail-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.pw-ing .pw-detail-content {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.pw-ing .pw-detail-pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 22px;
+}
+
+.pw-ing .pw-detail-col { min-width: 0; }
+
+.pw-ing .pw-detail-col h4 {
+  margin: 0 0 10px;
+  color: var(--charcoal, #1F2326);
+  font-family: var(--font-head, 'Montserrat', system-ui, sans-serif);
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.5px;
+  line-height: normal;
+  text-transform: uppercase;
+}
+
+.pw-ing .pw-detail-col p {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--slate, #737A80);
+}
+
+.pw-ing .pw-detail-col ul {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.pw-ing .pw-detail-col li {
+  position: relative;
+  padding-left: 18px;
+  font-size: 13px;
+  line-height: 1.45;
+  color: var(--charcoal, #1F2326);
+}
+
+.pw-ing .pw-detail-col li::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  color: var(--gold, #C89A3D);
+  font-weight: 800;
+}
+
+/* the evidence block sits at the foot of the text column, not under the image */
+.pw-ing .pw-detail-foot {
+  margin-top: auto;
+  padding-top: 18px;
+  border-top: 1px solid rgba(31, 35, 38, 0.1);
+}
+
+.pw-ing .pw-evidence-label {
+  display: block;
+  margin-bottom: 12px;
+  font-family: var(--font-head, 'Montserrat', system-ui, sans-serif);
+  font-weight: 700;
+  font-size: 10px;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  color: var(--slate, #737A80);
+}
+
+.pw-ing .pw-evidence {
+  display: grid;
+  grid-template-columns: 46px minmax(0, 1fr);
+  gap: 8px;
+  margin-bottom: 9px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--charcoal, #1F2326);
+}
+
+.pw-ing .pw-evidence strong {
+  font-family: var(--font-head, 'Montserrat', system-ui, sans-serif);
+  font-weight: 800;
+}
+
+.pw-ing .pw-reference-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 6px 0 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--gold, #C89A3D);
+  font-family: var(--font-head, 'Montserrat', system-ui, sans-serif);
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.pw-ing .pw-reference-panel {
+  position: absolute;
+  z-index: 8;
+  right: 30px;
+  bottom: 68px;
+  width: min(330px, calc(100% - 60px));
+  padding: 16px;
+  border: 1px solid rgba(31, 35, 38, 0.12);
+  border-radius: 12px;
+  background: var(--white, #FFFFFF);
+  box-shadow: 0 15px 40px rgba(15, 18, 20, 0.18);
+}
+
+.pw-ing .pw-reference-panel[hidden] { display: none; }
+
+.pw-ing .pw-reference-panel strong {
+  display: block;
+  margin-bottom: 8px;
+  font-family: var(--font-head, 'Montserrat', system-ui, sans-serif);
+  font-size: 12px;
+  text-transform: uppercase;
+}
+
+.pw-ing .pw-reference-panel a {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 10px 0;
+  border-top: 1px solid rgba(31, 35, 38, 0.08);
+  color: var(--charcoal, #1F2326);
+  font-size: 13px;
+  text-decoration: none;
+}
+
+.pw-ing .pw-list-toggle {
+  display: none;
+  width: 100%;
+  padding: 14px 20px;
+  border: 1.5px solid var(--gold, #C89A3D);
+  border-radius: 12px;
+  background: transparent;
+  color: var(--gold, #C89A3D);
+  font-family: var(--font-head, 'Montserrat', system-ui, sans-serif);
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.8px;
+  line-height: normal;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.pw-ing .pw-list-toggle[hidden] { display: none; }
+
+.pw-ing .pw-list-empty {
+  padding: 26px;
+  border-radius: 12px;
+  background: var(--white, #FFFFFF);
+  color: var(--slate, #737A80);
+  font-size: 14px;
+  text-align: center;
+}
+
+/* CLEAN BY DESIGN */
+.pw-ing .pw-clean {
+  padding: 44px 0;
+  background: var(--white, #FFFFFF);
+}
+
+.pw-ing .pw-clean-title {
+  margin: 0 0 26px;
+  color: var(--charcoal, #1F2326);
+  font-family: var(--font-head, 'Montserrat', system-ui, sans-serif);
+  font-weight: 800;
+  font-size: 22px;
+  letter-spacing: normal;
+  line-height: normal;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.pw-ing .pw-clean-grid {
+  display: grid;
+  grid-template-columns: 1.45fr 1px 1fr;
+  gap: 26px;
+  align-items: start;
+}
+
+.pw-ing .pw-clean-label {
+  margin: 0 0 16px;
+  color: var(--slate, #737A80);
+  font-family: var(--font-head, 'Montserrat', system-ui, sans-serif);
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 1px;
+  line-height: normal;
+  text-transform: uppercase;
+}
+
+.pw-ing .pw-clean-items {
+  display: grid;
+  gap: 10px;
+}
+
+.pw-ing .pw-clean-items--free {
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+}
+
+.pw-ing .pw-clean-items--suitable {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
+.pw-ing .pw-clean-item {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  text-align: center;
+}
+
+.pw-ing .pw-clean-item img {
+  width: 30px;
+  height: 30px;
+  object-fit: contain;
+}
+
+.pw-ing .pw-clean-item span {
+  font-size: 11px;
+  line-height: 1.25;
+  color: var(--charcoal, #1F2326);
+}
+
+.pw-ing .pw-clean-divider {
+  display: block;
+  width: 1px;
+  align-self: stretch;
+  background: rgba(31, 35, 38, 0.16);
+}
+
+/* BOTTOM CTA */
+.pw-ing .pw-cta {
+  background: linear-gradient(100deg, #0F1316 0%, #20262A 100%);
+  color: var(--white, #FFFFFF);
+}
+
+.pw-ing .pw-cta-main {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 30px;
+  align-items: center;
+  width: 100%;
+  max-width: var(--pw-inner);
+  margin-inline: auto;
+  padding: 40px var(--pw-gutter);
+}
+
+.pw-ing .pw-cta-title {
+  margin: 0;
+  color: var(--white, #FFFFFF);
+  font-family: var(--font-head, 'Montserrat', system-ui, sans-serif);
+  font-weight: 900;
+  font-size: 34px;
+  line-height: 0.95;
+  text-transform: uppercase;
+}
+
+.pw-ing .pw-cta-title span { color: var(--gold, #C89A3D); }
+
+.pw-ing .pw-cta-copy {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.pw-ing .pw-cta-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 26px;
+  border: 0;
+  border-radius: 10px;
+  background: var(--gold, #C89A3D);
+  color: var(--ink-900, #14171A);
+  font-family: var(--font-head, 'Montserrat', system-ui, sans-serif);
+  font-weight: 800;
+  font-size: 15px;
+  letter-spacing: 0.6px;
+  line-height: normal;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.18s ease;
+}
+
+.pw-ing .pw-cta-button:hover {
+  background: var(--gold-deep, #B4842E);
+  color: var(--ink-900, #14171A);
+}
+
+.pw-ing .pw-cta-button svg { stroke: var(--ink-900, #14171A); flex: 0 0 auto; }
+
+.pw-ing .pw-cta-action {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.pw-ing .pw-shipping {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 13px;
+  color: #C7CBCE;
+}
+
+.pw-ing .pw-shipping strong {
+  display: block;
+  font-family: var(--font-head, 'Montserrat', system-ui, sans-serif);
+  font-weight: 800;
+  font-size: 13px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: var(--white, #FFFFFF);
+}
+
+.pw-ing .pw-trust {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.pw-ing .pw-trust-inner {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 16px;
+  width: 100%;
+  max-width: var(--pw-inner);
+  margin-inline: auto;
+  padding: 20px var(--pw-gutter);
+}
+
+.pw-ing .pw-trust-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--white, #FFFFFF);
+  font-family: var(--font-head, 'Montserrat', system-ui, sans-serif);
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+}
+
+.pw-ing .pw-trust-item svg {
+  width: 26px;
+  height: 26px;
+  color: var(--gold, #C89A3D);
+}
+
+/* RESPONSIVE — mirrors ingredients.html */
+@media screen and (max-width: 1180px) {
+  .pw-ing .pw-hero-title { font-size: 5.2vw; }
+  .pw-ing .pw-hero-copy { max-width: 56%; }
+  .pw-ing .pw-hero-media { width: 58%; }
+}
+
+@media screen and (max-width: 960px) {
+  .pw-ing .pw-hero {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .pw-ing .pw-hero-inner { order: 1; }
+  .pw-ing .pw-hero-media { order: 2; }
+
+  .pw-ing .pw-hero-title { font-size: 42px; }
+  .pw-ing .pw-hero-copy { max-width: 100%; }
+
+  .pw-ing .pw-hero-inner {
+    min-height: 0;
+    padding-bottom: 24px;
+  }
+
+  .pw-ing .pw-hero-media {
+    position: static;
+    width: 100%;
+    max-width: 460px;
+    height: auto;
+    margin: 24px auto 0;
+  }
+
+  .pw-ing .pw-hero::after { display: none; }
+
+  .pw-ing .pw-filters { overflow-x: auto; }
+  .pw-ing .pw-filter { flex: 0 0 auto; min-width: 120px; }
+
+  /* Forty stacked cards would push the panel 3000px down the page. Instead the
+     panel comes first and the list sits under it as a compact two-column grid,
+     so nothing has to be swiped sideways. */
+  .pw-ing .pw-explorer-grid {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 18px;
+  }
+
+  .pw-ing .pw-detail { order: 1; }
+
+  .pw-ing .pw-list {
+    order: 2;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    max-height: none;
+    overflow: visible;
+    padding: 0;
+  }
+
+  .pw-ing .pw-list-item {
+    gap: 10px;
+    padding: 12px 12px;
+  }
+
+  .pw-ing .pw-list-item .pw-abbr {
+    width: 36px;
+    height: 36px;
+    font-size: 12px;
+  }
+
+  .pw-ing .pw-list-copy strong { font-size: 12.5px; }
+  .pw-ing .pw-list-copy small { font-size: 11px; }
+  .pw-ing .pw-list-chevron { display: none; }
+
+  .pw-ing .pw-list-toggle {
+    display: block;
+    order: 3;
+    min-height: 44px;
+  }
+
+  .pw-ing .pw-list--collapsed .pw-list-item:nth-child(n + 9) { display: none; }
+
+  .pw-ing .pw-filters {
+    scroll-snap-type: x proximity;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .pw-ing .pw-filter { scroll-snap-align: start; }
+
+  .pw-ing .pw-reference-button {
+    min-height: 44px;
+    font-size: 13px;
+  }
+
+  .pw-ing .pw-evidence-label { font-size: 11px; }
+
+  .pw-ing .pw-detail-body {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  .pw-ing .pw-detail-image {
+    min-height: 0;
+    aspect-ratio: 16 / 9;
+  }
+
+  .pw-ing .pw-clean-grid {
+    grid-template-columns: 1fr;
+    gap: 26px;
+  }
+  .pw-ing .pw-clean-divider { display: none; }
+
+  .pw-ing .pw-cta-main {
+    grid-template-columns: 1fr;
+    gap: 22px;
+    padding: 34px var(--pw-gutter);
+  }
+  .pw-ing .pw-trust-inner {
+    gap: 14px 26px;
+    padding: 20px var(--pw-gutter);
+  }
+}
+
+@media screen and (max-width: 560px) {
+  .pw-ing .pw-hero-title { font-size: 34px; }
+
+  .pw-ing .pw-purpose {
+    flex-direction: column;
+    gap: 14px;
+    padding: 22px;
+  }
+
+  .pw-ing .pw-hero-features {
+    flex-wrap: wrap;
+    gap: 16px 0;
+  }
+  .pw-ing .pw-hero-feature {
+    flex: 0 0 50%;
+    padding: 0 10px;
+    border-left: 0;
+  }
+
+  .pw-ing .pw-explorer-head h2 { font-size: 23px; }
+
+  .pw-ing .pw-clean-items--free { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .pw-ing .pw-clean-items--suitable { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
+  .pw-ing .pw-detail {
+    min-height: 0;
+    padding: 22px 18px;
+  }
+
+  .pw-ing .pw-typical-form {
+  margin: 0 0 6px;
+  font-size: 13px;
+  line-height: 1.4;
+  color: var(--charcoal, #1F2326);
+}
+
+.pw-ing .pw-typical-dose {
+  display: block;
+  margin: 0 0 8px;
+  font-family: var(--font-head, 'Montserrat', system-ui, sans-serif);
+  font-weight: 800;
+  font-size: 22px;
+  line-height: 1;
+  color: var(--charcoal, #1F2326);
+}
+
+.pw-ing .pw-typical-note {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--slate, #737A80);
+}
+
+.pw-ing .pw-detail-foot { gap: 14px 24px; }
+
+  .pw-ing .pw-cta-button {
+    width: 100%;
+    justify-content: center;
+  }
+  .pw-ing .pw-detail-pair { grid-template-columns: 1fr; }
+  .pw-ing .pw-list { grid-template-columns: 1fr; }
+  .pw-ing .pw-detail-head { flex-wrap: wrap; }
+  .pw-ing .pw-detail-badge { margin-left: 0; }
+  .pw-ing .pw-reference-button { margin-left: 0; }
+  .pw-ing .pw-reference-panel {
+    right: 18px;
+    width: calc(100% - 36px);
+  }
+
+  .pw-ing .pw-cta-title { font-size: 28px; }
+}
+{% endstyle %}
+
+<section class="pw-ing" id="PwIng-{{ section.id }}">
+  <div class="pw-hero">
+    {%- if hero != blank -%}
+      {{
+        hero
+        | image_url: width: 2000
+        | image_tag:
+          class: 'pw-hero-media',
+          widths: '600,800,1000,1200,1600,2000',
+          sizes: '(min-width: 961px) 64vw, 100vw',
+          alt: hero.alt,
+          loading: 'eager',
+          fetchpriority: 'high'
+      }}
+    {%- else -%}
+      <img
+        class="pw-hero-media"
+        src="{{ 'primal-ingredients-hero.png' | asset_url }}"
+        alt="{{ section.settings.hero_line_1 | escape }} {{ section.settings.hero_line_2 | escape }}"
+        width="982"
+        height="781"
+        loading="eager"
+        fetchpriority="high"
+      >
+    {%- endif -%}
+
+    <div class="pw-shell pw-hero-inner">
+      <div class="pw-hero-copy">
+        <h1 class="pw-hero-title">
+          {{ section.settings.hero_line_1 | escape }}<br>
+          {{ section.settings.hero_line_2 | escape }}<span class="pw-dot">.</span>
+        </h1>
+
+        {%- if section.settings.hero_lead != blank -%}
+          <p class="pw-hero-lead">{{ section.settings.hero_lead | escape }}</p>
+        {%- endif -%}
+
+        <div class="pw-purpose">
+          <span class="pw-purpose-icon" aria-hidden="true">
+            <svg width="26" height="26" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M25.5 6.5C17 6.8 9.1 11.7 7.2 20.3c-.8 3.8 2.5 6.4 5.8 4.8 7.5-3.6 10.7-10.3 12.5-18.6Z"/>
+              <path d="M9.5 23c3.1-4.2 6.4-7.2 11.1-10.2"/>
+            </svg>
+          </span>
+          <div>
+            <h2>{{ section.settings.purpose_heading | escape }}</h2>
+            <ul>
+              {%- for i in (1..4) -%}
+                {%- liquid
+                  case i
+                    when 1
+                      assign point = section.settings.purpose_point_1
+                    when 2
+                      assign point = section.settings.purpose_point_2
+                    when 3
+                      assign point = section.settings.purpose_point_3
+                    when 4
+                      assign point = section.settings.purpose_point_4
+                  endcase
+                -%}
+                {%- if point != blank -%}
+                  <li>{{ point | escape }}</li>
+                {%- endif -%}
+              {%- endfor -%}
+            </ul>
+          </div>
+        </div>
+
+        <div class="pw-hero-features">
+          <div class="pw-hero-feature">
+            <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M25 6C17 6 10 10 8 18c-1 4 2 7 6 5 7-3 9-9 11-17Z"/><path d="M10 22c3-4 6-7 11-10"/></svg>
+            <span>Clean<br>Ingredients</span>
+          </div>
+          <div class="pw-hero-feature">
+            <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M13 4h6M15 4v8l-6 10a3 3 0 0 0 2.6 4.5h8.8A3 3 0 0 0 23 22l-6-10V4"/><path d="M11 20h10M7 27h18"/></svg>
+            <span>Clinically<br>Studied</span>
+          </div>
+          <div class="pw-hero-feature">
+            <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m16 4 10 4v8c0 6-4 10-10 13C10 26 6 22 6 16V8l10-4Z"/><path d="M16 10v10M11 15h10"/></svg>
+            <span>Transparent<br>Formulation</span>
+          </div>
+          <div class="pw-hero-feature">
+            <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="16" cy="16" r="11"/><path d="m11 16 3.2 3.2L21 12"/></svg>
+            <span>Third Party<br>Tested</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pw-explorer" id="pw-ingredients-explorer" data-pw-explorer>
+    <div class="pw-explorer-head">
+      <h2>{{ section.settings.explore_heading | escape }}</h2>
+      {%- if section.settings.explore_text != blank -%}
+        <p>{{ section.settings.explore_text | escape }}</p>
+      {%- endif -%}
+    </div>
+
+    <div class="pw-explorer-width">
+      <div class="pw-filters" data-pw-filters></div>
+      <div class="pw-explorer-grid">
+        <div class="pw-list" data-pw-list></div>
+        <button type="button" class="pw-list-toggle" data-pw-more hidden></button>
+        <div class="pw-detail" data-pw-detail></div>
+      </div>
+    </div>
+  </div>
+
+  {%- if section.settings.show_clean -%}
+    <div class="pw-clean">
+      <div class="pw-clean-inner">
+        <h2 class="pw-clean-title">{{ section.settings.clean_heading | escape }}</h2>
+
+        <div class="pw-clean-grid">
+          <div>
+            <h3 class="pw-clean-label">Free From</h3>
+            <div class="pw-clean-items pw-clean-items--free">
+              <div class="pw-clean-item">
+              {%- if section.settings.clean_sweeteners != blank -%}
+                {{ section.settings.clean_sweeteners | image_url: width: 60 | image_tag: alt: '', loading: 'lazy', width: 30, height: 30, widths: '30, 60' }}
+              {%- else -%}
+                <img src="{{ 'primal-ci-sweeteners.svg' | asset_url }}" alt="" width="30" height="30" loading="lazy">
+              {%- endif -%}
+              <span>Artificial Sweeteners</span>
+            </div>
+              <div class="pw-clean-item">
+              {%- if section.settings.clean_flavours != blank -%}
+                {{ section.settings.clean_flavours | image_url: width: 60 | image_tag: alt: '', loading: 'lazy', width: 30, height: 30, widths: '30, 60' }}
+              {%- else -%}
+                <img src="{{ 'primal-ci-flavours.svg' | asset_url }}" alt="" width="30" height="30" loading="lazy">
+              {%- endif -%}
+              <span>Artificial Flavours</span>
+            </div>
+              <div class="pw-clean-item">
+              {%- if section.settings.clean_colours != blank -%}
+                {{ section.settings.clean_colours | image_url: width: 60 | image_tag: alt: '', loading: 'lazy', width: 30, height: 30, widths: '30, 60' }}
+              {%- else -%}
+                <img src="{{ 'primal-ci-colours.svg' | asset_url }}" alt="" width="30" height="30" loading="lazy">
+              {%- endif -%}
+              <span>Artificial Colours</span>
+            </div>
+              <div class="pw-clean-item">
+              {%- if section.settings.clean_preservatives != blank -%}
+                {{ section.settings.clean_preservatives | image_url: width: 60 | image_tag: alt: '', loading: 'lazy', width: 30, height: 30, widths: '30, 60' }}
+              {%- else -%}
+                <img src="{{ 'primal-ci-preservatives.svg' | asset_url }}" alt="" width="30" height="30" loading="lazy">
+              {%- endif -%}
+              <span>Preservatives</span>
+            </div>
+              <div class="pw-clean-item">
+              {%- if section.settings.clean_gluten != blank -%}
+                {{ section.settings.clean_gluten | image_url: width: 60 | image_tag: alt: '', loading: 'lazy', width: 30, height: 30, widths: '30, 60' }}
+              {%- else -%}
+                <img src="{{ 'primal-ci-gluten.svg' | asset_url }}" alt="" width="30" height="30" loading="lazy">
+              {%- endif -%}
+              <span>Gluten</span>
+            </div>
+              <div class="pw-clean-item">
+              {%- if section.settings.clean_dairy != blank -%}
+                {{ section.settings.clean_dairy | image_url: width: 60 | image_tag: alt: '', loading: 'lazy', width: 30, height: 30, widths: '30, 60' }}
+              {%- else -%}
+                <img src="{{ 'primal-ci-dairy.svg' | asset_url }}" alt="" width="30" height="30" loading="lazy">
+              {%- endif -%}
+              <span>Dairy</span>
+            </div>
+              <div class="pw-clean-item">
+              {%- if section.settings.clean_gmos != blank -%}
+                {{ section.settings.clean_gmos | image_url: width: 60 | image_tag: alt: '', loading: 'lazy', width: 30, height: 30, widths: '30, 60' }}
+              {%- else -%}
+                <img src="{{ 'primal-ci-gmos.svg' | asset_url }}" alt="" width="30" height="30" loading="lazy">
+              {%- endif -%}
+              <span>GMOs</span>
+            </div>
+            </div>
+          </div>
+
+          <div class="pw-clean-divider"></div>
+
+          <div>
+            <h3 class="pw-clean-label">Suitable For</h3>
+            <div class="pw-clean-items pw-clean-items--suitable">
+              <div class="pw-clean-item">
+              {%- if section.settings.clean_vegan != blank -%}
+                {{ section.settings.clean_vegan | image_url: width: 60 | image_tag: alt: '', loading: 'lazy', width: 30, height: 30, widths: '30, 60' }}
+              {%- else -%}
+                <img src="{{ 'primal-ci-vegan.svg' | asset_url }}" alt="" width="30" height="30" loading="lazy">
+              {%- endif -%}
+              <span>Vegan</span>
+            </div>
+              <div class="pw-clean-item">
+              {%- if section.settings.clean_vegetarian != blank -%}
+                {{ section.settings.clean_vegetarian | image_url: width: 60 | image_tag: alt: '', loading: 'lazy', width: 30, height: 30, widths: '30, 60' }}
+              {%- else -%}
+                <img src="{{ 'primal-ci-vegetarian.svg' | asset_url }}" alt="" width="30" height="30" loading="lazy">
+              {%- endif -%}
+              <span>Vegetarian</span>
+            </div>
+              <div class="pw-clean-item">
+              {%- if section.settings.clean_keto != blank -%}
+                {{ section.settings.clean_keto | image_url: width: 60 | image_tag: alt: '', loading: 'lazy', width: 30, height: 30, widths: '30, 60' }}
+              {%- else -%}
+                <img src="{{ 'primal-ci-keto.svg' | asset_url }}" alt="" width="30" height="30" loading="lazy">
+              {%- endif -%}
+              <span>Keto Friendly</span>
+            </div>
+              <div class="pw-clean-item">
+              {%- if section.settings.clean_paleo != blank -%}
+                {{ section.settings.clean_paleo | image_url: width: 60 | image_tag: alt: '', loading: 'lazy', width: 30, height: 30, widths: '30, 60' }}
+              {%- else -%}
+                <img src="{{ 'primal-ci-paleo.svg' | asset_url }}" alt="" width="30" height="30" loading="lazy">
+              {%- endif -%}
+              <span>Paleo Friendly</span>
+            </div>
+              <div class="pw-clean-item">
+              {%- if section.settings.clean_lowcarb != blank -%}
+                {{ section.settings.clean_lowcarb | image_url: width: 60 | image_tag: alt: '', loading: 'lazy', width: 30, height: 30, widths: '30, 60' }}
+              {%- else -%}
+                <img src="{{ 'primal-ci-lowcarb.svg' | asset_url }}" alt="" width="30" height="30" loading="lazy">
+              {%- endif -%}
+              <span>Low Carb</span>
+            </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  {%- endif -%}
+
+  {%- if section.settings.show_cta -%}
+    <div class="pw-cta">
+      <div class="pw-cta-main">
+        <h2 class="pw-cta-title">
+          {{ section.settings.cta_line_1 | escape }}<br><span>{{ section.settings.cta_line_2 | escape }}</span>
+        </h2>
+        <p class="pw-cta-copy">{{ section.settings.cta_text | escape | newline_to_br }}</p>
+        <div class="pw-cta-action">
+          <a class="pw-cta-button" href="{{ section.settings.cta_link | default: routes.all_products_collection_url }}">
+            {{ section.settings.cta_label | escape }}
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+          <div class="pw-shipping">
+            <svg width="26" height="26" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M3 8h17v13H3zM20 13h5l4 5v3h-9z"/><circle cx="9" cy="24" r="2.5"/><circle cx="24" cy="24" r="2.5"/></svg>
+            <div>
+              <strong>{{ section.settings.shipping_heading | escape }}</strong>
+              {{ section.settings.shipping_text | escape }}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="pw-trust">
+        <div class="pw-trust-inner">
+          <div class="pw-trust-item">
+            <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="m16 4 10 4v8c0 6-4 10-10 13C10 26 6 22 6 16V8l10-4Z"/><path d="m11 16 3 3 7-7"/></svg>
+            <span>Third-Party Tested</span>
+          </div>
+          <div class="pw-trust-item">
+            <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="16" cy="16" r="11"/><path d="M10 16h12M16 10v12"/></svg>
+            <span>GMP Certified Facility</span>
+          </div>
+          <div class="pw-trust-item">
+            <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="m16 4 3.5 7 7.5 1-5.5 5.3 1.3 7.7L16 21.4 9.2 25l1.3-7.7L5 12l7.5-1L16 4Z"/></svg>
+            <span>Premium Ingredients</span>
+          </div>
+          <div class="pw-trust-item">
+            <img src="{{ 'primal-icon-uk.svg' | asset_url }}" alt="" width="26" height="26" loading="lazy">
+            <span>Made in the UK</span>
+          </div>
+          <div class="pw-trust-item">
+            <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="16" cy="16" r="11"/><path d="m11 16 3 3 7-7"/></svg>
+            <span>30-Day Money Back Guarantee</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  {%- endif -%}
+
+  <script type="application/json" data-pw-data>
+    [
+      {%- for block in section.blocks -%}
+        {%- liquid
+          assign img = ''
+          if block.settings.image != blank
+            assign img = block.settings.image | image_url: width: 900
+          elsif block.settings.asset_filename != blank
+            assign img = block.settings.asset_filename | asset_url
+          endif
+
+          assign cats = ''
+          if block.settings.cat_gut
+            assign cats = cats | append: 'gut,'
+          endif
+          if block.settings.cat_brain
+            assign cats = cats | append: 'brain,'
+          endif
+          if block.settings.cat_energy
+            assign cats = cats | append: 'energy,'
+          endif
+          if block.settings.cat_immune
+            assign cats = cats | append: 'immune,'
+          endif
+          if block.settings.cat_performance
+            assign cats = cats | append: 'performance,'
+          endif
+          if block.settings.cat_skin
+            assign cats = cats | append: 'skin,'
+          endif
+          if block.settings.cat_overall
+            assign cats = cats | append: 'overall,'
+          endif
+        -%}
+        {
+          "blockId": {{ block.id | json }},
+          "abbr": {{ block.settings.abbr | json }},
+          "name": {{ block.settings.ingredient_name | json }},
+          "type": {{ block.settings.ingredient_type | json }},
+          "tag": {{ block.settings.benefit_tag | json }},
+          "image": {{ img | json }},
+          "cats": {{ cats | json }},
+          "what": {{ block.settings.what_it_does | json }},
+          "how": {{ block.settings.how_it_works | json }},
+          "why": {{ block.settings.why_included | json }},
+          "intro": {{ block.settings.intro | json }},
+          "badge": {{ block.settings.detail_badge | json }},
+          "typicalForm": {{ block.settings.typical_form | json }},
+          "typicalDose": {{ block.settings.typical_dose | json }},
+          "typicalNote": {{ block.settings.typical_note | json }},
+          "referenceUrl": {{ block.settings.reference_url | json }}
+        }{%- unless forloop.last -%},{%- endunless -%}
+      {%- endfor -%}
+    ]
+  </script>
+</section>
+
+<script>
+(function () {
+  var root = document.getElementById('PwIng-{{ section.id }}');
+  if (!root) return;
+
+  var dataNode = root.querySelector('[data-pw-data]');
+  var filtersNode = root.querySelector('[data-pw-filters]');
+  var listNode = root.querySelector('[data-pw-list]');
+  var moreNode = root.querySelector('[data-pw-more]');
+  var detailNode = root.querySelector('[data-pw-detail]');
+  if (!dataNode || !filtersNode || !listNode || !detailNode) return;
+
+  var ICONS = {
+      "all": {%- if section.settings.icon_all != blank -%}{{ section.settings.icon_all | image_url: width: 60 | json }}{%- else -%}{{ 'primal-icon-all.svg' | asset_url | json }}{%- endif -%},
+      "gut": {%- if section.settings.icon_gut != blank -%}{{ section.settings.icon_gut | image_url: width: 60 | json }}{%- else -%}{{ 'primal-icon-gut.svg' | asset_url | json }}{%- endif -%},
+      "brain": {%- if section.settings.icon_brain != blank -%}{{ section.settings.icon_brain | image_url: width: 60 | json }}{%- else -%}{{ 'primal-icon-brain.svg' | asset_url | json }}{%- endif -%},
+      "energy": {%- if section.settings.icon_energy != blank -%}{{ section.settings.icon_energy | image_url: width: 60 | json }}{%- else -%}{{ 'primal-icon-energy.svg' | asset_url | json }}{%- endif -%},
+      "immune": {%- if section.settings.icon_immune != blank -%}{{ section.settings.icon_immune | image_url: width: 60 | json }}{%- else -%}{{ 'primal-icon-immune.svg' | asset_url | json }}{%- endif -%},
+      "performance": {%- if section.settings.icon_performance != blank -%}{{ section.settings.icon_performance | image_url: width: 60 | json }}{%- else -%}{{ 'primal-icon-performance.svg' | asset_url | json }}{%- endif -%},
+      "skin": {%- if section.settings.icon_skin != blank -%}{{ section.settings.icon_skin | image_url: width: 60 | json }}{%- else -%}{{ 'primal-icon-skin.svg' | asset_url | json }}{%- endif -%},
+      "overall": {%- if section.settings.icon_overall != blank -%}{{ section.settings.icon_overall | image_url: width: 60 | json }}{%- else -%}{{ 'primal-icon-overall.svg' | asset_url | json }}{%- endif -%}
+  };
+
+  var CATEGORIES = [
+    ['all', "All Benefits"],
+    ['gut', "Gut Health"],
+    ['brain', "Brain Function"],
+    ['energy', "Energy & Vitality"],
+    ['immune', "Immune Support"],
+    ['performance', "Performance & Recovery"],
+    ['skin', "Healthy Skin, Hair & Nails"],
+    ['overall', "Overall Wellbeing"]
+  ];
+
+  var REFERENCES_LABEL = {{ section.settings.references_label | json }};
+
+  var ingredients;
+  try {
+    ingredients = JSON.parse(dataNode.textContent || '[]');
+  } catch (error) {
+    detailNode.innerHTML = '<div class="pw-list-empty">Ingredient data could not be loaded.</div>';
+    return;
+  }
+
+  ingredients.forEach(function (item) {
+    item.cats = String(item.cats || '').split(',').filter(Boolean);
+    item.slug = String(item.name || '')
+      .toLowerCase()
+      .replace(/['\u2019]/g, '')
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-|-$/g, '');
+  });
+
+  function esc(value) {
+    return String(value == null ? '' : value)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
+
+  function lines(value) {
+    return String(value || '')
+      .split(/\r?\n/)
+      .map(function (line) { return line.trim(); })
+      .filter(Boolean);
+  }
+
+  function copy(value) {
+    var items = lines(value);
+    if (!items.length) return '';
+    if (items.length === 1) return '<p>' + esc(items[0]) + '</p>';
+    return '<ul>' + items.map(function (item) {
+      return '<li>' + esc(item) + '</li>';
+    }).join('') + '</ul>';
+  }
+
+  var category = 'all';
+  var expanded = false;
+  var params = new URLSearchParams(window.location.search);
+  var wanted = params.get('ing');
+  var active = 0;
+  ingredients.forEach(function (item, index) {
+    if (item.slug === wanted) active = index;
+  });
+
+  function visible() {
+    if (category === 'all') return ingredients;
+    return ingredients.filter(function (item) {
+      return item.cats.indexOf(category) !== -1;
+    });
+  }
+
+  function renderFilters() {
+    filtersNode.innerHTML = CATEGORIES.map(function (pair) {
+      var key = pair[0];
+      var label = pair[1];
+      var on = category === key;
+      return '<button type="button" class="pw-filter' + (on ? ' is-active' : '') +
+        '" data-category="' + key + '" aria-pressed="' + on + '">' +
+        '<img src="' + esc(ICONS[key]) + '" alt="" width="26" height="26" loading="lazy">' +
+        '<span>' + esc(label) + '</span></button>';
+    }).join('');
+
+    filtersNode.querySelectorAll('[data-category]').forEach(function (button) {
+      button.addEventListener('click', function () {
+        category = button.dataset.category;
+        expanded = false;
+        var list = visible();
+        if (list.indexOf(ingredients[active]) === -1) {
+          active = list.length ? ingredients.indexOf(list[0]) : -1;
+        }
+        render();
+      });
+    });
+  }
+
+  function renderList() {
+    var list = visible();
+    if (!list.length) {
+      listNode.innerHTML = '<div class="pw-list-empty">No ingredients in this category yet.</div>';
+      return;
+    }
+
+    listNode.innerHTML = list.map(function (item) {
+      var index = ingredients.indexOf(item);
+      var on = index === active;
+      return '<button type="button" class="pw-list-item' + (on ? ' is-active' : '') +
+        '" data-index="' + index + '" aria-pressed="' + on + '">' +
+        '<span class="pw-abbr">' + esc(item.abbr) + '</span>' +
+        '<span class="pw-list-copy"><strong>' + esc(item.name) + '</strong>' +
+        '<small>' + esc(item.type) + '</small></span>' +
+        '<span class="pw-list-chevron" aria-hidden="true">&rsaquo;</span></button>';
+    }).join('');
+
+    // On narrow screens only the first eight are shown until asked for more.
+    if (moreNode) {
+      var narrow = window.matchMedia('(max-width: 960px)').matches;
+      if (narrow && list.length > 8 && !expanded) {
+        listNode.classList.add('pw-list--collapsed');
+        moreNode.hidden = false;
+        moreNode.textContent = 'Show all ' + list.length + ' ingredients';
+      } else {
+        listNode.classList.remove('pw-list--collapsed');
+        moreNode.hidden = !(narrow && list.length > 8);
+        moreNode.textContent = 'Show fewer';
+      }
+    }
+
+    listNode.querySelectorAll('[data-index]').forEach(function (button) {
+      button.addEventListener('click', function () {
+        active = Number(button.dataset.index);
+        var item = ingredients[active];
+        if (item && window.history && window.history.replaceState) {
+          var url = new URL(window.location.href);
+          url.searchParams.set('ing', item.slug);
+          window.history.replaceState({}, '', url);
+        }
+        renderList();
+        renderDetail();
+
+        // the panel sits above the list on narrow screens, so bring it into view
+        if (window.matchMedia('(max-width: 960px)').matches) {
+          detailNode.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+  }
+
+  function references(item) {
+    var term = encodeURIComponent(item.name);
+    var links = [];
+    if (item.referenceUrl) links.push(['Approved reference', item.referenceUrl]);
+    links.push(['NIH evidence search', 'https://search.nih.gov/search?affiliate=nih&query=' + term]);
+    links.push(['EFSA evidence search', 'https://www.efsa.europa.eu/en/search?text=' + term]);
+    links.push(['PubMed research', 'https://pubmed.ncbi.nlm.nih.gov/?term=' + term]);
+    return links;
+  }
+
+  function renderDetail() {
+    var item = ingredients[active] || visible()[0];
+    if (!item) {
+      detailNode.innerHTML = '<div class="pw-list-empty">Select a category to see ingredients.</div>';
+      return;
+    }
+
+    var image = item.image
+      ? '<img src="' + esc(item.image) + '" alt="' + esc(item.name) + '" width="620" height="827" loading="lazy">'
+      : '';
+
+    var badge = item.badge || item.tag;
+
+    detailNode.innerHTML =
+      '<div class="pw-detail-head">' +
+        '<span class="pw-abbr">' + esc(item.abbr) + '</span>' +
+        '<div class="pw-detail-title"><h3>' + esc(item.name) + '</h3>' +
+        '<small>' + esc(item.type) + '</small></div>' +
+        (badge ? '<span class="pw-detail-badge">' + esc(badge) + '</span>' : '') +
+      '</div>' +
+      '<div class="pw-detail-body">' +
+        '<div class="pw-detail-image">' + image + '</div>' +
+        '<div class="pw-detail-content">' +
+          '<div class="pw-detail-col"><h4>What It Does</h4>' + copy(item.what) + '</div>' +
+          '<div class="pw-detail-pair">' +
+            '<div class="pw-detail-col"><h4>How It Works</h4>' + copy(item.how) + '</div>' +
+            '<div class="pw-detail-col"><h4>Why We Included It</h4>' + copy(item.why) + '</div>' +
+          '</div>' +
+          '<div class="pw-detail-foot">' +
+            '<span class="pw-evidence-label">Scientifically Supported By</span>' +
+            '<span class="pw-evidence"><strong>NIH</strong> <span>National Institutes of Health</span></span>' +
+            '<span class="pw-evidence"><strong>EFSA</strong> <span>European Food Safety Authority</span></span>' +
+            '<button type="button" class="pw-reference-button" data-pw-refs>' +
+              esc(REFERENCES_LABEL) + ' <span aria-hidden="true">&rarr;</span>' +
+            '</button>' +
+          '</div>' +
+        '</div>' +
+      '</div>' +
+      '<div class="pw-reference-panel" data-pw-panel hidden>' +
+        '<strong>' + esc(item.name) + ' references</strong>' +
+        references(item).map(function (pair) {
+          return '<a href="' + esc(pair[1]) + '" target="_blank" rel="noopener noreferrer">' +
+            '<span>' + esc(pair[0]) + '</span><span aria-hidden="true">&rarr;</span></a>';
+        }).join('') +
+      '</div>';
+
+    var button = detailNode.querySelector('[data-pw-refs]');
+    var panel = detailNode.querySelector('[data-pw-panel]');
+    if (button && panel) {
+      button.addEventListener('click', function (event) {
+        event.stopPropagation();
+        panel.hidden = !panel.hidden;
+      });
+    }
+  }
+
+  if (moreNode) {
+    moreNode.addEventListener('click', function () {
+      expanded = !expanded;
+      renderList();
+    });
+  }
+
+  var narrowQuery = window.matchMedia('(max-width: 960px)');
+  var onBreakpoint = function () {
+    expanded = false;
+    renderList();
+  };
+  if (narrowQuery.addEventListener) {
+    narrowQuery.addEventListener('change', onBreakpoint);
+  } else if (narrowQuery.addListener) {
+    narrowQuery.addListener(onBreakpoint);
+  }
+
+  function render() {
+    renderFilters();
+    renderList();
+    renderDetail();
+  }
+
+  function scrollToDeepLinkedIngredient() {
+    if (!wanted) return;
+
+    var matched = ingredients.some(function (item) {
+      return item.slug === wanted;
+    });
+    if (!matched) return;
+
+    requestAnimationFrame(function () {
+      var narrow = window.matchMedia('(max-width: 960px)').matches;
+      var target = narrow ? detailNode : root.querySelector('[data-pw-explorer]');
+      if (!target) return;
+
+      target.scrollIntoView({ behavior: 'auto', block: 'start' });
+    });
+  }
+
+  document.addEventListener('click', function (event) {
+    var panel = detailNode.querySelector('[data-pw-panel]');
+    if (panel && !panel.hidden && !panel.contains(event.target)) panel.hidden = true;
+  });
+
+  document.addEventListener('shopify:block:select', function (event) {
+    ingredients.forEach(function (item, index) {
+      if (item.blockId === event.detail.blockId) {
+        active = index;
+        category = 'all';
+        render();
+      }
+    });
+  });
+
+  render();
+  scrollToDeepLinkedIngredient();
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Primal ingredients",
+  "tag": "section",
+  "class": "pw-section pw-ingredients-section",
+  "max_blocks": 40,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Hero"
+    },
+    {
+      "type": "text",
+      "id": "hero_line_1",
+      "label": "Heading line 1",
+      "default": "Purpose In"
+    },
+    {
+      "type": "text",
+      "id": "hero_line_2",
+      "label": "Heading line 2",
+      "default": "Every Ingredient"
+    },
+    {
+      "type": "text",
+      "id": "hero_lead",
+      "label": "Supporting text",
+      "default": "The right ingredients. The right forms. The right doses."
+    },
+    {
+      "type": "image_picker",
+      "id": "hero_image",
+      "label": "Hero image",
+      "info": "Falls back to primal-ingredients-hero.png in assets."
+    },
+    {
+      "type": "header",
+      "content": "Purpose box"
+    },
+    {
+      "type": "text",
+      "id": "purpose_heading",
+      "label": "Heading",
+      "default": "Every Ingredient Has A Purpose"
+    },
+    {
+      "type": "text",
+      "id": "purpose_point_1",
+      "label": "Point 1",
+      "default": "Carefully selected for a reason"
+    },
+    {
+      "type": "text",
+      "id": "purpose_point_2",
+      "label": "Point 2",
+      "default": "No fillers. No shortcuts."
+    },
+    {
+      "type": "text",
+      "id": "purpose_point_3",
+      "label": "Point 3",
+      "default": "Effective forms at meaningful doses."
+    },
+    {
+      "type": "text",
+      "id": "purpose_point_4",
+      "label": "Point 4",
+      "default": "Designed to help you live, think and perform at your best."
+    },
+    {
+      "type": "header",
+      "content": "Explorer"
+    },
+    {
+      "type": "text",
+      "id": "explore_heading",
+      "label": "Heading",
+      "default": "Explore What Powers Primal Win"
+    },
+    {
+      "type": "text",
+      "id": "explore_text",
+      "label": "Supporting text",
+      "default": "Discover the ingredients that support how you live, think and perform."
+    },
+    {
+      "type": "text",
+      "id": "references_label",
+      "label": "References link label",
+      "default": "View References"
+    },
+    {
+      "type": "paragraph",
+      "content": "Benefit filter icons fall back to primal-icon-<name>.svg in assets."
+    },
+    {
+      "type": "header",
+      "content": "Section spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Space above section",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Space below section",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "image_picker",
+      "id": "icon_all",
+      "label": "All Benefits icon"
+    },
+    {
+      "type": "image_picker",
+      "id": "icon_gut",
+      "label": "Gut Health icon"
+    },
+    {
+      "type": "image_picker",
+      "id": "icon_brain",
+      "label": "Brain Function icon"
+    },
+    {
+      "type": "image_picker",
+      "id": "icon_energy",
+      "label": "Energy & Vitality icon"
+    },
+    {
+      "type": "image_picker",
+      "id": "icon_immune",
+      "label": "Immune Support icon"
+    },
+    {
+      "type": "image_picker",
+      "id": "icon_performance",
+      "label": "Performance & Recovery icon"
+    },
+    {
+      "type": "image_picker",
+      "id": "icon_skin",
+      "label": "Healthy Skin, Hair & Nails icon"
+    },
+    {
+      "type": "image_picker",
+      "id": "icon_overall",
+      "label": "Overall Wellbeing icon"
+    },
+    {
+      "type": "header",
+      "content": "Clean by design"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_clean",
+      "label": "Show this block",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "clean_heading",
+      "label": "Heading",
+      "default": "Clean By Design"
+    },
+    {
+      "type": "paragraph",
+      "content": "Icons fall back to primal-ci-<name>.svg in assets."
+    },
+    {
+      "type": "image_picker",
+      "id": "clean_sweeteners",
+      "label": "Artificial Sweeteners icon"
+    },
+    {
+      "type": "image_picker",
+      "id": "clean_flavours",
+      "label": "Artificial Flavours icon"
+    },
+    {
+      "type": "image_picker",
+      "id": "clean_colours",
+      "label": "Artificial Colours icon"
+    },
+    {
+      "type": "image_picker",
+      "id": "clean_preservatives",
+      "label": "Preservatives icon"
+    },
+    {
+      "type": "image_picker",
+      "id": "clean_gluten",
+      "label": "Gluten icon"
+    },
+    {
+      "type": "image_picker",
+      "id": "clean_dairy",
+      "label": "Dairy icon"
+    },
+    {
+      "type": "image_picker",
+      "id": "clean_gmos",
+      "label": "GMOs icon"
+    },
+    {
+      "type": "image_picker",
+      "id": "clean_vegan",
+      "label": "Vegan icon"
+    },
+    {
+      "type": "image_picker",
+      "id": "clean_vegetarian",
+      "label": "Vegetarian icon"
+    },
+    {
+      "type": "image_picker",
+      "id": "clean_keto",
+      "label": "Keto Friendly icon"
+    },
+    {
+      "type": "image_picker",
+      "id": "clean_paleo",
+      "label": "Paleo Friendly icon"
+    },
+    {
+      "type": "image_picker",
+      "id": "clean_lowcarb",
+      "label": "Low Carb icon"
+    },
+    {
+      "type": "header",
+      "content": "Bottom CTA"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_cta",
+      "label": "Show this block",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "cta_line_1",
+      "label": "Heading line 1",
+      "default": "One Scoop."
+    },
+    {
+      "type": "text",
+      "id": "cta_line_2",
+      "label": "Heading line 2 (gold)",
+      "default": "Every Day."
+    },
+    {
+      "type": "textarea",
+      "id": "cta_text",
+      "label": "Supporting text",
+      "default": "One simple daily habit designed to help you feel stronger, think sharper and perform at your best."
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "Button label",
+      "default": "Get Primal Win"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "Button link"
+    },
+    {
+      "type": "text",
+      "id": "shipping_heading",
+      "label": "Shipping heading",
+      "default": "Free Shipping"
+    },
+    {
+      "type": "text",
+      "id": "shipping_text",
+      "label": "Shipping text",
+      "default": "On all orders over £50"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "ingredient",
+      "name": "Ingredient",
+      "settings": [
+        {
+          "type": "text",
+          "id": "abbr",
+          "label": "Short code",
+          "default": "Mg"
+        },
+        {
+          "type": "text",
+          "id": "ingredient_name",
+          "label": "Name",
+          "default": "Ingredient"
+        },
+        {
+          "type": "text",
+          "id": "ingredient_type",
+          "label": "Type",
+          "default": "Essential Mineral"
+        },
+        {
+          "type": "text",
+          "id": "benefit_tag",
+          "label": "Benefit tag",
+          "default": "Overall Wellbeing"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "asset_filename",
+          "label": "Fallback asset filename",
+          "info": "Used when no image is chosen. Example: primal-ing-magnesium.png"
+        },
+        {
+          "type": "header",
+          "content": "Benefit categories"
+        },
+        {
+          "type": "checkbox",
+          "id": "cat_gut",
+          "label": "Gut Health",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "cat_brain",
+          "label": "Brain Function",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "cat_energy",
+          "label": "Energy & Vitality",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "cat_immune",
+          "label": "Immune Support",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "cat_performance",
+          "label": "Performance & Recovery",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "cat_skin",
+          "label": "Healthy Skin, Hair & Nails",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "cat_overall",
+          "label": "Overall Wellbeing",
+          "default": false
+        },
+        {
+          "type": "header",
+          "content": "Copy"
+        },
+        {
+          "type": "text",
+          "id": "detail_badge",
+          "label": "Quality badge",
+          "info": "Green badge, top right. Example: Highly Absorbed. Falls back to the benefit tag."
+        },
+        {
+          "type": "textarea",
+          "id": "intro",
+          "label": "Introduction",
+          "info": "One line under the title, above the columns."
+        },
+        {
+          "type": "textarea",
+          "id": "what_it_does",
+          "label": "What it does"
+        },
+        {
+          "type": "textarea",
+          "id": "how_it_works",
+          "label": "How it works",
+          "info": "One line becomes a paragraph. Several lines become a tick list."
+        },
+        {
+          "type": "textarea",
+          "id": "why_included",
+          "label": "Why we included it",
+          "info": "One line becomes a paragraph. Several lines become a tick list."
+        },
+        {
+          "type": "header",
+          "content": "Typical greens powders"
+        },
+        {
+          "type": "text",
+          "id": "typical_form",
+          "label": "Form used elsewhere",
+          "info": "Example: Magnesium Oxide"
+        },
+        {
+          "type": "text",
+          "id": "typical_dose",
+          "label": "Amount",
+          "info": "Example: 50mg"
+        },
+        {
+          "type": "textarea",
+          "id": "typical_note",
+          "label": "Note",
+          "info": "Example: Lower absorption and bioavailability."
+        },
+        {
+          "type": "url",
+          "id": "reference_url",
+          "label": "References URL"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Primal ingredients",
+      "blocks": [
+        {
+          "type": "ingredient",
+          "settings": {
+            "abbr": "Mg",
+            "ingredient_name": "Magnesium",
+            "ingredient_type": "Essential Mineral",
+            "benefit_tag": "Energy & Vitality",
+            "asset_filename": "primal-ing-magnesium.png",
+            "what_it_does": "Supports over 300 biochemical reactions in the body.",
+            "how_it_works": "Immune System\nBone Health\nMuscle Function\nMood & Wellbeing",
+            "why_included": "Essential for energy production, muscle function and overall wellbeing.",
+            "cat_gut": false,
+            "cat_brain": false,
+            "cat_energy": true,
+            "cat_immune": true,
+            "cat_performance": true,
+            "cat_skin": false,
+            "cat_overall": true
+          }
+        },
+        {
+          "type": "ingredient",
+          "settings": {
+            "abbr": "D3",
+            "ingredient_name": "Vitamin D3",
+            "ingredient_type": "Essential Vitamin",
+            "benefit_tag": "Immune Support",
+            "asset_filename": "primal-ing-vitamin-d3.png",
+            "what_it_does": "Supports immune function and helps maintain healthy bones and muscles.",
+            "how_it_works": "Helps regulate calcium absorption and supports immune cell activity.",
+            "why_included": "Immune System\nBone Health\nMuscle Function\nMood & Wellbeing",
+            "cat_gut": false,
+            "cat_brain": false,
+            "cat_energy": false,
+            "cat_immune": true,
+            "cat_performance": true,
+            "cat_skin": false,
+            "cat_overall": true
+          }
+        },
+        {
+          "type": "ingredient",
+          "settings": {
+            "abbr": "K2",
+            "ingredient_name": "Vitamin K2",
+            "ingredient_type": "Essential Vitamin",
+            "benefit_tag": "Bone & Heart Health",
+            "asset_filename": "primal-ing-vitamin-k2.png",
+            "what_it_does": "Supports normal blood clotting and helps direct calcium to the bones and away from arteries.",
+            "how_it_works": "Activates proteins that bind calcium in bones and prevents it from building up in soft tissue.",
+            "why_included": "Bone Health\nHeart Health\nCalcium Utilisation\nArterial Health",
+            "cat_gut": false,
+            "cat_brain": false,
+            "cat_energy": false,
+            "cat_immune": false,
+            "cat_performance": true,
+            "cat_skin": false,
+            "cat_overall": true
+          }
+        },
+        {
+          "type": "ingredient",
+          "settings": {
+            "abbr": "Zn",
+            "ingredient_name": "Zinc",
+            "ingredient_type": "Essential Mineral",
+            "benefit_tag": "Immune Support",
+            "asset_filename": "primal-ing-zinc.png",
+            "what_it_does": "Supports immune function and helps protect cells from oxidative stress.",
+            "how_it_works": "Involved in over 300 enzyme reactions and supports protein synthesis.",
+            "why_included": "Immune System\nSkin Health\nWound Healing\nHormone Balance\nAntioxidant Protection",
+            "cat_gut": false,
+            "cat_brain": false,
+            "cat_energy": false,
+            "cat_immune": true,
+            "cat_performance": false,
+            "cat_skin": true,
+            "cat_overall": true
+          }
+        },
+        {
+          "type": "ingredient",
+          "settings": {
+            "abbr": "Se",
+            "ingredient_name": "Selenium",
+            "ingredient_type": "Essential Mineral",
+            "benefit_tag": "Immune Support",
+            "asset_filename": "primal-ing-selenium.png",
+            "what_it_does": "Supports antioxidant defence and immune function.",
+            "how_it_works": "Activates antioxidant enzymes that protect cells from oxidative damage.",
+            "why_included": "Immune System\nThyroid Health\nCell Protection\nAntioxidant Support",
+            "cat_gut": false,
+            "cat_brain": false,
+            "cat_energy": false,
+            "cat_immune": true,
+            "cat_performance": false,
+            "cat_skin": false,
+            "cat_overall": true
+          }
+        },
+        {
+          "type": "ingredient",
+          "settings": {
+            "abbr": "C",
+            "ingredient_name": "Vitamin C",
+            "ingredient_type": "Essential Vitamin",
+            "benefit_tag": "Immune Support",
+            "asset_filename": "primal-ing-vitamin-c.png",
+            "what_it_does": "Supports immune function and helps protect cells from oxidative stress.",
+            "how_it_works": "Powerful antioxidant that neutralises free radicals and supports collagen formation.",
+            "why_included": "Immune System\nCollagen Formation\nSkin Health\nIron Absorption\nAntioxidant Protection",
+            "cat_gut": false,
+            "cat_brain": false,
+            "cat_energy": false,
+            "cat_immune": true,
+            "cat_performance": false,
+            "cat_skin": true,
+            "cat_overall": true
+          }
+        },
+        {
+          "type": "ingredient",
+          "settings": {
+            "abbr": "B12",
+            "ingredient_name": "Vitamin B12",
+            "ingredient_type": "Essential Vitamin",
+            "benefit_tag": "Energy & Brain Function",
+            "asset_filename": "primal-ing-vitamin-b12.png",
+            "what_it_does": "Supports energy production and normal function of the nervous system.",
+            "how_it_works": "Helps red blood cell formation and supports nerve health.",
+            "why_included": "Energy Production\nNervous System Function\nReduces Tiredness & Fatigue\nCognitive Function",
+            "cat_gut": false,
+            "cat_brain": true,
+            "cat_energy": true,
+            "cat_immune": false,
+            "cat_performance": false,
+            "cat_skin": false,
+            "cat_overall": false
+          }
+        },
+        {
+          "type": "ingredient",
+          "settings": {
+            "abbr": "Fo",
+            "ingredient_name": "Folate (5-MTHF)",
+            "ingredient_type": "Essential B Vitamin",
+            "benefit_tag": "Energy & Brain Function",
+            "asset_filename": "primal-ing-folate.png",
+            "what_it_does": "Supports healthy cell division and red blood cell formation.",
+            "how_it_works": "Helps convert food into DNA and supports methylation processes.",
+            "why_included": "Cell Division\nRed Blood Cell Production\nBrain Function\nNervous System",
+            "cat_gut": false,
+            "cat_brain": true,
+            "cat_energy": true,
+            "cat_immune": false,
+            "cat_performance": false,
+            "cat_skin": false,
+            "cat_overall": false
+          }
+        },
+        {
+          "type": "ingredient",
+          "settings": {
+            "abbr": "Ash",
+            "ingredient_name": "Ashwagandha",
+            "ingredient_type": "Adaptogenic Herb",
+            "benefit_tag": "Stress & Recovery",
+            "asset_filename": "primal-ing-ashwagandha.png",
+            "what_it_does": "Helps the body adapt to stress and supports overall wellbeing.",
+            "how_it_works": "Modulates cortisol and supports neurotransmitter balance.",
+            "why_included": "Stress Management\nMental Wellbeing\nMood Balance\nRecovery\nSleep Quality",
+            "cat_gut": false,
+            "cat_brain": true,
+            "cat_energy": false,
+            "cat_immune": false,
+            "cat_performance": true,
+            "cat_skin": false,
+            "cat_overall": true
+          }
+        },
+        {
+          "type": "ingredient",
+          "settings": {
+            "abbr": "LM",
+            "ingredient_name": "Lion's Mane",
+            "ingredient_type": "Functional Mushroom",
+            "benefit_tag": "Brain Function",
+            "asset_filename": "primal-ing-lions-mane.png",
+            "what_it_does": "Supports cognitive function and memory.",
+            "how_it_works": "Stimulates nerve growth factor for brain cell health and repair.",
+            "why_included": "Cognitive Function\nLong-term Brain Health\nNerve Regeneration\nFocus & Clarity",
+            "cat_gut": false,
+            "cat_brain": true,
+            "cat_energy": false,
+            "cat_immune": false,
+            "cat_performance": false,
+            "cat_skin": false,
+            "cat_overall": false
+          }
+        },
+        {
+          "type": "ingredient",
+          "settings": {
+            "abbr": "LT",
+            "ingredient_name": "L-Theanine",
+            "ingredient_type": "Amino Acid",
+            "benefit_tag": "Focus & Relaxation",
+            "asset_filename": "primal-ing-l-theanine.png",
+            "what_it_does": "Promotes relaxation without drowsiness and supports mental clarity.",
+            "how_it_works": "Increases alpha brain wave activity and balances neurotransmitters.",
+            "why_included": "Relaxation\nFocus & Attention\nStress Reduction\nSleep Quality",
+            "cat_gut": false,
+            "cat_brain": true,
+            "cat_energy": false,
+            "cat_immune": false,
+            "cat_performance": false,
+            "cat_skin": false,
+            "cat_overall": true
+          }
+        },
+        {
+          "type": "ingredient",
+          "settings": {
+            "abbr": "Rh",
+            "ingredient_name": "Rhodiola Rosea",
+            "ingredient_type": "Adaptogenic Herb",
+            "benefit_tag": "Energy & Stress Support",
+            "asset_filename": "primal-ing-rhodiola.png",
+            "what_it_does": "Helps reduce fatigue and enhances physical and mental performance.",
+            "how_it_works": "Supports the body's ability to adapt to stress.",
+            "why_included": "Energy Production\nCognitive Function\nReduces Fatigue\nPhysical Performance",
+            "cat_gut": false,
+            "cat_brain": true,
+            "cat_energy": true,
+            "cat_immune": false,
+            "cat_performance": false,
+            "cat_skin": false,
+            "cat_overall": true
+          }
+        },
+        {
+          "type": "ingredient",
+          "settings": {
+            "abbr": "ALA",
+            "ingredient_name": "Alpha Lipoic Acid",
+            "ingredient_type": "Antioxidant",
+            "benefit_tag": "Energy & Antioxidant",
+            "asset_filename": "primal-ing-alpha-lipoic-acid.png",
+            "what_it_does": "Powerful antioxidant that supports energy production and regeneration.",
+            "how_it_works": "Works in both fat and water and recycles other antioxidants in the body.",
+            "why_included": "Antioxidant Support\nEnergy Production\nCell Protection\nDetoxification Support",
+            "cat_gut": false,
+            "cat_brain": false,
+            "cat_energy": true,
+            "cat_immune": true,
+            "cat_performance": false,
+            "cat_skin": false,
+            "cat_overall": true
+          }
+        },
+        {
+          "type": "ingredient",
+          "settings": {
+            "abbr": "Ch",
+            "ingredient_name": "Choline",
+            "ingredient_type": "Essential Nutrient",
+            "benefit_tag": "Brain & Liver Health",
+            "asset_filename": "primal-ing-choline.png",
+            "what_it_does": "Supports brain function and liver health.",
+            "how_it_works": "Essential for liver function and the metabolism of fats.",
+            "why_included": "Brain Function\nLiver Health\nFat Metabolism\nCell Membrane Health",
+            "cat_gut": false,
+            "cat_brain": true,
+            "cat_energy": false,
+            "cat_immune": false,
+            "cat_performance": false,
+            "cat_skin": false,
+            "cat_overall": true
+          }
+        },
+        {
+          "type": "ingredient",
+          "settings": {
+            "abbr": "Q10",
+            "ingredient_name": "Coenzyme Q10",
+            "ingredient_type": "Antioxidant",
+            "benefit_tag": "Energy & Heart Health",
+            "asset_filename": "primal-ing-coq10.png",
+            "what_it_does": "Supports cellular energy production and acts as a powerful antioxidant.",
+            "how_it_works": "Plays a key role in mitochondrial energy production and protects cells from damage.",
+            "why_included": "Cellular Energy\nHeart Health\nAntioxidant Protection\nAnti-Aging Support",
+            "cat_gut": false,
+            "cat_brain": false,
+            "cat_energy": true,
+            "cat_immune": false,
+            "cat_performance": true,
+            "cat_skin": false,
+            "cat_overall": true
+          }
+        },
+        {
+          "type": "ingredient",
+          "settings": {
+            "abbr": "Cre",
+            "ingredient_name": "Creatine",
+            "ingredient_type": "Performance Compound",
+            "benefit_tag": "Performance & Recovery",
+            "asset_filename": "primal-ing-creatine.png",
+            "what_it_does": "Increases physical performance in short bursts of high-intensity exercise.",
+            "how_it_works": "Supports phospho-creatine for fast ATP resynthesis and brain function.",
+            "why_included": "Muscle Growth & Strength\nPower & Performance\nBrain Function\nRecovery",
+            "cat_gut": false,
+            "cat_brain": true,
+            "cat_energy": false,
+            "cat_immune": false,
+            "cat_performance": true,
+            "cat_skin": false,
+            "cat_overall": false
+          }
+        },
+        {
+          "type": "ingredient",
+          "settings": {
+            "abbr": "Pro",
+            "ingredient_name": "Probiotics",
+            "ingredient_type": "Live Cultures",
+            "benefit_tag": "Gut Health",
+            "asset_filename": "primal-ing-probiotics.png",
+            "what_it_does": "Supports a healthy gut microbiome and digestive wellbeing.",
+            "how_it_works": "Maintains beneficial bacteria for gut health and supports immunity.",
+            "why_included": "Digestive Health\nImmune Support\nGut Balance\nNutrient Absorption",
+            "cat_gut": true,
+            "cat_brain": false,
+            "cat_energy": false,
+            "cat_immune": true,
+            "cat_performance": false,
+            "cat_skin": false,
+            "cat_overall": false
+          }
+        },
+        {
+          "type": "ingredient",
+          "settings": {
+            "abbr": "DE",
+            "ingredient_name": "Digestive Enzymes",
+            "ingredient_type": "Enzyme Blend",
+            "benefit_tag": "Gut Health",
+            "asset_filename": "primal-ing-digestive-enzymes.png",
+            "what_it_does": "Supports the digestion of nutrients and reduces bloating.",
+            "how_it_works": "Breaks down carbohydrates, proteins and fats for better nutrient absorption.",
+            "why_included": "Improved Digestion\nReduced Bloating\nNutrient Absorption\nGut Comfort",
+            "cat_gut": true,
+            "cat_brain": false,
+            "cat_energy": false,
+            "cat_immune": false,
+            "cat_performance": false,
+            "cat_skin": false,
+            "cat_overall": false
+          }
+        },
+        {
+          "type": "ingredient",
+          "settings": {
+            "abbr": "Sp",
+            "ingredient_name": "Spirulina",
+            "ingredient_type": "Blue-Green Algae",
+            "benefit_tag": "Energy & Vitality",
+            "asset_filename": "primal-ing-spirulina.png",
+            "what_it_does": "Provides natural nutrients and supports energy and immunity.",
+            "how_it_works": "Rich in protein, B vitamins, iron and antioxidants that combat oxidative stress.",
+            "why_included": "Energy Levels\nImmune Function\nAntioxidant Support\nDetoxification",
+            "cat_gut": false,
+            "cat_brain": false,
+            "cat_energy": true,
+            "cat_immune": true,
+            "cat_performance": false,
+            "cat_skin": false,
+            "cat_overall": true
+          }
+        },
+        {
+          "type": "ingredient",
+          "settings": {
+            "abbr": "Chl",
+            "ingredient_name": "Chlorella",
+            "ingredient_type": "Green Algae",
+            "benefit_tag": "Detox & Immune Support",
+            "asset_filename": "primal-ing-chlorella.png",
+            "what_it_does": "Supports detoxification and immune health.",
+            "how_it_works": "Rich in vitamins, minerals and chlorophyll that binds toxins.",
+            "why_included": "Detoxification\nImmune Health\nNutrient Absorption\nCellular Health",
+            "cat_gut": true,
+            "cat_brain": false,
+            "cat_energy": false,
+            "cat_immune": true,
+            "cat_performance": false,
+            "cat_skin": false,
+            "cat_overall": true
+          }
+        },
+        {
+          "type": "ingredient",
+          "settings": {
+            "abbr": "ALA",
+            "ingredient_name": "Alpha Lipoic Acid (ALA)",
+            "ingredient_type": "Antioxidant",
+            "benefit_tag": "Metabolic & Antioxidant",
+            "asset_filename": "primal-ing-ala.png",
+            "what_it_does": "Supports energy metabolism and helps protect cells from oxidative stress.",
+            "how_it_works": "Powerful antioxidant that helps recycle other antioxidants and supports mitochondrial function.",
+            "why_included": "Energy Production\nAntioxidant Support\nBlood Sugar Support\nCell Protection",
+            "cat_gut": false,
+            "cat_brain": false,
+            "cat_energy": true,
+            "cat_immune": true,
+            "cat_performance": false,
+            "cat_skin": false,
+            "cat_overall": true
+          }
+        },
+        {
+          "type": "ingredient",
+          "settings": {
+            "abbr": "Bt",
+            "ingredient_name": "Beetroot Extract",
+            "ingredient_type": "Nitrate Source",
+            "benefit_tag": "Circulation & Performance",
+            "asset_filename": "primal-ing-beetroot.png",
+            "what_it_does": "Supports healthy blood flow and oxygen delivery for improved endurance.",
+            "how_it_works": "Natural nitrates convert to nitric oxide to help relax blood vessels and enhance circulation.",
+            "why_included": "Performance Enhancement\nStamina & Endurance\nHeart Health\nHealthy Circulation",
+            "cat_gut": false,
+            "cat_brain": false,
+            "cat_energy": true,
+            "cat_immune": false,
+            "cat_performance": true,
+            "cat_skin": false,
+            "cat_overall": true
+          }
+        },
+        {
+          "type": "ingredient",
+          "settings": {
+            "abbr": "Tur",
+            "ingredient_name": "Turmeric Extract",
+            "ingredient_type": "Curcumin Source",
+            "benefit_tag": "Inflammation & Joint Support",
+            "asset_filename": "primal-ing-turmeric.png",
+            "what_it_does": "Helps reduce inflammation and supports joint, brain and digestive health.",
+            "how_it_works": "Curcumin modulates inflammatory pathways and acts as a potent antioxidant.",
+            "why_included": "Inflammation Support\nJoint Health\nAntioxidant Protection\nDigestive Support",
+            "cat_gut": true,
+            "cat_brain": false,
+            "cat_energy": false,
+            "cat_immune": false,
+            "cat_performance": true,
+            "cat_skin": false,
+            "cat_overall": true
+          }
+        },
+        {
+          "type": "ingredient",
+          "settings": {
+            "abbr": "Bos",
+            "ingredient_name": "Boswellia Serrata",
+            "ingredient_type": "Resin Extract",
+            "benefit_tag": "Joint & Inflammation Support",
+            "asset_filename": "primal-ing-boswellia.png",
+            "what_it_does": "Supports joint comfort and helps reduce inflammatory responses.",
+            "how_it_works": "Boswellic acids inhibit inflammatory enzymes and support cartilage health.",
+            "why_included": "Joint Comfort\nInflammation Support\nMobility Support\nCartilage Health",
+            "cat_gut": false,
+            "cat_brain": false,
+            "cat_energy": false,
+            "cat_immune": false,
+            "cat_performance": true,
+            "cat_skin": false,
+            "cat_overall": true
+          }
+        },
+        {
+          "type": "ingredient",
+          "settings": {
+            "abbr": "GT",
+            "ingredient_name": "Green Tea Extract",
+            "ingredient_type": "Polyphenol Source",
+            "benefit_tag": "Antioxidant & Metabolic Health",
+            "asset_filename": "primal-ing-green-tea.png",
+            "what_it_does": "Provides antioxidant protection and supports healthy metabolism and fat oxidation.",
+            "how_it_works": "Rich in EGCG polyphenols that help protect cells and support metabolic rate.",
+            "why_included": "Antioxidant Support\nMetabolic Support\nFat Oxidation\nCell Protection",
+            "cat_gut": false,
+            "cat_brain": false,
+            "cat_energy": true,
+            "cat_immune": true,
+            "cat_performance": false,
+            "cat_skin": false,
+            "cat_overall": true
+          }
+        },
+        {
+          "type": "ingredient",
+          "settings": {
+            "abbr": "GS",
+            "ingredient_name": "Grape Seed Extract",
+            "ingredient_type": "Polyphenol Source",
+            "benefit_tag": "Antioxidant & Heart Health",
+            "asset_filename": "primal-ing-grape-seed.png",
+            "what_it_does": "Provides powerful antioxidant protection and supports heart and vascular health.",
+            "how_it_works": "Rich in OPCs that help protect cells from oxidative damage and support healthy circulation.",
+            "why_included": "Antioxidant Support\nHeart Health\nBlood Vessel Support\nCell Protection",
+            "cat_gut": false,
+            "cat_brain": false,
+            "cat_energy": false,
+            "cat_immune": true,
+            "cat_performance": true,
+            "cat_skin": false,
+            "cat_overall": true
+          }
+        },
+        {
+          "type": "ingredient",
+          "settings": {
+            "abbr": "Pom",
+            "ingredient_name": "Pomegranate Extract",
+            "ingredient_type": "Polyphenol Source",
+            "benefit_tag": "Heart & Anti-Aging",
+            "asset_filename": "primal-ing-pomegranate.png",
+            "what_it_does": "Supports heart health, healthy blood flow and helps protect cells from oxidative stress.",
+            "how_it_works": "Polyphenols help improve nitric oxide production and reduce oxidative damage.",
+            "why_included": "Heart Health\nCirculation Support\nAntioxidant\nAnti-Aging Support",
+            "cat_gut": false,
+            "cat_brain": false,
+            "cat_energy": false,
+            "cat_immune": false,
+            "cat_performance": true,
+            "cat_skin": true,
+            "cat_overall": true
+          }
+        },
+        {
+          "type": "ingredient",
+          "settings": {
+            "abbr": "MT",
+            "ingredient_name": "Milk Thistle Extract",
+            "ingredient_type": "Silymarin Source",
+            "benefit_tag": "Liver Health & Detox",
+            "asset_filename": "primal-ing-milk-thistle.png",
+            "what_it_does": "Supports liver function and natural detoxification processes.",
+            "how_it_works": "Silymarin helps protect liver cells and supports regeneration.",
+            "why_included": "Liver Health\nDetox Support\nCell Protection\nAntioxidant",
+            "cat_gut": true,
+            "cat_brain": false,
+            "cat_energy": false,
+            "cat_immune": false,
+            "cat_performance": false,
+            "cat_skin": false,
+            "cat_overall": true
+          }
+        },
+        {
+          "type": "ingredient",
+          "settings": {
+            "abbr": "Ba",
+            "ingredient_name": "Bacopa Monnieri",
+            "ingredient_type": "Adaptogenic Herb",
+            "benefit_tag": "Brain Function & Memory",
+            "asset_filename": "primal-ing-bacopa.png",
+            "what_it_does": "Supports memory, learning and cognitive function.",
+            "how_it_works": "Active compounds help enhance neurotransmitter activity and protect brain cells.",
+            "why_included": "Memory Support\nCognitive Function\nFocus & Clarity\nNeuroprotection",
+            "cat_gut": false,
+            "cat_brain": true,
+            "cat_energy": false,
+            "cat_immune": false,
+            "cat_performance": false,
+            "cat_skin": false,
+            "cat_overall": false
+          }
+        },
+        {
+          "type": "ingredient",
+          "settings": {
+            "abbr": "Gk",
+            "ingredient_name": "Ginkgo Biloba Extract",
+            "ingredient_type": "Standardised Extract",
+            "benefit_tag": "Circulation & Brain Health",
+            "asset_filename": "primal-ing-ginkgo.png",
+            "what_it_does": "Supports circulation and cognitive performance.",
+            "how_it_works": "Improves blood flow to the brain and acts as a powerful antioxidant.",
+            "why_included": "Cognitive Function\nCirculation Support\nMemory Support\nAntioxidant",
+            "cat_gut": false,
+            "cat_brain": true,
+            "cat_energy": false,
+            "cat_immune": false,
+            "cat_performance": true,
+            "cat_skin": false,
+            "cat_overall": true
+          }
+        },
+        {
+          "type": "ingredient",
+          "settings": {
+            "abbr": "Ac",
+            "ingredient_name": "Acerola Cherry Extract",
+            "ingredient_type": "Natural Vitamin C Source",
+            "benefit_tag": "Immune Support & Antioxidant",
+            "asset_filename": "primal-ing-acerola.png",
+            "what_it_does": "Supports immune function and provides powerful antioxidant protection.",
+            "how_it_works": "Naturally rich in vitamin C and bioflavonoids that neutralise free radicals.",
+            "why_included": "Immune Support\nAntioxidant Support\nCollagen Formation\nIron Absorption",
+            "cat_gut": false,
+            "cat_brain": false,
+            "cat_energy": false,
+            "cat_immune": true,
+            "cat_performance": false,
+            "cat_skin": true,
+            "cat_overall": true
+          }
+        },
+        {
+          "type": "ingredient",
+          "settings": {
+            "abbr": "BG",
+            "ingredient_name": "Beta Glucan",
+            "ingredient_type": "Soluble Fibre",
+            "benefit_tag": "Immune & Heart Health",
+            "asset_filename": "primal-ing-beta-glucan.png",
+            "what_it_does": "Supports immune function and helps maintain healthy cholesterol levels.",
+            "how_it_works": "Forms a gel-like substance in the gut that supports immune cells and cholesterol management.",
+            "why_included": "Immune Health\nHeart Health\nCholesterol Management\nGut Health",
+            "cat_gut": true,
+            "cat_brain": false,
+            "cat_energy": false,
+            "cat_immune": true,
+            "cat_performance": false,
+            "cat_skin": false,
+            "cat_overall": true
+          }
+        },
+        {
+          "type": "ingredient",
+          "settings": {
+            "abbr": "Qu",
+            "ingredient_name": "Quercetin",
+            "ingredient_type": "Flavonoid",
+            "benefit_tag": "Antioxidant & Immune Support",
+            "asset_filename": "primal-ing-quercetin.png",
+            "what_it_does": "Powerful antioxidant that supports immune health and reduces oxidative stress.",
+            "how_it_works": "Stabilises mast cells and reduces inflammation while protecting cells from damage.",
+            "why_included": "Antioxidant Support\nImmune Support\nInflammation Support\nAllergy Support",
+            "cat_gut": false,
+            "cat_brain": false,
+            "cat_energy": false,
+            "cat_immune": true,
+            "cat_performance": false,
+            "cat_skin": false,
+            "cat_overall": true
+          }
+        },
+        {
+          "type": "ingredient",
+          "settings": {
+            "abbr": "BP",
+            "ingredient_name": "Black Pepper Extract",
+            "ingredient_type": "BioPerine® (Piper nigrum)",
+            "benefit_tag": "Absorption Enhancer",
+            "asset_filename": "primal-ing-black-pepper.png",
+            "what_it_does": "Enhances absorption and bioavailability of nutrients and compounds.",
+            "how_it_works": "Piperine increases permeability and helps nutrients pass more effectively into the bloodstream.",
+            "why_included": "Enhanced Absorption\nIncreased Bioavailability\nBetter Efficacy",
+            "cat_gut": false,
+            "cat_brain": false,
+            "cat_energy": false,
+            "cat_immune": false,
+            "cat_performance": false,
+            "cat_skin": false,
+            "cat_overall": true
+          }
+        },
+        {
+          "type": "ingredient",
+          "settings": {
+            "abbr": "Zn",
+            "ingredient_name": "Zinc (as Citrate)",
+            "ingredient_type": "Essential Mineral",
+            "benefit_tag": "Immune & Cell Support",
+            "asset_filename": "primal-ing-zinc-citrate.png",
+            "what_it_does": "Supports immune function, skin health and cell growth and repair.",
+            "how_it_works": "Essential for enzyme function and immune cell development.",
+            "why_included": "Immune Support\nCellular Health\nSkin Health\nWound Healing",
+            "cat_gut": false,
+            "cat_brain": false,
+            "cat_energy": false,
+            "cat_immune": true,
+            "cat_performance": false,
+            "cat_skin": true,
+            "cat_overall": true
+          }
+        },
+        {
+          "type": "ingredient",
+          "settings": {
+            "abbr": "Se",
+            "ingredient_name": "Selenium (as Selenomethionine)",
+            "ingredient_type": "Essential Mineral",
+            "benefit_tag": "Antioxidant & Immune Support",
+            "asset_filename": "primal-ing-selenium-2.png",
+            "what_it_does": "Supports immune function, thyroid health and protects cells from oxidative damage.",
+            "how_it_works": "Selenium is a cofactor for antioxidant enzymes that help neutralise free radicals.",
+            "why_included": "Immune Support\nThyroid Support\nAntioxidant Protection\nCell Protection",
+            "cat_gut": false,
+            "cat_brain": false,
+            "cat_energy": false,
+            "cat_immune": true,
+            "cat_performance": false,
+            "cat_skin": false,
+            "cat_overall": true
+          }
+        },
+        {
+          "type": "ingredient",
+          "settings": {
+            "abbr": "Mn",
+            "ingredient_name": "Manganese",
+            "ingredient_type": "Essential Mineral",
+            "benefit_tag": "Bone & Metabolic Health",
+            "asset_filename": "primal-ing-manganese.png",
+            "what_it_does": "Supports bone formation, energy metabolism and antioxidant enzyme function.",
+            "how_it_works": "Activates enzymes involved in metabolism and helps defend cells from oxidative stress.",
+            "why_included": "Bone Health\nMetabolic Support\nAntioxidant Support\nEnzyme Function",
+            "cat_gut": false,
+            "cat_brain": false,
+            "cat_energy": true,
+            "cat_immune": false,
+            "cat_performance": false,
+            "cat_skin": false,
+            "cat_overall": true
+          }
+        },
+        {
+          "type": "ingredient",
+          "settings": {
+            "abbr": "Cr",
+            "ingredient_name": "Chromium (as Picolinate)",
+            "ingredient_type": "Essential Trace Mineral",
+            "benefit_tag": "Blood Sugar & Metabolic Health",
+            "asset_filename": "primal-ing-chromium.png",
+            "what_it_does": "Helps maintain healthy blood sugar levels and supports macronutrient metabolism.",
+            "how_it_works": "Enhances insulin action and helps the body metabolise carbohydrates, proteins and fats.",
+            "why_included": "Blood Sugar Support\nMetabolic Support\nInsulin Function\nEnergy Production",
+            "cat_gut": false,
+            "cat_brain": false,
+            "cat_energy": true,
+            "cat_immune": false,
+            "cat_performance": false,
+            "cat_skin": false,
+            "cat_overall": true
+          }
+        },
+        {
+          "type": "ingredient",
+          "settings": {
+            "abbr": "Mo",
+            "ingredient_name": "Molybdenum",
+            "ingredient_type": "Essential Trace Mineral",
+            "benefit_tag": "Detox & Enzyme Support",
+            "asset_filename": "primal-ing-molybdenum.png",
+            "what_it_does": "Supports detoxification processes and the breakdown of sulphites and other compounds.",
+            "how_it_works": "A cofactor for enzymes that assist in detox and nutrient metabolism.",
+            "why_included": "Detox Support\nEnzyme Function\nSulphite Metabolism\nNutrient Utilisation",
+            "cat_gut": true,
+            "cat_brain": false,
+            "cat_energy": false,
+            "cat_immune": false,
+            "cat_performance": false,
+            "cat_skin": false,
+            "cat_overall": true
+          }
+        },
+        {
+          "type": "ingredient",
+          "settings": {
+            "abbr": "K2",
+            "ingredient_name": "Vitamin K2 (MK-7)",
+            "ingredient_type": "Essential Vitamin",
+            "benefit_tag": "Bone & Heart Health",
+            "asset_filename": "primal-ing-vitamin-k2-mk7.png",
+            "what_it_does": "Supports strong bones and helps maintain healthy arteries and cardiovascular function.",
+            "how_it_works": "Directs calcium to bones and teeth and away from arteries and soft tissues.",
+            "why_included": "Bone Health\nHeart Health\nCalcium Utilisation\nArterial Support",
+            "cat_gut": false,
+            "cat_brain": false,
+            "cat_energy": false,
+            "cat_immune": false,
+            "cat_performance": true,
+            "cat_skin": false,
+            "cat_overall": true
+          }
+        }
+      ]
+    }
+  ],
+  "enabled_on": {
+    "templates": [
+      "page",
+      "index"
+    ]
+  }
+}
+{% endschema %}

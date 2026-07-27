@@ -1,0 +1,49 @@
+PRIMAL INGREDIENTS PAGE — SHOPIFY PASTE GUIDE
+==============================================
+
+STEP 1 — Snippet (pehle ye check karo)
+--------------------------------------
+Theme → Edit code → snippets/pw-align-vars.liquid
+
+Agar file nahi hai to INGREDIENTS-SNIPPET-pw-align-vars.liquid se copy karo.
+
+STEP 2 — Section file
+---------------------
+Theme → Edit code → sections/primal-ingredients.liquid
+
+Poora purana code DELETE karo. Neeche 4 parts ko ORDER mein paste karo (ek ke neeche ek):
+
+  Part 1 → INGREDIENTS-PART-1.liquid  (lines 1–730)
+  Part 2 → INGREDIENTS-PART-2.liquid  (lines 731–1460) — Part 1 ke BILKUL neeche
+  Part 3 → INGREDIENTS-PART-3.liquid  (lines 1461–2190)
+  Part 4 → INGREDIENTS-PART-4.liquid  (lines 2191–2917)
+
+YA ek hi file:
+  INGREDIENTS-PASTE-FULL.liquid (poora 2917 lines)
+
+STEP 3 — Apna purana GLOBAL ALIGNMENT block HATAO
+-------------------------------------------------
+Agar file ke end mein ye hai to DELETE karo (side gaps banata hai):
+
+  #PwIng-{{ section.id }} {
+    max-width: 1440px !important;
+  }
+
+STEP 4 — Save + Preview
+-----------------------
+- Clean By Design icons dikhen (Liquid errors nahi)
+- UK trust badge dikhe
+- Background full width, content header/footer ke saath align
+
+RAW GITHUB LINKS (branch: cursor/primal-ingredients-align-7eea)
+---------------------------------------------------------------
+Full file:
+https://raw.githubusercontent.com/fullstackwebdeveloper1000-coder/shopifycode/cursor/primal-ingredients-align-7eea/INGREDIENTS-PASTE-FULL.liquid
+
+Snippet:
+https://raw.githubusercontent.com/fullstackwebdeveloper1000-coder/shopifycode/cursor/primal-ingredients-align-7eea/INGREDIENTS-SNIPPET-pw-align-vars.liquid
+
+Part 1: .../INGREDIENTS-PART-1.liquid
+Part 2: .../INGREDIENTS-PART-2.liquid
+Part 3: .../INGREDIENTS-PART-3.liquid
+Part 4: .../INGREDIENTS-PART-4.liquid
