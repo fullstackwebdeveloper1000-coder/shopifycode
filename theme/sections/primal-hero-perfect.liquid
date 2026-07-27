@@ -149,6 +149,13 @@
     overflow-x: clip !important;
   }
 
+  #shopify-section-{{ section.id }} .page-width,
+  #shopify-section-{{ section.id }} > .page-width {
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
   #PrimalHeroPerfect-{{ section.id }} {
     display: block;
     width: 100%;
@@ -219,6 +226,7 @@
     flex-direction: column;
     justify-content: center;
     width: 48%;
+    max-width: 660px;
     margin: 0;
     padding: 60px 10px 60px 0;
   }
