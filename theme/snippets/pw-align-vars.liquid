@@ -1,10 +1,11 @@
 {%- comment -%}
   Primal Win — shared alignment tokens
-  Include inside {% style %} in every section:
-  {% render 'pw-align-vars' %}
+  Site width: 1440px (client standard)
+  Wrap inside a section selector in {% style %}:
+  #YourSection-{{ section.id }} { {% render 'pw-align-vars' %} }
 {%- endcomment -%}
   --pw-frame: 1440px;
-  --pw-max: 1180px;
+  --pw-max: 1440px;
   --pw-gutter: 48px;
 
   @media screen and (max-width: 1180px) {
