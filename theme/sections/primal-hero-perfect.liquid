@@ -174,10 +174,10 @@
   #PrimalHeroPerfect-{{ section.id }} .pw-container.primal-container-{{ section.id }} {
     position: relative;
     display: flex;
-    align-items: center;
+    align-items: stretch;
     width: 100%;
     max-width: var(--pw-max);
-    min-height: 620px;
+    height: 620px;
     margin-inline: auto;
     padding-inline: var(--pw-gutter);
     padding-block: 0;
@@ -189,7 +189,8 @@
     z-index: 1;
     top: 0;
     right: 0;
-    width: 68%;
+    width: 770px;
+    max-width: calc(100% - 48px);
     height: 100%;
     overflow: hidden;
   }
@@ -200,23 +201,9 @@
     height: 100%;
     max-width: none;
     object-fit: cover;
-    object-position: right 45%;
-  }
-
-  #PrimalHeroPerfect-{{ section.id }} .primal-bg-image-{{ section.id }}::before {
-    content: "";
-    position: absolute;
-    z-index: 2;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    width: 28%;
-    pointer-events: none;
-    background: linear-gradient(
-      90deg,
-      #FAF8F5 0%,
-      rgba(250, 248, 245, 0) 100%
-    );
+    object-position: right center;
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 30%);
+    mask-image: linear-gradient(to right, transparent 0%, #000 30%);
   }
 
   #PrimalHeroPerfect-{{ section.id }} .primal-text-col-{{ section.id }} {
@@ -225,10 +212,10 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    width: 48%;
+    width: 100%;
     max-width: 660px;
     margin: 0;
-    padding: 60px 10px 60px 0;
+    padding: 64px 0 60px;
   }
 
   #PrimalHeroPerfect-{{ section.id }} .primal-kicker-{{ section.id }} {
