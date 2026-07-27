@@ -1,0 +1,568 @@
+{% liquid
+  assign heading_font = section.settings.heading_font
+  assign body_font = section.settings.body_font
+  assign logo_alt = section.settings.logo.alt | default: shop.name
+%}
+
+<footer
+  id="PrimalFooterClean-{{ section.id }}"
+  class="primal-footer-clean"
+  style="
+    --pfc-bg: {{ section.settings.background_color }};
+    --pfc-heading: {{ section.settings.heading_color }};
+    --pfc-text: {{ section.settings.text_color }};
+    --pfc-gold: {{ section.settings.gold_color }};
+    --pfc-logo-width: {{ section.settings.logo_width }}px;
+  "
+>
+  <div class="pw-container pfc__wrap">
+    <div class="pfc-brand">
+      <a class="pfc-logo" href="{{ routes.root_url }}" aria-label="{{ shop.name | escape }}">
+        {% if section.settings.logo != blank %}
+          {{
+            section.settings.logo
+            | image_url: width: 800
+            | image_tag:
+              class: 'pfc-logo__image',
+              loading: 'lazy',
+              widths: '220, 320, 450, 600, 800',
+              sizes: '223px',
+              alt: logo_alt
+          }}
+        {% else %}
+          <span class="pfc-logo__fallback">
+            <strong>PRIMAL WIN</strong>
+            <small>DAILY PERFORMANCE FORMULA</small>
+          </span>
+        {% endif %}
+      </a>
+
+      {% if section.settings.brand_text != blank %}
+        <div class="pfc-brand-text rte">{{ section.settings.brand_text }}</div>
+      {% endif %}
+
+      {% if section.settings.show_socials %}
+        <div class="pfc-socials" aria-label="Social media links">
+          <a
+            {% if section.settings.instagram_url != blank %}
+              href="{{ section.settings.instagram_url }}" target="_blank" rel="noopener"
+            {% else %}
+              role="link" aria-disabled="true"
+            {% endif %}
+            aria-label="Instagram"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <rect x="3.5" y="3.5" width="17" height="17" rx="5"/>
+              <circle cx="12" cy="12" r="4"/>
+              <circle cx="17.5" cy="6.5" r="1" class="pfc-fill"/>
+            </svg>
+          </a>
+
+          <a
+            {% if section.settings.facebook_url != blank %}
+              href="{{ section.settings.facebook_url }}" target="_blank" rel="noopener"
+            {% else %}
+              role="link" aria-disabled="true"
+            {% endif %}
+            aria-label="Facebook"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M14 20v-7h2.5l.4-3H14V8.1c0-.9.3-1.6 1.7-1.6H17V3.8c-.4-.1-1.3-.2-2.3-.2-2.3 0-3.8 1.4-3.8 4V10H8.5v3H11v7"/>
+            </svg>
+          </a>
+
+          <a
+            {% if section.settings.youtube_url != blank %}
+              href="{{ section.settings.youtube_url }}" target="_blank" rel="noopener"
+            {% else %}
+              role="link" aria-disabled="true"
+            {% endif %}
+            aria-label="YouTube"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M21 8.2c-.2-1.2-.9-2-2.1-2.2C17.4 5.7 14.7 5.5 12 5.5s-5.4.2-6.9.5C3.9 6.2 3.2 7 3 8.2c-.3 1.3-.5 2.6-.5 3.8s.2 2.5.5 3.8c.2 1.2.9 2 2.1 2.2 1.5.3 4.2.5 6.9.5s5.4-.2 6.9-.5c1.2-.2 1.9-1 2.1-2.2.3-1.3.5-2.6.5-3.8s-.2-2.5-.5-3.8Z"/>
+              <path d="m10 9 5 3-5 3V9Z" class="pfc-fill"/>
+            </svg>
+          </a>
+
+          <a
+            {% if section.settings.tiktok_url != blank %}
+              href="{{ section.settings.tiktok_url }}" target="_blank" rel="noopener"
+            {% else %}
+              role="link" aria-disabled="true"
+            {% endif %}
+            aria-label="TikTok"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M14 4v10.1a4.1 4.1 0 1 1-3.4-4.1"/>
+              <path d="M14 4c.7 2.1 2.1 3.4 4 3.8"/>
+            </svg>
+          </a>
+        </div>
+      {% endif %}
+    </div>
+
+    <nav class="pfc-menu pfc-menu--learn" aria-label="{{ section.settings.learn_heading | escape }}">
+      <h2>{{ section.settings.learn_heading }}</h2>
+      {% if section.settings.learn_menu != blank %}
+        <div class="pfc-menu-links">
+          {% for link in section.settings.learn_menu.links %}
+            <a href="{{ link.url }}"{% if link.current %} aria-current="page"{% endif %}>
+              {{ link.title }}
+            </a>
+          {% endfor %}
+        </div>
+      {% endif %}
+    </nav>
+
+    <nav class="pfc-menu pfc-menu--about" aria-label="{{ section.settings.about_heading | escape }}">
+      <h2>{{ section.settings.about_heading }}</h2>
+      {% if section.settings.about_menu != blank %}
+        <div class="pfc-menu-links">
+          {% for link in section.settings.about_menu.links %}
+            <a href="{{ link.url }}"{% if link.current %} aria-current="page"{% endif %}>
+              {{ link.title }}
+            </a>
+          {% endfor %}
+        </div>
+      {% endif %}
+    </nav>
+
+    <nav class="pfc-menu pfc-menu--care" aria-label="{{ section.settings.care_heading | escape }}">
+      <h2>{{ section.settings.care_heading }}</h2>
+      {% if section.settings.care_menu != blank %}
+        <div class="pfc-menu-links">
+          {% for link in section.settings.care_menu.links %}
+            <a href="{{ link.url }}"{% if link.current %} aria-current="page"{% endif %}>
+              {{ link.title }}
+            </a>
+          {% endfor %}
+        </div>
+      {% endif %}
+    </nav>
+
+    <div class="pfc-community">
+      {% if section.settings.community_heading != blank %}
+        <h2>{{ section.settings.community_heading }}</h2>
+      {% endif %}
+
+      {% if section.settings.community_text != blank %}
+        <p>{{ section.settings.community_text }}</p>
+      {% endif %}
+    </div>
+  </div>
+</footer>
+
+{% style %}
+  {{ heading_font | font_face: font_display: 'swap' }}
+  {{ body_font | font_face: font_display: 'swap' }}
+
+  #PrimalFooterClean-{{ section.id }} {
+    {% render 'pw-align-vars' %}
+  }
+
+  #shopify-section-{{ section.id }} {
+    display: block !important;
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow-x: clip !important;
+  }
+
+  #shopify-section-{{ section.id }} .page-width,
+  #shopify-section-{{ section.id }} > .page-width {
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  #PrimalFooterClean-{{ section.id }},
+  #PrimalFooterClean-{{ section.id }} *,
+  #PrimalFooterClean-{{ section.id }} *::before,
+  #PrimalFooterClean-{{ section.id }} *::after {
+    box-sizing: border-box;
+  }
+
+  #PrimalFooterClean-{{ section.id }} {
+    width: 100%;
+    min-height: 365px;
+    margin: 0;
+    padding: 56px 0 44px;
+    background: var(--pfc-bg);
+    color: var(--pfc-text);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  #PrimalFooterClean-{{ section.id }} .pw-container.pfc__wrap {
+    display: grid;
+    grid-template-columns:
+      minmax(0, 220px)
+      minmax(0, 120px)
+      minmax(0, 140px)
+      minmax(0, 170px)
+      minmax(0, 240px);
+    justify-content: space-between;
+    align-items: start;
+    column-gap: clamp(20px, 2.4vw, 36px);
+    width: 100%;
+    max-width: var(--pw-max);
+    margin-inline: auto;
+    padding-inline: var(--pw-gutter);
+  }
+
+  #PrimalFooterClean-{{ section.id }} .pfc-brand {
+    min-width: 0;
+  }
+
+  #PrimalFooterClean-{{ section.id }} .pfc-logo {
+    display: block;
+    width: var(--pfc-logo-width);
+    max-width: 100%;
+    text-decoration: none;
+  }
+
+  #PrimalFooterClean-{{ section.id }} .pfc-logo__image {
+    display: block;
+    width: var(--pfc-logo-width);
+    max-width: 100%;
+    height: auto;
+    max-height: 52px;
+    object-fit: contain;
+    object-position: left center;
+  }
+
+  #PrimalFooterClean-{{ section.id }} .pfc-logo__fallback {
+    display: flex;
+    flex-direction: column;
+    color: var(--pfc-heading);
+    font-family: {{ heading_font.family }}, sans-serif;
+  }
+
+  #PrimalFooterClean-{{ section.id }} .pfc-logo__fallback strong {
+    font-size: 21px;
+    line-height: 1;
+    letter-spacing: 2px;
+  }
+
+  #PrimalFooterClean-{{ section.id }} .pfc-logo__fallback small {
+    margin-top: 4px;
+    color: var(--pfc-gold);
+    font-size: 9px;
+    line-height: 1;
+  }
+
+  #PrimalFooterClean-{{ section.id }} .pfc-brand-text {
+    margin-top: 24px;
+    color: var(--pfc-text);
+    font-family: {{ body_font.family }}, sans-serif;
+    font-style: {{ body_font.style }};
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 1.75;
+  }
+
+  #PrimalFooterClean-{{ section.id }} .pfc-brand-text p {
+    margin: 0;
+  }
+
+  #PrimalFooterClean-{{ section.id }} .pfc-socials {
+    display: flex;
+    gap: 18px;
+    align-items: center;
+    margin-top: 20px;
+  }
+
+  #PrimalFooterClean-{{ section.id }} .pfc-socials a {
+    width: 20px;
+    height: 20px;
+    display: inline-flex;
+    color: #fff;
+  }
+
+  #PrimalFooterClean-{{ section.id }} .pfc-socials svg {
+    width: 100%;
+    height: 100%;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  #PrimalFooterClean-{{ section.id }} .pfc-socials .pfc-fill {
+    fill: currentColor;
+    stroke: none;
+  }
+
+  #PrimalFooterClean-{{ section.id }} .pfc-community {
+    min-width: 0;
+    padding-top: 2px;
+  }
+
+  #PrimalFooterClean-{{ section.id }} .pfc-community h2,
+  #PrimalFooterClean-{{ section.id }} .pfc-menu h2 {
+    margin: 0;
+    color: var(--pfc-heading);
+    font-family: {{ heading_font.family }}, sans-serif;
+    font-style: {{ heading_font.style }};
+    font-weight: 700;
+    font-size: 13px;
+    line-height: 1.25;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  #PrimalFooterClean-{{ section.id }} .pfc-community p {
+    margin: 14px 0 0;
+    color: var(--pfc-text);
+    font-family: {{ body_font.family }}, sans-serif;
+    font-style: {{ body_font.style }};
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 1.65;
+  }
+
+  #PrimalFooterClean-{{ section.id }} .pfc-menu {
+    padding-top: 2px;
+  }
+
+  #PrimalFooterClean-{{ section.id }} .pfc-menu-links {
+    margin-top: 17px;
+    display: grid;
+    gap: 13px;
+  }
+
+  #PrimalFooterClean-{{ section.id }} .pfc-menu-links a {
+    color: var(--pfc-text);
+    text-decoration: none;
+    font-family: {{ body_font.family }}, sans-serif;
+    font-style: {{ body_font.style }};
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 1.2;
+  }
+
+  #PrimalFooterClean-{{ section.id }} .pfc-menu-links a:hover,
+  #PrimalFooterClean-{{ section.id }} .pfc-menu-links a[aria-current="page"] {
+    color: var(--pfc-gold);
+  }
+
+  @media screen and (max-width: 1100px) {
+    #PrimalFooterClean-{{ section.id }} .pw-container.pfc__wrap {
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.9fr) minmax(0, 0.9fr);
+      grid-template-areas:
+        "brand learn about"
+        "brand care community";
+      row-gap: 36px;
+      justify-content: stretch;
+    }
+
+    #PrimalFooterClean-{{ section.id }} .pfc-brand {
+      grid-area: brand;
+    }
+
+    #PrimalFooterClean-{{ section.id }} .pfc-menu--learn {
+      grid-area: learn;
+    }
+
+    #PrimalFooterClean-{{ section.id }} .pfc-menu--about {
+      grid-area: about;
+    }
+
+    #PrimalFooterClean-{{ section.id }} .pfc-menu--care {
+      grid-area: care;
+    }
+
+    #PrimalFooterClean-{{ section.id }} .pfc-community {
+      grid-area: community;
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    #PrimalFooterClean-{{ section.id }} {
+      padding: 42px 0;
+    }
+
+    #PrimalFooterClean-{{ section.id }} .pw-container.pfc__wrap {
+      display: block;
+      padding-inline: var(--pw-gutter);
+    }
+
+    #PrimalFooterClean-{{ section.id }} .pfc-menu,
+    #PrimalFooterClean-{{ section.id }} .pfc-community {
+      margin-top: 34px;
+    }
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "Primal Screenshot Footer",
+  "tag": "section",
+  "class": "section-primal-screenshot-footer",
+  "enabled_on": {
+    "groups": ["footer"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "Brand"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Footer logo"
+    },
+    {
+      "type": "range",
+      "id": "logo_width",
+      "min": 180,
+      "max": 240,
+      "step": 1,
+      "unit": "px",
+      "label": "Logo width",
+      "default": 223
+    },
+    {
+      "type": "richtext",
+      "id": "brand_text",
+      "label": "Brand description",
+      "default": "<p>For those who want to win.<br>Clean ingredients.<br>Real results.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Menus"
+    },
+    {
+      "type": "text",
+      "id": "learn_heading",
+      "label": "Learn heading",
+      "default": "Learn"
+    },
+    {
+      "type": "link_list",
+      "id": "learn_menu",
+      "label": "Learn menu"
+    },
+    {
+      "type": "text",
+      "id": "about_heading",
+      "label": "About heading",
+      "default": "About"
+    },
+    {
+      "type": "link_list",
+      "id": "about_menu",
+      "label": "About menu"
+    },
+    {
+      "type": "text",
+      "id": "care_heading",
+      "label": "Customer Care heading",
+      "default": "Customer Care"
+    },
+    {
+      "type": "link_list",
+      "id": "care_menu",
+      "label": "Customer Care menu"
+    },
+    {
+      "type": "header",
+      "content": "Community text"
+    },
+    {
+      "type": "text",
+      "id": "community_heading",
+      "label": "Community heading",
+      "default": "Join The Primal Community"
+    },
+    {
+      "type": "textarea",
+      "id": "community_text",
+      "label": "Community text",
+      "default": "Be the first to know about new drops, offers and performance tips."
+    },
+    {
+      "type": "header",
+      "content": "Social media"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_socials",
+      "label": "Show social icons",
+      "default": true
+    },
+    {
+      "type": "url",
+      "id": "instagram_url",
+      "label": "Instagram URL"
+    },
+    {
+      "type": "url",
+      "id": "facebook_url",
+      "label": "Facebook URL"
+    },
+    {
+      "type": "url",
+      "id": "youtube_url",
+      "label": "YouTube URL"
+    },
+    {
+      "type": "url",
+      "id": "tiktok_url",
+      "label": "TikTok URL"
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "font_picker",
+      "id": "heading_font",
+      "label": "Heading font",
+      "default": "montserrat_n7"
+    },
+    {
+      "type": "font_picker",
+      "id": "body_font",
+      "label": "Body font",
+      "default": "inter_n4"
+    },
+    {
+      "type": "header",
+      "content": "Colours"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#14171A"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading colour",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text colour",
+      "default": "#C7CBCE"
+    },
+    {
+      "type": "color",
+      "id": "gold_color",
+      "label": "Brand gold",
+      "default": "#C89A3D"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Primal Screenshot Footer"
+    }
+  ]
+}
+{% endschema %}
