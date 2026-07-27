@@ -2,7 +2,7 @@
   assign heading_font = section.settings.heading_font
   assign display_font = section.settings.display_font
   assign hero_alt = section.settings.hero_image.alt | default: 'Primal Win pouch with greens powder and gold scoop'
-  assign hero_sizes = '(min-width: 1025px) 980px, 100vw'
+  assign hero_sizes = '(min-width: 1025px) 770px, 100%'
   assign hero_widths = '900, 1200, 1600, 1800, 2200'
 %}
 
@@ -190,7 +190,7 @@
     top: 0;
     right: 0;
     width: 770px;
-    max-width: calc(100% - 48px);
+    max-width: calc(100% - var(--pw-gutter));
     height: 100%;
     overflow: hidden;
   }
@@ -375,7 +375,7 @@
   @media screen and (max-width: 1024px) {
     #PrimalHeroPerfect-{{ section.id }} .pw-container.primal-container-{{ section.id }} {
       flex-direction: column-reverse;
-      min-height: 0;
+      height: auto;
       padding-inline: var(--pw-gutter);
     }
 
@@ -383,15 +383,18 @@
       position: relative;
       right: auto;
       width: 100%;
+      max-width: none;
       height: 400px;
     }
 
-    #PrimalHeroPerfect-{{ section.id }} .primal-bg-image-{{ section.id }}::before {
-      display: none;
+    #PrimalHeroPerfect-{{ section.id }} .primal-bg-image-{{ section.id }} .primal-hero-image {
+      -webkit-mask-image: none;
+      mask-image: none;
     }
 
     #PrimalHeroPerfect-{{ section.id }} .primal-text-col-{{ section.id }} {
       width: 100%;
+      max-width: none;
       padding: 50px 0;
     }
 
