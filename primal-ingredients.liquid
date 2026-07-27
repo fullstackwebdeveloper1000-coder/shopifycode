@@ -24,6 +24,7 @@
     max-width: none !important;
     margin: 0 !important;
     padding: 0 !important;
+    overflow-x: clip;
   }
 
   #shopify-section-{{ section.id }} .page-width,
@@ -36,6 +37,8 @@
 .shopify-section.pw-ingredients-section { margin: 0; }
 
 .pw-ing {
+  width: 100%;
+  max-width: none;
   margin: 0;
   padding-top: var(--pw-pad-top, 0px);
   padding-bottom: var(--pw-pad-bottom, 0px);
