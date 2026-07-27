@@ -484,7 +484,7 @@
   display: grid;
   width: min(702px, 100%);
   height: 195.69px;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: 146.77px repeat(3, minmax(0, 1fr));
   grid-template-rows: 1fr;
   column-gap: 22px;
   row-gap: 22px;
@@ -495,13 +495,14 @@
 .pw-ing .pw-detail-image {
   position: relative;
   display: block;
-  width: 100%;
+  width: 146.77px;
   height: 195.69px;
-  min-height: 0;
-  aspect-ratio: auto;
-  align-self: stretch;
+  min-width: 146.77px;
+  min-height: 195.69px;
+  max-width: 146.77px;
+  max-height: 195.69px;
   overflow: hidden;
-  border-radius: 14px;
+  border-radius: 12px;
   background: linear-gradient(160deg, #2B3228 0%, #11160F 100%);
 }
 
@@ -511,6 +512,10 @@
   display: block;
   width: 100%;
   height: 100%;
+  min-width: 100%;
+  min-height: 100%;
+  max-width: none;
+  max-height: none;
   border-radius: inherit;
   object-fit: cover;
   object-position: center center;
@@ -1015,10 +1020,13 @@
 
   .pw-ing .pw-detail-image {
     width: 100%;
+    max-width: none;
     height: auto;
+    min-width: 0;
     min-height: 0;
-    aspect-ratio: 16 / 9;
-    border-radius: 14px;
+    max-height: none;
+    aspect-ratio: 146.77 / 195.69;
+    border-radius: 12px;
   }
 
   .pw-ing .pw-clean-grid {
@@ -1812,7 +1820,7 @@
     }
 
     var image = item.image
-      ? '<img src="' + esc(item.image) + '" alt="' + esc(item.name) + '" loading="lazy">'
+      ? '<img class="pw-detail-img" src="' + esc(item.image) + '" alt="' + esc(item.name) + '" loading="lazy">'
       : '';
 
     var badge = item.badge || item.tag;

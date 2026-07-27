@@ -1,3 +1,11 @@
+    ['skin', "Healthy Skin, Hair & Nails"],
+    ['overall', "Overall Wellbeing"]
+  ];
+
+  var REFERENCES_LABEL = {{ section.settings.references_label | json }};
+
+  var ingredients;
+  try {
     ingredients = JSON.parse(dataNode.textContent || '[]');
   } catch (error) {
     detailNode.innerHTML = '<div class="pw-list-empty">Ingredient data could not be loaded.</div>';
@@ -148,7 +156,7 @@
     }
 
     var image = item.image
-      ? '<img src="' + esc(item.image) + '" alt="' + esc(item.name) + '" loading="lazy">'
+      ? '<img class="pw-detail-img" src="' + esc(item.image) + '" alt="' + esc(item.name) + '" loading="lazy">'
       : '';
 
     var badge = item.badge || item.tag;
@@ -822,11 +830,3 @@
           "content": "Typical greens powders"
         },
         {
-          "type": "text",
-          "id": "typical_form",
-          "label": "Form used elsewhere",
-          "info": "Example: Magnesium Oxide"
-        },
-        {
-          "type": "text",
-          "id": "typical_dose",
