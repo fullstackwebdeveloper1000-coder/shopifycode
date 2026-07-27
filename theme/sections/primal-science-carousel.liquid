@@ -13,7 +13,7 @@
             {%- if clean_line != blank -%}
               <span class="pw-sci-car__title-line{% if forloop.first %} pw-sci-car__title-line--ruled{% endif %}">
                 {%- if forloop.first -%}<span class="pw-sci-car__rule" aria-hidden="true"></span>{%- endif -%}
-                {{ clean_line }}
+                <span class="pw-sci-car__title-txt">{{ clean_line }}</span>
                 {%- if forloop.first -%}<span class="pw-sci-car__rule" aria-hidden="true"></span>{%- endif -%}
               </span>
             {%- endif -%}
@@ -24,7 +24,9 @@
         <p class="pw-sci-car__lead">{{ section.settings.subheading }}</p>
       {%- endif -%}
     </header>
+  </div>
 
+  <div class="pw-sci-car__frame">
     <div class="pw-sci-car__row">
       <button class="pw-sci-car__arrow pw-sci-car__arrow--prev" type="button" aria-label="Previous slide" data-carousel-prev>
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg>
@@ -116,7 +118,9 @@
         data-counter-total="{{ section.settings.counter_total | default: 10 }}"
       >01 / {{ section.settings.counter_total | default: 10 | prepend: '0' | slice: -2, 2 }}</span>
     </div>
+  </div>
 
+  <div class="pw-container pw-sci-car__container">
     {%- if section.settings.footnote != blank -%}
       <p class="pw-sci-car__note">{{ section.settings.footnote }}</p>
     {%- endif -%}
@@ -167,9 +171,10 @@
     padding-inline: var(--pw-gutter);
   }
 
-  /* ── Heading (Figma: 3 lines, gold rules line 1) ── */
+  /* ── Heading: 1280 content column, gold rules full width line 1 ── */
   #PwScienceCarousel-{{ section.id }} .pw-sci-car__head {
-    max-width: 900px;
+    width: 100%;
+    max-width: var(--pw-content);
     margin: 0 auto 36px;
     text-align: center;
   }
@@ -178,12 +183,13 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 6px;
-    margin: 0 0 14px;
+    gap: 4px;
+    width: 100%;
+    margin: 0 0 16px;
     font-family: Montserrat, Arial, sans-serif;
     font-weight: 800;
-    font-size: 30px;
-    line-height: 1.2;
+    font-size: 28px;
+    line-height: 1.25;
     letter-spacing: 0.2px;
     text-transform: uppercase;
     color: #fff;
@@ -191,26 +197,32 @@
 
   #PwScienceCarousel-{{ section.id }} .pw-sci-car__title-line {
     display: block;
+    width: 100%;
   }
 
   #PwScienceCarousel-{{ section.id }} .pw-sci-car__title-line--ruled {
     display: flex;
     align-items: center;
-    justify-content: center;
-    gap: 16px;
+    gap: 20px;
     width: 100%;
+  }
+
+  #PwScienceCarousel-{{ section.id }} .pw-sci-car__title-txt {
+    flex: 0 1 auto;
+    white-space: nowrap;
   }
 
   #PwScienceCarousel-{{ section.id }} .pw-sci-car__rule {
     display: block;
-    width: 40px;
-    height: 2px;
-    flex: 0 0 40px;
+    flex: 1 1 0;
+    min-width: 24px;
+    height: 1px;
     background: #c89a3d;
   }
 
   #PwScienceCarousel-{{ section.id }} .pw-sci-car__lead {
-    max-width: 720px;
+    width: 100%;
+    max-width: var(--pw-content);
     margin: 0 auto;
     font-family: Inter, Arial, sans-serif;
     font-size: 15px;
@@ -218,14 +230,21 @@
     color: #c7cbce;
   }
 
-  /* ── Carousel row: [arrow] [cards 1280] [arrow] ── */
+  /* ── 1440 frame: carousel + arrows outside 1280 cards ── */
+  #PwScienceCarousel-{{ section.id }} .pw-sci-car__frame {
+    width: 100%;
+    max-width: var(--pw-frame);
+    margin-inline: auto;
+    padding-inline: var(--pw-gutter);
+  }
+
   #PwScienceCarousel-{{ section.id }} .pw-sci-car__row {
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 20px;
     width: 100%;
-    max-width: var(--pw-frame);
+    max-width: calc(var(--pw-content) + 128px);
     margin-inline: auto;
   }
 
@@ -467,11 +486,19 @@
   }
 
   #PwScienceCarousel-{{ section.id }} .pw-sci-car__note {
-    margin: 16px 0 0;
+    width: 100%;
+    max-width: var(--pw-content);
+    margin: 16px auto 0;
     text-align: center;
     font-family: Inter, Arial, sans-serif;
     font-size: 12px;
     color: #737a80;
+  }
+
+  @media screen and (max-width: 1100px) {
+    #PwScienceCarousel-{{ section.id }} .pw-sci-car__title-txt {
+      white-space: normal;
+    }
   }
 
   @media screen and (max-width: 960px) {
@@ -584,7 +611,7 @@
       "type": "textarea",
       "id": "heading",
       "label": "Heading (one line per row)",
-      "default": "Superior Ingredients.\nClinically Effective Doses.\nReal Results."
+      "default": "Superior Ingredients. Clinically Effective\nDoses. Real Results."
     },
     {
       "type": "textarea",
