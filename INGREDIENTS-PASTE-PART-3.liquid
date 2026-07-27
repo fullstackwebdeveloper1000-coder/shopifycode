@@ -1,0 +1,832 @@
+    ingredients = JSON.parse(dataNode.textContent || '[]');
+  } catch (error) {
+    detailNode.innerHTML = '<div class="pw-list-empty">Ingredient data could not be loaded.</div>';
+    return;
+  }
+
+  ingredients.forEach(function (item) {
+    item.cats = String(item.cats || '').split(',').filter(Boolean);
+    item.slug = String(item.name || '')
+      .toLowerCase()
+      .replace(/['\u2019]/g, '')
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-|-$/g, '');
+  });
+
+  function esc(value) {
+    return String(value == null ? '' : value)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
+
+  function lines(value) {
+    return String(value || '')
+      .split(/\r?\n/)
+      .map(function (line) { return line.trim(); })
+      .filter(Boolean);
+  }
+
+  function copy(value) {
+    var items = lines(value);
+    if (!items.length) return '';
+    if (items.length === 1) return '<p>' + esc(items[0]) + '</p>';
+    return '<ul>' + items.map(function (item) {
+      return '<li>' + esc(item) + '</li>';
+    }).join('') + '</ul>';
+  }
+
+  var category = 'all';
+  var expanded = false;
+  var params = new URLSearchParams(window.location.search);
+  var wanted = params.get('ing');
+  var active = 0;
+  ingredients.forEach(function (item, index) {
+    if (item.slug === wanted) active = index;
+  });
+
+  function visible() {
+    if (category === 'all') return ingredients;
+    return ingredients.filter(function (item) {
+      return item.cats.indexOf(category) !== -1;
+    });
+  }
+
+  function renderFilters() {
+    filtersNode.innerHTML = CATEGORIES.map(function (pair) {
+      var key = pair[0];
+      var label = pair[1];
+      var on = category === key;
+      return '<button type="button" class="pw-filter' + (on ? ' is-active' : '') +
+        '" data-category="' + key + '" aria-pressed="' + on + '">' +
+        '<img src="' + esc(ICONS[key]) + '" alt="" width="26" height="26" loading="lazy">' +
+        '<span>' + esc(label) + '</span></button>';
+    }).join('');
+
+    filtersNode.querySelectorAll('[data-category]').forEach(function (button) {
+      button.addEventListener('click', function () {
+        category = button.dataset.category;
+        expanded = false;
+        var list = visible();
+        if (list.indexOf(ingredients[active]) === -1) {
+          active = list.length ? ingredients.indexOf(list[0]) : -1;
+        }
+        render();
+      });
+    });
+  }
+
+  function renderList() {
+    var list = visible();
+    if (!list.length) {
+      listNode.innerHTML = '<div class="pw-list-empty">No ingredients in this category yet.</div>';
+      return;
+    }
+
+    listNode.innerHTML = list.map(function (item) {
+      var index = ingredients.indexOf(item);
+      var on = index === active;
+      return '<button type="button" class="pw-list-item' + (on ? ' is-active' : '') +
+        '" data-index="' + index + '" aria-pressed="' + on + '">' +
+        '<span class="pw-abbr">' + esc(item.abbr) + '</span>' +
+        '<span class="pw-list-copy"><strong>' + esc(item.name) + '</strong>' +
+        '<small>' + esc(item.type) + '</small></span>' +
+        '<span class="pw-list-chevron" aria-hidden="true">&rsaquo;</span></button>';
+    }).join('');
+
+    // On narrow screens only the first eight are shown until asked for more.
+    if (moreNode) {
+      var narrow = window.matchMedia('(max-width: 960px)').matches;
+      if (narrow && list.length > 8 && !expanded) {
+        listNode.classList.add('pw-list--collapsed');
+        moreNode.hidden = false;
+        moreNode.textContent = 'Show all ' + list.length + ' ingredients';
+      } else {
+        listNode.classList.remove('pw-list--collapsed');
+        moreNode.hidden = !(narrow && list.length > 8);
+        moreNode.textContent = 'Show fewer';
+      }
+    }
+
+    listNode.querySelectorAll('[data-index]').forEach(function (button) {
+      button.addEventListener('click', function () {
+        active = Number(button.dataset.index);
+        var item = ingredients[active];
+        if (item && window.history && window.history.replaceState) {
+          var url = new URL(window.location.href);
+          url.searchParams.set('ing', item.slug);
+          window.history.replaceState({}, '', url);
+        }
+        renderList();
+        renderDetail();
+
+        // the panel sits above the list on narrow screens, so bring it into view
+        if (window.matchMedia('(max-width: 960px)').matches) {
+          detailNode.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+  }
+
+  function references(item) {
+    var term = encodeURIComponent(item.name);
+    var links = [];
+    if (item.referenceUrl) links.push(['Approved reference', item.referenceUrl]);
+    links.push(['NIH evidence search', 'https://search.nih.gov/search?affiliate=nih&query=' + term]);
+    links.push(['EFSA evidence search', 'https://www.efsa.europa.eu/en/search?text=' + term]);
+    links.push(['PubMed research', 'https://pubmed.ncbi.nlm.nih.gov/?term=' + term]);
+    return links;
+  }
+
+  function renderDetail() {
+    var item = ingredients[active] || visible()[0];
+    if (!item) {
+      detailNode.innerHTML = '<div class="pw-list-empty">Select a category to see ingredients.</div>';
+      return;
+    }
+
+    var image = item.image
+      ? '<img src="' + esc(item.image) + '" alt="' + esc(item.name) + '" loading="lazy">'
+      : '';
+
+    var badge = item.badge || item.tag;
+
+    detailNode.innerHTML =
+      '<div class="pw-detail-head">' +
+        '<span class="pw-abbr">' + esc(item.abbr) + '</span>' +
+        '<div class="pw-detail-title"><h3>' + esc(item.name) + '</h3>' +
+        '<small>' + esc(item.type) + '</small></div>' +
+        (badge ? '<span class="pw-detail-badge">' + esc(badge) + '</span>' : '') +
+      '</div>' +
+      '<div class="pw-detail-body">' +
+        '<div class="pw-detail-image">' + image + '</div>' +
+        '<div class="pw-detail-content">' +
+          '<div class="pw-detail-col"><h4>What It Does</h4>' + copy(item.what) + '</div>' +
+          '<div class="pw-detail-pair">' +
+            '<div class="pw-detail-col"><h4>How It Works</h4>' + copy(item.how) + '</div>' +
+            '<div class="pw-detail-col"><h4>Why We Included It</h4>' + copy(item.why) + '</div>' +
+          '</div>' +
+        '</div>' +
+      '</div>' +
+      '<div class="pw-detail-foot">' +
+        '<span class="pw-evidence-label">Scientifically Supported By</span>' +
+        '<span class="pw-evidence"><strong>NIH</strong> <span>National Institutes of Health</span></span>' +
+        '<span class="pw-evidence"><strong>EFSA</strong> <span>European Food Safety Authority</span></span>' +
+        '<button type="button" class="pw-reference-button" data-pw-refs>' +
+          esc(REFERENCES_LABEL) + ' <span aria-hidden="true">&rarr;</span>' +
+        '</button>' +
+      '</div>' +
+      '<div class="pw-reference-panel" data-pw-panel hidden>' +
+        '<strong>' + esc(item.name) + ' references</strong>' +
+        references(item).map(function (pair) {
+          return '<a href="' + esc(pair[1]) + '" target="_blank" rel="noopener noreferrer">' +
+            '<span>' + esc(pair[0]) + '</span><span aria-hidden="true">&rarr;</span></a>';
+        }).join('') +
+      '</div>';
+
+    var button = detailNode.querySelector('[data-pw-refs]');
+    var panel = detailNode.querySelector('[data-pw-panel]');
+    if (button && panel) {
+      button.addEventListener('click', function (event) {
+        event.stopPropagation();
+        panel.hidden = !panel.hidden;
+      });
+    }
+  }
+
+  if (moreNode) {
+    moreNode.addEventListener('click', function () {
+      expanded = !expanded;
+      renderList();
+    });
+  }
+
+  var narrowQuery = window.matchMedia('(max-width: 960px)');
+  var onBreakpoint = function () {
+    expanded = false;
+    renderList();
+  };
+  if (narrowQuery.addEventListener) {
+    narrowQuery.addEventListener('change', onBreakpoint);
+  } else if (narrowQuery.addListener) {
+    narrowQuery.addListener(onBreakpoint);
+  }
+
+  function render() {
+    renderFilters();
+    renderList();
+    renderDetail();
+  }
+
+  function scrollToDeepLinkedIngredient() {
+    if (!wanted) return;
+
+    var matched = ingredients.some(function (item) {
+      return item.slug === wanted;
+    });
+    if (!matched) return;
+
+    requestAnimationFrame(function () {
+      var narrow = window.matchMedia('(max-width: 960px)').matches;
+      var target = narrow ? detailNode : root.querySelector('[data-pw-explorer]');
+      if (!target) return;
+
+      target.scrollIntoView({ behavior: 'auto', block: 'start' });
+    });
+  }
+
+  document.addEventListener('click', function (event) {
+    var panel = detailNode.querySelector('[data-pw-panel]');
+    if (panel && !panel.hidden && !panel.contains(event.target)) panel.hidden = true;
+  });
+
+  document.addEventListener('shopify:block:select', function (event) {
+    ingredients.forEach(function (item, index) {
+      if (item.blockId === event.detail.blockId) {
+        active = index;
+        category = 'all';
+        render();
+      }
+    });
+  });
+
+  render();
+  scrollToDeepLinkedIngredient();
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Primal ingredients",
+  "tag": "section",
+  "class": "pw-section pw-ingredients-section",
+  "max_blocks": 40,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Hero"
+    },
+    {
+      "type": "font_picker",
+      "id": "display_font",
+      "label": "Hero heading font",
+      "default": "inter_n9"
+    },
+    {
+      "type": "text",
+      "id": "hero_line_1",
+      "label": "Heading line 1",
+      "default": "Purpose In"
+    },
+    {
+      "type": "text",
+      "id": "hero_line_2",
+      "label": "Heading line 2",
+      "default": "Every Ingredient"
+    },
+    {
+      "type": "text",
+      "id": "hero_lead",
+      "label": "Supporting text",
+      "default": "The right ingredients. The right forms. The right doses."
+    },
+    {
+      "type": "image_picker",
+      "id": "hero_image",
+      "label": "Hero image",
+      "info": "Falls back to primal-ingredients-hero.png in assets."
+    },
+    {
+      "type": "header",
+      "content": "Purpose box"
+    },
+    {
+      "type": "text",
+      "id": "purpose_heading",
+      "label": "Heading",
+      "default": "Every Ingredient Has A Purpose"
+    },
+    {
+      "type": "text",
+      "id": "purpose_point_1",
+      "label": "Point 1",
+      "default": "Carefully selected for a reason"
+    },
+    {
+      "type": "text",
+      "id": "purpose_point_2",
+      "label": "Point 2",
+      "default": "No fillers. No shortcuts."
+    },
+    {
+      "type": "text",
+      "id": "purpose_point_3",
+      "label": "Point 3",
+      "default": "Effective forms at meaningful doses."
+    },
+    {
+      "type": "text",
+      "id": "purpose_point_4",
+      "label": "Point 4",
+      "default": "Designed to help you live, think and perform at your best."
+    },
+    {
+      "type": "header",
+      "content": "Explorer"
+    },
+    {
+      "type": "text",
+      "id": "explore_heading",
+      "label": "Heading",
+      "default": "Explore What Powers Primal Win"
+    },
+    {
+      "type": "text",
+      "id": "explore_text",
+      "label": "Supporting text",
+      "default": "Discover the ingredients that support how you live, think and perform."
+    },
+    {
+      "type": "text",
+      "id": "references_label",
+      "label": "References link label",
+      "default": "View References"
+    },
+    {
+      "type": "paragraph",
+      "content": "For every icon you can either upload a file directly or paste an SVG URL / Theme Asset filename. Direct upload takes priority. Leave both blank to use the default SVG."
+    },
+    {
+      "type": "header",
+      "content": "Section spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Space above section",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Space below section",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "Benefit icons: upload SVG/PNG/WebP directly, or use the SVG URL / Theme Asset filename field. Direct upload takes priority."
+    },
+    {
+      "type": "image_picker",
+      "id": "icon_all_upload",
+      "label": "All Benefits icon upload",
+      "info": "Upload SVG, PNG or WebP. Uploaded icon takes priority over the URL field below."
+    },
+    {
+      "type": "text",
+      "id": "icon_all",
+      "label": "All Benefits icon — SVG URL or asset filename",
+      "info": "Example: https://cdn.shopify.com/.../icon.svg or custom-icon.svg"
+    },
+    {
+      "type": "image_picker",
+      "id": "icon_gut_upload",
+      "label": "Gut Health icon upload",
+      "info": "Upload SVG, PNG or WebP. Uploaded icon takes priority over the URL field below."
+    },
+    {
+      "type": "text",
+      "id": "icon_gut",
+      "label": "Gut Health icon — SVG URL or asset filename",
+      "info": "Example: https://cdn.shopify.com/.../icon.svg or custom-icon.svg"
+    },
+    {
+      "type": "image_picker",
+      "id": "icon_brain_upload",
+      "label": "Brain Function icon upload",
+      "info": "Upload SVG, PNG or WebP. Uploaded icon takes priority over the URL field below."
+    },
+    {
+      "type": "text",
+      "id": "icon_brain",
+      "label": "Brain Function icon — SVG URL or asset filename",
+      "info": "Example: https://cdn.shopify.com/.../icon.svg or custom-icon.svg"
+    },
+    {
+      "type": "image_picker",
+      "id": "icon_energy_upload",
+      "label": "Energy & Vitality icon upload",
+      "info": "Upload SVG, PNG or WebP. Uploaded icon takes priority over the URL field below."
+    },
+    {
+      "type": "text",
+      "id": "icon_energy",
+      "label": "Energy & Vitality icon — SVG URL or asset filename",
+      "info": "Example: https://cdn.shopify.com/.../icon.svg or custom-icon.svg"
+    },
+    {
+      "type": "image_picker",
+      "id": "icon_immune_upload",
+      "label": "Immune Support icon upload",
+      "info": "Upload SVG, PNG or WebP. Uploaded icon takes priority over the URL field below."
+    },
+    {
+      "type": "text",
+      "id": "icon_immune",
+      "label": "Immune Support icon — SVG URL or asset filename",
+      "info": "Example: https://cdn.shopify.com/.../icon.svg or custom-icon.svg"
+    },
+    {
+      "type": "image_picker",
+      "id": "icon_performance_upload",
+      "label": "Performance & Recovery icon upload",
+      "info": "Upload SVG, PNG or WebP. Uploaded icon takes priority over the URL field below."
+    },
+    {
+      "type": "text",
+      "id": "icon_performance",
+      "label": "Performance & Recovery icon — SVG URL or asset filename",
+      "info": "Example: https://cdn.shopify.com/.../icon.svg or custom-icon.svg"
+    },
+    {
+      "type": "image_picker",
+      "id": "icon_skin_upload",
+      "label": "Healthy Skin, Hair & Nails icon upload",
+      "info": "Upload SVG, PNG or WebP. Uploaded icon takes priority over the URL field below."
+    },
+    {
+      "type": "text",
+      "id": "icon_skin",
+      "label": "Healthy Skin, Hair & Nails icon — SVG URL or asset filename",
+      "info": "Example: https://cdn.shopify.com/.../icon.svg or custom-icon.svg"
+    },
+    {
+      "type": "image_picker",
+      "id": "icon_overall_upload",
+      "label": "Overall Wellbeing icon upload",
+      "info": "Upload SVG, PNG or WebP. Uploaded icon takes priority over the URL field below."
+    },
+    {
+      "type": "text",
+      "id": "icon_overall",
+      "label": "Overall Wellbeing icon — SVG URL or asset filename",
+      "info": "Example: https://cdn.shopify.com/.../icon.svg or custom-icon.svg"
+    },
+    {
+      "type": "header",
+      "content": "Clean by design"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_clean",
+      "label": "Show this block",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "clean_heading",
+      "label": "Heading",
+      "default": "Clean By Design"
+    },
+    {
+      "type": "paragraph",
+      "content": "SVG supported: upload the SVG in Content > Files and paste its full URL, or upload it to Theme Assets and enter the filename. Leave blank to use the default SVG."
+    },
+    {
+      "type": "image_picker",
+      "id": "clean_sweeteners_upload",
+      "label": "Artificial Sweeteners icon upload",
+      "info": "Upload SVG, PNG or WebP. Uploaded icon takes priority over the URL field below."
+    },
+    {
+      "type": "text",
+      "id": "clean_sweeteners",
+      "label": "Artificial Sweeteners icon — SVG URL or asset filename",
+      "info": "Example: https://cdn.shopify.com/.../icon.svg or custom-icon.svg"
+    },
+    {
+      "type": "image_picker",
+      "id": "clean_flavours_upload",
+      "label": "Artificial Flavours icon upload",
+      "info": "Upload SVG, PNG or WebP. Uploaded icon takes priority over the URL field below."
+    },
+    {
+      "type": "text",
+      "id": "clean_flavours",
+      "label": "Artificial Flavours icon — SVG URL or asset filename",
+      "info": "Example: https://cdn.shopify.com/.../icon.svg or custom-icon.svg"
+    },
+    {
+      "type": "image_picker",
+      "id": "clean_colours_upload",
+      "label": "Artificial Colours icon upload",
+      "info": "Upload SVG, PNG or WebP. Uploaded icon takes priority over the URL field below."
+    },
+    {
+      "type": "text",
+      "id": "clean_colours",
+      "label": "Artificial Colours icon — SVG URL or asset filename",
+      "info": "Example: https://cdn.shopify.com/.../icon.svg or custom-icon.svg"
+    },
+    {
+      "type": "image_picker",
+      "id": "clean_preservatives_upload",
+      "label": "Preservatives icon upload",
+      "info": "Upload SVG, PNG or WebP. Uploaded icon takes priority over the URL field below."
+    },
+    {
+      "type": "text",
+      "id": "clean_preservatives",
+      "label": "Preservatives icon — SVG URL or asset filename",
+      "info": "Example: https://cdn.shopify.com/.../icon.svg or custom-icon.svg"
+    },
+    {
+      "type": "image_picker",
+      "id": "clean_gluten_upload",
+      "label": "Gluten icon upload",
+      "info": "Upload SVG, PNG or WebP. Uploaded icon takes priority over the URL field below."
+    },
+    {
+      "type": "text",
+      "id": "clean_gluten",
+      "label": "Gluten icon — SVG URL or asset filename",
+      "info": "Example: https://cdn.shopify.com/.../icon.svg or custom-icon.svg"
+    },
+    {
+      "type": "image_picker",
+      "id": "clean_dairy_upload",
+      "label": "Dairy icon upload",
+      "info": "Upload SVG, PNG or WebP. Uploaded icon takes priority over the URL field below."
+    },
+    {
+      "type": "text",
+      "id": "clean_dairy",
+      "label": "Dairy icon — SVG URL or asset filename",
+      "info": "Example: https://cdn.shopify.com/.../icon.svg or custom-icon.svg"
+    },
+    {
+      "type": "image_picker",
+      "id": "clean_gmos_upload",
+      "label": "GMOs icon upload",
+      "info": "Upload SVG, PNG or WebP. Uploaded icon takes priority over the URL field below."
+    },
+    {
+      "type": "text",
+      "id": "clean_gmos",
+      "label": "GMOs icon — SVG URL or asset filename",
+      "info": "Example: https://cdn.shopify.com/.../icon.svg or custom-icon.svg"
+    },
+    {
+      "type": "image_picker",
+      "id": "clean_vegan_upload",
+      "label": "Vegan icon upload",
+      "info": "Upload SVG, PNG or WebP. Uploaded icon takes priority over the URL field below."
+    },
+    {
+      "type": "text",
+      "id": "clean_vegan",
+      "label": "Vegan icon — SVG URL or asset filename",
+      "info": "Example: https://cdn.shopify.com/.../icon.svg or custom-icon.svg"
+    },
+    {
+      "type": "image_picker",
+      "id": "clean_vegetarian_upload",
+      "label": "Vegetarian icon upload",
+      "info": "Upload SVG, PNG or WebP. Uploaded icon takes priority over the URL field below."
+    },
+    {
+      "type": "text",
+      "id": "clean_vegetarian",
+      "label": "Vegetarian icon — SVG URL or asset filename",
+      "info": "Example: https://cdn.shopify.com/.../icon.svg or custom-icon.svg"
+    },
+    {
+      "type": "image_picker",
+      "id": "clean_keto_upload",
+      "label": "Keto Friendly icon upload",
+      "info": "Upload SVG, PNG or WebP. Uploaded icon takes priority over the URL field below."
+    },
+    {
+      "type": "text",
+      "id": "clean_keto",
+      "label": "Keto Friendly icon — SVG URL or asset filename",
+      "info": "Example: https://cdn.shopify.com/.../icon.svg or custom-icon.svg"
+    },
+    {
+      "type": "image_picker",
+      "id": "clean_paleo_upload",
+      "label": "Paleo Friendly icon upload",
+      "info": "Upload SVG, PNG or WebP. Uploaded icon takes priority over the URL field below."
+    },
+    {
+      "type": "text",
+      "id": "clean_paleo",
+      "label": "Paleo Friendly icon — SVG URL or asset filename",
+      "info": "Example: https://cdn.shopify.com/.../icon.svg or custom-icon.svg"
+    },
+    {
+      "type": "image_picker",
+      "id": "clean_lowcarb_upload",
+      "label": "Low Carb icon upload",
+      "info": "Upload SVG, PNG or WebP. Uploaded icon takes priority over the URL field below."
+    },
+    {
+      "type": "text",
+      "id": "clean_lowcarb",
+      "label": "Low Carb icon — SVG URL or asset filename",
+      "info": "Example: https://cdn.shopify.com/.../icon.svg or custom-icon.svg"
+    },
+    {
+      "type": "header",
+      "content": "Bottom CTA"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_cta",
+      "label": "Show this block",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "cta_line_1",
+      "label": "Heading line 1",
+      "default": "One Scoop."
+    },
+    {
+      "type": "text",
+      "id": "cta_line_2",
+      "label": "Heading line 2 (gold)",
+      "default": "Every Day."
+    },
+    {
+      "type": "textarea",
+      "id": "cta_text",
+      "label": "Supporting text",
+      "default": "One simple daily habit designed to help you feel stronger, think sharper and perform at your best."
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "Button label",
+      "default": "Get Primal Win"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "Button link"
+    },
+    {
+      "type": "text",
+      "id": "shipping_heading",
+      "label": "Shipping heading",
+      "default": "Free Shipping"
+    },
+    {
+      "type": "text",
+      "id": "shipping_text",
+      "label": "Shipping text",
+      "default": "On all orders over £50"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "ingredient",
+      "name": "Ingredient",
+      "settings": [
+        {
+          "type": "text",
+          "id": "abbr",
+          "label": "Short code",
+          "default": "Mg"
+        },
+        {
+          "type": "text",
+          "id": "ingredient_name",
+          "label": "Name",
+          "default": "Ingredient"
+        },
+        {
+          "type": "text",
+          "id": "ingredient_type",
+          "label": "Type",
+          "default": "Essential Mineral"
+        },
+        {
+          "type": "text",
+          "id": "benefit_tag",
+          "label": "Benefit tag",
+          "default": "Overall Wellbeing"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "asset_filename",
+          "label": "Fallback asset filename",
+          "info": "Used when no image is chosen. Example: primal-ing-magnesium.png"
+        },
+        {
+          "type": "header",
+          "content": "Benefit categories"
+        },
+        {
+          "type": "checkbox",
+          "id": "cat_gut",
+          "label": "Gut Health",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "cat_brain",
+          "label": "Brain Function",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "cat_energy",
+          "label": "Energy & Vitality",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "cat_immune",
+          "label": "Immune Support",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "cat_performance",
+          "label": "Performance & Recovery",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "cat_skin",
+          "label": "Healthy Skin, Hair & Nails",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "cat_overall",
+          "label": "Overall Wellbeing",
+          "default": false
+        },
+        {
+          "type": "header",
+          "content": "Copy"
+        },
+        {
+          "type": "text",
+          "id": "detail_badge",
+          "label": "Quality badge",
+          "info": "Green badge, top right. Example: Highly Absorbed. Falls back to the benefit tag."
+        },
+        {
+          "type": "textarea",
+          "id": "intro",
+          "label": "Introduction",
+          "info": "One line under the title, above the columns."
+        },
+        {
+          "type": "textarea",
+          "id": "what_it_does",
+          "label": "What it does"
+        },
+        {
+          "type": "textarea",
+          "id": "how_it_works",
+          "label": "How it works",
+          "info": "One line becomes a paragraph. Several lines become a tick list."
+        },
+        {
+          "type": "textarea",
+          "id": "why_included",
+          "label": "Why we included it",
+          "info": "One line becomes a paragraph. Several lines become a tick list."
+        },
+        {
+          "type": "header",
+          "content": "Typical greens powders"
+        },
+        {
+          "type": "text",
+          "id": "typical_form",
+          "label": "Form used elsewhere",
+          "info": "Example: Magnesium Oxide"
+        },
+        {
+          "type": "text",
+          "id": "typical_dose",

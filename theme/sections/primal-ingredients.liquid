@@ -1,5 +1,6 @@
 {%- liquid
   assign hero = section.settings.hero_image
+  assign display_font = section.settings.display_font
 
   assign icon_all = section.settings.icon_all
   assign icon_gut = section.settings.icon_gut
@@ -12,6 +13,8 @@
 -%}
 
 {% style %}
+  {{ display_font | font_face: font_display: 'swap' }}
+
   #PwIng-{{ section.id }} {
     {% render 'pw-align-vars' %}
     --pw-pad-top: {{ section.settings.padding_top }}px;
@@ -89,8 +92,8 @@
   inset: 0 0 0 auto;
   width: min(64%, 1000px);
   height: 100%;
-  object-fit: cover;
-  object-position: center;
+  object-fit: contain;
+  object-position: right center;
 }
 
 .pw-ing .pw-hero::after {
@@ -117,15 +120,28 @@
   padding-bottom: 40px;
 }
 
-.pw-ing .pw-hero-copy { max-width: 600px; }
+.pw-ing .pw-hero-copy {
+  width: min(660px, 100%);
+  max-width: 660px;
+}
 
 .pw-ing .pw-hero-title {
-  margin: 0 0 14px;
-  font-family: var(--font-head, 'Montserrat', system-ui, sans-serif);
-  font-weight: 900;
-  font-size: 62px;
-  line-height: 0.96;
-  letter-spacing: -1px;
+  display: block;
+  width: 660px;
+  max-width: 100%;
+  height: auto;
+  margin: 0;
+  padding-bottom: 19.8px;
+  opacity: 1;
+  transform: rotate(0deg);
+  font-family: {{ display_font.family }}, sans-serif;
+  font-style: {{ display_font.style }};
+  font-weight: {{ display_font.weight }} !important;
+  font-synthesis: none;
+  font-size: 82px;
+  line-height: 86px;
+  letter-spacing: 0;
+  vertical-align: middle;
   text-transform: uppercase;
   color: var(--charcoal, #1F2326);
 }
@@ -225,6 +241,13 @@
 }
 
 /* EXPLORER */
+.pw-ing .pw-explorer-width {
+  width: min(1180px, calc(100% - 48px));
+  max-width: 1180px;
+  margin-inline: auto;
+  padding-inline: 0;
+}
+
 .pw-ing .pw-explorer { padding: 22px 0 56px; scroll-margin-top: 90px; }
 
 .pw-ing .pw-explorer-head {
@@ -285,9 +308,13 @@
 }
 
 .pw-ing .pw-filter img {
+  display: block;
   width: 26px;
   height: 26px;
+  max-width: 26px;
+  max-height: 26px;
   object-fit: contain;
+  image-rendering: auto;
 }
 
 .pw-ing .pw-filter.is-active {
@@ -298,15 +325,20 @@
 
 .pw-ing .pw-explorer-grid {
   display: grid;
+  width: 100%;
+  max-width: 1180px;
+  height: 640px;
+  min-height: 640px;
   grid-template-columns: 300px minmax(0, 1fr);
   gap: 22px;
-  align-items: start;
+  align-items: stretch;
 }
 
 .pw-ing .pw-list {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   gap: 10px;
+  height: 640px;
   max-height: 640px;
   overflow-y: auto;
   padding-right: 4px;
@@ -387,7 +419,8 @@
   display: flex;
   flex-direction: column;
   position: relative;
-  min-height: 520px;
+  height: 640px;
+  min-height: 640px;
   padding: 28px 30px;
   border-radius: 16px;
   background: var(--white, #FFFFFF);
@@ -449,38 +482,46 @@
 
 .pw-ing .pw-detail-body {
   display: grid;
-  grid-template-columns: 0.8fr 1fr;
-  gap: 26px;
+  width: min(702px, 100%);
+  height: 195.69px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-rows: 1fr;
+  column-gap: 22px;
+  row-gap: 22px;
   align-items: stretch;
-  flex: 1 1 auto;
+  flex: 0 0 auto;
 }
 
 .pw-ing .pw-detail-image {
+  position: relative;
   display: block;
+  width: 100%;
+  height: 195.69px;
+  min-height: 0;
+  aspect-ratio: auto;
+  align-self: stretch;
   overflow: hidden;
-  min-height: 300px;
-  border-radius: 12px;
-  background: linear-gradient(160deg, #33392F, #12160F);
+  border-radius: 14px;
+  background: linear-gradient(160deg, #2B3228 0%, #11160F 100%);
 }
 
 .pw-ing .pw-detail-image img {
+  position: absolute;
+  inset: 0;
+  display: block;
   width: 100%;
   height: 100%;
+  border-radius: inherit;
   object-fit: cover;
-  object-position: center;
+  object-position: center center;
 }
 
 .pw-ing .pw-detail-content {
-  display: flex;
-  min-width: 0;
-  flex-direction: column;
-  gap: 22px;
+  display: contents;
 }
 
 .pw-ing .pw-detail-pair {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 22px;
+  display: contents;
 }
 
 .pw-ing .pw-detail-col { min-width: 0; }
@@ -698,9 +739,13 @@
 }
 
 .pw-ing .pw-clean-item img {
+  display: block;
   width: 30px;
   height: 30px;
+  max-width: 30px;
+  max-height: 30px;
   object-fit: contain;
+  image-rendering: auto;
 }
 
 .pw-ing .pw-clean-item span {
@@ -838,9 +883,16 @@
 
 /* RESPONSIVE — mirrors ingredients.html */
 @media screen and (max-width: 1180px) {
-  .pw-ing .pw-hero-title { font-size: 5.2vw; }
+  .pw-ing .pw-hero-title {
+    width: 100%;
+    height: auto;
+    display: block;
+    padding-bottom: 16px;
+    font-size: 5.2vw;
+    line-height: 1;
+  }
   .pw-ing .pw-hero-copy { max-width: 56%; }
-  .pw-ing .pw-hero-media { width: 58%; }
+  .pw-ing .pw-hero-media { width: 58%; object-fit: contain; object-position: right center; }
 }
 
 @media screen and (max-width: 960px) {
@@ -852,7 +904,7 @@
   .pw-ing .pw-hero-inner { order: 1; }
   .pw-ing .pw-hero-media { order: 2; }
 
-  .pw-ing .pw-hero-title { font-size: 42px; }
+  .pw-ing .pw-hero-title { font-size: 42px; line-height: 46px; }
   .pw-ing .pw-hero-copy { max-width: 100%; }
 
   .pw-ing .pw-hero-inner {
@@ -863,9 +915,11 @@
   .pw-ing .pw-hero-media {
     position: static;
     width: 100%;
-    max-width: 460px;
+    max-width: 520px;
     height: auto;
-    margin: 24px auto 0;
+    margin: 16px auto 0;
+    object-fit: contain;
+    object-position: center top;
   }
 
   .pw-ing .pw-hero::after { display: none; }
@@ -878,6 +932,9 @@
      so nothing has to be swiped sideways. */
   .pw-ing .pw-explorer-grid {
     display: flex;
+    width: 100%;
+    height: auto;
+    min-height: 0;
     flex-direction: column;
     align-items: stretch;
     gap: 18px;
@@ -930,13 +987,38 @@
 
   .pw-ing .pw-evidence-label { font-size: 11px; }
 
+  .pw-ing .pw-detail {
+    height: auto;
+    min-height: 0;
+  }
+
   .pw-ing .pw-detail-body {
+    width: 100%;
+    height: auto;
     grid-template-columns: 1fr;
+    grid-template-rows: auto;
     gap: 20px;
   }
+
+  .pw-ing .pw-detail-content {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    gap: 22px;
+  }
+
+  .pw-ing .pw-detail-pair {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 22px;
+  }
+
   .pw-ing .pw-detail-image {
+    width: 100%;
+    height: auto;
     min-height: 0;
     aspect-ratio: 16 / 9;
+    border-radius: 14px;
   }
 
   .pw-ing .pw-clean-grid {
@@ -957,7 +1039,14 @@
 }
 
 @media screen and (max-width: 560px) {
-  .pw-ing .pw-hero-title { font-size: 34px; }
+  .pw-ing .pw-explorer-width {
+    width: calc(100% - 32px);
+  }
+
+  .pw-ing .pw-hero-title {
+    font-size: 34px;
+    line-height: 38px;
+  }
 
   .pw-ing .pw-purpose {
     flex-direction: column;
@@ -1147,56 +1236,105 @@
             <h3 class="pw-clean-label">Free From</h3>
             <div class="pw-clean-items pw-clean-items--free">
               <div class="pw-clean-item">
-              {%- if section.settings.clean_sweeteners != blank -%}
-                {{ section.settings.clean_sweeteners | image_url: width: 60 | image_tag: alt: '', loading: 'lazy', width: 30, height: 30, widths: '30, 60' }}
+              {%- if section.settings.clean_sweeteners_upload != blank -%}
+                <img src="{{ section.settings.clean_sweeteners_upload | image_url: width: 120 }}" alt="" width="30" height="30" loading="lazy">
+              {%- elsif section.settings.clean_sweeteners != blank -%}
+                {%- assign pw_svg_icon = section.settings.clean_sweeteners | strip -%}
+                {%- if pw_svg_icon contains '://' -%}
+                  <img src="{{ pw_svg_icon | escape }}" alt="" width="30" height="30" loading="lazy">
+                {%- else -%}
+                  <img src="{{ pw_svg_icon | asset_url }}" alt="" width="30" height="30" loading="lazy">
+                {%- endif -%}
               {%- else -%}
                 <img src="{{ 'primal-ci-sweeteners.svg' | asset_url }}" alt="" width="30" height="30" loading="lazy">
               {%- endif -%}
               <span>Artificial Sweeteners</span>
             </div>
               <div class="pw-clean-item">
-              {%- if section.settings.clean_flavours != blank -%}
-                {{ section.settings.clean_flavours | image_url: width: 60 | image_tag: alt: '', loading: 'lazy', width: 30, height: 30, widths: '30, 60' }}
+              {%- if section.settings.clean_flavours_upload != blank -%}
+                <img src="{{ section.settings.clean_flavours_upload | image_url: width: 120 }}" alt="" width="30" height="30" loading="lazy">
+              {%- elsif section.settings.clean_flavours != blank -%}
+                {%- assign pw_svg_icon = section.settings.clean_flavours | strip -%}
+                {%- if pw_svg_icon contains '://' -%}
+                  <img src="{{ pw_svg_icon | escape }}" alt="" width="30" height="30" loading="lazy">
+                {%- else -%}
+                  <img src="{{ pw_svg_icon | asset_url }}" alt="" width="30" height="30" loading="lazy">
+                {%- endif -%}
               {%- else -%}
                 <img src="{{ 'primal-ci-flavours.svg' | asset_url }}" alt="" width="30" height="30" loading="lazy">
               {%- endif -%}
               <span>Artificial Flavours</span>
             </div>
               <div class="pw-clean-item">
-              {%- if section.settings.clean_colours != blank -%}
-                {{ section.settings.clean_colours | image_url: width: 60 | image_tag: alt: '', loading: 'lazy', width: 30, height: 30, widths: '30, 60' }}
+              {%- if section.settings.clean_colours_upload != blank -%}
+                <img src="{{ section.settings.clean_colours_upload | image_url: width: 120 }}" alt="" width="30" height="30" loading="lazy">
+              {%- elsif section.settings.clean_colours != blank -%}
+                {%- assign pw_svg_icon = section.settings.clean_colours | strip -%}
+                {%- if pw_svg_icon contains '://' -%}
+                  <img src="{{ pw_svg_icon | escape }}" alt="" width="30" height="30" loading="lazy">
+                {%- else -%}
+                  <img src="{{ pw_svg_icon | asset_url }}" alt="" width="30" height="30" loading="lazy">
+                {%- endif -%}
               {%- else -%}
                 <img src="{{ 'primal-ci-colours.svg' | asset_url }}" alt="" width="30" height="30" loading="lazy">
               {%- endif -%}
               <span>Artificial Colours</span>
             </div>
               <div class="pw-clean-item">
-              {%- if section.settings.clean_preservatives != blank -%}
-                {{ section.settings.clean_preservatives | image_url: width: 60 | image_tag: alt: '', loading: 'lazy', width: 30, height: 30, widths: '30, 60' }}
+              {%- if section.settings.clean_preservatives_upload != blank -%}
+                <img src="{{ section.settings.clean_preservatives_upload | image_url: width: 120 }}" alt="" width="30" height="30" loading="lazy">
+              {%- elsif section.settings.clean_preservatives != blank -%}
+                {%- assign pw_svg_icon = section.settings.clean_preservatives | strip -%}
+                {%- if pw_svg_icon contains '://' -%}
+                  <img src="{{ pw_svg_icon | escape }}" alt="" width="30" height="30" loading="lazy">
+                {%- else -%}
+                  <img src="{{ pw_svg_icon | asset_url }}" alt="" width="30" height="30" loading="lazy">
+                {%- endif -%}
               {%- else -%}
                 <img src="{{ 'primal-ci-preservatives.svg' | asset_url }}" alt="" width="30" height="30" loading="lazy">
               {%- endif -%}
               <span>Preservatives</span>
             </div>
               <div class="pw-clean-item">
-              {%- if section.settings.clean_gluten != blank -%}
-                {{ section.settings.clean_gluten | image_url: width: 60 | image_tag: alt: '', loading: 'lazy', width: 30, height: 30, widths: '30, 60' }}
+              {%- if section.settings.clean_gluten_upload != blank -%}
+                <img src="{{ section.settings.clean_gluten_upload | image_url: width: 120 }}" alt="" width="30" height="30" loading="lazy">
+              {%- elsif section.settings.clean_gluten != blank -%}
+                {%- assign pw_svg_icon = section.settings.clean_gluten | strip -%}
+                {%- if pw_svg_icon contains '://' -%}
+                  <img src="{{ pw_svg_icon | escape }}" alt="" width="30" height="30" loading="lazy">
+                {%- else -%}
+                  <img src="{{ pw_svg_icon | asset_url }}" alt="" width="30" height="30" loading="lazy">
+                {%- endif -%}
               {%- else -%}
                 <img src="{{ 'primal-ci-gluten.svg' | asset_url }}" alt="" width="30" height="30" loading="lazy">
               {%- endif -%}
               <span>Gluten</span>
             </div>
               <div class="pw-clean-item">
-              {%- if section.settings.clean_dairy != blank -%}
-                {{ section.settings.clean_dairy | image_url: width: 60 | image_tag: alt: '', loading: 'lazy', width: 30, height: 30, widths: '30, 60' }}
+              {%- if section.settings.clean_dairy_upload != blank -%}
+                <img src="{{ section.settings.clean_dairy_upload | image_url: width: 120 }}" alt="" width="30" height="30" loading="lazy">
+              {%- elsif section.settings.clean_dairy != blank -%}
+                {%- assign pw_svg_icon = section.settings.clean_dairy | strip -%}
+                {%- if pw_svg_icon contains '://' -%}
+                  <img src="{{ pw_svg_icon | escape }}" alt="" width="30" height="30" loading="lazy">
+                {%- else -%}
+                  <img src="{{ pw_svg_icon | asset_url }}" alt="" width="30" height="30" loading="lazy">
+                {%- endif -%}
               {%- else -%}
                 <img src="{{ 'primal-ci-dairy.svg' | asset_url }}" alt="" width="30" height="30" loading="lazy">
               {%- endif -%}
               <span>Dairy</span>
             </div>
               <div class="pw-clean-item">
-              {%- if section.settings.clean_gmos != blank -%}
-                {{ section.settings.clean_gmos | image_url: width: 60 | image_tag: alt: '', loading: 'lazy', width: 30, height: 30, widths: '30, 60' }}
+              {%- if section.settings.clean_gmos_upload != blank -%}
+                <img src="{{ section.settings.clean_gmos_upload | image_url: width: 120 }}" alt="" width="30" height="30" loading="lazy">
+              {%- elsif section.settings.clean_gmos != blank -%}
+                {%- assign pw_svg_icon = section.settings.clean_gmos | strip -%}
+                {%- if pw_svg_icon contains '://' -%}
+                  <img src="{{ pw_svg_icon | escape }}" alt="" width="30" height="30" loading="lazy">
+                {%- else -%}
+                  <img src="{{ pw_svg_icon | asset_url }}" alt="" width="30" height="30" loading="lazy">
+                {%- endif -%}
               {%- else -%}
                 <img src="{{ 'primal-ci-gmos.svg' | asset_url }}" alt="" width="30" height="30" loading="lazy">
               {%- endif -%}
@@ -1211,40 +1349,75 @@
             <h3 class="pw-clean-label">Suitable For</h3>
             <div class="pw-clean-items pw-clean-items--suitable">
               <div class="pw-clean-item">
-              {%- if section.settings.clean_vegan != blank -%}
-                {{ section.settings.clean_vegan | image_url: width: 60 | image_tag: alt: '', loading: 'lazy', width: 30, height: 30, widths: '30, 60' }}
+              {%- if section.settings.clean_vegan_upload != blank -%}
+                <img src="{{ section.settings.clean_vegan_upload | image_url: width: 120 }}" alt="" width="30" height="30" loading="lazy">
+              {%- elsif section.settings.clean_vegan != blank -%}
+                {%- assign pw_svg_icon = section.settings.clean_vegan | strip -%}
+                {%- if pw_svg_icon contains '://' -%}
+                  <img src="{{ pw_svg_icon | escape }}" alt="" width="30" height="30" loading="lazy">
+                {%- else -%}
+                  <img src="{{ pw_svg_icon | asset_url }}" alt="" width="30" height="30" loading="lazy">
+                {%- endif -%}
               {%- else -%}
                 <img src="{{ 'primal-ci-vegan.svg' | asset_url }}" alt="" width="30" height="30" loading="lazy">
               {%- endif -%}
               <span>Vegan</span>
             </div>
               <div class="pw-clean-item">
-              {%- if section.settings.clean_vegetarian != blank -%}
-                {{ section.settings.clean_vegetarian | image_url: width: 60 | image_tag: alt: '', loading: 'lazy', width: 30, height: 30, widths: '30, 60' }}
+              {%- if section.settings.clean_vegetarian_upload != blank -%}
+                <img src="{{ section.settings.clean_vegetarian_upload | image_url: width: 120 }}" alt="" width="30" height="30" loading="lazy">
+              {%- elsif section.settings.clean_vegetarian != blank -%}
+                {%- assign pw_svg_icon = section.settings.clean_vegetarian | strip -%}
+                {%- if pw_svg_icon contains '://' -%}
+                  <img src="{{ pw_svg_icon | escape }}" alt="" width="30" height="30" loading="lazy">
+                {%- else -%}
+                  <img src="{{ pw_svg_icon | asset_url }}" alt="" width="30" height="30" loading="lazy">
+                {%- endif -%}
               {%- else -%}
                 <img src="{{ 'primal-ci-vegetarian.svg' | asset_url }}" alt="" width="30" height="30" loading="lazy">
               {%- endif -%}
               <span>Vegetarian</span>
             </div>
               <div class="pw-clean-item">
-              {%- if section.settings.clean_keto != blank -%}
-                {{ section.settings.clean_keto | image_url: width: 60 | image_tag: alt: '', loading: 'lazy', width: 30, height: 30, widths: '30, 60' }}
+              {%- if section.settings.clean_keto_upload != blank -%}
+                <img src="{{ section.settings.clean_keto_upload | image_url: width: 120 }}" alt="" width="30" height="30" loading="lazy">
+              {%- elsif section.settings.clean_keto != blank -%}
+                {%- assign pw_svg_icon = section.settings.clean_keto | strip -%}
+                {%- if pw_svg_icon contains '://' -%}
+                  <img src="{{ pw_svg_icon | escape }}" alt="" width="30" height="30" loading="lazy">
+                {%- else -%}
+                  <img src="{{ pw_svg_icon | asset_url }}" alt="" width="30" height="30" loading="lazy">
+                {%- endif -%}
               {%- else -%}
                 <img src="{{ 'primal-ci-keto.svg' | asset_url }}" alt="" width="30" height="30" loading="lazy">
               {%- endif -%}
               <span>Keto Friendly</span>
             </div>
               <div class="pw-clean-item">
-              {%- if section.settings.clean_paleo != blank -%}
-                {{ section.settings.clean_paleo | image_url: width: 60 | image_tag: alt: '', loading: 'lazy', width: 30, height: 30, widths: '30, 60' }}
+              {%- if section.settings.clean_paleo_upload != blank -%}
+                <img src="{{ section.settings.clean_paleo_upload | image_url: width: 120 }}" alt="" width="30" height="30" loading="lazy">
+              {%- elsif section.settings.clean_paleo != blank -%}
+                {%- assign pw_svg_icon = section.settings.clean_paleo | strip -%}
+                {%- if pw_svg_icon contains '://' -%}
+                  <img src="{{ pw_svg_icon | escape }}" alt="" width="30" height="30" loading="lazy">
+                {%- else -%}
+                  <img src="{{ pw_svg_icon | asset_url }}" alt="" width="30" height="30" loading="lazy">
+                {%- endif -%}
               {%- else -%}
                 <img src="{{ 'primal-ci-paleo.svg' | asset_url }}" alt="" width="30" height="30" loading="lazy">
               {%- endif -%}
               <span>Paleo Friendly</span>
             </div>
               <div class="pw-clean-item">
-              {%- if section.settings.clean_lowcarb != blank -%}
-                {{ section.settings.clean_lowcarb | image_url: width: 60 | image_tag: alt: '', loading: 'lazy', width: 30, height: 30, widths: '30, 60' }}
+              {%- if section.settings.clean_lowcarb_upload != blank -%}
+                <img src="{{ section.settings.clean_lowcarb_upload | image_url: width: 120 }}" alt="" width="30" height="30" loading="lazy">
+              {%- elsif section.settings.clean_lowcarb != blank -%}
+                {%- assign pw_svg_icon = section.settings.clean_lowcarb | strip -%}
+                {%- if pw_svg_icon contains '://' -%}
+                  <img src="{{ pw_svg_icon | escape }}" alt="" width="30" height="30" loading="lazy">
+                {%- else -%}
+                  <img src="{{ pw_svg_icon | asset_url }}" alt="" width="30" height="30" loading="lazy">
+                {%- endif -%}
               {%- else -%}
                 <img src="{{ 'primal-ci-lowcarb.svg' | asset_url }}" alt="" width="30" height="30" loading="lazy">
               {%- endif -%}
@@ -1376,14 +1549,102 @@
   if (!dataNode || !filtersNode || !listNode || !detailNode) return;
 
   var ICONS = {
-      "all": {%- if section.settings.icon_all != blank -%}{{ section.settings.icon_all | image_url: width: 60 | json }}{%- else -%}{{ 'primal-icon-all.svg' | asset_url | json }}{%- endif -%},
-      "gut": {%- if section.settings.icon_gut != blank -%}{{ section.settings.icon_gut | image_url: width: 60 | json }}{%- else -%}{{ 'primal-icon-gut.svg' | asset_url | json }}{%- endif -%},
-      "brain": {%- if section.settings.icon_brain != blank -%}{{ section.settings.icon_brain | image_url: width: 60 | json }}{%- else -%}{{ 'primal-icon-brain.svg' | asset_url | json }}{%- endif -%},
-      "energy": {%- if section.settings.icon_energy != blank -%}{{ section.settings.icon_energy | image_url: width: 60 | json }}{%- else -%}{{ 'primal-icon-energy.svg' | asset_url | json }}{%- endif -%},
-      "immune": {%- if section.settings.icon_immune != blank -%}{{ section.settings.icon_immune | image_url: width: 60 | json }}{%- else -%}{{ 'primal-icon-immune.svg' | asset_url | json }}{%- endif -%},
-      "performance": {%- if section.settings.icon_performance != blank -%}{{ section.settings.icon_performance | image_url: width: 60 | json }}{%- else -%}{{ 'primal-icon-performance.svg' | asset_url | json }}{%- endif -%},
-      "skin": {%- if section.settings.icon_skin != blank -%}{{ section.settings.icon_skin | image_url: width: 60 | json }}{%- else -%}{{ 'primal-icon-skin.svg' | asset_url | json }}{%- endif -%},
-      "overall": {%- if section.settings.icon_overall != blank -%}{{ section.settings.icon_overall | image_url: width: 60 | json }}{%- else -%}{{ 'primal-icon-overall.svg' | asset_url | json }}{%- endif -%}
+      "all": {%- if section.settings.icon_all_upload != blank -%}
+        {{ section.settings.icon_all_upload | image_url: width: 120 | json }}
+      {%- elsif section.settings.icon_all != blank -%}
+        {%- assign pw_svg_icon = section.settings.icon_all | strip -%}
+        {%- if pw_svg_icon contains '://' -%}
+          {{ pw_svg_icon | json }}
+        {%- else -%}
+          {{ pw_svg_icon | asset_url | json }}
+        {%- endif -%}
+      {%- else -%}
+        {{ 'primal-icon-all.svg' | asset_url | json }}
+      {%- endif -%},
+      "gut": {%- if section.settings.icon_gut_upload != blank -%}
+        {{ section.settings.icon_gut_upload | image_url: width: 120 | json }}
+      {%- elsif section.settings.icon_gut != blank -%}
+        {%- assign pw_svg_icon = section.settings.icon_gut | strip -%}
+        {%- if pw_svg_icon contains '://' -%}
+          {{ pw_svg_icon | json }}
+        {%- else -%}
+          {{ pw_svg_icon | asset_url | json }}
+        {%- endif -%}
+      {%- else -%}
+        {{ 'primal-icon-gut.svg' | asset_url | json }}
+      {%- endif -%},
+      "brain": {%- if section.settings.icon_brain_upload != blank -%}
+        {{ section.settings.icon_brain_upload | image_url: width: 120 | json }}
+      {%- elsif section.settings.icon_brain != blank -%}
+        {%- assign pw_svg_icon = section.settings.icon_brain | strip -%}
+        {%- if pw_svg_icon contains '://' -%}
+          {{ pw_svg_icon | json }}
+        {%- else -%}
+          {{ pw_svg_icon | asset_url | json }}
+        {%- endif -%}
+      {%- else -%}
+        {{ 'primal-icon-brain.svg' | asset_url | json }}
+      {%- endif -%},
+      "energy": {%- if section.settings.icon_energy_upload != blank -%}
+        {{ section.settings.icon_energy_upload | image_url: width: 120 | json }}
+      {%- elsif section.settings.icon_energy != blank -%}
+        {%- assign pw_svg_icon = section.settings.icon_energy | strip -%}
+        {%- if pw_svg_icon contains '://' -%}
+          {{ pw_svg_icon | json }}
+        {%- else -%}
+          {{ pw_svg_icon | asset_url | json }}
+        {%- endif -%}
+      {%- else -%}
+        {{ 'primal-icon-energy.svg' | asset_url | json }}
+      {%- endif -%},
+      "immune": {%- if section.settings.icon_immune_upload != blank -%}
+        {{ section.settings.icon_immune_upload | image_url: width: 120 | json }}
+      {%- elsif section.settings.icon_immune != blank -%}
+        {%- assign pw_svg_icon = section.settings.icon_immune | strip -%}
+        {%- if pw_svg_icon contains '://' -%}
+          {{ pw_svg_icon | json }}
+        {%- else -%}
+          {{ pw_svg_icon | asset_url | json }}
+        {%- endif -%}
+      {%- else -%}
+        {{ 'primal-icon-immune.svg' | asset_url | json }}
+      {%- endif -%},
+      "performance": {%- if section.settings.icon_performance_upload != blank -%}
+        {{ section.settings.icon_performance_upload | image_url: width: 120 | json }}
+      {%- elsif section.settings.icon_performance != blank -%}
+        {%- assign pw_svg_icon = section.settings.icon_performance | strip -%}
+        {%- if pw_svg_icon contains '://' -%}
+          {{ pw_svg_icon | json }}
+        {%- else -%}
+          {{ pw_svg_icon | asset_url | json }}
+        {%- endif -%}
+      {%- else -%}
+        {{ 'primal-icon-performance.svg' | asset_url | json }}
+      {%- endif -%},
+      "skin": {%- if section.settings.icon_skin_upload != blank -%}
+        {{ section.settings.icon_skin_upload | image_url: width: 120 | json }}
+      {%- elsif section.settings.icon_skin != blank -%}
+        {%- assign pw_svg_icon = section.settings.icon_skin | strip -%}
+        {%- if pw_svg_icon contains '://' -%}
+          {{ pw_svg_icon | json }}
+        {%- else -%}
+          {{ pw_svg_icon | asset_url | json }}
+        {%- endif -%}
+      {%- else -%}
+        {{ 'primal-icon-skin.svg' | asset_url | json }}
+      {%- endif -%},
+      "overall": {%- if section.settings.icon_overall_upload != blank -%}
+        {{ section.settings.icon_overall_upload | image_url: width: 120 | json }}
+      {%- elsif section.settings.icon_overall != blank -%}
+        {%- assign pw_svg_icon = section.settings.icon_overall | strip -%}
+        {%- if pw_svg_icon contains '://' -%}
+          {{ pw_svg_icon | json }}
+        {%- else -%}
+          {{ pw_svg_icon | asset_url | json }}
+        {%- endif -%}
+      {%- else -%}
+        {{ 'primal-icon-overall.svg' | asset_url | json }}
+      {%- endif -%}
   };
 
   var CATEGORIES = [
@@ -1551,7 +1812,7 @@
     }
 
     var image = item.image
-      ? '<img src="' + esc(item.image) + '" alt="' + esc(item.name) + '" width="620" height="827" loading="lazy">'
+      ? '<img src="' + esc(item.image) + '" alt="' + esc(item.name) + '" loading="lazy">'
       : '';
 
     var badge = item.badge || item.tag;
@@ -1571,15 +1832,15 @@
             '<div class="pw-detail-col"><h4>How It Works</h4>' + copy(item.how) + '</div>' +
             '<div class="pw-detail-col"><h4>Why We Included It</h4>' + copy(item.why) + '</div>' +
           '</div>' +
-          '<div class="pw-detail-foot">' +
-            '<span class="pw-evidence-label">Scientifically Supported By</span>' +
-            '<span class="pw-evidence"><strong>NIH</strong> <span>National Institutes of Health</span></span>' +
-            '<span class="pw-evidence"><strong>EFSA</strong> <span>European Food Safety Authority</span></span>' +
-            '<button type="button" class="pw-reference-button" data-pw-refs>' +
-              esc(REFERENCES_LABEL) + ' <span aria-hidden="true">&rarr;</span>' +
-            '</button>' +
-          '</div>' +
         '</div>' +
+      '</div>' +
+      '<div class="pw-detail-foot">' +
+        '<span class="pw-evidence-label">Scientifically Supported By</span>' +
+        '<span class="pw-evidence"><strong>NIH</strong> <span>National Institutes of Health</span></span>' +
+        '<span class="pw-evidence"><strong>EFSA</strong> <span>European Food Safety Authority</span></span>' +
+        '<button type="button" class="pw-reference-button" data-pw-refs>' +
+          esc(REFERENCES_LABEL) + ' <span aria-hidden="true">&rarr;</span>' +
+        '</button>' +
       '</div>' +
       '<div class="pw-reference-panel" data-pw-panel hidden>' +
         '<strong>' + esc(item.name) + ' references</strong>' +
@@ -1672,6 +1933,12 @@
       "content": "Hero"
     },
     {
+      "type": "font_picker",
+      "id": "display_font",
+      "label": "Hero heading font",
+      "default": "inter_n9"
+    },
+    {
       "type": "text",
       "id": "hero_line_1",
       "label": "Heading line 1",
@@ -1753,7 +2020,7 @@
     },
     {
       "type": "paragraph",
-      "content": "Benefit filter icons fall back to primal-icon-<name>.svg in assets."
+      "content": "For every icon you can either upload a file directly or paste an SVG URL / Theme Asset filename. Direct upload takes priority. Leave both blank to use the default SVG."
     },
     {
       "type": "header",
@@ -1780,44 +2047,104 @@
       "default": 0
     },
     {
+      "type": "paragraph",
+      "content": "Benefit icons: upload SVG/PNG/WebP directly, or use the SVG URL / Theme Asset filename field. Direct upload takes priority."
+    },
+    {
       "type": "image_picker",
+      "id": "icon_all_upload",
+      "label": "All Benefits icon upload",
+      "info": "Upload SVG, PNG or WebP. Uploaded icon takes priority over the URL field below."
+    },
+    {
+      "type": "text",
       "id": "icon_all",
-      "label": "All Benefits icon"
+      "label": "All Benefits icon — SVG URL or asset filename",
+      "info": "Example: https://cdn.shopify.com/.../icon.svg or custom-icon.svg"
     },
     {
       "type": "image_picker",
+      "id": "icon_gut_upload",
+      "label": "Gut Health icon upload",
+      "info": "Upload SVG, PNG or WebP. Uploaded icon takes priority over the URL field below."
+    },
+    {
+      "type": "text",
       "id": "icon_gut",
-      "label": "Gut Health icon"
+      "label": "Gut Health icon — SVG URL or asset filename",
+      "info": "Example: https://cdn.shopify.com/.../icon.svg or custom-icon.svg"
     },
     {
       "type": "image_picker",
+      "id": "icon_brain_upload",
+      "label": "Brain Function icon upload",
+      "info": "Upload SVG, PNG or WebP. Uploaded icon takes priority over the URL field below."
+    },
+    {
+      "type": "text",
       "id": "icon_brain",
-      "label": "Brain Function icon"
+      "label": "Brain Function icon — SVG URL or asset filename",
+      "info": "Example: https://cdn.shopify.com/.../icon.svg or custom-icon.svg"
     },
     {
       "type": "image_picker",
+      "id": "icon_energy_upload",
+      "label": "Energy & Vitality icon upload",
+      "info": "Upload SVG, PNG or WebP. Uploaded icon takes priority over the URL field below."
+    },
+    {
+      "type": "text",
       "id": "icon_energy",
-      "label": "Energy & Vitality icon"
+      "label": "Energy & Vitality icon — SVG URL or asset filename",
+      "info": "Example: https://cdn.shopify.com/.../icon.svg or custom-icon.svg"
     },
     {
       "type": "image_picker",
+      "id": "icon_immune_upload",
+      "label": "Immune Support icon upload",
+      "info": "Upload SVG, PNG or WebP. Uploaded icon takes priority over the URL field below."
+    },
+    {
+      "type": "text",
       "id": "icon_immune",
-      "label": "Immune Support icon"
+      "label": "Immune Support icon — SVG URL or asset filename",
+      "info": "Example: https://cdn.shopify.com/.../icon.svg or custom-icon.svg"
     },
     {
       "type": "image_picker",
+      "id": "icon_performance_upload",
+      "label": "Performance & Recovery icon upload",
+      "info": "Upload SVG, PNG or WebP. Uploaded icon takes priority over the URL field below."
+    },
+    {
+      "type": "text",
       "id": "icon_performance",
-      "label": "Performance & Recovery icon"
+      "label": "Performance & Recovery icon — SVG URL or asset filename",
+      "info": "Example: https://cdn.shopify.com/.../icon.svg or custom-icon.svg"
     },
     {
       "type": "image_picker",
+      "id": "icon_skin_upload",
+      "label": "Healthy Skin, Hair & Nails icon upload",
+      "info": "Upload SVG, PNG or WebP. Uploaded icon takes priority over the URL field below."
+    },
+    {
+      "type": "text",
       "id": "icon_skin",
-      "label": "Healthy Skin, Hair & Nails icon"
+      "label": "Healthy Skin, Hair & Nails icon — SVG URL or asset filename",
+      "info": "Example: https://cdn.shopify.com/.../icon.svg or custom-icon.svg"
     },
     {
       "type": "image_picker",
+      "id": "icon_overall_upload",
+      "label": "Overall Wellbeing icon upload",
+      "info": "Upload SVG, PNG or WebP. Uploaded icon takes priority over the URL field below."
+    },
+    {
+      "type": "text",
       "id": "icon_overall",
-      "label": "Overall Wellbeing icon"
+      "label": "Overall Wellbeing icon — SVG URL or asset filename",
+      "info": "Example: https://cdn.shopify.com/.../icon.svg or custom-icon.svg"
     },
     {
       "type": "header",
@@ -1837,67 +2164,151 @@
     },
     {
       "type": "paragraph",
-      "content": "Icons fall back to primal-ci-<name>.svg in assets."
+      "content": "SVG supported: upload the SVG in Content > Files and paste its full URL, or upload it to Theme Assets and enter the filename. Leave blank to use the default SVG."
     },
     {
       "type": "image_picker",
+      "id": "clean_sweeteners_upload",
+      "label": "Artificial Sweeteners icon upload",
+      "info": "Upload SVG, PNG or WebP. Uploaded icon takes priority over the URL field below."
+    },
+    {
+      "type": "text",
       "id": "clean_sweeteners",
-      "label": "Artificial Sweeteners icon"
+      "label": "Artificial Sweeteners icon — SVG URL or asset filename",
+      "info": "Example: https://cdn.shopify.com/.../icon.svg or custom-icon.svg"
     },
     {
       "type": "image_picker",
+      "id": "clean_flavours_upload",
+      "label": "Artificial Flavours icon upload",
+      "info": "Upload SVG, PNG or WebP. Uploaded icon takes priority over the URL field below."
+    },
+    {
+      "type": "text",
       "id": "clean_flavours",
-      "label": "Artificial Flavours icon"
+      "label": "Artificial Flavours icon — SVG URL or asset filename",
+      "info": "Example: https://cdn.shopify.com/.../icon.svg or custom-icon.svg"
     },
     {
       "type": "image_picker",
+      "id": "clean_colours_upload",
+      "label": "Artificial Colours icon upload",
+      "info": "Upload SVG, PNG or WebP. Uploaded icon takes priority over the URL field below."
+    },
+    {
+      "type": "text",
       "id": "clean_colours",
-      "label": "Artificial Colours icon"
+      "label": "Artificial Colours icon — SVG URL or asset filename",
+      "info": "Example: https://cdn.shopify.com/.../icon.svg or custom-icon.svg"
     },
     {
       "type": "image_picker",
+      "id": "clean_preservatives_upload",
+      "label": "Preservatives icon upload",
+      "info": "Upload SVG, PNG or WebP. Uploaded icon takes priority over the URL field below."
+    },
+    {
+      "type": "text",
       "id": "clean_preservatives",
-      "label": "Preservatives icon"
+      "label": "Preservatives icon — SVG URL or asset filename",
+      "info": "Example: https://cdn.shopify.com/.../icon.svg or custom-icon.svg"
     },
     {
       "type": "image_picker",
+      "id": "clean_gluten_upload",
+      "label": "Gluten icon upload",
+      "info": "Upload SVG, PNG or WebP. Uploaded icon takes priority over the URL field below."
+    },
+    {
+      "type": "text",
       "id": "clean_gluten",
-      "label": "Gluten icon"
+      "label": "Gluten icon — SVG URL or asset filename",
+      "info": "Example: https://cdn.shopify.com/.../icon.svg or custom-icon.svg"
     },
     {
       "type": "image_picker",
+      "id": "clean_dairy_upload",
+      "label": "Dairy icon upload",
+      "info": "Upload SVG, PNG or WebP. Uploaded icon takes priority over the URL field below."
+    },
+    {
+      "type": "text",
       "id": "clean_dairy",
-      "label": "Dairy icon"
+      "label": "Dairy icon — SVG URL or asset filename",
+      "info": "Example: https://cdn.shopify.com/.../icon.svg or custom-icon.svg"
     },
     {
       "type": "image_picker",
+      "id": "clean_gmos_upload",
+      "label": "GMOs icon upload",
+      "info": "Upload SVG, PNG or WebP. Uploaded icon takes priority over the URL field below."
+    },
+    {
+      "type": "text",
       "id": "clean_gmos",
-      "label": "GMOs icon"
+      "label": "GMOs icon — SVG URL or asset filename",
+      "info": "Example: https://cdn.shopify.com/.../icon.svg or custom-icon.svg"
     },
     {
       "type": "image_picker",
+      "id": "clean_vegan_upload",
+      "label": "Vegan icon upload",
+      "info": "Upload SVG, PNG or WebP. Uploaded icon takes priority over the URL field below."
+    },
+    {
+      "type": "text",
       "id": "clean_vegan",
-      "label": "Vegan icon"
+      "label": "Vegan icon — SVG URL or asset filename",
+      "info": "Example: https://cdn.shopify.com/.../icon.svg or custom-icon.svg"
     },
     {
       "type": "image_picker",
+      "id": "clean_vegetarian_upload",
+      "label": "Vegetarian icon upload",
+      "info": "Upload SVG, PNG or WebP. Uploaded icon takes priority over the URL field below."
+    },
+    {
+      "type": "text",
       "id": "clean_vegetarian",
-      "label": "Vegetarian icon"
+      "label": "Vegetarian icon — SVG URL or asset filename",
+      "info": "Example: https://cdn.shopify.com/.../icon.svg or custom-icon.svg"
     },
     {
       "type": "image_picker",
+      "id": "clean_keto_upload",
+      "label": "Keto Friendly icon upload",
+      "info": "Upload SVG, PNG or WebP. Uploaded icon takes priority over the URL field below."
+    },
+    {
+      "type": "text",
       "id": "clean_keto",
-      "label": "Keto Friendly icon"
+      "label": "Keto Friendly icon — SVG URL or asset filename",
+      "info": "Example: https://cdn.shopify.com/.../icon.svg or custom-icon.svg"
     },
     {
       "type": "image_picker",
+      "id": "clean_paleo_upload",
+      "label": "Paleo Friendly icon upload",
+      "info": "Upload SVG, PNG or WebP. Uploaded icon takes priority over the URL field below."
+    },
+    {
+      "type": "text",
       "id": "clean_paleo",
-      "label": "Paleo Friendly icon"
+      "label": "Paleo Friendly icon — SVG URL or asset filename",
+      "info": "Example: https://cdn.shopify.com/.../icon.svg or custom-icon.svg"
     },
     {
       "type": "image_picker",
+      "id": "clean_lowcarb_upload",
+      "label": "Low Carb icon upload",
+      "info": "Upload SVG, PNG or WebP. Uploaded icon takes priority over the URL field below."
+    },
+    {
+      "type": "text",
       "id": "clean_lowcarb",
-      "label": "Low Carb icon"
+      "label": "Low Carb icon — SVG URL or asset filename",
+      "info": "Example: https://cdn.shopify.com/.../icon.svg or custom-icon.svg"
     },
     {
       "type": "header",

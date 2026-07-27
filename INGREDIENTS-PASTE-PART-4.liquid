@@ -1,0 +1,832 @@
+          "label": "Amount",
+          "info": "Example: 50mg"
+        },
+        {
+          "type": "textarea",
+          "id": "typical_note",
+          "label": "Note",
+          "info": "Example: Lower absorption and bioavailability."
+        },
+        {
+          "type": "url",
+          "id": "reference_url",
+          "label": "References URL"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Primal ingredients",
+      "blocks": [
+        {
+          "type": "ingredient",
+          "settings": {
+            "abbr": "Mg",
+            "ingredient_name": "Magnesium",
+            "ingredient_type": "Essential Mineral",
+            "benefit_tag": "Energy & Vitality",
+            "asset_filename": "primal-ing-magnesium.png",
+            "what_it_does": "Supports over 300 biochemical reactions in the body.",
+            "how_it_works": "Immune System\nBone Health\nMuscle Function\nMood & Wellbeing",
+            "why_included": "Essential for energy production, muscle function and overall wellbeing.",
+            "cat_gut": false,
+            "cat_brain": false,
+            "cat_energy": true,
+            "cat_immune": true,
+            "cat_performance": true,
+            "cat_skin": false,
+            "cat_overall": true
+          }
+        },
+        {
+          "type": "ingredient",
+          "settings": {
+            "abbr": "D3",
+            "ingredient_name": "Vitamin D3",
+            "ingredient_type": "Essential Vitamin",
+            "benefit_tag": "Immune Support",
+            "asset_filename": "primal-ing-vitamin-d3.png",
+            "what_it_does": "Supports immune function and helps maintain healthy bones and muscles.",
+            "how_it_works": "Helps regulate calcium absorption and supports immune cell activity.",
+            "why_included": "Immune System\nBone Health\nMuscle Function\nMood & Wellbeing",
+            "cat_gut": false,
+            "cat_brain": false,
+            "cat_energy": false,
+            "cat_immune": true,
+            "cat_performance": true,
+            "cat_skin": false,
+            "cat_overall": true
+          }
+        },
+        {
+          "type": "ingredient",
+          "settings": {
+            "abbr": "K2",
+            "ingredient_name": "Vitamin K2",
+            "ingredient_type": "Essential Vitamin",
+            "benefit_tag": "Bone & Heart Health",
+            "asset_filename": "primal-ing-vitamin-k2.png",
+            "what_it_does": "Supports normal blood clotting and helps direct calcium to the bones and away from arteries.",
+            "how_it_works": "Activates proteins that bind calcium in bones and prevents it from building up in soft tissue.",
+            "why_included": "Bone Health\nHeart Health\nCalcium Utilisation\nArterial Health",
+            "cat_gut": false,
+            "cat_brain": false,
+            "cat_energy": false,
+            "cat_immune": false,
+            "cat_performance": true,
+            "cat_skin": false,
+            "cat_overall": true
+          }
+        },
+        {
+          "type": "ingredient",
+          "settings": {
+            "abbr": "Zn",
+            "ingredient_name": "Zinc",
+            "ingredient_type": "Essential Mineral",
+            "benefit_tag": "Immune Support",
+            "asset_filename": "primal-ing-zinc.png",
+            "what_it_does": "Supports immune function and helps protect cells from oxidative stress.",
+            "how_it_works": "Involved in over 300 enzyme reactions and supports protein synthesis.",
+            "why_included": "Immune System\nSkin Health\nWound Healing\nHormone Balance\nAntioxidant Protection",
+            "cat_gut": false,
+            "cat_brain": false,
+            "cat_energy": false,
+            "cat_immune": true,
+            "cat_performance": false,
+            "cat_skin": true,
+            "cat_overall": true
+          }
+        },
+        {
+          "type": "ingredient",
+          "settings": {
+            "abbr": "Se",
+            "ingredient_name": "Selenium",
+            "ingredient_type": "Essential Mineral",
+            "benefit_tag": "Immune Support",
+            "asset_filename": "primal-ing-selenium.png",
+            "what_it_does": "Supports antioxidant defence and immune function.",
+            "how_it_works": "Activates antioxidant enzymes that protect cells from oxidative damage.",
+            "why_included": "Immune System\nThyroid Health\nCell Protection\nAntioxidant Support",
+            "cat_gut": false,
+            "cat_brain": false,
+            "cat_energy": false,
+            "cat_immune": true,
+            "cat_performance": false,
+            "cat_skin": false,
+            "cat_overall": true
+          }
+        },
+        {
+          "type": "ingredient",
+          "settings": {
+            "abbr": "C",
+            "ingredient_name": "Vitamin C",
+            "ingredient_type": "Essential Vitamin",
+            "benefit_tag": "Immune Support",
+            "asset_filename": "primal-ing-vitamin-c.png",
+            "what_it_does": "Supports immune function and helps protect cells from oxidative stress.",
+            "how_it_works": "Powerful antioxidant that neutralises free radicals and supports collagen formation.",
+            "why_included": "Immune System\nCollagen Formation\nSkin Health\nIron Absorption\nAntioxidant Protection",
+            "cat_gut": false,
+            "cat_brain": false,
+            "cat_energy": false,
+            "cat_immune": true,
+            "cat_performance": false,
+            "cat_skin": true,
+            "cat_overall": true
+          }
+        },
+        {
+          "type": "ingredient",
+          "settings": {
+            "abbr": "B12",
+            "ingredient_name": "Vitamin B12",
+            "ingredient_type": "Essential Vitamin",
+            "benefit_tag": "Energy & Brain Function",
+            "asset_filename": "primal-ing-vitamin-b12.png",
+            "what_it_does": "Supports energy production and normal function of the nervous system.",
+            "how_it_works": "Helps red blood cell formation and supports nerve health.",
+            "why_included": "Energy Production\nNervous System Function\nReduces Tiredness & Fatigue\nCognitive Function",
+            "cat_gut": false,
+            "cat_brain": true,
+            "cat_energy": true,
+            "cat_immune": false,
+            "cat_performance": false,
+            "cat_skin": false,
+            "cat_overall": false
+          }
+        },
+        {
+          "type": "ingredient",
+          "settings": {
+            "abbr": "Fo",
+            "ingredient_name": "Folate (5-MTHF)",
+            "ingredient_type": "Essential B Vitamin",
+            "benefit_tag": "Energy & Brain Function",
+            "asset_filename": "primal-ing-folate.png",
+            "what_it_does": "Supports healthy cell division and red blood cell formation.",
+            "how_it_works": "Helps convert food into DNA and supports methylation processes.",
+            "why_included": "Cell Division\nRed Blood Cell Production\nBrain Function\nNervous System",
+            "cat_gut": false,
+            "cat_brain": true,
+            "cat_energy": true,
+            "cat_immune": false,
+            "cat_performance": false,
+            "cat_skin": false,
+            "cat_overall": false
+          }
+        },
+        {
+          "type": "ingredient",
+          "settings": {
+            "abbr": "Ash",
+            "ingredient_name": "Ashwagandha",
+            "ingredient_type": "Adaptogenic Herb",
+            "benefit_tag": "Stress & Recovery",
+            "asset_filename": "primal-ing-ashwagandha.png",
+            "what_it_does": "Helps the body adapt to stress and supports overall wellbeing.",
+            "how_it_works": "Modulates cortisol and supports neurotransmitter balance.",
+            "why_included": "Stress Management\nMental Wellbeing\nMood Balance\nRecovery\nSleep Quality",
+            "cat_gut": false,
+            "cat_brain": true,
+            "cat_energy": false,
+            "cat_immune": false,
+            "cat_performance": true,
+            "cat_skin": false,
+            "cat_overall": true
+          }
+        },
+        {
+          "type": "ingredient",
+          "settings": {
+            "abbr": "LM",
+            "ingredient_name": "Lion's Mane",
+            "ingredient_type": "Functional Mushroom",
+            "benefit_tag": "Brain Function",
+            "asset_filename": "primal-ing-lions-mane.png",
+            "what_it_does": "Supports cognitive function and memory.",
+            "how_it_works": "Stimulates nerve growth factor for brain cell health and repair.",
+            "why_included": "Cognitive Function\nLong-term Brain Health\nNerve Regeneration\nFocus & Clarity",
+            "cat_gut": false,
+            "cat_brain": true,
+            "cat_energy": false,
+            "cat_immune": false,
+            "cat_performance": false,
+            "cat_skin": false,
+            "cat_overall": false
+          }
+        },
+        {
+          "type": "ingredient",
+          "settings": {
+            "abbr": "LT",
+            "ingredient_name": "L-Theanine",
+            "ingredient_type": "Amino Acid",
+            "benefit_tag": "Focus & Relaxation",
+            "asset_filename": "primal-ing-l-theanine.png",
+            "what_it_does": "Promotes relaxation without drowsiness and supports mental clarity.",
+            "how_it_works": "Increases alpha brain wave activity and balances neurotransmitters.",
+            "why_included": "Relaxation\nFocus & Attention\nStress Reduction\nSleep Quality",
+            "cat_gut": false,
+            "cat_brain": true,
+            "cat_energy": false,
+            "cat_immune": false,
+            "cat_performance": false,
+            "cat_skin": false,
+            "cat_overall": true
+          }
+        },
+        {
+          "type": "ingredient",
+          "settings": {
+            "abbr": "Rh",
+            "ingredient_name": "Rhodiola Rosea",
+            "ingredient_type": "Adaptogenic Herb",
+            "benefit_tag": "Energy & Stress Support",
+            "asset_filename": "primal-ing-rhodiola.png",
+            "what_it_does": "Helps reduce fatigue and enhances physical and mental performance.",
+            "how_it_works": "Supports the body's ability to adapt to stress.",
+            "why_included": "Energy Production\nCognitive Function\nReduces Fatigue\nPhysical Performance",
+            "cat_gut": false,
+            "cat_brain": true,
+            "cat_energy": true,
+            "cat_immune": false,
+            "cat_performance": false,
+            "cat_skin": false,
+            "cat_overall": true
+          }
+        },
+        {
+          "type": "ingredient",
+          "settings": {
+            "abbr": "ALA",
+            "ingredient_name": "Alpha Lipoic Acid",
+            "ingredient_type": "Antioxidant",
+            "benefit_tag": "Energy & Antioxidant",
+            "asset_filename": "primal-ing-alpha-lipoic-acid.png",
+            "what_it_does": "Powerful antioxidant that supports energy production and regeneration.",
+            "how_it_works": "Works in both fat and water and recycles other antioxidants in the body.",
+            "why_included": "Antioxidant Support\nEnergy Production\nCell Protection\nDetoxification Support",
+            "cat_gut": false,
+            "cat_brain": false,
+            "cat_energy": true,
+            "cat_immune": true,
+            "cat_performance": false,
+            "cat_skin": false,
+            "cat_overall": true
+          }
+        },
+        {
+          "type": "ingredient",
+          "settings": {
+            "abbr": "Ch",
+            "ingredient_name": "Choline",
+            "ingredient_type": "Essential Nutrient",
+            "benefit_tag": "Brain & Liver Health",
+            "asset_filename": "primal-ing-choline.png",
+            "what_it_does": "Supports brain function and liver health.",
+            "how_it_works": "Essential for liver function and the metabolism of fats.",
+            "why_included": "Brain Function\nLiver Health\nFat Metabolism\nCell Membrane Health",
+            "cat_gut": false,
+            "cat_brain": true,
+            "cat_energy": false,
+            "cat_immune": false,
+            "cat_performance": false,
+            "cat_skin": false,
+            "cat_overall": true
+          }
+        },
+        {
+          "type": "ingredient",
+          "settings": {
+            "abbr": "Q10",
+            "ingredient_name": "Coenzyme Q10",
+            "ingredient_type": "Antioxidant",
+            "benefit_tag": "Energy & Heart Health",
+            "asset_filename": "primal-ing-coq10.png",
+            "what_it_does": "Supports cellular energy production and acts as a powerful antioxidant.",
+            "how_it_works": "Plays a key role in mitochondrial energy production and protects cells from damage.",
+            "why_included": "Cellular Energy\nHeart Health\nAntioxidant Protection\nAnti-Aging Support",
+            "cat_gut": false,
+            "cat_brain": false,
+            "cat_energy": true,
+            "cat_immune": false,
+            "cat_performance": true,
+            "cat_skin": false,
+            "cat_overall": true
+          }
+        },
+        {
+          "type": "ingredient",
+          "settings": {
+            "abbr": "Cre",
+            "ingredient_name": "Creatine",
+            "ingredient_type": "Performance Compound",
+            "benefit_tag": "Performance & Recovery",
+            "asset_filename": "primal-ing-creatine.png",
+            "what_it_does": "Increases physical performance in short bursts of high-intensity exercise.",
+            "how_it_works": "Supports phospho-creatine for fast ATP resynthesis and brain function.",
+            "why_included": "Muscle Growth & Strength\nPower & Performance\nBrain Function\nRecovery",
+            "cat_gut": false,
+            "cat_brain": true,
+            "cat_energy": false,
+            "cat_immune": false,
+            "cat_performance": true,
+            "cat_skin": false,
+            "cat_overall": false
+          }
+        },
+        {
+          "type": "ingredient",
+          "settings": {
+            "abbr": "Pro",
+            "ingredient_name": "Probiotics",
+            "ingredient_type": "Live Cultures",
+            "benefit_tag": "Gut Health",
+            "asset_filename": "primal-ing-probiotics.png",
+            "what_it_does": "Supports a healthy gut microbiome and digestive wellbeing.",
+            "how_it_works": "Maintains beneficial bacteria for gut health and supports immunity.",
+            "why_included": "Digestive Health\nImmune Support\nGut Balance\nNutrient Absorption",
+            "cat_gut": true,
+            "cat_brain": false,
+            "cat_energy": false,
+            "cat_immune": true,
+            "cat_performance": false,
+            "cat_skin": false,
+            "cat_overall": false
+          }
+        },
+        {
+          "type": "ingredient",
+          "settings": {
+            "abbr": "DE",
+            "ingredient_name": "Digestive Enzymes",
+            "ingredient_type": "Enzyme Blend",
+            "benefit_tag": "Gut Health",
+            "asset_filename": "primal-ing-digestive-enzymes.png",
+            "what_it_does": "Supports the digestion of nutrients and reduces bloating.",
+            "how_it_works": "Breaks down carbohydrates, proteins and fats for better nutrient absorption.",
+            "why_included": "Improved Digestion\nReduced Bloating\nNutrient Absorption\nGut Comfort",
+            "cat_gut": true,
+            "cat_brain": false,
+            "cat_energy": false,
+            "cat_immune": false,
+            "cat_performance": false,
+            "cat_skin": false,
+            "cat_overall": false
+          }
+        },
+        {
+          "type": "ingredient",
+          "settings": {
+            "abbr": "Sp",
+            "ingredient_name": "Spirulina",
+            "ingredient_type": "Blue-Green Algae",
+            "benefit_tag": "Energy & Vitality",
+            "asset_filename": "primal-ing-spirulina.png",
+            "what_it_does": "Provides natural nutrients and supports energy and immunity.",
+            "how_it_works": "Rich in protein, B vitamins, iron and antioxidants that combat oxidative stress.",
+            "why_included": "Energy Levels\nImmune Function\nAntioxidant Support\nDetoxification",
+            "cat_gut": false,
+            "cat_brain": false,
+            "cat_energy": true,
+            "cat_immune": true,
+            "cat_performance": false,
+            "cat_skin": false,
+            "cat_overall": true
+          }
+        },
+        {
+          "type": "ingredient",
+          "settings": {
+            "abbr": "Chl",
+            "ingredient_name": "Chlorella",
+            "ingredient_type": "Green Algae",
+            "benefit_tag": "Detox & Immune Support",
+            "asset_filename": "primal-ing-chlorella.png",
+            "what_it_does": "Supports detoxification and immune health.",
+            "how_it_works": "Rich in vitamins, minerals and chlorophyll that binds toxins.",
+            "why_included": "Detoxification\nImmune Health\nNutrient Absorption\nCellular Health",
+            "cat_gut": true,
+            "cat_brain": false,
+            "cat_energy": false,
+            "cat_immune": true,
+            "cat_performance": false,
+            "cat_skin": false,
+            "cat_overall": true
+          }
+        },
+        {
+          "type": "ingredient",
+          "settings": {
+            "abbr": "ALA",
+            "ingredient_name": "Alpha Lipoic Acid (ALA)",
+            "ingredient_type": "Antioxidant",
+            "benefit_tag": "Metabolic & Antioxidant",
+            "asset_filename": "primal-ing-ala.png",
+            "what_it_does": "Supports energy metabolism and helps protect cells from oxidative stress.",
+            "how_it_works": "Powerful antioxidant that helps recycle other antioxidants and supports mitochondrial function.",
+            "why_included": "Energy Production\nAntioxidant Support\nBlood Sugar Support\nCell Protection",
+            "cat_gut": false,
+            "cat_brain": false,
+            "cat_energy": true,
+            "cat_immune": true,
+            "cat_performance": false,
+            "cat_skin": false,
+            "cat_overall": true
+          }
+        },
+        {
+          "type": "ingredient",
+          "settings": {
+            "abbr": "Bt",
+            "ingredient_name": "Beetroot Extract",
+            "ingredient_type": "Nitrate Source",
+            "benefit_tag": "Circulation & Performance",
+            "asset_filename": "primal-ing-beetroot.png",
+            "what_it_does": "Supports healthy blood flow and oxygen delivery for improved endurance.",
+            "how_it_works": "Natural nitrates convert to nitric oxide to help relax blood vessels and enhance circulation.",
+            "why_included": "Performance Enhancement\nStamina & Endurance\nHeart Health\nHealthy Circulation",
+            "cat_gut": false,
+            "cat_brain": false,
+            "cat_energy": true,
+            "cat_immune": false,
+            "cat_performance": true,
+            "cat_skin": false,
+            "cat_overall": true
+          }
+        },
+        {
+          "type": "ingredient",
+          "settings": {
+            "abbr": "Tur",
+            "ingredient_name": "Turmeric Extract",
+            "ingredient_type": "Curcumin Source",
+            "benefit_tag": "Inflammation & Joint Support",
+            "asset_filename": "primal-ing-turmeric.png",
+            "what_it_does": "Helps reduce inflammation and supports joint, brain and digestive health.",
+            "how_it_works": "Curcumin modulates inflammatory pathways and acts as a potent antioxidant.",
+            "why_included": "Inflammation Support\nJoint Health\nAntioxidant Protection\nDigestive Support",
+            "cat_gut": true,
+            "cat_brain": false,
+            "cat_energy": false,
+            "cat_immune": false,
+            "cat_performance": true,
+            "cat_skin": false,
+            "cat_overall": true
+          }
+        },
+        {
+          "type": "ingredient",
+          "settings": {
+            "abbr": "Bos",
+            "ingredient_name": "Boswellia Serrata",
+            "ingredient_type": "Resin Extract",
+            "benefit_tag": "Joint & Inflammation Support",
+            "asset_filename": "primal-ing-boswellia.png",
+            "what_it_does": "Supports joint comfort and helps reduce inflammatory responses.",
+            "how_it_works": "Boswellic acids inhibit inflammatory enzymes and support cartilage health.",
+            "why_included": "Joint Comfort\nInflammation Support\nMobility Support\nCartilage Health",
+            "cat_gut": false,
+            "cat_brain": false,
+            "cat_energy": false,
+            "cat_immune": false,
+            "cat_performance": true,
+            "cat_skin": false,
+            "cat_overall": true
+          }
+        },
+        {
+          "type": "ingredient",
+          "settings": {
+            "abbr": "GT",
+            "ingredient_name": "Green Tea Extract",
+            "ingredient_type": "Polyphenol Source",
+            "benefit_tag": "Antioxidant & Metabolic Health",
+            "asset_filename": "primal-ing-green-tea.png",
+            "what_it_does": "Provides antioxidant protection and supports healthy metabolism and fat oxidation.",
+            "how_it_works": "Rich in EGCG polyphenols that help protect cells and support metabolic rate.",
+            "why_included": "Antioxidant Support\nMetabolic Support\nFat Oxidation\nCell Protection",
+            "cat_gut": false,
+            "cat_brain": false,
+            "cat_energy": true,
+            "cat_immune": true,
+            "cat_performance": false,
+            "cat_skin": false,
+            "cat_overall": true
+          }
+        },
+        {
+          "type": "ingredient",
+          "settings": {
+            "abbr": "GS",
+            "ingredient_name": "Grape Seed Extract",
+            "ingredient_type": "Polyphenol Source",
+            "benefit_tag": "Antioxidant & Heart Health",
+            "asset_filename": "primal-ing-grape-seed.png",
+            "what_it_does": "Provides powerful antioxidant protection and supports heart and vascular health.",
+            "how_it_works": "Rich in OPCs that help protect cells from oxidative damage and support healthy circulation.",
+            "why_included": "Antioxidant Support\nHeart Health\nBlood Vessel Support\nCell Protection",
+            "cat_gut": false,
+            "cat_brain": false,
+            "cat_energy": false,
+            "cat_immune": true,
+            "cat_performance": true,
+            "cat_skin": false,
+            "cat_overall": true
+          }
+        },
+        {
+          "type": "ingredient",
+          "settings": {
+            "abbr": "Pom",
+            "ingredient_name": "Pomegranate Extract",
+            "ingredient_type": "Polyphenol Source",
+            "benefit_tag": "Heart & Anti-Aging",
+            "asset_filename": "primal-ing-pomegranate.png",
+            "what_it_does": "Supports heart health, healthy blood flow and helps protect cells from oxidative stress.",
+            "how_it_works": "Polyphenols help improve nitric oxide production and reduce oxidative damage.",
+            "why_included": "Heart Health\nCirculation Support\nAntioxidant\nAnti-Aging Support",
+            "cat_gut": false,
+            "cat_brain": false,
+            "cat_energy": false,
+            "cat_immune": false,
+            "cat_performance": true,
+            "cat_skin": true,
+            "cat_overall": true
+          }
+        },
+        {
+          "type": "ingredient",
+          "settings": {
+            "abbr": "MT",
+            "ingredient_name": "Milk Thistle Extract",
+            "ingredient_type": "Silymarin Source",
+            "benefit_tag": "Liver Health & Detox",
+            "asset_filename": "primal-ing-milk-thistle.png",
+            "what_it_does": "Supports liver function and natural detoxification processes.",
+            "how_it_works": "Silymarin helps protect liver cells and supports regeneration.",
+            "why_included": "Liver Health\nDetox Support\nCell Protection\nAntioxidant",
+            "cat_gut": true,
+            "cat_brain": false,
+            "cat_energy": false,
+            "cat_immune": false,
+            "cat_performance": false,
+            "cat_skin": false,
+            "cat_overall": true
+          }
+        },
+        {
+          "type": "ingredient",
+          "settings": {
+            "abbr": "Ba",
+            "ingredient_name": "Bacopa Monnieri",
+            "ingredient_type": "Adaptogenic Herb",
+            "benefit_tag": "Brain Function & Memory",
+            "asset_filename": "primal-ing-bacopa.png",
+            "what_it_does": "Supports memory, learning and cognitive function.",
+            "how_it_works": "Active compounds help enhance neurotransmitter activity and protect brain cells.",
+            "why_included": "Memory Support\nCognitive Function\nFocus & Clarity\nNeuroprotection",
+            "cat_gut": false,
+            "cat_brain": true,
+            "cat_energy": false,
+            "cat_immune": false,
+            "cat_performance": false,
+            "cat_skin": false,
+            "cat_overall": false
+          }
+        },
+        {
+          "type": "ingredient",
+          "settings": {
+            "abbr": "Gk",
+            "ingredient_name": "Ginkgo Biloba Extract",
+            "ingredient_type": "Standardised Extract",
+            "benefit_tag": "Circulation & Brain Health",
+            "asset_filename": "primal-ing-ginkgo.png",
+            "what_it_does": "Supports circulation and cognitive performance.",
+            "how_it_works": "Improves blood flow to the brain and acts as a powerful antioxidant.",
+            "why_included": "Cognitive Function\nCirculation Support\nMemory Support\nAntioxidant",
+            "cat_gut": false,
+            "cat_brain": true,
+            "cat_energy": false,
+            "cat_immune": false,
+            "cat_performance": true,
+            "cat_skin": false,
+            "cat_overall": true
+          }
+        },
+        {
+          "type": "ingredient",
+          "settings": {
+            "abbr": "Ac",
+            "ingredient_name": "Acerola Cherry Extract",
+            "ingredient_type": "Natural Vitamin C Source",
+            "benefit_tag": "Immune Support & Antioxidant",
+            "asset_filename": "primal-ing-acerola.png",
+            "what_it_does": "Supports immune function and provides powerful antioxidant protection.",
+            "how_it_works": "Naturally rich in vitamin C and bioflavonoids that neutralise free radicals.",
+            "why_included": "Immune Support\nAntioxidant Support\nCollagen Formation\nIron Absorption",
+            "cat_gut": false,
+            "cat_brain": false,
+            "cat_energy": false,
+            "cat_immune": true,
+            "cat_performance": false,
+            "cat_skin": true,
+            "cat_overall": true
+          }
+        },
+        {
+          "type": "ingredient",
+          "settings": {
+            "abbr": "BG",
+            "ingredient_name": "Beta Glucan",
+            "ingredient_type": "Soluble Fibre",
+            "benefit_tag": "Immune & Heart Health",
+            "asset_filename": "primal-ing-beta-glucan.png",
+            "what_it_does": "Supports immune function and helps maintain healthy cholesterol levels.",
+            "how_it_works": "Forms a gel-like substance in the gut that supports immune cells and cholesterol management.",
+            "why_included": "Immune Health\nHeart Health\nCholesterol Management\nGut Health",
+            "cat_gut": true,
+            "cat_brain": false,
+            "cat_energy": false,
+            "cat_immune": true,
+            "cat_performance": false,
+            "cat_skin": false,
+            "cat_overall": true
+          }
+        },
+        {
+          "type": "ingredient",
+          "settings": {
+            "abbr": "Qu",
+            "ingredient_name": "Quercetin",
+            "ingredient_type": "Flavonoid",
+            "benefit_tag": "Antioxidant & Immune Support",
+            "asset_filename": "primal-ing-quercetin.png",
+            "what_it_does": "Powerful antioxidant that supports immune health and reduces oxidative stress.",
+            "how_it_works": "Stabilises mast cells and reduces inflammation while protecting cells from damage.",
+            "why_included": "Antioxidant Support\nImmune Support\nInflammation Support\nAllergy Support",
+            "cat_gut": false,
+            "cat_brain": false,
+            "cat_energy": false,
+            "cat_immune": true,
+            "cat_performance": false,
+            "cat_skin": false,
+            "cat_overall": true
+          }
+        },
+        {
+          "type": "ingredient",
+          "settings": {
+            "abbr": "BP",
+            "ingredient_name": "Black Pepper Extract",
+            "ingredient_type": "BioPerine® (Piper nigrum)",
+            "benefit_tag": "Absorption Enhancer",
+            "asset_filename": "primal-ing-black-pepper.png",
+            "what_it_does": "Enhances absorption and bioavailability of nutrients and compounds.",
+            "how_it_works": "Piperine increases permeability and helps nutrients pass more effectively into the bloodstream.",
+            "why_included": "Enhanced Absorption\nIncreased Bioavailability\nBetter Efficacy",
+            "cat_gut": false,
+            "cat_brain": false,
+            "cat_energy": false,
+            "cat_immune": false,
+            "cat_performance": false,
+            "cat_skin": false,
+            "cat_overall": true
+          }
+        },
+        {
+          "type": "ingredient",
+          "settings": {
+            "abbr": "Zn",
+            "ingredient_name": "Zinc (as Citrate)",
+            "ingredient_type": "Essential Mineral",
+            "benefit_tag": "Immune & Cell Support",
+            "asset_filename": "primal-ing-zinc-citrate.png",
+            "what_it_does": "Supports immune function, skin health and cell growth and repair.",
+            "how_it_works": "Essential for enzyme function and immune cell development.",
+            "why_included": "Immune Support\nCellular Health\nSkin Health\nWound Healing",
+            "cat_gut": false,
+            "cat_brain": false,
+            "cat_energy": false,
+            "cat_immune": true,
+            "cat_performance": false,
+            "cat_skin": true,
+            "cat_overall": true
+          }
+        },
+        {
+          "type": "ingredient",
+          "settings": {
+            "abbr": "Se",
+            "ingredient_name": "Selenium (as Selenomethionine)",
+            "ingredient_type": "Essential Mineral",
+            "benefit_tag": "Antioxidant & Immune Support",
+            "asset_filename": "primal-ing-selenium-2.png",
+            "what_it_does": "Supports immune function, thyroid health and protects cells from oxidative damage.",
+            "how_it_works": "Selenium is a cofactor for antioxidant enzymes that help neutralise free radicals.",
+            "why_included": "Immune Support\nThyroid Support\nAntioxidant Protection\nCell Protection",
+            "cat_gut": false,
+            "cat_brain": false,
+            "cat_energy": false,
+            "cat_immune": true,
+            "cat_performance": false,
+            "cat_skin": false,
+            "cat_overall": true
+          }
+        },
+        {
+          "type": "ingredient",
+          "settings": {
+            "abbr": "Mn",
+            "ingredient_name": "Manganese",
+            "ingredient_type": "Essential Mineral",
+            "benefit_tag": "Bone & Metabolic Health",
+            "asset_filename": "primal-ing-manganese.png",
+            "what_it_does": "Supports bone formation, energy metabolism and antioxidant enzyme function.",
+            "how_it_works": "Activates enzymes involved in metabolism and helps defend cells from oxidative stress.",
+            "why_included": "Bone Health\nMetabolic Support\nAntioxidant Support\nEnzyme Function",
+            "cat_gut": false,
+            "cat_brain": false,
+            "cat_energy": true,
+            "cat_immune": false,
+            "cat_performance": false,
+            "cat_skin": false,
+            "cat_overall": true
+          }
+        },
+        {
+          "type": "ingredient",
+          "settings": {
+            "abbr": "Cr",
+            "ingredient_name": "Chromium (as Picolinate)",
+            "ingredient_type": "Essential Trace Mineral",
+            "benefit_tag": "Blood Sugar & Metabolic Health",
+            "asset_filename": "primal-ing-chromium.png",
+            "what_it_does": "Helps maintain healthy blood sugar levels and supports macronutrient metabolism.",
+            "how_it_works": "Enhances insulin action and helps the body metabolise carbohydrates, proteins and fats.",
+            "why_included": "Blood Sugar Support\nMetabolic Support\nInsulin Function\nEnergy Production",
+            "cat_gut": false,
+            "cat_brain": false,
+            "cat_energy": true,
+            "cat_immune": false,
+            "cat_performance": false,
+            "cat_skin": false,
+            "cat_overall": true
+          }
+        },
+        {
+          "type": "ingredient",
+          "settings": {
+            "abbr": "Mo",
+            "ingredient_name": "Molybdenum",
+            "ingredient_type": "Essential Trace Mineral",
+            "benefit_tag": "Detox & Enzyme Support",
+            "asset_filename": "primal-ing-molybdenum.png",
+            "what_it_does": "Supports detoxification processes and the breakdown of sulphites and other compounds.",
+            "how_it_works": "A cofactor for enzymes that assist in detox and nutrient metabolism.",
+            "why_included": "Detox Support\nEnzyme Function\nSulphite Metabolism\nNutrient Utilisation",
+            "cat_gut": true,
+            "cat_brain": false,
+            "cat_energy": false,
+            "cat_immune": false,
+            "cat_performance": false,
+            "cat_skin": false,
+            "cat_overall": true
+          }
+        },
+        {
+          "type": "ingredient",
+          "settings": {
+            "abbr": "K2",
+            "ingredient_name": "Vitamin K2 (MK-7)",
+            "ingredient_type": "Essential Vitamin",
+            "benefit_tag": "Bone & Heart Health",
+            "asset_filename": "primal-ing-vitamin-k2-mk7.png",
+            "what_it_does": "Supports strong bones and helps maintain healthy arteries and cardiovascular function.",
+            "how_it_works": "Directs calcium to bones and teeth and away from arteries and soft tissues.",
+            "why_included": "Bone Health\nHeart Health\nCalcium Utilisation\nArterial Support",
+            "cat_gut": false,
+            "cat_brain": false,
+            "cat_energy": false,
+            "cat_immune": false,
+            "cat_performance": true,
+            "cat_skin": false,
+            "cat_overall": true
+          }
+        }
+      ]
+    }
+  ],
+  "enabled_on": {
+    "templates": [
+      "page",
+      "index"
+    ]
+  }
+}
+{% endschema %}
