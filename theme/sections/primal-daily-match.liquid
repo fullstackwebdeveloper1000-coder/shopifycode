@@ -1,0 +1,561 @@
+{% liquid
+  assign heading_font = section.settings.heading_font
+  assign body_font = section.settings.body_font
+  assign image_alt = section.settings.image.alt | default: section.settings.left_heading
+%}
+
+<section
+  id="PrimalDailyMatch-{{ section.id }}"
+  class="primal-daily-match"
+  style="
+    --pds-bg: {{ section.settings.background_color }};
+    --pds-text: {{ section.settings.text_color }};
+    --pds-gold: {{ section.settings.gold_color }};
+    --pds-button-text: {{ section.settings.button_text_color }};
+  "
+>
+  <div class="pw-container pds__wrap">
+    <div class="pds-left">
+      <h2>{{ section.settings.left_heading }}</h2>
+
+      <ul class="pds-benefits" role="list">
+        {% for block in section.blocks %}
+          <li {{ block.shopify_attributes }}>
+            <span class="pds-check" aria-hidden="true">
+              <svg viewBox="0 0 20 20">
+                <circle cx="10" cy="10" r="8.5"/>
+                <path d="m6.1 10.1 2.5 2.5 5.2-5.4"/>
+              </svg>
+            </span>
+            <span>{{ block.settings.text }}</span>
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+
+    <div class="pds-media">
+      {% if section.settings.image != blank %}
+        {{
+          section.settings.image
+          | image_url: width: 2400
+          | image_tag:
+            class: 'pds-image',
+            loading: 'eager',
+            fetchpriority: 'high',
+            widths: '800, 1200, 1600, 2000, 2400',
+            sizes: '(min-width: 1100px) 525px, (min-width: 750px) 40vw, 100vw',
+            alt: image_alt
+        }}
+      {% else %}
+        {{ 'lifestyle-1' | placeholder_svg_tag: 'pds-placeholder' }}
+      {% endif %}
+    </div>
+
+    <div class="pds-right">
+      <h3>
+        {{ section.settings.right_heading }}
+        <span>{{ section.settings.right_gold_line }}</span>
+      </h3>
+
+      <p class="pds-description">{{ section.settings.description }}</p>
+
+      <a
+        class="pds-button"
+        {% if section.settings.button_link != blank %}
+          href="{{ section.settings.button_link }}"
+        {% else %}
+          role="link"
+          aria-disabled="true"
+        {% endif %}
+      >
+        <span>{{ section.settings.button_label }}</span>
+        <span class="pds-arrow" aria-hidden="true">→</span>
+      </a>
+
+      {% if section.settings.show_shipping %}
+        <div class="pds-shipping">
+          <span class="pds-truck" aria-hidden="true">
+            <svg viewBox="0 0 44 32">
+              <path d="M2 5h25v19H2z"/>
+              <path d="M27 12h8l6 7v5H27z"/>
+              <circle cx="11" cy="26" r="3.5"/>
+              <circle cx="34" cy="26" r="3.5"/>
+              <path d="M2 10h-4M2 15h-2M2 20h-4"/>
+            </svg>
+          </span>
+          <span class="pds-shipping-copy">
+            <strong>{{ section.settings.shipping_heading }}</strong>
+            <span>{{ section.settings.shipping_text }}</span>
+          </span>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+{% style %}
+  {{ heading_font | font_face: font_display: 'swap' }}
+  {{ body_font | font_face: font_display: 'swap' }}
+
+  #PrimalDailyMatch-{{ section.id }} {
+    {% render 'pw-align-vars' %}
+  }
+
+  #shopify-section-{{ section.id }} {
+    display: block !important;
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow-x: clip !important;
+  }
+
+  #shopify-section-{{ section.id }} .page-width,
+  #shopify-section-{{ section.id }} > .page-width {
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  #PrimalDailyMatch-{{ section.id }},
+  #PrimalDailyMatch-{{ section.id }} *,
+  #PrimalDailyMatch-{{ section.id }} *::before,
+  #PrimalDailyMatch-{{ section.id }} *::after {
+    box-sizing: border-box;
+  }
+
+  #PrimalDailyMatch-{{ section.id }} {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background: var(--pds-bg);
+    color: var(--pds-text);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  #PrimalDailyMatch-{{ section.id }} .pw-container.pds__wrap {
+    display: grid;
+    grid-template-columns: minmax(0, 314px) minmax(0, 1fr) minmax(0, 319px);
+    gap: clamp(16px, 2.2vw, 30px);
+    align-items: stretch;
+    width: 100%;
+    max-width: var(--pw-max);
+    min-height: 320px;
+    margin-inline: auto;
+    padding-inline: var(--pw-gutter);
+  }
+
+  #PrimalDailyMatch-{{ section.id }} .pds-left {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    min-width: 0;
+    padding-top: 57px;
+    padding-bottom: 24px;
+  }
+
+  #PrimalDailyMatch-{{ section.id }} .pds-left h2 {
+    margin: 0;
+    color: var(--pds-text);
+    font-family: {{ heading_font.family }}, sans-serif;
+    font-style: {{ heading_font.style }};
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 27.5px;
+    letter-spacing: -0.25px;
+    text-transform: uppercase;
+  }
+
+  #PrimalDailyMatch-{{ section.id }} .pds-benefits {
+    margin: 20px 0 0;
+    padding: 0;
+    display: grid;
+    gap: 14px;
+    list-style: none;
+  }
+
+  #PrimalDailyMatch-{{ section.id }} .pds-benefits li {
+    min-height: 20px;
+    display: grid;
+    grid-template-columns: 20px minmax(0, 1fr);
+    gap: 10px;
+    align-items: center;
+    color: var(--pds-text);
+    font-family: {{ body_font.family }}, sans-serif;
+    font-style: {{ body_font.style }};
+    font-weight: 700;
+    font-size: 13.5px;
+    line-height: 20px;
+    white-space: nowrap;
+  }
+
+  #PrimalDailyMatch-{{ section.id }} .pds-check,
+  #PrimalDailyMatch-{{ section.id }} .pds-check svg {
+    display: block;
+    width: 20px;
+    height: 20px;
+  }
+
+  #PrimalDailyMatch-{{ section.id }} .pds-check {
+    color: var(--pds-gold);
+  }
+
+  #PrimalDailyMatch-{{ section.id }} .pds-check svg {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.15;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  #PrimalDailyMatch-{{ section.id }} .pds-media {
+    position: relative;
+    min-width: 0;
+    min-height: 320px;
+    overflow: hidden;
+    background: #111;
+  }
+
+  #PrimalDailyMatch-{{ section.id }} .pds-media::before {
+    content: "";
+    position: absolute;
+    z-index: 2;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 42px;
+    pointer-events: none;
+    background: linear-gradient(90deg, var(--pds-bg) 0%, rgba(244, 240, 237, 0) 100%);
+  }
+
+  #PrimalDailyMatch-{{ section.id }} .pds-image,
+  #PrimalDailyMatch-{{ section.id }} .pds-placeholder {
+    display: block;
+    width: 100%;
+    height: 100%;
+    min-height: 320px;
+    max-width: none;
+    object-fit: cover;
+    object-position: center center;
+  }
+
+  #PrimalDailyMatch-{{ section.id }} .pds-right {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    min-width: 0;
+    padding-top: 26px;
+    padding-bottom: 24px;
+  }
+
+  #PrimalDailyMatch-{{ section.id }} .pds-right h3 {
+    margin: 0;
+    color: var(--pds-text);
+    font-family: {{ heading_font.family }}, sans-serif;
+    font-style: {{ heading_font.style }};
+    font-weight: 700;
+    font-size: 36px;
+    line-height: 34px;
+    letter-spacing: -0.4px;
+    text-transform: uppercase;
+  }
+
+  #PrimalDailyMatch-{{ section.id }} .pds-right h3 span {
+    display: block;
+    color: var(--pds-gold);
+  }
+
+  #PrimalDailyMatch-{{ section.id }} .pds-description {
+    width: 100%;
+    max-width: 282px;
+    margin: 18px 0 0;
+    color: var(--pds-text);
+    font-family: {{ body_font.family }}, sans-serif;
+    font-style: {{ body_font.style }};
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 22px;
+  }
+
+  #PrimalDailyMatch-{{ section.id }} .pds-button {
+    width: 201px;
+    height: 47px;
+    margin-top: 24px;
+    padding: 0 23px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 9px;
+    background: var(--pds-gold);
+    color: var(--pds-button-text);
+    text-decoration: none;
+    font-family: {{ heading_font.family }}, sans-serif;
+    font-style: {{ heading_font.style }};
+    font-weight: 700;
+    font-size: 13px;
+    line-height: 1;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  #PrimalDailyMatch-{{ section.id }} .pds-arrow {
+    font-size: 18px;
+    line-height: 1;
+  }
+
+  #PrimalDailyMatch-{{ section.id }} .pds-shipping {
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  #PrimalDailyMatch-{{ section.id }} .pds-truck {
+    width: 40px;
+    height: 30px;
+    flex: 0 0 40px;
+    color: #000;
+  }
+
+  #PrimalDailyMatch-{{ section.id }} .pds-truck svg {
+    display: block;
+    width: 40px;
+    height: 30px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.35;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  #PrimalDailyMatch-{{ section.id }} .pds-shipping-copy {
+    display: block;
+  }
+
+  #PrimalDailyMatch-{{ section.id }} .pds-shipping-copy strong,
+  #PrimalDailyMatch-{{ section.id }} .pds-shipping-copy > span {
+    display: block;
+    color: #000;
+    font-family: {{ body_font.family }}, sans-serif;
+    font-style: {{ body_font.style }};
+  }
+
+  #PrimalDailyMatch-{{ section.id }} .pds-shipping-copy strong {
+    font-weight: 700;
+    font-size: 12px;
+    line-height: 14px;
+    letter-spacing: 0.35px;
+    text-transform: uppercase;
+  }
+
+  #PrimalDailyMatch-{{ section.id }} .pds-shipping-copy > span {
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 15px;
+  }
+
+  @media screen and (max-width: 1100px) {
+    #PrimalDailyMatch-{{ section.id }} .pw-container.pds__wrap {
+      grid-template-columns: minmax(0, 260px) minmax(0, 1fr) minmax(0, 280px);
+      gap: 20px;
+    }
+
+    #PrimalDailyMatch-{{ section.id }} .pds-left h2 {
+      font-size: 21px;
+      line-height: 24px;
+    }
+
+    #PrimalDailyMatch-{{ section.id }} .pds-benefits li {
+      font-size: 12px;
+      white-space: normal;
+    }
+
+    #PrimalDailyMatch-{{ section.id }} .pds-right h3 {
+      font-size: 31px;
+      line-height: 30px;
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    #PrimalDailyMatch-{{ section.id }} .pw-container.pds__wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      min-height: 0;
+      padding-inline: var(--pw-gutter);
+    }
+
+    #PrimalDailyMatch-{{ section.id }} .pds-left,
+    #PrimalDailyMatch-{{ section.id }} .pds-right {
+      padding-top: 0;
+      padding-bottom: 0;
+    }
+
+    #PrimalDailyMatch-{{ section.id }} .pds-left {
+      padding: 40px 0 34px;
+    }
+
+    #PrimalDailyMatch-{{ section.id }} .pds-benefits li {
+      white-space: normal;
+    }
+
+    #PrimalDailyMatch-{{ section.id }} .pds-media {
+      min-height: 0;
+      height: min(78vw, 470px);
+    }
+
+    #PrimalDailyMatch-{{ section.id }} .pds-image,
+    #PrimalDailyMatch-{{ section.id }} .pds-placeholder {
+      min-height: 0;
+      height: 100%;
+    }
+
+    #PrimalDailyMatch-{{ section.id }} .pds-media::before {
+      display: none;
+    }
+
+    #PrimalDailyMatch-{{ section.id }} .pds-right {
+      padding: 38px 0 45px;
+    }
+
+    #PrimalDailyMatch-{{ section.id }} .pds-description {
+      max-width: none;
+    }
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "Primal Daily Match",
+  "tag": "section",
+  "class": "section-primal-daily-match",
+  "enabled_on": {
+    "templates": ["index"]
+  },
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Centre image"
+    },
+    {
+      "type": "text",
+      "id": "left_heading",
+      "label": "Left heading",
+      "default": "A Simple Daily Habit Built For Results"
+    },
+    {
+      "type": "text",
+      "id": "right_heading",
+      "label": "Right heading first line",
+      "default": "One Scoop."
+    },
+    {
+      "type": "text",
+      "id": "right_gold_line",
+      "label": "Right heading gold line",
+      "default": "Every Day."
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Right description",
+      "default": "A simple daily habit designed to help you feel stronger, think sharper and perform at your best."
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "Get Primal Win"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_shipping",
+      "label": "Show free shipping",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "shipping_heading",
+      "label": "Shipping heading",
+      "default": "Free Shipping"
+    },
+    {
+      "type": "text",
+      "id": "shipping_text",
+      "label": "Shipping text",
+      "default": "On all orders over £50"
+    },
+    {
+      "type": "font_picker",
+      "id": "heading_font",
+      "label": "Heading font",
+      "default": "montserrat_n7"
+    },
+    {
+      "type": "font_picker",
+      "id": "body_font",
+      "label": "Body font",
+      "default": "inter_n4"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#F4F0ED"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text",
+      "default": "#1F2326"
+    },
+    {
+      "type": "color",
+      "id": "gold_color",
+      "label": "Gold",
+      "default": "#C89A3D"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button text",
+      "default": "#14171A"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "benefit",
+      "name": "Benefit",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Benefit text",
+          "default": "Supports energy & vitality"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 5,
+  "presets": [
+    {
+      "name": "Primal Daily Match",
+      "blocks": [
+        { "type": "benefit", "settings": { "text": "Supports energy & vitality" } },
+        { "type": "benefit", "settings": { "text": "Enhances focus & mental clarity" } },
+        { "type": "benefit", "settings": { "text": "Aids recovery & reduces fatigue" } },
+        { "type": "benefit", "settings": { "text": "Supports immune system health" } },
+        { "type": "benefit", "settings": { "text": "Made with premium, active ingredients" } }
+      ]
+    }
+  ]
+}
+{% endschema %}
