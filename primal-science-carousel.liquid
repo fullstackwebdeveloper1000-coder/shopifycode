@@ -182,7 +182,7 @@
   #PwScienceCarousel-{{ section.id }} .pw-sci-car__title {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: stretch;
     gap: 4px;
     width: 100%;
     margin: 0 0 16px;
@@ -198,25 +198,28 @@
   #PwScienceCarousel-{{ section.id }} .pw-sci-car__title-line {
     display: block;
     width: 100%;
+    text-align: center;
   }
 
   #PwScienceCarousel-{{ section.id }} .pw-sci-car__title-line--ruled {
     display: flex;
     align-items: center;
-    gap: 20px;
+    gap: 24px;
     width: 100%;
+    text-align: left;
   }
 
   #PwScienceCarousel-{{ section.id }} .pw-sci-car__title-txt {
-    flex: 0 1 auto;
-    white-space: nowrap;
+    flex: 0 0 auto;
+    max-width: 72%;
+    text-align: center;
   }
 
   #PwScienceCarousel-{{ section.id }} .pw-sci-car__rule {
     display: block;
     flex: 1 1 0;
-    min-width: 24px;
-    height: 1px;
+    min-width: 40px;
+    height: 2px;
     background: #c89a3d;
   }
 
@@ -242,7 +245,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 20px;
+    gap: 16px;
     width: 100%;
     max-width: calc(var(--pw-content) + 128px);
     margin-inline: auto;
@@ -263,15 +266,20 @@
 
   #PwScienceCarousel-{{ section.id }} .pw-sci-car__slide {
     flex: 0 0 100%;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+    gap: 18px;
   }
 
-  /* ── Cards ── */
+  /* ── Cards: Figma 348 × 332, min 300 ── */
   #PwScienceCarousel-{{ section.id }} .pw-sci-car__tile {
     display: flex;
-    min-height: 320px;
+    flex: 0 0 348px;
+    width: 348px;
+    max-width: 348px;
+    min-height: 300px;
+    height: 332px;
     overflow: hidden;
     border-radius: 12px;
     background: #f7f5f1;
@@ -427,26 +435,27 @@
     color: #737a80;
   }
 
-  /* ── Arrows: Figma dark circle + white chevron ── */
+  /* ── Arrows: gold circle ring ── */
   #PwScienceCarousel-{{ section.id }} .pw-sci-car__arrow {
-    flex: 0 0 44px;
+    flex: 0 0 48px;
     display: flex;
-    width: 44px;
-    height: 44px;
+    width: 48px;
+    height: 48px;
     align-items: center;
     justify-content: center;
     padding: 0;
-    border: 1px solid rgba(255, 255, 255, 0.35);
+    border: 1.5px solid #c89a3d;
     border-radius: 50%;
-    background: rgba(0, 0, 0, 0.45);
-    color: #fff;
+    background: rgba(20, 23, 26, 0.35);
+    color: #c89a3d;
     cursor: pointer;
-    transition: background 0.2s ease, border-color 0.2s ease;
+    transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
   }
 
   #PwScienceCarousel-{{ section.id }} .pw-sci-car__arrow:hover {
-    background: rgba(0, 0, 0, 0.7);
-    border-color: rgba(255, 255, 255, 0.6);
+    background: rgba(200, 154, 61, 0.14);
+    border-color: #d4ab52;
+    color: #d4ab52;
   }
 
   /* ── Footer ── */
@@ -497,7 +506,13 @@
 
   @media screen and (max-width: 1100px) {
     #PwScienceCarousel-{{ section.id }} .pw-sci-car__title-txt {
-      white-space: normal;
+      max-width: 100%;
+    }
+
+    #PwScienceCarousel-{{ section.id }} .pw-sci-car__tile {
+      flex: 0 0 calc((100% - 36px) / 3);
+      width: auto;
+      max-width: 348px;
     }
   }
 
@@ -507,18 +522,23 @@
     }
 
     #PwScienceCarousel-{{ section.id }} .pw-sci-car__slide {
-      grid-template-columns: 1fr;
+      flex-direction: column;
+      align-items: center;
       gap: 16px;
     }
 
     #PwScienceCarousel-{{ section.id }} .pw-sci-car__tile {
-      min-height: 0;
+      flex: 0 0 auto;
+      width: 100%;
+      max-width: 348px;
+      height: auto;
+      min-height: 300px;
     }
 
     #PwScienceCarousel-{{ section.id }} .pw-sci-car__arrow {
-      flex: 0 0 36px;
-      width: 36px;
-      height: 36px;
+      flex: 0 0 40px;
+      width: 40px;
+      height: 40px;
     }
 
     #PwScienceCarousel-{{ section.id }} .pw-sci-car__arrow svg {
@@ -533,8 +553,12 @@
       gap: 4px;
     }
 
-    #PwScienceCarousel-{{ section.id }} .pw-sci-car__title-line--ruled .pw-sci-car__rule {
-      display: none;
+    #PwScienceCarousel-{{ section.id }} .pw-sci-car__title-line--ruled {
+      gap: 14px;
+    }
+
+    #PwScienceCarousel-{{ section.id }} .pw-sci-car__rule {
+      min-width: 20px;
     }
 
     #PwScienceCarousel-{{ section.id }} .pw-sci-car__lead {
