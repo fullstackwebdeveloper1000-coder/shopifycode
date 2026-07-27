@@ -2,7 +2,7 @@
   assign heading_font = section.settings.heading_font
   assign display_font = section.settings.display_font
   assign hero_alt = section.settings.hero_image.alt | default: 'Primal Win pouch with greens powder and gold scoop'
-  assign hero_sizes = '(min-width: 1025px) 770px, 100%'
+  assign hero_sizes = '(min-width: 1025px) 980px, 100vw'
   assign hero_widths = '900, 1200, 1600, 1800, 2200'
 %}
 
@@ -19,7 +19,8 @@
       {% endif %}
 
       <h2 class="primal-heading-{{ section.id }}">
-        FOR THOSE WHO WANT<br>
+        FOR THOSE<br>
+        WHO WANT<br>
         <span class="gold">TO WIN.</span>
       </h2>
 
@@ -77,8 +78,15 @@
           {% endif %}
         >
           <span class="primal-play-btn-{{ section.id }}" aria-hidden="true">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M8 5v14l11-7z"></path>
+            <svg
+              viewBox="0 0 16 21"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M15.8215 10.0682L0 20.1364V0L15.8215 10.0682Z"
+                fill="currentColor"
+              />
             </svg>
           </span>
 
@@ -137,7 +145,7 @@
     max-width: none !important;
     margin: 0 !important;
     padding: 0 !important;
-    background: #FBF9F7 !important;
+    background: #FAF8F5 !important;
     overflow-x: clip !important;
   }
 
@@ -153,7 +161,7 @@
     width: 100%;
     margin: 0;
     padding: 0;
-    background: #FBF9F7;
+    background: #FAF8F5;
     overflow-x: clip;
   }
 
@@ -182,7 +190,7 @@
     top: 0;
     right: 0;
     width: 770px;
-    max-width: calc(100% - var(--pw-gutter));
+    max-width: calc(100% - 48px);
     height: 100%;
     overflow: hidden;
   }
@@ -192,10 +200,10 @@
     width: 100%;
     height: 100%;
     max-width: none;
-    object-fit: contain;
-    object-position: right bottom;
-    -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 22%);
-    mask-image: linear-gradient(to right, transparent 0%, #000 22%);
+    object-fit: cover;
+    object-position: right center;
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 30%);
+    mask-image: linear-gradient(to right, transparent 0%, #000 30%);
   }
 
   #PrimalHeroPerfect-{{ section.id }} .primal-text-col-{{ section.id }} {
@@ -223,14 +231,14 @@
   }
 
   #PrimalHeroPerfect-{{ section.id }} .primal-heading-{{ section.id }} {
-    margin: 0 0 0;
+    margin: 0 0 20px;
     color: #1F2326;
     font-family: {{ display_font.family }}, sans-serif;
     font-style: {{ display_font.style }};
     font-weight: 900;
     font-size: 82px;
-    line-height: 0.9;
-    letter-spacing: -1px;
+    line-height: 86px;
+    letter-spacing: 0;
     text-transform: uppercase;
   }
 
@@ -242,7 +250,7 @@
     display: block;
     width: 64px;
     height: 3px;
-    margin: 30px 0 24px;
+    margin: 0 0 25px;
     padding: 0;
     border: 0;
     background: #C89A3D;
@@ -250,23 +258,23 @@
   }
 
   #PrimalHeroPerfect-{{ section.id }} .primal-sub1-{{ section.id }} {
-    margin: 0 0 18px;
+    margin: 0 0 15px;
     color: #1F2326;
     font-family: {{ heading_font.family }}, sans-serif;
     font-style: {{ heading_font.style }};
     font-weight: 700;
     font-size: 22px;
-    line-height: 1.35;
+    line-height: 29.7px;
     letter-spacing: .3px;
     text-transform: uppercase;
   }
 
   #PrimalHeroPerfect-{{ section.id }} .primal-sub2-{{ section.id }} {
-    margin: 0 0 30px;
+    margin: 0 0 35px;
     color: #C89A3D;
     font-family: {{ heading_font.family }}, sans-serif;
     font-style: {{ heading_font.style }};
-    font-weight: 800;
+    font-weight: 700;
     font-size: 22px;
     line-height: 1;
     letter-spacing: .5px;
@@ -277,7 +285,7 @@
     display: flex;
     flex-flow: row nowrap;
     align-items: center;
-    gap: 26px;
+    gap: 24px;
     margin: 0;
     padding: 0;
   }
@@ -314,7 +322,7 @@
     display: inline-flex;
     flex: 0 0 auto;
     align-items: center;
-    gap: 12px;
+    gap: 16px;
     color: #1F2326;
     text-decoration: none;
     cursor: pointer;
@@ -328,10 +336,10 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 44px;
-    height: 44px;
-    flex: 0 0 44px;
-    border: 1.5px solid #1F2326;
+    width: 48px;
+    height: 48px;
+    flex: 0 0 48px;
+    border: 1px solid #1F2326;
     border-radius: 50%;
     background: transparent;
     color: #1F2326;
@@ -342,14 +350,14 @@
 
   #PrimalHeroPerfect-{{ section.id }} .primal-play-btn-{{ section.id }} svg {
     display: block;
-    width: 14px;
-    height: 14px;
-    margin-left: 2px;
+    width: 15.82px;
+    height: 20.14px;
+    margin-left: 3px;
   }
 
   #PrimalHeroPerfect-{{ section.id }} .primal-play-wrap-{{ section.id }}:hover .primal-play-btn-{{ section.id }} {
     background: #1F2326;
-    color: #FBF9F7;
+    color: #FAF8F5;
   }
 
   #PrimalHeroPerfect-{{ section.id }} .primal-play-text-{{ section.id }} {
@@ -359,7 +367,7 @@
     font-weight: 700;
     font-size: 13px;
     line-height: 1;
-    letter-spacing: 1.5px;
+    letter-spacing: 2px;
     text-transform: uppercase;
     white-space: nowrap;
   }
@@ -367,7 +375,7 @@
   @media screen and (max-width: 1024px) {
     #PrimalHeroPerfect-{{ section.id }} .pw-container.primal-container-{{ section.id }} {
       flex-direction: column-reverse;
-      height: auto;
+      min-height: 0;
       padding-inline: var(--pw-gutter);
     }
 
@@ -375,18 +383,15 @@
       position: relative;
       right: auto;
       width: 100%;
-      max-width: none;
       height: 400px;
     }
 
-    #PrimalHeroPerfect-{{ section.id }} .primal-bg-image-{{ section.id }} .primal-hero-image {
-      -webkit-mask-image: none;
-      mask-image: none;
+    #PrimalHeroPerfect-{{ section.id }} .primal-bg-image-{{ section.id }}::before {
+      display: none;
     }
 
     #PrimalHeroPerfect-{{ section.id }} .primal-text-col-{{ section.id }} {
       width: 100%;
-      max-width: none;
       padding: 50px 0;
     }
 
