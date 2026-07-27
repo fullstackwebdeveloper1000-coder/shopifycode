@@ -35,28 +35,33 @@
         </div>
       </div>
     </div>
+
     <div class="gpw-hero-media">
-      {%- if section.settings.image != blank -%}
-        {{
-          section.settings.image
-          | image_url: width: 1200
-          | image_tag:
-            loading: 'eager',
-            alt: 'Primal Win pouch',
-            width: section.settings.image.width,
-            height: section.settings.image.height,
-            widths: '560, 800, 1200',
-            sizes: '(min-width: 860px) 560px, 100vw'
-        }}
-      {%- else -%}
-        <img
-          src="{{ 'hero-pouch.png' | asset_url }}"
-          alt="Primal Win pouch"
-          loading="eager"
-          width="560"
-          height="560"
-        >
-      {%- endif -%}
+      <div class="gpw-hero-shot-wrap">
+        {%- if section.settings.image != blank -%}
+          {{
+            section.settings.image
+            | image_url: width: 1600
+            | image_tag:
+              class: 'gpw-hero-shot',
+              loading: 'eager',
+              alt: 'Primal Win pouch with greens powder and gold scoop',
+              width: section.settings.image.width,
+              height: section.settings.image.height,
+              widths: '800, 1200, 1600',
+              sizes: '(min-width: 860px) 620px, 100vw'
+          }}
+        {%- else -%}
+          <img
+            class="gpw-hero-shot"
+            src="{{ 'hero-pouch.png' | asset_url }}"
+            alt="Primal Win pouch with greens powder and gold scoop"
+            loading="eager"
+            width="620"
+            height="520"
+          >
+        {%- endif -%}
+      </div>
     </div>
   </div>
 </section>
@@ -90,10 +95,15 @@
 
   #PwGpwHero-{{ section.id }} .gpw-hero-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 40px;
+    grid-template-columns: 1.05fr 0.95fr;
+    gap: 24px 32px;
     align-items: center;
     padding: 56px 0 44px;
+  }
+
+  #PwGpwHero-{{ section.id }} .gpw-hero-copy {
+    position: relative;
+    z-index: 2;
   }
 
   #PwGpwHero-{{ section.id }} .gpw-hero-head {
@@ -160,6 +170,7 @@
     align-items: center;
     justify-content: center;
     color: #c89a3d;
+    flex-shrink: 0;
   }
 
   #PwGpwHero-{{ section.id }} .gpw-badge p {
@@ -181,23 +192,43 @@
   }
 
   #PwGpwHero-{{ section.id }} .gpw-hero-media {
+    position: relative;
+    z-index: 1;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-end;
+    min-height: 480px;
   }
 
-  #PwGpwHero-{{ section.id }} .gpw-hero-media img {
+  #PwGpwHero-{{ section.id }} .gpw-hero-shot-wrap {
+    line-height: 0;
+    display: flex;
+    justify-content: flex-end;
     width: 100%;
-    max-width: 560px;
-    border-radius: 14px;
+  }
+
+  #PwGpwHero-{{ section.id }} .gpw-hero-shot {
+    width: auto;
+    max-width: none !important;
+    height: 500px;
     display: block;
+    object-fit: contain;
+    object-position: right center;
     border: 0 !important;
+    border-radius: 0 !important;
     box-shadow: none !important;
+    background: transparent !important;
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 24%);
+    mask-image: linear-gradient(to right, transparent 0%, #000 24%);
   }
 
   @media screen and (max-width: 1080px) {
     #PwGpwHero-{{ section.id }} .gpw-hero-head {
       font-size: 64px !important;
+    }
+
+    #PwGpwHero-{{ section.id }} .gpw-hero-shot {
+      height: 420px;
     }
   }
 
@@ -210,6 +241,22 @@
 
     #PwGpwHero-{{ section.id }} .gpw-hero-media {
       order: -1;
+      min-height: 0;
+      justify-content: center;
+    }
+
+    #PwGpwHero-{{ section.id }} .gpw-hero-shot-wrap {
+      justify-content: center;
+    }
+
+    #PwGpwHero-{{ section.id }} .gpw-hero-shot {
+      width: 100%;
+      max-width: 420px !important;
+      height: auto;
+      object-fit: contain;
+      object-position: center;
+      -webkit-mask-image: none;
+      mask-image: none;
     }
   }
 
@@ -246,7 +293,8 @@
     {
       "type": "image_picker",
       "id": "image",
-      "label": "Pouch image (default: hero-pouch.png from Assets)"
+      "label": "Pouch image",
+      "info": "Upload hero-pouch.png here (pouch + scoop on black platform). If empty, theme looks for hero-pouch.png in Assets."
     }
   ],
   "presets": [
