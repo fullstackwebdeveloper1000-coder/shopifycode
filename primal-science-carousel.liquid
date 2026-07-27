@@ -4,7 +4,7 @@
   data-pw-sci-carousel
 >
   <div class="pw-container pw-sci-car__container">
-    <div class="pw-sci-car__head">
+    <header class="pw-sci-car__head">
       {%- if section.settings.heading != blank -%}
         <h2 class="pw-sci-car__title">
           {%- assign title_lines = section.settings.heading | newline_to_br | split: '<br />' -%}
@@ -12,29 +12,22 @@
             {%- assign clean_line = line | strip -%}
             {%- if clean_line != blank -%}
               <span class="pw-sci-car__title-line{% if forloop.first %} pw-sci-car__title-line--ruled{% endif %}">
-                {%- if forloop.first -%}
-                  <span class="pw-sci-car__rule" aria-hidden="true"></span>
-                {%- endif -%}
+                {%- if forloop.first -%}<span class="pw-sci-car__rule" aria-hidden="true"></span>{%- endif -%}
                 {{ clean_line }}
-                {%- if forloop.first -%}
-                  <span class="pw-sci-car__rule" aria-hidden="true"></span>
-                {%- endif -%}
+                {%- if forloop.first -%}<span class="pw-sci-car__rule" aria-hidden="true"></span>{%- endif -%}
               </span>
             {%- endif -%}
           {%- endfor -%}
         </h2>
       {%- endif -%}
       {%- if section.settings.subheading != blank -%}
-        <p>{{ section.settings.subheading }}</p>
+        <p class="pw-sci-car__lead">{{ section.settings.subheading }}</p>
       {%- endif -%}
-    </div>
+    </header>
 
-    <div class="pw-sci-car__stage">
+    <div class="pw-sci-car__row">
       <button class="pw-sci-car__arrow pw-sci-car__arrow--prev" type="button" aria-label="Previous slide" data-carousel-prev>
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg>
-      </button>
-      <button class="pw-sci-car__arrow pw-sci-car__arrow--next" type="button" aria-label="Next slide" data-carousel-next>
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
       </button>
 
       <div class="pw-sci-car__viewport" data-carousel-viewport>
@@ -71,9 +64,7 @@
                       {%- endif -%}
                       {%- if block.settings.badge_multiplier != blank or block.settings.badge_line_1 != blank or block.settings.badge_line_2 != blank -%}
                         <span class="pw-sci-car__badge">
-                          {%- if block.settings.badge_multiplier != blank -%}
-                            <b>{{ block.settings.badge_multiplier }}</b>
-                          {%- endif -%}
+                          {%- if block.settings.badge_multiplier != blank -%}<b>{{ block.settings.badge_multiplier }}</b>{%- endif -%}
                           {{ block.settings.badge_line_1 }}
                           {%- if block.settings.badge_line_2 != blank -%}<br>{{ block.settings.badge_line_2 }}{%- endif -%}
                         </span>
@@ -82,27 +73,17 @@
                     <div class="pw-sci-car__body">
                       <h4>
                         {{ block.settings.title }}
-                        {%- if block.settings.title_suffix != blank -%}
-                          <span>{{ block.settings.title_suffix }}</span>
-                        {%- endif -%}
+                        {%- if block.settings.title_suffix != blank -%}<span>{{ block.settings.title_suffix }}</span>{%- endif -%}
                       </h4>
-                      {%- if block.settings.subtitle != blank -%}
-                        <p class="pw-sci-car__sub">{{ block.settings.subtitle }}</p>
-                      {%- endif -%}
+                      {%- if block.settings.subtitle != blank -%}<p class="pw-sci-car__sub">{{ block.settings.subtitle }}</p>{%- endif -%}
                       {%- if block.settings.amount != blank -%}
                         <p class="pw-sci-car__amt">
                           {{ block.settings.amount }}{%- if block.settings.amount_unit != blank -%}<span>{{ block.settings.amount_unit }}</span>{%- endif -%}
                         </p>
                       {%- endif -%}
-                      {%- if block.settings.brand_label != blank -%}
-                        <p class="pw-sci-car__label">{{ block.settings.brand_label }}</p>
-                      {%- endif -%}
-                      {%- if block.settings.form != blank -%}
-                        <p class="pw-sci-car__form">{{ block.settings.form }}</p>
-                      {%- endif -%}
-                      {%- if block.settings.why != blank -%}
-                        <p class="pw-sci-car__why"><b>Why it matters:</b> {{ block.settings.why }}</p>
-                      {%- endif -%}
+                      {%- if block.settings.brand_label != blank -%}<p class="pw-sci-car__label">{{ block.settings.brand_label }}</p>{%- endif -%}
+                      {%- if block.settings.form != blank -%}<p class="pw-sci-car__form">{{ block.settings.form }}</p>{%- endif -%}
+                      {%- if block.settings.why != blank -%}<p class="pw-sci-car__why"><b>Why it matters:</b> {{ block.settings.why }}</p>{%- endif -%}
                       <hr>
                       {%- if block.settings.typical_label != blank -%}
                         <p class="pw-sci-car__typ"><b>{{ block.settings.typical_label }}</b>{{ block.settings.typical_form }}</p>
@@ -121,30 +102,30 @@
           {%- endfor -%}
         </div>
       </div>
+
+      <button class="pw-sci-car__arrow pw-sci-car__arrow--next" type="button" aria-label="Next slide" data-carousel-next>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+      </button>
     </div>
 
     <div class="pw-sci-car__foot">
-        <div class="pw-sci-car__dots" data-carousel-dots></div>
-        <span
-          class="pw-sci-car__count"
-          data-carousel-count
-          data-counter-total="{{ section.settings.counter_total | default: 10 }}"
-        >01 / {{ section.settings.counter_total | default: 10 | prepend: '0' | slice: -2, 2 }}</span>
-      </div>
+      <div class="pw-sci-car__dots" data-carousel-dots></div>
+      <span
+        class="pw-sci-car__count"
+        data-carousel-count
+        data-counter-total="{{ section.settings.counter_total | default: 10 }}"
+      >01 / {{ section.settings.counter_total | default: 10 | prepend: '0' | slice: -2, 2 }}</span>
+    </div>
 
-      {%- if section.settings.footnote != blank -%}
-        <p class="pw-sci-car__note">{{ section.settings.footnote }}</p>
-      {%- endif -%}
+    {%- if section.settings.footnote != blank -%}
+      <p class="pw-sci-car__note">{{ section.settings.footnote }}</p>
+    {%- endif -%}
   </div>
 </section>
 
 {% style %}
   #PwScienceCarousel-{{ section.id }} {
     {% render 'pw-align-vars' %}
-    --pw-car-side: max(
-      var(--pw-gutter),
-      calc((min(100vw, var(--pw-frame)) - var(--pw-content)) / 2)
-    );
   }
 
   #shopify-section-{{ section.id }} {
@@ -153,7 +134,6 @@
     max-width: none !important;
     margin: 0 !important;
     padding: 0 !important;
-    overflow-x: visible !important;
   }
 
   #shopify-section-{{ section.id }} .page-width,
@@ -176,7 +156,6 @@
     padding: 56px 0 60px;
     background: #14171a;
     color: #fff;
-    overflow: visible;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
   }
@@ -188,6 +167,7 @@
     padding-inline: var(--pw-gutter);
   }
 
+  /* ── Heading (Figma: 3 lines, gold rules line 1) ── */
   #PwScienceCarousel-{{ section.id }} .pw-sci-car__head {
     max-width: 900px;
     margin: 0 auto 36px;
@@ -222,14 +202,14 @@
   }
 
   #PwScienceCarousel-{{ section.id }} .pw-sci-car__rule {
-    display: inline-block;
+    display: block;
     width: 40px;
     height: 2px;
     flex: 0 0 40px;
     background: #c89a3d;
   }
 
-  #PwScienceCarousel-{{ section.id }} .pw-sci-car__head p {
+  #PwScienceCarousel-{{ section.id }} .pw-sci-car__lead {
     max-width: 720px;
     margin: 0 auto;
     font-family: Inter, Arial, sans-serif;
@@ -238,14 +218,22 @@
     color: #c7cbce;
   }
 
-  #PwScienceCarousel-{{ section.id }} .pw-sci-car__stage {
-    position: relative;
+  /* ── Carousel row: [arrow] [cards 1280] [arrow] ── */
+  #PwScienceCarousel-{{ section.id }} .pw-sci-car__row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
     width: 100%;
-    max-width: var(--pw-content);
+    max-width: var(--pw-frame);
     margin-inline: auto;
   }
 
   #PwScienceCarousel-{{ section.id }} .pw-sci-car__viewport {
+    flex: 1 1 auto;
+    width: 100%;
+    max-width: var(--pw-content);
+    min-width: 0;
     overflow: hidden;
   }
 
@@ -261,6 +249,7 @@
     gap: 20px;
   }
 
+  /* ── Cards ── */
   #PwScienceCarousel-{{ section.id }} .pw-sci-car__tile {
     display: flex;
     min-height: 320px;
@@ -419,39 +408,29 @@
     color: #737a80;
   }
 
+  /* ── Arrows: Figma dark circle + white chevron ── */
   #PwScienceCarousel-{{ section.id }} .pw-sci-car__arrow {
-    position: absolute;
-    top: 50%;
-    z-index: 3;
+    flex: 0 0 44px;
     display: flex;
     width: 44px;
     height: 44px;
     align-items: center;
     justify-content: center;
     padding: 0;
-    border: 1.5px solid #c89a3d;
+    border: 1px solid rgba(255, 255, 255, 0.35);
     border-radius: 50%;
-    background: transparent;
-    color: #c89a3d;
+    background: rgba(0, 0, 0, 0.45);
+    color: #fff;
     cursor: pointer;
-    transform: translateY(-50%);
     transition: background 0.2s ease, border-color 0.2s ease;
   }
 
   #PwScienceCarousel-{{ section.id }} .pw-sci-car__arrow:hover {
-    background: rgba(0, 0, 0, 0.35);
-    border-color: #d4ab4a;
-    color: #d4ab4a;
+    background: rgba(0, 0, 0, 0.7);
+    border-color: rgba(255, 255, 255, 0.6);
   }
 
-  #PwScienceCarousel-{{ section.id }} .pw-sci-car__arrow--prev {
-    left: calc(-1 * var(--pw-car-side));
-  }
-
-  #PwScienceCarousel-{{ section.id }} .pw-sci-car__arrow--next {
-    right: calc(-1 * var(--pw-car-side));
-  }
-
+  /* ── Footer ── */
   #PwScienceCarousel-{{ section.id }} .pw-sci-car__foot {
     display: flex;
     align-items: center;
@@ -496,8 +475,8 @@
   }
 
   @media screen and (max-width: 960px) {
-    #PwScienceCarousel-{{ section.id }} {
-      --pw-car-side: var(--pw-gutter);
+    #PwScienceCarousel-{{ section.id }} .pw-sci-car__row {
+      gap: 10px;
     }
 
     #PwScienceCarousel-{{ section.id }} .pw-sci-car__slide {
@@ -510,6 +489,7 @@
     }
 
     #PwScienceCarousel-{{ section.id }} .pw-sci-car__arrow {
+      flex: 0 0 36px;
       width: 36px;
       height: 36px;
     }
@@ -518,9 +498,6 @@
       width: 16px;
       height: 16px;
     }
-
-    #PwScienceCarousel-{{ section.id }} .pw-sci-car__arrow--prev { left: 0; }
-    #PwScienceCarousel-{{ section.id }} .pw-sci-car__arrow--next { right: 0; }
   }
 
   @media screen and (max-width: 560px) {
@@ -533,7 +510,7 @@
       display: none;
     }
 
-    #PwScienceCarousel-{{ section.id }} .pw-sci-car__head p {
+    #PwScienceCarousel-{{ section.id }} .pw-sci-car__lead {
       font-size: 14px;
     }
   }
@@ -606,7 +583,7 @@
     {
       "type": "textarea",
       "id": "heading",
-      "label": "Heading",
+      "label": "Heading (one line per row)",
       "default": "Superior Ingredients.\nClinically Effective Doses.\nReal Results."
     },
     {
@@ -628,7 +605,7 @@
       "type": "range",
       "id": "counter_total",
       "label": "Counter total",
-      "info": "Design shows 03 / 10",
+      "info": "Design shows 01 / 10",
       "min": 1,
       "max": 10,
       "step": 1,
