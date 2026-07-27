@@ -1041,23 +1041,18 @@
           sizes: '(min-width: 961px) 64vw, 100vw',
           alt: hero.alt,
           loading: 'eager',
-          fetchpriority: 'high',
-          preload: true
+          fetchpriority: 'high'
       }}
     {%- else -%}
-      {{
-        'primal-ingredients-hero.png'
-        | asset_img_url: width: 2000
-        | image_tag:
-          class: 'pw-hero-media',
-          alt: section.settings.hero_line_1 | append: ' ' | append: section.settings.hero_line_2,
-          loading: 'eager',
-          fetchpriority: 'high',
-          widths: '600,800,1000,1200,1600,2000',
-          sizes: '(min-width: 961px) 64vw, 100vw',
-          width: 982,
-          height: 781
-      }}
+      <img
+        class="pw-hero-media"
+        src="{{ 'primal-ingredients-hero.png' | asset_url }}"
+        alt="{{ section.settings.hero_line_1 | escape }} {{ section.settings.hero_line_2 | escape }}"
+        width="982"
+        height="781"
+        loading="eager"
+        fetchpriority="high"
+      >
     {%- endif -%}
 
     <div class="pw-shell pw-hero-inner">
@@ -1155,11 +1150,7 @@
               {%- if section.settings.clean_sweeteners != blank -%}
                 {{ section.settings.clean_sweeteners | image_url: width: 60 | image_tag: alt: '', loading: 'lazy', width: 30, height: 30, widths: '30, 60' }}
               {%- else -%}
-                {{
-                  'primal-ci-sweeteners.svg'
-                  | asset_img_url: width: 60
-                  | image_tag: alt: '', loading: 'lazy', width: 30, height: 30, widths: '30, 60'
-                }}
+                <img src="{{ 'primal-ci-sweeteners.svg' | asset_url }}" alt="" width="30" height="30" loading="lazy">
               {%- endif -%}
               <span>Artificial Sweeteners</span>
             </div>
@@ -1167,11 +1158,7 @@
               {%- if section.settings.clean_flavours != blank -%}
                 {{ section.settings.clean_flavours | image_url: width: 60 | image_tag: alt: '', loading: 'lazy', width: 30, height: 30, widths: '30, 60' }}
               {%- else -%}
-                {{
-                  'primal-ci-flavours.svg'
-                  | asset_img_url: width: 60
-                  | image_tag: alt: '', loading: 'lazy', width: 30, height: 30, widths: '30, 60'
-                }}
+                <img src="{{ 'primal-ci-flavours.svg' | asset_url }}" alt="" width="30" height="30" loading="lazy">
               {%- endif -%}
               <span>Artificial Flavours</span>
             </div>
@@ -1179,11 +1166,7 @@
               {%- if section.settings.clean_colours != blank -%}
                 {{ section.settings.clean_colours | image_url: width: 60 | image_tag: alt: '', loading: 'lazy', width: 30, height: 30, widths: '30, 60' }}
               {%- else -%}
-                {{
-                  'primal-ci-colours.svg'
-                  | asset_img_url: width: 60
-                  | image_tag: alt: '', loading: 'lazy', width: 30, height: 30, widths: '30, 60'
-                }}
+                <img src="{{ 'primal-ci-colours.svg' | asset_url }}" alt="" width="30" height="30" loading="lazy">
               {%- endif -%}
               <span>Artificial Colours</span>
             </div>
@@ -1191,11 +1174,7 @@
               {%- if section.settings.clean_preservatives != blank -%}
                 {{ section.settings.clean_preservatives | image_url: width: 60 | image_tag: alt: '', loading: 'lazy', width: 30, height: 30, widths: '30, 60' }}
               {%- else -%}
-                {{
-                  'primal-ci-preservatives.svg'
-                  | asset_img_url: width: 60
-                  | image_tag: alt: '', loading: 'lazy', width: 30, height: 30, widths: '30, 60'
-                }}
+                <img src="{{ 'primal-ci-preservatives.svg' | asset_url }}" alt="" width="30" height="30" loading="lazy">
               {%- endif -%}
               <span>Preservatives</span>
             </div>
@@ -1203,11 +1182,7 @@
               {%- if section.settings.clean_gluten != blank -%}
                 {{ section.settings.clean_gluten | image_url: width: 60 | image_tag: alt: '', loading: 'lazy', width: 30, height: 30, widths: '30, 60' }}
               {%- else -%}
-                {{
-                  'primal-ci-gluten.svg'
-                  | asset_img_url: width: 60
-                  | image_tag: alt: '', loading: 'lazy', width: 30, height: 30, widths: '30, 60'
-                }}
+                <img src="{{ 'primal-ci-gluten.svg' | asset_url }}" alt="" width="30" height="30" loading="lazy">
               {%- endif -%}
               <span>Gluten</span>
             </div>
@@ -1215,11 +1190,7 @@
               {%- if section.settings.clean_dairy != blank -%}
                 {{ section.settings.clean_dairy | image_url: width: 60 | image_tag: alt: '', loading: 'lazy', width: 30, height: 30, widths: '30, 60' }}
               {%- else -%}
-                {{
-                  'primal-ci-dairy.svg'
-                  | asset_img_url: width: 60
-                  | image_tag: alt: '', loading: 'lazy', width: 30, height: 30, widths: '30, 60'
-                }}
+                <img src="{{ 'primal-ci-dairy.svg' | asset_url }}" alt="" width="30" height="30" loading="lazy">
               {%- endif -%}
               <span>Dairy</span>
             </div>
@@ -1227,11 +1198,7 @@
               {%- if section.settings.clean_gmos != blank -%}
                 {{ section.settings.clean_gmos | image_url: width: 60 | image_tag: alt: '', loading: 'lazy', width: 30, height: 30, widths: '30, 60' }}
               {%- else -%}
-                {{
-                  'primal-ci-gmos.svg'
-                  | asset_img_url: width: 60
-                  | image_tag: alt: '', loading: 'lazy', width: 30, height: 30, widths: '30, 60'
-                }}
+                <img src="{{ 'primal-ci-gmos.svg' | asset_url }}" alt="" width="30" height="30" loading="lazy">
               {%- endif -%}
               <span>GMOs</span>
             </div>
@@ -1247,11 +1214,7 @@
               {%- if section.settings.clean_vegan != blank -%}
                 {{ section.settings.clean_vegan | image_url: width: 60 | image_tag: alt: '', loading: 'lazy', width: 30, height: 30, widths: '30, 60' }}
               {%- else -%}
-                {{
-                  'primal-ci-vegan.svg'
-                  | asset_img_url: width: 60
-                  | image_tag: alt: '', loading: 'lazy', width: 30, height: 30, widths: '30, 60'
-                }}
+                <img src="{{ 'primal-ci-vegan.svg' | asset_url }}" alt="" width="30" height="30" loading="lazy">
               {%- endif -%}
               <span>Vegan</span>
             </div>
@@ -1259,11 +1222,7 @@
               {%- if section.settings.clean_vegetarian != blank -%}
                 {{ section.settings.clean_vegetarian | image_url: width: 60 | image_tag: alt: '', loading: 'lazy', width: 30, height: 30, widths: '30, 60' }}
               {%- else -%}
-                {{
-                  'primal-ci-vegetarian.svg'
-                  | asset_img_url: width: 60
-                  | image_tag: alt: '', loading: 'lazy', width: 30, height: 30, widths: '30, 60'
-                }}
+                <img src="{{ 'primal-ci-vegetarian.svg' | asset_url }}" alt="" width="30" height="30" loading="lazy">
               {%- endif -%}
               <span>Vegetarian</span>
             </div>
@@ -1271,11 +1230,7 @@
               {%- if section.settings.clean_keto != blank -%}
                 {{ section.settings.clean_keto | image_url: width: 60 | image_tag: alt: '', loading: 'lazy', width: 30, height: 30, widths: '30, 60' }}
               {%- else -%}
-                {{
-                  'primal-ci-keto.svg'
-                  | asset_img_url: width: 60
-                  | image_tag: alt: '', loading: 'lazy', width: 30, height: 30, widths: '30, 60'
-                }}
+                <img src="{{ 'primal-ci-keto.svg' | asset_url }}" alt="" width="30" height="30" loading="lazy">
               {%- endif -%}
               <span>Keto Friendly</span>
             </div>
@@ -1283,11 +1238,7 @@
               {%- if section.settings.clean_paleo != blank -%}
                 {{ section.settings.clean_paleo | image_url: width: 60 | image_tag: alt: '', loading: 'lazy', width: 30, height: 30, widths: '30, 60' }}
               {%- else -%}
-                {{
-                  'primal-ci-paleo.svg'
-                  | asset_img_url: width: 60
-                  | image_tag: alt: '', loading: 'lazy', width: 30, height: 30, widths: '30, 60'
-                }}
+                <img src="{{ 'primal-ci-paleo.svg' | asset_url }}" alt="" width="30" height="30" loading="lazy">
               {%- endif -%}
               <span>Paleo Friendly</span>
             </div>
@@ -1295,11 +1246,7 @@
               {%- if section.settings.clean_lowcarb != blank -%}
                 {{ section.settings.clean_lowcarb | image_url: width: 60 | image_tag: alt: '', loading: 'lazy', width: 30, height: 30, widths: '30, 60' }}
               {%- else -%}
-                {{
-                  'primal-ci-lowcarb.svg'
-                  | asset_img_url: width: 60
-                  | image_tag: alt: '', loading: 'lazy', width: 30, height: 30, widths: '30, 60'
-                }}
+                <img src="{{ 'primal-ci-lowcarb.svg' | asset_url }}" alt="" width="30" height="30" loading="lazy">
               {%- endif -%}
               <span>Low Carb</span>
             </div>
@@ -1347,11 +1294,7 @@
             <span>Premium Ingredients</span>
           </div>
           <div class="pw-trust-item">
-            {{
-                  'primal-icon-uk.svg'
-                  | asset_img_url: width: 60
-                  | image_tag: alt: '', loading: 'lazy', width: 26, height: 26, widths: '30, 60'
-                }}
+            <img src="{{ 'primal-icon-uk.svg' | asset_url }}" alt="" width="26" height="26" loading="lazy">
             <span>Made in the UK</span>
           </div>
           <div class="pw-trust-item">
@@ -1371,7 +1314,7 @@
           if block.settings.image != blank
             assign img = block.settings.image | image_url: width: 900
           elsif block.settings.asset_filename != blank
-            assign img = block.settings.asset_filename | asset_img_url: width: 900
+            assign img = block.settings.asset_filename | asset_url
           endif
 
           assign cats = ''
@@ -1433,14 +1376,14 @@
   if (!dataNode || !filtersNode || !listNode || !detailNode) return;
 
   var ICONS = {
-      "all": {%- if section.settings.icon_all != blank -%}{{ section.settings.icon_all | image_url: width: 60 | json }}{%- else -%}{{ 'primal-icon-all.svg' | asset_img_url: width: 60 | json }}{%- endif -%},
-      "gut": {%- if section.settings.icon_gut != blank -%}{{ section.settings.icon_gut | image_url: width: 60 | json }}{%- else -%}{{ 'primal-icon-gut.svg' | asset_img_url: width: 60 | json }}{%- endif -%},
-      "brain": {%- if section.settings.icon_brain != blank -%}{{ section.settings.icon_brain | image_url: width: 60 | json }}{%- else -%}{{ 'primal-icon-brain.svg' | asset_img_url: width: 60 | json }}{%- endif -%},
-      "energy": {%- if section.settings.icon_energy != blank -%}{{ section.settings.icon_energy | image_url: width: 60 | json }}{%- else -%}{{ 'primal-icon-energy.svg' | asset_img_url: width: 60 | json }}{%- endif -%},
-      "immune": {%- if section.settings.icon_immune != blank -%}{{ section.settings.icon_immune | image_url: width: 60 | json }}{%- else -%}{{ 'primal-icon-immune.svg' | asset_img_url: width: 60 | json }}{%- endif -%},
-      "performance": {%- if section.settings.icon_performance != blank -%}{{ section.settings.icon_performance | image_url: width: 60 | json }}{%- else -%}{{ 'primal-icon-performance.svg' | asset_img_url: width: 60 | json }}{%- endif -%},
-      "skin": {%- if section.settings.icon_skin != blank -%}{{ section.settings.icon_skin | image_url: width: 60 | json }}{%- else -%}{{ 'primal-icon-skin.svg' | asset_img_url: width: 60 | json }}{%- endif -%},
-      "overall": {%- if section.settings.icon_overall != blank -%}{{ section.settings.icon_overall | image_url: width: 60 | json }}{%- else -%}{{ 'primal-icon-overall.svg' | asset_img_url: width: 60 | json }}{%- endif -%}
+      "all": {%- if section.settings.icon_all != blank -%}{{ section.settings.icon_all | image_url: width: 60 | json }}{%- else -%}{{ 'primal-icon-all.svg' | asset_url | json }}{%- endif -%},
+      "gut": {%- if section.settings.icon_gut != blank -%}{{ section.settings.icon_gut | image_url: width: 60 | json }}{%- else -%}{{ 'primal-icon-gut.svg' | asset_url | json }}{%- endif -%},
+      "brain": {%- if section.settings.icon_brain != blank -%}{{ section.settings.icon_brain | image_url: width: 60 | json }}{%- else -%}{{ 'primal-icon-brain.svg' | asset_url | json }}{%- endif -%},
+      "energy": {%- if section.settings.icon_energy != blank -%}{{ section.settings.icon_energy | image_url: width: 60 | json }}{%- else -%}{{ 'primal-icon-energy.svg' | asset_url | json }}{%- endif -%},
+      "immune": {%- if section.settings.icon_immune != blank -%}{{ section.settings.icon_immune | image_url: width: 60 | json }}{%- else -%}{{ 'primal-icon-immune.svg' | asset_url | json }}{%- endif -%},
+      "performance": {%- if section.settings.icon_performance != blank -%}{{ section.settings.icon_performance | image_url: width: 60 | json }}{%- else -%}{{ 'primal-icon-performance.svg' | asset_url | json }}{%- endif -%},
+      "skin": {%- if section.settings.icon_skin != blank -%}{{ section.settings.icon_skin | image_url: width: 60 | json }}{%- else -%}{{ 'primal-icon-skin.svg' | asset_url | json }}{%- endif -%},
+      "overall": {%- if section.settings.icon_overall != blank -%}{{ section.settings.icon_overall | image_url: width: 60 | json }}{%- else -%}{{ 'primal-icon-overall.svg' | asset_url | json }}{%- endif -%}
   };
 
   var CATEGORIES = [
