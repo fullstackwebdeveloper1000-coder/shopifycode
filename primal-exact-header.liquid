@@ -1,0 +1,733 @@
+{% liquid
+  assign science_url = section.settings.science_link
+  assign ingredients_url = section.settings.ingredients_link
+  assign partner_url = section.settings.partner_link
+  assign primal_url = section.settings.primal_link
+
+  if science_url == blank
+    assign science_url = '/pages/the-science'
+  endif
+  if ingredients_url == blank
+    assign ingredients_url = '/pages/ingredients'
+  endif
+  if partner_url == blank
+    assign partner_url = '/pages/partner-with-us'
+  endif
+  if primal_url == blank
+    assign primal_url = '/pages/get-primal-win'
+  endif
+%}
+
+<header
+  id="PrimalExactHeader-{{ section.id }}"
+  class="peh{% if section.settings.sticky_header %} peh--sticky{% endif %}"
+  style="
+    --peh-background: {{ section.settings.background_color }};
+    --peh-text: {{ section.settings.text_color }};
+    --peh-gold: {{ section.settings.button_color }};
+    --peh-button-text: {{ section.settings.button_text_color }};
+    --peh-border: {{ section.settings.border_color }};
+    --peh-logo-base-width: {{ section.settings.logo_width_desktop_v3 }}px;
+    --peh-logo-mobile-width: {{ section.settings.logo_width_mobile_v3 }}px;
+    --peh-button-radius: {{ section.settings.button_radius }}px;
+    --peh-logo-zoom: {{ section.settings.logo_zoom | divided_by: 100.0 }};
+    --peh-scale: 1;
+    --peh-stage-height: 74px;
+  "
+>
+  <div class="pw-container peh__stage">
+    <div class="peh__canvas">
+      <a class="peh__logo-link" href="{{ routes.root_url }}" aria-label="{{ shop.name | escape }} home">
+        {% if section.settings.logo != blank %}
+          {{
+            section.settings.logo
+            | image_url: width: 700
+            | image_tag:
+              class: 'peh__logo-image',
+              widths: '160, 220, 320, 440, 700',
+              sizes: '(min-width: 800px) 190px, 140px',
+              loading: 'eager',
+              preload: true,
+              alt: section.settings.logo.alt | default: shop.name
+          }}
+        {% else %}
+          <span class="peh__fallback-logo">
+            <span class="peh__fallback-mark">P</span>
+            <span class="peh__fallback-copy">
+              <strong>PRIMAL WIN</strong>
+              <small>DAILY PERFORMANCE FORMULA</small>
+            </span>
+          </span>
+        {% endif %}
+      </a>
+
+      <nav class="peh__desktop-nav" aria-label="Primary navigation">
+        <a href="{{ science_url }}" class="peh__nav-link">{{ section.settings.science_label }}</a>
+        <a href="{{ ingredients_url }}" class="peh__nav-link">{{ section.settings.ingredients_label }}</a>
+        <a href="{{ partner_url }}" class="peh__nav-link">{{ section.settings.partner_label }}</a>
+      </nav>
+
+      <a href="{{ primal_url }}" class="peh__cta">{{ section.settings.primal_label }}</a>
+
+      {% if section.settings.show_account and shop.customer_accounts_enabled %}
+        <a class="peh__account peh__icon-link" href="{{ routes.account_url }}" aria-label="Account">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <circle cx="12" cy="7.5" r="3.5"></circle>
+            <path d="M5.5 21c.7-4 3-6 6.5-6s5.8 2 6.5 6"></path>
+          </svg>
+        </a>
+      {% endif %}
+
+      {% if section.settings.show_cart %}
+        <a class="peh__cart peh__icon-link" href="{{ routes.cart_url }}" aria-label="Cart, {{ cart.item_count }} items">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="M3 4h2l2.1 10.2a2 2 0 0 0 2 1.6h7.7a2 2 0 0 0 1.9-1.4L20.5 8H6"></path>
+            <circle cx="9.5" cy="20" r="1"></circle>
+            <circle cx="17" cy="20" r="1"></circle>
+          </svg>
+          {% if cart.item_count > 0 %}
+            <span class="peh__cart-count">{{ cart.item_count }}</span>
+          {% endif %}
+        </a>
+      {% endif %}
+
+      <div class="peh__mobile-actions">
+        {% if section.settings.show_cart %}
+          <a class="peh__mobile-cart peh__icon-link" href="{{ routes.cart_url }}" aria-label="Cart, {{ cart.item_count }} items">
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path d="M3 4h2l2.1 10.2a2 2 0 0 0 2 1.6h7.7a2 2 0 0 0 1.9-1.4L20.5 8H6"></path>
+              <circle cx="9.5" cy="20" r="1"></circle>
+              <circle cx="17" cy="20" r="1"></circle>
+            </svg>
+            {% if cart.item_count > 0 %}
+              <span class="peh__cart-count">{{ cart.item_count }}</span>
+            {% endif %}
+          </a>
+        {% endif %}
+
+        <details class="peh__mobile-menu">
+          <summary class="peh__menu-toggle" aria-label="Open menu">
+            <svg class="peh__menu-open" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M3 6h18M3 12h18M3 18h18"></path>
+            </svg>
+            <svg class="peh__menu-close" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M5 5l14 14M19 5L5 19"></path>
+            </svg>
+          </summary>
+
+          <div class="peh__mobile-panel">
+            <nav class="peh__mobile-nav" aria-label="Mobile navigation">
+              <a href="{{ science_url }}">{{ section.settings.science_label }}</a>
+              <a href="{{ ingredients_url }}">{{ section.settings.ingredients_label }}</a>
+              <a href="{{ partner_url }}">{{ section.settings.partner_label }}</a>
+
+              {% if section.settings.show_account and shop.customer_accounts_enabled %}
+                <a href="{{ routes.account_url }}">Account</a>
+              {% endif %}
+
+              <a href="{{ primal_url }}" class="peh__mobile-cta">{{ section.settings.primal_label }}</a>
+            </nav>
+          </div>
+        </details>
+      </div>
+    </div>
+  </div>
+</header>
+
+{% style %}
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@600;700&display=swap');
+
+  {% render 'pw-align-vars' %}
+
+  #shopify-section-{{ section.id }} {
+    position: relative;
+    z-index: 40;
+    margin: 0 !important;
+    padding: 0 !important;
+    max-width: none !important;
+  }
+
+  #PrimalExactHeader-{{ section.id }},
+  #PrimalExactHeader-{{ section.id }} *,
+  #PrimalExactHeader-{{ section.id }} *::before,
+  #PrimalExactHeader-{{ section.id }} *::after {
+    box-sizing: border-box;
+  }
+
+  #PrimalExactHeader-{{ section.id }} {
+    width: 100%;
+    height: var(--peh-stage-height);
+    margin: 0;
+    padding: 0;
+    overflow: visible;
+    border-bottom: 1px solid var(--peh-border);
+    background: var(--peh-background);
+    color: var(--peh-text);
+    font-family: 'Inter', sans-serif;
+  }
+
+  #PrimalExactHeader-{{ section.id }}.peh--sticky {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+  }
+
+  #PrimalExactHeader-{{ section.id }} a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  #PrimalExactHeader-{{ section.id }} .pw-container.peh__stage {
+    width: 100%;
+    max-width: var(--pw-max);
+    margin-inline: auto;
+    padding-inline: var(--pw-gutter);
+    height: var(--peh-stage-height);
+    position: relative;
+  }
+
+  #PrimalExactHeader-{{ section.id }} .peh__canvas {
+    position: relative;
+    width: 100%;
+    height: 74px;
+    overflow: visible;
+    transform: scale(var(--peh-scale));
+    transform-origin: left top;
+  }
+
+  #PrimalExactHeader-{{ section.id }} .peh__logo-link {
+    position: absolute;
+    top: 15px;
+    left: 0;
+    display: flex;
+    width: var(--peh-logo-base-width);
+    height: 44px;
+    align-items: center;
+    justify-content: flex-start;
+  }
+
+  #PrimalExactHeader-{{ section.id }} .peh__logo-image {
+    display: block;
+    width: 100%;
+    height: 44px;
+    object-fit: contain;
+    object-position: left center;
+    transform: scale(var(--peh-logo-zoom));
+    transform-origin: left center;
+  }
+
+  #PrimalExactHeader-{{ section.id }} .peh__fallback-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    white-space: nowrap;
+  }
+
+  #PrimalExactHeader-{{ section.id }} .peh__fallback-mark {
+    color: var(--peh-gold);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 35px;
+    font-weight: 700;
+    font-style: italic;
+    line-height: 1;
+  }
+
+  #PrimalExactHeader-{{ section.id }} .peh__fallback-copy {
+    display: flex;
+    flex-direction: column;
+    line-height: 1;
+  }
+
+  #PrimalExactHeader-{{ section.id }} .peh__fallback-copy strong {
+    color: var(--peh-text);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 1.8px;
+  }
+
+  #PrimalExactHeader-{{ section.id }} .peh__fallback-copy small {
+    margin-top: 4px;
+    color: var(--peh-gold);
+    font-family: 'Inter', sans-serif;
+    font-size: 6px;
+    font-weight: 500;
+    letter-spacing: .2px;
+  }
+
+  #PrimalExactHeader-{{ section.id }} .peh__desktop-nav {
+    position: absolute;
+    top: 0;
+    left: 278px;
+    display: flex;
+    height: 74px;
+    align-items: center;
+    gap: 38px;
+  }
+
+  #PrimalExactHeader-{{ section.id }} .peh__nav-link {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    color: var(--peh-text);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: .85px;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  #PrimalExactHeader-{{ section.id }} .peh__nav-link::after {
+    position: absolute;
+    right: 0;
+    bottom: -9px;
+    left: 0;
+    height: 2px;
+    background: var(--peh-gold);
+    content: '';
+    opacity: 0;
+    transform: scaleX(.4);
+    transition: opacity .2s ease, transform .2s ease;
+  }
+
+  #PrimalExactHeader-{{ section.id }} .peh__nav-link:hover,
+  #PrimalExactHeader-{{ section.id }} .peh__nav-link:focus-visible {
+    color: var(--peh-gold);
+  }
+
+  #PrimalExactHeader-{{ section.id }} .peh__nav-link:hover::after,
+  #PrimalExactHeader-{{ section.id }} .peh__nav-link:focus-visible::after {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+
+  #PrimalExactHeader-{{ section.id }} .peh__cta {
+    position: absolute;
+    top: 19px;
+    left: 762px;
+    display: flex;
+    width: 162px;
+    height: 40px;
+    align-items: center;
+    justify-content: center;
+    padding: 0 18px;
+    border-radius: var(--peh-button-radius);
+    background: var(--peh-gold);
+    color: var(--peh-button-text);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: .55px;
+    text-transform: uppercase;
+    white-space: nowrap;
+    transition: filter .2s ease;
+  }
+
+  #PrimalExactHeader-{{ section.id }} .peh__cta:hover,
+  #PrimalExactHeader-{{ section.id }} .peh__cta:focus-visible {
+    filter: brightness(.96);
+  }
+
+  #PrimalExactHeader-{{ section.id }} .peh__icon-link {
+    position: absolute;
+    display: flex;
+    width: 24px;
+    height: 24px;
+    align-items: center;
+    justify-content: center;
+    color: var(--peh-text);
+  }
+
+  #PrimalExactHeader-{{ section.id }} .peh__icon-link svg {
+    display: block;
+    width: 22px;
+    height: 22px;
+    fill: none;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 1.55;
+  }
+
+  #PrimalExactHeader-{{ section.id }} .peh__account {
+    top: 25px;
+    left: 944px;
+  }
+
+  #PrimalExactHeader-{{ section.id }} .peh__cart {
+    top: 25px;
+    left: 982px;
+  }
+
+  #PrimalExactHeader-{{ section.id }} .peh__cart-count {
+    position: absolute;
+    top: -6px;
+    right: -5px;
+    display: flex;
+    width: 14px;
+    height: 14px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: var(--peh-gold);
+    color: var(--peh-button-text);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 8px;
+    font-weight: 700;
+    line-height: 1;
+  }
+
+  #PrimalExactHeader-{{ section.id }} .peh__mobile-actions {
+    display: none;
+  }
+
+  @media screen and (max-width: 799px) {
+    #PrimalExactHeader-{{ section.id }} {
+      height: 70px;
+      overflow: visible;
+    }
+
+    #PrimalExactHeader-{{ section.id }} .pw-container.peh__stage {
+      height: 70px;
+    }
+
+    #PrimalExactHeader-{{ section.id }} .peh__canvas {
+      height: 70px;
+      transform: none;
+    }
+
+    #PrimalExactHeader-{{ section.id }} .peh__logo-link {
+      top: 14px;
+      left: 0;
+      width: var(--peh-logo-mobile-width);
+      height: 42px;
+    }
+
+    #PrimalExactHeader-{{ section.id }} .peh__logo-image {
+      height: 42px;
+    }
+
+    #PrimalExactHeader-{{ section.id }} .peh__desktop-nav,
+    #PrimalExactHeader-{{ section.id }} .peh__cta,
+    #PrimalExactHeader-{{ section.id }} .peh__account,
+    #PrimalExactHeader-{{ section.id }} .peh__cart {
+      display: none;
+    }
+
+    #PrimalExactHeader-{{ section.id }} .peh__mobile-actions {
+      position: absolute;
+      top: 0;
+      right: 0;
+      display: flex;
+      height: 70px;
+      align-items: center;
+      gap: 17px;
+    }
+
+    #PrimalExactHeader-{{ section.id }} .peh__mobile-actions .peh__icon-link {
+      position: relative;
+      top: auto;
+      left: auto;
+    }
+
+    #PrimalExactHeader-{{ section.id }} .peh__mobile-menu {
+      position: static;
+    }
+
+    #PrimalExactHeader-{{ section.id }} .peh__menu-toggle {
+      display: flex;
+      width: 28px;
+      height: 28px;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      border: 0;
+      color: var(--peh-text);
+      cursor: pointer;
+      list-style: none;
+    }
+
+    #PrimalExactHeader-{{ section.id }} .peh__menu-toggle::-webkit-details-marker {
+      display: none;
+    }
+
+    #PrimalExactHeader-{{ section.id }} .peh__menu-toggle svg {
+      width: 26px;
+      height: 26px;
+      fill: none;
+      stroke: currentColor;
+      stroke-linecap: round;
+      stroke-width: 1.7;
+    }
+
+    #PrimalExactHeader-{{ section.id }} .peh__menu-close {
+      display: none;
+    }
+
+    #PrimalExactHeader-{{ section.id }} .peh__mobile-menu[open] .peh__menu-open {
+      display: none;
+    }
+
+    #PrimalExactHeader-{{ section.id }} .peh__mobile-menu[open] .peh__menu-close {
+      display: block;
+    }
+
+    #PrimalExactHeader-{{ section.id }} .peh__mobile-panel {
+      position: absolute;
+      z-index: 50;
+      top: 70px;
+      right: calc(var(--pw-gutter) * -1);
+      left: calc(var(--pw-gutter) * -1);
+      width: auto;
+      padding: 20px var(--pw-gutter);
+      border-top: 1px solid var(--peh-border);
+      border-bottom: 1px solid var(--peh-border);
+      background: var(--peh-background);
+      box-shadow: 0 16px 30px rgba(20, 23, 26, .10);
+    }
+
+    #PrimalExactHeader-{{ section.id }} .peh__mobile-nav {
+      display: flex;
+      flex-direction: column;
+    }
+
+    #PrimalExactHeader-{{ section.id }} .peh__mobile-nav > a {
+      display: flex;
+      min-height: 52px;
+      align-items: center;
+      border-bottom: 1px solid var(--peh-border);
+      color: var(--peh-text);
+      font-family: 'Montserrat', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: .8px;
+      text-transform: uppercase;
+    }
+
+    #PrimalExactHeader-{{ section.id }} .peh__mobile-nav .peh__mobile-cta {
+      min-height: 50px;
+      justify-content: center;
+      margin-top: 18px;
+      border: 0;
+      border-radius: var(--peh-button-radius);
+      background: var(--peh-gold);
+      color: var(--peh-button-text);
+    }
+  }
+{% endstyle %}
+
+<script>
+  (() => {
+    const header = document.getElementById('PrimalExactHeader-{{ section.id }}');
+    if (!header) return;
+
+    const BASE_WIDTH = 1180;
+    const BASE_HEIGHT = 74;
+    const stage = header.querySelector('.peh__stage');
+
+    const resizeHeader = () => {
+      if (!stage) return;
+      const availableWidth = stage.getBoundingClientRect().width;
+
+      if (window.matchMedia('(max-width: 799px)').matches) {
+        header.style.setProperty('--peh-scale', '1');
+        header.style.setProperty('--peh-stage-height', '70px');
+        return;
+      }
+
+      const innerWidth = Math.max(availableWidth - (parseFloat(getComputedStyle(stage).paddingLeft) || 0) - (parseFloat(getComputedStyle(stage).paddingRight) || 0), 1);
+      const scale = Math.min(innerWidth / (BASE_WIDTH - 96), 1);
+      const renderedHeight = BASE_HEIGHT * scale;
+
+      header.style.setProperty('--peh-scale', scale.toFixed(6));
+      header.style.setProperty('--peh-stage-height', `${renderedHeight.toFixed(3)}px`);
+    };
+
+    resizeHeader();
+
+    if ('ResizeObserver' in window) {
+      const observer = new ResizeObserver(resizeHeader);
+      observer.observe(header);
+      if (stage) observer.observe(stage);
+    } else {
+      window.addEventListener('resize', resizeHeader, { passive: true });
+    }
+
+    document.addEventListener('shopify:section:load', resizeHeader);
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Primal Exact Header",
+  "tag": "section",
+  "class": "primal-exact-header-section",
+  "enabled_on": {
+    "groups": ["header"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "Logo"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Primal Win logo"
+    },
+    {
+      "type": "range",
+      "id": "logo_width_desktop_v3",
+      "min": 140,
+      "max": 220,
+      "step": 1,
+      "unit": "px",
+      "label": "Desktop logo width",
+      "default": 190
+    },
+    {
+      "type": "range",
+      "id": "logo_width_mobile_v3",
+      "min": 90,
+      "max": 170,
+      "step": 1,
+      "unit": "px",
+      "label": "Mobile logo width",
+      "default": 140
+    },
+    {
+      "type": "range",
+      "id": "logo_zoom",
+      "min": 100,
+      "max": 150,
+      "step": 1,
+      "unit": "%",
+      "label": "Logo visual zoom",
+      "info": "Isay barhayein agar uploaded logo image ke andar transparent khali space ho.",
+      "default": 100
+    },
+    {
+      "type": "header",
+      "content": "Navigation"
+    },
+    {
+      "type": "text",
+      "id": "science_label",
+      "label": "Science label",
+      "default": "The Science"
+    },
+    {
+      "type": "url",
+      "id": "science_link",
+      "label": "Science link"
+    },
+    {
+      "type": "text",
+      "id": "ingredients_label",
+      "label": "Ingredients label",
+      "default": "Ingredients"
+    },
+    {
+      "type": "url",
+      "id": "ingredients_link",
+      "label": "Ingredients link"
+    },
+    {
+      "type": "text",
+      "id": "partner_label",
+      "label": "Partner label",
+      "default": "Partner With Us"
+    },
+    {
+      "type": "url",
+      "id": "partner_link",
+      "label": "Partner link"
+    },
+    {
+      "type": "text",
+      "id": "primal_label",
+      "label": "Button label",
+      "default": "Get Primal Win"
+    },
+    {
+      "type": "url",
+      "id": "primal_link",
+      "label": "Button link"
+    },
+    {
+      "type": "header",
+      "content": "Header options"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_account",
+      "label": "Show account icon",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_cart",
+      "label": "Show cart icon",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "sticky_header",
+      "label": "Sticky header",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "button_radius",
+      "min": 0,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "label": "Button corner radius",
+      "default": 10
+    },
+    {
+      "type": "header",
+      "content": "Colours"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Navigation and icon colour",
+      "default": "#1F2326"
+    },
+    {
+      "type": "color",
+      "id": "button_color",
+      "label": "Gold button colour",
+      "default": "#C89A3D"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button text colour",
+      "default": "#14171A"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Bottom border colour",
+      "default": "#ECECEC"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Primal Exact Header"
+    }
+  ]
+}
+{% endschema %}
