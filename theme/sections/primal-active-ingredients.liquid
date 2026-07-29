@@ -43,11 +43,44 @@
     --pai-text: {{ section.settings.text_color }};
     --pai-muted: {{ section.settings.muted_text_color }};
     --pai-section-height: {{ section.settings.section_height }}px;
-    --pai-image-width: {{ section.settings.image_panel_width }}%;
     --pai-image-x: {{ section.settings.image_position_x }}%;
     --pai-image-y: {{ section.settings.image_position_y }}%;
+    --pai-overlay-solid: {{ section.settings.overlay_solid_stop }}%;
+    --pai-overlay-end: {{ section.settings.overlay_fade_end }}%;
   "
 >
+  <div class="pai__bg" aria-hidden="true">
+    {%- if section.settings.image != blank -%}
+      {{
+        section.settings.image
+        | image_url: width: 3840
+        | image_tag:
+          class: 'pai__bg-img',
+          loading: 'lazy',
+          widths: '900, 1200, 1600, 1920, 2560, 3840',
+          sizes: '100vw',
+          width: section.settings.image.width,
+          height: section.settings.image.height,
+          alt: image_alt
+      }}
+    {%- elsif section.settings.fallback_image_url != blank -%}
+      <img
+        class="pai__bg-img"
+        src="{{ section.settings.fallback_image_url }}"
+        alt="{{ image_alt | escape }}"
+        loading="lazy"
+        width="1920"
+        height="669"
+      >
+    {%- else -%}
+      <div class="pai__bg-placeholder">
+        {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+      </div>
+    {%- endif -%}
+  </div>
+
+  <div class="pai__overlay" aria-hidden="true"></div>
+
   <div class="pw-container pai__inner">
     <div class="pai__content">
       <span class="pai__rule" aria-hidden="true"></span>
@@ -64,25 +97,9 @@
         <article class="pai__feature">
           <span class="pai__icon" aria-hidden="true">
             {%- if icon_1_svg_src != blank -%}
-              <img
-                class="pai__icon-image"
-                src="{{ icon_1_svg_src | escape }}"
-                alt=""
-                width="36"
-                height="36"
-                loading="lazy"
-              >
+              <img class="pai__icon-image" src="{{ icon_1_svg_src | escape }}" alt="" width="36" height="36" loading="lazy">
             {%- elsif section.settings.icon_1_image != blank -%}
-              {{
-                section.settings.icon_1_image
-                | image_url: width: 160
-                | image_tag:
-                  class: 'pai__icon-image',
-                  loading: 'lazy',
-                  widths: '60, 90, 120, 160',
-                  sizes: '36px',
-                  alt: ''
-              }}
+              {{ section.settings.icon_1_image | image_url: width: 160 | image_tag: class: 'pai__icon-image', loading: 'lazy', widths: '60, 90, 120, 160', sizes: '36px', alt: '' }}
             {%- else -%}
               <svg viewBox="0 0 64 64" aria-hidden="true">
                 <rect x="21" y="17" width="22" height="31" rx="3"/>
@@ -99,25 +116,9 @@
         <article class="pai__feature">
           <span class="pai__icon" aria-hidden="true">
             {%- if icon_2_svg_src != blank -%}
-              <img
-                class="pai__icon-image"
-                src="{{ icon_2_svg_src | escape }}"
-                alt=""
-                width="36"
-                height="36"
-                loading="lazy"
-              >
+              <img class="pai__icon-image" src="{{ icon_2_svg_src | escape }}" alt="" width="36" height="36" loading="lazy">
             {%- elsif section.settings.icon_2_image != blank -%}
-              {{
-                section.settings.icon_2_image
-                | image_url: width: 160
-                | image_tag:
-                  class: 'pai__icon-image',
-                  loading: 'lazy',
-                  widths: '60, 90, 120, 160',
-                  sizes: '36px',
-                  alt: ''
-              }}
+              {{ section.settings.icon_2_image | image_url: width: 160 | image_tag: class: 'pai__icon-image', loading: 'lazy', widths: '60, 90, 120, 160', sizes: '36px', alt: '' }}
             {%- else -%}
               <svg viewBox="0 0 64 64" aria-hidden="true">
                 <circle cx="32" cy="32" r="15"/>
@@ -132,25 +133,9 @@
         <article class="pai__feature">
           <span class="pai__icon" aria-hidden="true">
             {%- if icon_3_svg_src != blank -%}
-              <img
-                class="pai__icon-image"
-                src="{{ icon_3_svg_src | escape }}"
-                alt=""
-                width="36"
-                height="36"
-                loading="lazy"
-              >
+              <img class="pai__icon-image" src="{{ icon_3_svg_src | escape }}" alt="" width="36" height="36" loading="lazy">
             {%- elsif section.settings.icon_3_image != blank -%}
-              {{
-                section.settings.icon_3_image
-                | image_url: width: 160
-                | image_tag:
-                  class: 'pai__icon-image',
-                  loading: 'lazy',
-                  widths: '60, 90, 120, 160',
-                  sizes: '36px',
-                  alt: ''
-              }}
+              {{ section.settings.icon_3_image | image_url: width: 160 | image_tag: class: 'pai__icon-image', loading: 'lazy', widths: '60, 90, 120, 160', sizes: '36px', alt: '' }}
             {%- else -%}
               <svg viewBox="0 0 64 64" aria-hidden="true">
                 <path d="M32 13 45 19v12c0 9-5 15-13 20-8-5-13-11-13-20V19l13-6Z"/>
@@ -163,34 +148,6 @@
         </article>
       </div>
     </div>
-  </div>
-
-  <div class="pai__media" aria-hidden="true">
-    {%- if section.settings.image != blank -%}
-      {{
-        section.settings.image
-        | image_url: width: 2400
-        | image_tag:
-          class: 'pai__image',
-          loading: 'lazy',
-          widths: '800, 1200, 1600, 2000, 2400',
-          sizes: '(min-width: 861px) 58vw, 100vw',
-          width: section.settings.image.width,
-          height: section.settings.image.height,
-          alt: image_alt
-      }}
-    {%- elsif section.settings.fallback_image_url != blank -%}
-      <img
-        class="pai__image"
-        src="{{ section.settings.fallback_image_url }}"
-        alt="{{ image_alt | escape }}"
-        loading="lazy"
-        width="1600"
-        height="900"
-      >
-    {%- else -%}
-      {{ 'product-1' | placeholder_svg_tag: 'pai__image pai__placeholder' }}
-    {%- endif -%}
   </div>
 </section>
 
@@ -245,18 +202,72 @@
     isolation: isolate;
   }
 
+  #PwActiveIngredients-{{ section.id }} .pai__bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    pointer-events: none;
+    background: var(--pai-bg);
+  }
+
+  #PwActiveIngredients-{{ section.id }} .pai__bg-img,
+  #PwActiveIngredients-{{ section.id }} .pai__bg img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: var(--pai-image-x) var(--pai-image-y);
+    display: block;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    max-width: none;
+  }
+
+  #PwActiveIngredients-{{ section.id }} .pai__bg-placeholder {
+    width: 100%;
+    height: 100%;
+    background: #0b261a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #PwActiveIngredients-{{ section.id }} .pai__bg-placeholder svg {
+    width: 40%;
+    height: auto;
+    opacity: 0.35;
+  }
+
+  #PwActiveIngredients-{{ section.id }} .pai__overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background: linear-gradient(
+      90deg,
+      rgba(4, 16, 12, 0.98) 0%,
+      rgba(4, 16, 12, 0.94) var(--pai-overlay-solid),
+      rgba(4, 16, 12, 0.72) calc(var(--pai-overlay-solid) + 6%),
+      rgba(4, 16, 12, 0.34) calc(var(--pai-overlay-solid) + 14%),
+      rgba(4, 16, 12, 0.08) var(--pai-overlay-end),
+      transparent calc(var(--pai-overlay-end) + 6%)
+    );
+  }
+
   #PwActiveIngredients-{{ section.id }} .pw-container.pai__inner {
     position: relative;
-    z-index: 3;
+    z-index: 2;
     width: 100%;
     max-width: var(--pw-inner, 1376px);
     height: 100%;
     min-height: var(--pai-section-height);
     margin: 0 auto;
-    padding-left: var(--pw-gutter, 48px);
-    padding-right: var(--pw-gutter, 48px);
+    padding: 74px var(--pw-gutter, 48px) 34px;
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: flex-start;
   }
 
@@ -267,6 +278,7 @@
     max-width: 820px;
     margin: 0;
     padding: 0;
+    overflow: visible;
   }
 
   #PwActiveIngredients-{{ section.id }} .pai__rule {
@@ -275,7 +287,6 @@
     height: 4px;
     margin: 0 0 25px;
     background: var(--pai-gold);
-    border-radius: 0;
   }
 
   #PwActiveIngredients-{{ section.id }} .pai__eyebrow {
@@ -288,6 +299,7 @@
     line-height: 1.1 !important;
     letter-spacing: 0 !important;
     text-transform: uppercase !important;
+    background: transparent !important;
   }
 
   #PwActiveIngredients-{{ section.id }} .pai__heading {
@@ -305,6 +317,7 @@
     background: transparent !important;
     border: 0 !important;
     overflow: visible !important;
+    transform: none !important;
   }
 
   #PwActiveIngredients-{{ section.id }} .pai__features {
@@ -334,6 +347,7 @@
     border-radius: 50%;
     color: var(--pai-gold);
     overflow: hidden;
+    background: transparent;
   }
 
   #PwActiveIngredients-{{ section.id }} .pai__icon svg,
@@ -382,60 +396,14 @@
     border: 0 !important;
   }
 
-  #PwActiveIngredients-{{ section.id }} .pai__media {
-    position: absolute;
-    z-index: 1;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    width: var(--pai-image-width);
-    height: 100%;
-    overflow: hidden;
-    background: var(--pai-bg);
-    pointer-events: none;
-  }
-
-  #PwActiveIngredients-{{ section.id }} .pai__media::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    z-index: 2;
-    pointer-events: none;
-    background: linear-gradient(
-      90deg,
-      var(--pai-bg) 0%,
-      rgba(4, 16, 12, 0.72) 8%,
-      rgba(4, 16, 12, 0.2) 18%,
-      transparent 28%
-    );
-  }
-
-  #PwActiveIngredients-{{ section.id }} .pai__image,
-  #PwActiveIngredients-{{ section.id }} .pai__placeholder {
-    position: relative;
-    z-index: 1;
-    display: block;
-    width: 100%;
-    height: 100%;
-    max-width: none !important;
-    max-height: none !important;
-    object-fit: cover;
-    object-position: var(--pai-image-x) var(--pai-image-y);
-    background: var(--pai-bg);
-    border: 0 !important;
-    border-radius: 0 !important;
-    outline: 0 !important;
-    box-shadow: none !important;
-  }
-
-  #PwActiveIngredients-{{ section.id }} .pai__placeholder {
-    background: #0b261a;
-  }
-
   @media screen and (max-width: 1180px) {
     #PwActiveIngredients-{{ section.id }} {
       --pw-gutter: 34px;
       --pw-inner: 1348px;
+    }
+
+    #PwActiveIngredients-{{ section.id }} .pw-container.pai__inner {
+      padding-top: clamp(48px, 5vw, 74px);
     }
 
     #PwActiveIngredients-{{ section.id }} .pai__eyebrow {
@@ -443,15 +411,15 @@
     }
 
     #PwActiveIngredients-{{ section.id }} .pai__heading {
-      max-width: min(42vw, 690px);
-      font-size: clamp(52px, 5vw, 72px) !important;
+      max-width: min(46vw, 690px);
+      font-size: clamp(48px, 5vw, 72px) !important;
     }
 
     #PwActiveIngredients-{{ section.id }} .pai__features {
       grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: clamp(28px, 3vw, 52px);
-      max-width: min(62vw, 820px);
-      margin-top: clamp(42px, 4vw, 58px);
+      gap: clamp(24px, 3vw, 52px);
+      max-width: min(68vw, 820px);
+      margin-top: clamp(40px, 4vw, 58px);
     }
 
     #PwActiveIngredients-{{ section.id }} .pai__feature-title,
@@ -465,51 +433,36 @@
       --pw-gutter: 22px;
       --pw-inner: 1324px;
       height: auto;
-      min-height: 0;
+      min-height: 520px;
     }
 
     #PwActiveIngredients-{{ section.id }} .pw-container.pai__inner {
-      height: auto;
-      min-height: 0;
+      min-height: 520px;
       padding-top: 42px;
-      padding-bottom: 0;
-      align-items: flex-start;
+      padding-bottom: 42px;
     }
 
-    #PwActiveIngredients-{{ section.id }} .pai__content {
+    #PwActiveIngredients-{{ section.id }} .pai__content,
+    #PwActiveIngredients-{{ section.id }} .pai__features,
+    #PwActiveIngredients-{{ section.id }} .pai__heading {
       max-width: none;
     }
 
     #PwActiveIngredients-{{ section.id }} .pai__heading {
-      max-width: 620px;
-      font-size: clamp(40px, 9vw, 56px) !important;
+      font-size: clamp(36px, 9vw, 52px) !important;
     }
 
     #PwActiveIngredients-{{ section.id }} .pai__features {
-      width: 100%;
-      max-width: 620px;
       margin-top: 34px;
     }
 
-    #PwActiveIngredients-{{ section.id }} .pai__media {
-      position: relative;
-      top: auto;
-      right: auto;
-      bottom: auto;
-      width: 100%;
-      height: auto;
-      aspect-ratio: 16 / 9;
-      margin: 36px 0 0;
-      pointer-events: auto;
-    }
-
-    #PwActiveIngredients-{{ section.id }} .pai__media::before {
-      display: none;
-    }
-
-    #PwActiveIngredients-{{ section.id }} .pai__image,
-    #PwActiveIngredients-{{ section.id }} .pai__placeholder {
-      object-position: center center;
+    #PwActiveIngredients-{{ section.id }} .pai__overlay {
+      background: linear-gradient(
+        180deg,
+        rgba(4, 16, 12, 0.94) 0%,
+        rgba(4, 16, 12, 0.82) 55%,
+        rgba(4, 16, 12, 0.45) 100%
+      );
     }
   }
 
@@ -517,10 +470,12 @@
     #PwActiveIngredients-{{ section.id }} {
       --pw-gutter: 20px;
       --pw-inner: 1320px;
+      min-height: 480px;
     }
 
     #PwActiveIngredients-{{ section.id }} .pw-container.pai__inner {
       padding-top: 34px;
+      padding-bottom: 34px;
     }
 
     #PwActiveIngredients-{{ section.id }} .pai__rule {
@@ -533,7 +488,7 @@
     }
 
     #PwActiveIngredients-{{ section.id }} .pai__heading {
-      font-size: 36px !important;
+      font-size: 34px !important;
       line-height: 1 !important;
     }
 
@@ -560,11 +515,6 @@
     #PwActiveIngredients-{{ section.id }} .pai__feature-sub {
       font-size: 14px !important;
     }
-
-    #PwActiveIngredients-{{ section.id }} .pai__media {
-      aspect-ratio: 4 / 3;
-      margin-top: 32px;
-    }
   }
 {% endstyle %}
 
@@ -576,7 +526,18 @@
   "settings": [
     {
       "type": "header",
-      "content": "Layout — Figma 1920 × 669"
+      "content": "Background — Figma 1920 × 669 full bleed"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Full section background image",
+      "info": "Figma export: pouch + powder + dark scene (1920×669)."
+    },
+    {
+      "type": "text",
+      "id": "fallback_image_url",
+      "label": "Or paste background image URL"
     },
     {
       "type": "range",
@@ -590,45 +551,44 @@
       "info": "Figma: 668.8px"
     },
     {
-      "type": "range",
-      "id": "image_panel_width",
-      "label": "Right image panel width",
-      "min": 48,
-      "max": 68,
-      "step": 1,
-      "unit": "%",
-      "default": 58
-    },
-    {
-      "type": "header",
-      "content": "Product image"
-    },
-    {
-      "type": "image_picker",
-      "id": "image",
-      "label": "Right product image"
-    },
-    {
-      "type": "text",
-      "id": "fallback_image_url",
-      "label": "Or paste image URL"
-    },
-    {
-      "type": "range",
+      "type": "select",
       "id": "image_position_x",
-      "label": "Image horizontal position",
-      "min": 0,
-      "max": 100,
-      "step": 1,
-      "unit": "%",
-      "default": 58
+      "label": "Background focal X",
+      "default": "62%",
+      "options": [
+        { "value": "50%", "label": "Center" },
+        { "value": "58%", "label": "Slight right" },
+        { "value": "62%", "label": "Figma default" },
+        { "value": "70%", "label": "Far right" }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "image_position_y",
+      "label": "Background focal Y",
+      "default": "50%",
+      "options": [
+        { "value": "40%", "label": "Top" },
+        { "value": "50%", "label": "Center" },
+        { "value": "60%", "label": "Bottom" }
+      ]
     },
     {
       "type": "range",
-      "id": "image_position_y",
-      "label": "Image vertical position",
-      "min": 0,
-      "max": 100,
+      "id": "overlay_solid_stop",
+      "label": "Dark overlay solid zone",
+      "min": 18,
+      "max": 42,
+      "step": 1,
+      "unit": "%",
+      "default": 28
+    },
+    {
+      "type": "range",
+      "id": "overlay_fade_end",
+      "label": "Dark overlay fade end",
+      "min": 38,
+      "max": 62,
       "step": 1,
       "unit": "%",
       "default": 50
@@ -664,8 +624,7 @@
     {
       "type": "text",
       "id": "icon_1_svg",
-      "label": "Feature 1 SVG URL / asset filename",
-      "info": "Shopify Files SVG URL ya theme asset filename."
+      "label": "Feature 1 SVG URL / asset filename"
     },
     {
       "type": "image_picker",
@@ -723,7 +682,7 @@
     {
       "type": "color",
       "id": "background_color",
-      "label": "Background",
+      "label": "Fallback background",
       "default": "#04100C"
     },
     {
