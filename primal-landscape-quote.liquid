@@ -6,55 +6,53 @@
   id="PwLandscapeQuote-{{ section.id }}"
   class="pw-landscape-quote"
   style="
-    --plq-bg: {{ section.settings.background_color }};
     --plq-accent: {{ section.settings.accent_color }};
     --plq-heading-color: {{ section.settings.heading_color }};
     --plq-body-color: {{ section.settings.body_color }};
-    --plq-min-height: {{ section.settings.min_height }}px;
+    --plq-section-height: {{ section.settings.section_height }}px;
     --plq-accent-width: {{ section.settings.accent_width }}px;
     --plq-content-gap: {{ section.settings.content_gap }}px;
     --plq-heading-size: {{ section.settings.heading_font_size }}px;
     --plq-body-size: {{ section.settings.body_font_size }}px;
-    --plq-image-width: {{ section.settings.image_panel_width }}vw;
-    --plq-image-max: {{ section.settings.image_panel_max }}px;
-    --plq-image-mask: {{ section.settings.image_mask_feather }}%;
+    --plq-gradient-solid: {{ section.settings.gradient_solid_stop }}%;
+    --plq-gradient-end: {{ section.settings.gradient_fade_end }}%;
   "
 >
-  <div class="pw-landscape-quote__media" aria-hidden="true">
+  <div class="pw-landscape-quote__bg" aria-hidden="true">
     {%- if section.settings.bg_image != blank -%}
       {{
         section.settings.bg_image
-        | image_url: width: 2000
+        | image_url: width: 3840
         | image_tag:
           loading: 'lazy',
-          widths: '600, 900, 1200, 1600, 2000',
-          sizes: '(min-width: 961px) 55vw, 100vw',
+          widths: '900, 1200, 1600, 1920, 2560, 3840',
+          sizes: '100vw',
           width: section.settings.bg_image.width,
           height: section.settings.bg_image.height,
           alt: bg_alt,
-          class: 'pw-landscape-quote__img'
+          class: 'pw-landscape-quote__bg-img'
       }}
     {%- else -%}
-      <div class="pw-landscape-quote__placeholder">
+      <div class="pw-landscape-quote__bg-placeholder">
         {{ 'lifestyle-2' | placeholder_svg_tag: 'placeholder-svg' }}
       </div>
     {%- endif -%}
   </div>
 
+  <div class="pw-landscape-quote__gradient" aria-hidden="true"></div>
+
   <div class="pw-container pw-landscape-quote__container">
-    <div class="pw-landscape-quote__inner">
-      <div class="pw-landscape-quote__content">
-        <div class="pw-landscape-quote__accent" aria-hidden="true"></div>
+    <div class="pw-landscape-quote__content">
+      <div class="pw-landscape-quote__accent" aria-hidden="true"></div>
 
-        <div class="pw-landscape-quote__copy">
-          {%- if section.settings.heading != blank -%}
-            <h2 class="pw-landscape-quote__heading">{{ section.settings.heading | escape }}</h2>
-          {%- endif -%}
+      <div class="pw-landscape-quote__copy">
+        {%- if section.settings.heading != blank -%}
+          <h2 class="pw-landscape-quote__heading">{{ section.settings.heading | escape }}</h2>
+        {%- endif -%}
 
-          {%- if section.settings.body != blank -%}
-            <p class="pw-landscape-quote__body">{{ section.settings.body | escape }}</p>
-          {%- endif -%}
-        </div>
+        {%- if section.settings.body != blank -%}
+          <p class="pw-landscape-quote__body">{{ section.settings.body | escape }}</p>
+        {%- endif -%}
       </div>
     </div>
   </div>
@@ -67,7 +65,7 @@
     {% render 'pw-align-vars' %}
     --pw-content: 1280px;
     --pw-gutter: 48px;
-    --pw-inner: calc(var(--pw-content) + 2 * var(--pw-gutter));
+    --pw-inner: 1376px;
   }
 
   #shopify-section-{{ section.id }} {
@@ -81,6 +79,7 @@
 
   #shopify-section-{{ section.id }} .page-width,
   #shopify-section-{{ section.id }} > .page-width {
+    width: 100% !important;
     max-width: none !important;
     margin: 0 !important;
     padding: 0 !important;
@@ -96,81 +95,84 @@
   #PwLandscapeQuote-{{ section.id }} {
     position: relative;
     width: 100%;
-    min-height: var(--plq-min-height);
-    background: var(--plq-bg);
-    color: var(--plq-heading-color);
+    height: var(--plq-section-height);
+    min-height: var(--plq-section-height);
+    margin: 0;
+    padding: 0;
     font-family: 'Inter', Inter, system-ui, sans-serif;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
-    overflow: hidden;
     isolation: isolate;
   }
 
-  #PwLandscapeQuote-{{ section.id }} .pw-landscape-quote__media {
+  #PwLandscapeQuote-{{ section.id }} .pw-landscape-quote__bg {
     position: absolute;
+    inset: 0;
     z-index: 0;
-    top: 0;
-    right: 0;
-    width: var(--plq-image-width);
-    max-width: var(--plq-image-max);
+    width: 100%;
     height: 100%;
-    min-height: var(--plq-min-height);
+    overflow: hidden;
     pointer-events: none;
   }
 
-  #PwLandscapeQuote-{{ section.id }} .pw-landscape-quote__img,
-  #PwLandscapeQuote-{{ section.id }} .pw-landscape-quote__media img {
+  #PwLandscapeQuote-{{ section.id }} .pw-landscape-quote__bg-img,
+  #PwLandscapeQuote-{{ section.id }} .pw-landscape-quote__bg img {
     width: 100%;
     height: 100%;
-    min-height: var(--plq-min-height);
     object-fit: cover;
     object-position: {{ section.settings.image_position }};
     display: block;
-    -webkit-mask-image: linear-gradient(
-      to right,
-      transparent 0%,
-      #000 var(--plq-image-mask)
-    );
-    mask-image: linear-gradient(
-      to right,
-      transparent 0%,
-      #000 var(--plq-image-mask)
-    );
+    margin: 0;
+    padding: 0;
+    border: 0;
+    max-width: none;
   }
 
-  #PwLandscapeQuote-{{ section.id }} .pw-landscape-quote__placeholder {
+  #PwLandscapeQuote-{{ section.id }} .pw-landscape-quote__bg-placeholder {
     width: 100%;
     height: 100%;
-    min-height: var(--plq-min-height);
-    background: #dde2dc;
+    background: #e8ebe6;
     display: flex;
     align-items: center;
     justify-content: center;
   }
 
-  #PwLandscapeQuote-{{ section.id }} .pw-landscape-quote__placeholder svg {
+  #PwLandscapeQuote-{{ section.id }} .pw-landscape-quote__bg-placeholder svg {
     width: 40%;
     height: auto;
     opacity: 0.35;
+  }
+
+  #PwLandscapeQuote-{{ section.id }} .pw-landscape-quote__gradient {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background: linear-gradient(
+      90deg,
+      #ffffff 0%,
+      #ffffff var(--plq-gradient-solid),
+      rgba(255, 255, 255, 0.92) calc(var(--plq-gradient-solid) + 4%),
+      rgba(255, 255, 255, 0.72) calc(var(--plq-gradient-solid) + 8%),
+      rgba(255, 255, 255, 0.42) calc(var(--plq-gradient-solid) + 14%),
+      rgba(255, 255, 255, 0.14) calc(var(--plq-gradient-end) - 4%),
+      transparent var(--plq-gradient-end)
+    );
   }
 
   #PwLandscapeQuote-{{ section.id }} .pw-container.pw-landscape-quote__container {
     position: relative;
     z-index: 2;
     width: 100%;
-    max-width: var(--pw-inner);
-    margin-inline: auto;
-    padding-inline: var(--pw-gutter);
-    padding-block: clamp(48px, 8vw, 72px);
-  }
-
-  #PwLandscapeQuote-{{ section.id }} .pw-landscape-quote__inner {
-    width: 100%;
-    max-width: var(--pw-content);
-    margin-inline: 0;
-    min-height: calc(var(--plq-min-height) - clamp(96px, 16vw, 144px));
+    max-width: var(--pw-inner, 1376px);
+    height: 100%;
+    min-height: var(--plq-section-height);
+    margin: 0 auto;
+    padding-left: var(--pw-gutter, 48px);
+    padding-right: var(--pw-gutter, 48px);
     display: flex;
     align-items: center;
+    justify-content: flex-start;
   }
 
   #PwLandscapeQuote-{{ section.id }} .pw-landscape-quote__content {
@@ -179,12 +181,16 @@
     gap: var(--plq-content-gap);
     width: 100%;
     max-width: {{ section.settings.content_max_width }}px;
-    overflow: visible;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    z-index: 3;
   }
 
   #PwLandscapeQuote-{{ section.id }} .pw-landscape-quote__accent {
     flex: 0 0 var(--plq-accent-width);
     width: var(--plq-accent-width);
+    min-width: var(--plq-accent-width);
     background: var(--plq-accent);
     border-radius: 1px;
   }
@@ -192,68 +198,66 @@
   #PwLandscapeQuote-{{ section.id }} .pw-landscape-quote__copy {
     flex: 1 1 auto;
     min-width: 0;
-    overflow: visible;
-    padding-right: 8px;
+    margin: 0;
+    padding: 0;
   }
 
   #PwLandscapeQuote-{{ section.id }} .pw-landscape-quote__heading {
     margin: 0 0 18px;
-    padding-left: 1px;
-    font-family: 'Montserrat', Montserrat, system-ui, sans-serif;
-    font-weight: 800;
-    font-size: clamp(28px, 3.2vw, var(--plq-heading-size));
-    line-height: 1.15;
-    letter-spacing: 0;
-    color: var(--plq-heading-color);
-    overflow: visible;
+    padding: 0;
+    font-family: 'Montserrat', Montserrat, system-ui, sans-serif !important;
+    font-weight: 800 !important;
+    font-style: normal !important;
+    font-size: clamp(28px, 2vw, var(--plq-heading-size)) !important;
+    line-height: 1.15 !important;
+    letter-spacing: -0.3px;
+    text-transform: none !important;
+    text-indent: 0 !important;
+    color: var(--plq-heading-color) !important;
+    background: transparent !important;
+    border: 0 !important;
+    overflow: visible !important;
+    transform: none !important;
   }
 
   #PwLandscapeQuote-{{ section.id }} .pw-landscape-quote__body {
     margin: 0;
-    padding-left: 1px;
-    font-family: 'Inter', Inter, system-ui, sans-serif;
-    font-weight: 400;
-    font-size: clamp(16px, 1.6vw, var(--plq-body-size));
-    line-height: 1.7;
-    color: var(--plq-body-color);
+    padding: 0;
+    font-family: 'Inter', Inter, system-ui, sans-serif !important;
+    font-weight: 400 !important;
+    font-style: normal !important;
+    font-size: clamp(16px, 1.1vw, var(--plq-body-size)) !important;
+    line-height: 1.7 !important;
+    letter-spacing: 0;
+    text-indent: 0 !important;
+    color: var(--plq-body-color) !important;
     max-width: {{ section.settings.body_max_width }}px;
-    overflow: visible;
+    background: transparent !important;
+    border: 0 !important;
+    overflow: visible !important;
+    transform: none !important;
   }
 
   @media screen and (max-width: 1180px) {
     #PwLandscapeQuote-{{ section.id }} {
       --pw-gutter: 34px;
+      --pw-inner: 1348px;
     }
   }
 
   @media screen and (max-width: 860px) {
     #PwLandscapeQuote-{{ section.id }} {
       --pw-gutter: 22px;
-    }
-
-    #PwLandscapeQuote-{{ section.id }} .pw-landscape-quote__media {
-      position: relative;
-      width: 100%;
-      max-width: none;
-      height: 280px;
-      min-height: 280px;
-    }
-
-    #PwLandscapeQuote-{{ section.id }} .pw-landscape-quote__img,
-    #PwLandscapeQuote-{{ section.id }} .pw-landscape-quote__media img,
-    #PwLandscapeQuote-{{ section.id }} .pw-landscape-quote__placeholder {
-      min-height: 280px;
-      -webkit-mask-image: none;
-      mask-image: none;
+      --pw-inner: 1324px;
+      height: auto;
+      min-height: 0;
     }
 
     #PwLandscapeQuote-{{ section.id }} .pw-container.pw-landscape-quote__container {
-      padding-top: 40px;
-      padding-bottom: 48px;
-    }
-
-    #PwLandscapeQuote-{{ section.id }} .pw-landscape-quote__inner {
+      height: auto;
       min-height: 0;
+      padding-top: 48px;
+      padding-bottom: 48px;
     }
 
     #PwLandscapeQuote-{{ section.id }} .pw-landscape-quote__content,
@@ -265,6 +269,7 @@
   @media screen and (max-width: 560px) {
     #PwLandscapeQuote-{{ section.id }} {
       --pw-gutter: 20px;
+      --pw-inner: 1320px;
     }
   }
 {% endstyle %}
@@ -277,18 +282,12 @@
   "settings": [
     {
       "type": "header",
-      "content": "Background"
+      "content": "Background — Figma 1920 × 669"
     },
     {
       "type": "image_picker",
       "id": "bg_image",
-      "label": "Landscape image"
-    },
-    {
-      "type": "color",
-      "id": "background_color",
-      "label": "Left panel background",
-      "default": "#FFFFFF"
+      "label": "Full-width background image"
     },
     {
       "type": "select",
@@ -296,51 +295,42 @@
       "label": "Image focal point",
       "default": "center center",
       "options": [
-        { "value": "center center", "label": "Center" },
-        { "value": "right center", "label": "Right center" },
-        { "value": "70% center", "label": "Right (hikers)" },
-        { "value": "left center", "label": "Left center" }
+        { "value": "center center", "label": "Center (Figma default)" },
+        { "value": "55% center", "label": "Slight right" },
+        { "value": "right center", "label": "Right" },
+        { "value": "left center", "label": "Left" }
       ]
     },
     {
       "type": "range",
-      "id": "image_panel_width",
-      "label": "Image panel width (desktop)",
-      "min": 40,
-      "max": 65,
-      "step": 1,
-      "unit": "vw",
-      "default": 52
-    },
-    {
-      "type": "range",
-      "id": "image_panel_max",
-      "label": "Image panel max width",
-      "min": 700,
-      "max": 1200,
-      "step": 10,
-      "unit": "px",
-      "default": 980
-    },
-    {
-      "type": "range",
-      "id": "image_mask_feather",
-      "label": "Image left fade",
-      "min": 5,
-      "max": 25,
-      "step": 1,
-      "unit": "%",
-      "default": 12
-    },
-    {
-      "type": "range",
-      "id": "min_height",
-      "label": "Section min height",
-      "min": 320,
+      "id": "section_height",
+      "label": "Section height",
+      "min": 400,
       "max": 900,
       "step": 10,
       "unit": "px",
-      "default": 670
+      "default": 670,
+      "info": "Figma: 668.8px"
+    },
+    {
+      "type": "range",
+      "id": "gradient_solid_stop",
+      "label": "Solid white zone (left)",
+      "min": 15,
+      "max": 40,
+      "step": 1,
+      "unit": "%",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "gradient_fade_end",
+      "label": "Gradient fade end",
+      "min": 40,
+      "max": 65,
+      "step": 1,
+      "unit": "%",
+      "default": 54
     },
     {
       "type": "header",
