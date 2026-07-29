@@ -1,0 +1,754 @@
+{%- liquid
+  assign image_alt = section.settings.image.alt | default: 'Primal Win pouch with greens powder and scoop'
+
+  assign icon_1_svg_value = section.settings.icon_1_svg | strip
+  assign icon_2_svg_value = section.settings.icon_2_svg | strip
+  assign icon_3_svg_value = section.settings.icon_3_svg | strip
+
+  assign icon_1_svg_src = ''
+  assign icon_2_svg_src = ''
+  assign icon_3_svg_src = ''
+
+  if icon_1_svg_value != blank
+    if icon_1_svg_value contains '://'
+      assign icon_1_svg_src = icon_1_svg_value
+    else
+      assign icon_1_svg_src = icon_1_svg_value | asset_url
+    endif
+  endif
+
+  if icon_2_svg_value != blank
+    if icon_2_svg_value contains '://'
+      assign icon_2_svg_src = icon_2_svg_value
+    else
+      assign icon_2_svg_src = icon_2_svg_value | asset_url
+    endif
+  endif
+
+  if icon_3_svg_value != blank
+    if icon_3_svg_value contains '://'
+      assign icon_3_svg_src = icon_3_svg_value
+    else
+      assign icon_3_svg_src = icon_3_svg_value | asset_url
+    endif
+  endif
+-%}
+
+<section
+  id="PwActiveIngredients-{{ section.id }}"
+  class="pw-active-ingredients"
+  style="
+    --pai-bg: {{ section.settings.background_color }};
+    --pai-gold: {{ section.settings.gold_color }};
+    --pai-text: {{ section.settings.text_color }};
+    --pai-muted: {{ section.settings.muted_text_color }};
+    --pai-section-height: {{ section.settings.section_height }}px;
+    --pai-image-width: {{ section.settings.image_panel_width }}%;
+    --pai-image-x: {{ section.settings.image_position_x }}%;
+    --pai-image-y: {{ section.settings.image_position_y }}%;
+  "
+>
+  <div class="pw-container pai__inner">
+    <div class="pai__content">
+      <span class="pai__rule" aria-hidden="true"></span>
+
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="pai__eyebrow">{{ section.settings.eyebrow | escape }}</p>
+      {%- endif -%}
+
+      {%- if section.settings.heading != blank -%}
+        <h2 class="pai__heading">{{ section.settings.heading | newline_to_br }}</h2>
+      {%- endif -%}
+
+      <div class="pai__features">
+        <article class="pai__feature">
+          <span class="pai__icon" aria-hidden="true">
+            {%- if icon_1_svg_src != blank -%}
+              <img
+                class="pai__icon-image"
+                src="{{ icon_1_svg_src | escape }}"
+                alt=""
+                width="36"
+                height="36"
+                loading="lazy"
+              >
+            {%- elsif section.settings.icon_1_image != blank -%}
+              {{
+                section.settings.icon_1_image
+                | image_url: width: 160
+                | image_tag:
+                  class: 'pai__icon-image',
+                  loading: 'lazy',
+                  widths: '60, 90, 120, 160',
+                  sizes: '36px',
+                  alt: ''
+              }}
+            {%- else -%}
+              <svg viewBox="0 0 64 64" aria-hidden="true">
+                <rect x="21" y="17" width="22" height="31" rx="3"/>
+                <path d="M27 17v-4h10v4"/>
+                <path d="M27 26h10M27 33h10M27 40h7"/>
+                <path d="m37 28 2 2 4-5"/>
+              </svg>
+            {%- endif -%}
+          </span>
+          <h4 class="pai__feature-title">{{ section.settings.feature_1_title | escape }}</h4>
+          <p class="pai__feature-sub">{{ section.settings.feature_1_subtitle | escape }}</p>
+        </article>
+
+        <article class="pai__feature">
+          <span class="pai__icon" aria-hidden="true">
+            {%- if icon_2_svg_src != blank -%}
+              <img
+                class="pai__icon-image"
+                src="{{ icon_2_svg_src | escape }}"
+                alt=""
+                width="36"
+                height="36"
+                loading="lazy"
+              >
+            {%- elsif section.settings.icon_2_image != blank -%}
+              {{
+                section.settings.icon_2_image
+                | image_url: width: 160
+                | image_tag:
+                  class: 'pai__icon-image',
+                  loading: 'lazy',
+                  widths: '60, 90, 120, 160',
+                  sizes: '36px',
+                  alt: ''
+              }}
+            {%- else -%}
+              <svg viewBox="0 0 64 64" aria-hidden="true">
+                <circle cx="32" cy="32" r="15"/>
+                <path d="m26 26 12 12M38 26 26 38"/>
+              </svg>
+            {%- endif -%}
+          </span>
+          <h4 class="pai__feature-title">{{ section.settings.feature_2_title | escape }}</h4>
+          <p class="pai__feature-sub">{{ section.settings.feature_2_subtitle | escape }}</p>
+        </article>
+
+        <article class="pai__feature">
+          <span class="pai__icon" aria-hidden="true">
+            {%- if icon_3_svg_src != blank -%}
+              <img
+                class="pai__icon-image"
+                src="{{ icon_3_svg_src | escape }}"
+                alt=""
+                width="36"
+                height="36"
+                loading="lazy"
+              >
+            {%- elsif section.settings.icon_3_image != blank -%}
+              {{
+                section.settings.icon_3_image
+                | image_url: width: 160
+                | image_tag:
+                  class: 'pai__icon-image',
+                  loading: 'lazy',
+                  widths: '60, 90, 120, 160',
+                  sizes: '36px',
+                  alt: ''
+              }}
+            {%- else -%}
+              <svg viewBox="0 0 64 64" aria-hidden="true">
+                <path d="M32 13 45 19v12c0 9-5 15-13 20-8-5-13-11-13-20V19l13-6Z"/>
+                <path d="m26 31 4 4 8-9"/>
+              </svg>
+            {%- endif -%}
+          </span>
+          <h4 class="pai__feature-title">{{ section.settings.feature_3_title | escape }}</h4>
+          <p class="pai__feature-sub">{{ section.settings.feature_3_subtitle | escape }}</p>
+        </article>
+      </div>
+    </div>
+  </div>
+
+  <div class="pai__media" aria-hidden="true">
+    {%- if section.settings.image != blank -%}
+      {{
+        section.settings.image
+        | image_url: width: 2400
+        | image_tag:
+          class: 'pai__image',
+          loading: 'lazy',
+          widths: '800, 1200, 1600, 2000, 2400',
+          sizes: '(min-width: 861px) 58vw, 100vw',
+          width: section.settings.image.width,
+          height: section.settings.image.height,
+          alt: image_alt
+      }}
+    {%- elsif section.settings.fallback_image_url != blank -%}
+      <img
+        class="pai__image"
+        src="{{ section.settings.fallback_image_url }}"
+        alt="{{ image_alt | escape }}"
+        loading="lazy"
+        width="1600"
+        height="900"
+      >
+    {%- else -%}
+      {{ 'product-1' | placeholder_svg_tag: 'pai__image pai__placeholder' }}
+    {%- endif -%}
+  </div>
+</section>
+
+{% style %}
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@600;700;800;900&display=swap');
+
+  #PwActiveIngredients-{{ section.id }} {
+    {% render 'pw-align-vars' %}
+    --pw-content: 1280px;
+    --pw-gutter: 48px;
+    --pw-inner: 1376px;
+  }
+
+  #shopify-section-{{ section.id }} {
+    display: block !important;
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+    background: var(--pai-bg, #04100C) !important;
+  }
+
+  #shopify-section-{{ section.id }} .page-width,
+  #shopify-section-{{ section.id }} > .page-width {
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  #PwActiveIngredients-{{ section.id }},
+  #PwActiveIngredients-{{ section.id }} *,
+  #PwActiveIngredients-{{ section.id }} *::before,
+  #PwActiveIngredients-{{ section.id }} *::after {
+    box-sizing: border-box;
+  }
+
+  #PwActiveIngredients-{{ section.id }} {
+    position: relative;
+    width: 100%;
+    height: var(--pai-section-height);
+    min-height: var(--pai-section-height);
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background: var(--pai-bg);
+    color: var(--pai-text);
+    font-family: Inter, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    isolation: isolate;
+  }
+
+  #PwActiveIngredients-{{ section.id }} .pw-container.pai__inner {
+    position: relative;
+    z-index: 3;
+    width: 100%;
+    max-width: var(--pw-inner, 1376px);
+    height: 100%;
+    min-height: var(--pai-section-height);
+    margin: 0 auto;
+    padding-left: var(--pw-gutter, 48px);
+    padding-right: var(--pw-gutter, 48px);
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+  }
+
+  #PwActiveIngredients-{{ section.id }} .pai__content {
+    position: relative;
+    z-index: 3;
+    width: 100%;
+    max-width: 820px;
+    margin: 0;
+    padding: 0;
+  }
+
+  #PwActiveIngredients-{{ section.id }} .pai__rule {
+    display: block;
+    width: 64px;
+    height: 4px;
+    margin: 0 0 25px;
+    background: var(--pai-gold);
+    border-radius: 0;
+  }
+
+  #PwActiveIngredients-{{ section.id }} .pai__eyebrow {
+    margin: 0 0 17px;
+    padding: 0;
+    color: var(--pai-gold) !important;
+    font-family: Montserrat, Arial, sans-serif !important;
+    font-weight: 700 !important;
+    font-size: 22px !important;
+    line-height: 1.1 !important;
+    letter-spacing: 0 !important;
+    text-transform: uppercase !important;
+  }
+
+  #PwActiveIngredients-{{ section.id }} .pai__heading {
+    width: 100%;
+    max-width: 690px;
+    margin: 0;
+    padding: 0;
+    color: var(--pai-text) !important;
+    font-family: Montserrat, Arial, sans-serif !important;
+    font-weight: 900 !important;
+    font-size: 72px !important;
+    line-height: 0.96 !important;
+    letter-spacing: -1.2px !important;
+    text-transform: uppercase !important;
+    background: transparent !important;
+    border: 0 !important;
+    overflow: visible !important;
+  }
+
+  #PwActiveIngredients-{{ section.id }} .pai__features {
+    display: grid;
+    grid-template-columns: 176px 200px 270px;
+    justify-content: flex-start;
+    gap: 52px;
+    width: 100%;
+    max-width: 820px;
+    margin: 58px 0 0;
+    padding: 0;
+  }
+
+  #PwActiveIngredients-{{ section.id }} .pai__feature {
+    min-width: 0;
+    margin: 0;
+    padding: 0;
+  }
+
+  #PwActiveIngredients-{{ section.id }} .pai__icon {
+    display: grid;
+    place-items: center;
+    width: 64px;
+    height: 64px;
+    margin: 0 0 20px;
+    border: 2px solid var(--pai-gold);
+    border-radius: 50%;
+    color: var(--pai-gold);
+    overflow: hidden;
+  }
+
+  #PwActiveIngredients-{{ section.id }} .pai__icon svg,
+  #PwActiveIngredients-{{ section.id }} .pai__icon-image {
+    display: block;
+    width: 36px;
+    height: 36px;
+    max-width: 36px;
+    max-height: 36px;
+    object-fit: contain;
+  }
+
+  #PwActiveIngredients-{{ section.id }} .pai__icon svg {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  #PwActiveIngredients-{{ section.id }} .pai__feature-title {
+    margin: 0 0 4px;
+    padding: 0;
+    color: var(--pai-gold) !important;
+    font-family: Montserrat, Arial, sans-serif !important;
+    font-weight: 800 !important;
+    font-size: 16px !important;
+    line-height: 1.25 !important;
+    letter-spacing: 0.5px !important;
+    text-transform: uppercase !important;
+    background: transparent !important;
+    border: 0 !important;
+  }
+
+  #PwActiveIngredients-{{ section.id }} .pai__feature-sub {
+    margin: 0;
+    padding: 0;
+    color: var(--pai-muted) !important;
+    font-family: Montserrat, Arial, sans-serif !important;
+    font-weight: 700 !important;
+    font-size: 16px !important;
+    line-height: 1.25 !important;
+    letter-spacing: 0.4px !important;
+    text-transform: uppercase !important;
+    background: transparent !important;
+    border: 0 !important;
+  }
+
+  #PwActiveIngredients-{{ section.id }} .pai__media {
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: var(--pai-image-width);
+    height: 100%;
+    overflow: hidden;
+    background: var(--pai-bg);
+    pointer-events: none;
+  }
+
+  #PwActiveIngredients-{{ section.id }} .pai__media::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+    background: linear-gradient(
+      90deg,
+      var(--pai-bg) 0%,
+      rgba(4, 16, 12, 0.72) 8%,
+      rgba(4, 16, 12, 0.2) 18%,
+      transparent 28%
+    );
+  }
+
+  #PwActiveIngredients-{{ section.id }} .pai__image,
+  #PwActiveIngredients-{{ section.id }} .pai__placeholder {
+    position: relative;
+    z-index: 1;
+    display: block;
+    width: 100%;
+    height: 100%;
+    max-width: none !important;
+    max-height: none !important;
+    object-fit: cover;
+    object-position: var(--pai-image-x) var(--pai-image-y);
+    background: var(--pai-bg);
+    border: 0 !important;
+    border-radius: 0 !important;
+    outline: 0 !important;
+    box-shadow: none !important;
+  }
+
+  #PwActiveIngredients-{{ section.id }} .pai__placeholder {
+    background: #0b261a;
+  }
+
+  @media screen and (max-width: 1180px) {
+    #PwActiveIngredients-{{ section.id }} {
+      --pw-gutter: 34px;
+      --pw-inner: 1348px;
+    }
+
+    #PwActiveIngredients-{{ section.id }} .pai__eyebrow {
+      font-size: clamp(18px, 1.8vw, 22px) !important;
+    }
+
+    #PwActiveIngredients-{{ section.id }} .pai__heading {
+      max-width: min(42vw, 690px);
+      font-size: clamp(52px, 5vw, 72px) !important;
+    }
+
+    #PwActiveIngredients-{{ section.id }} .pai__features {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: clamp(28px, 3vw, 52px);
+      max-width: min(62vw, 820px);
+      margin-top: clamp(42px, 4vw, 58px);
+    }
+
+    #PwActiveIngredients-{{ section.id }} .pai__feature-title,
+    #PwActiveIngredients-{{ section.id }} .pai__feature-sub {
+      font-size: clamp(13px, 1.2vw, 16px) !important;
+    }
+  }
+
+  @media screen and (max-width: 860px) {
+    #PwActiveIngredients-{{ section.id }} {
+      --pw-gutter: 22px;
+      --pw-inner: 1324px;
+      height: auto;
+      min-height: 0;
+    }
+
+    #PwActiveIngredients-{{ section.id }} .pw-container.pai__inner {
+      height: auto;
+      min-height: 0;
+      padding-top: 42px;
+      padding-bottom: 0;
+      align-items: flex-start;
+    }
+
+    #PwActiveIngredients-{{ section.id }} .pai__content {
+      max-width: none;
+    }
+
+    #PwActiveIngredients-{{ section.id }} .pai__heading {
+      max-width: 620px;
+      font-size: clamp(40px, 9vw, 56px) !important;
+    }
+
+    #PwActiveIngredients-{{ section.id }} .pai__features {
+      width: 100%;
+      max-width: 620px;
+      margin-top: 34px;
+    }
+
+    #PwActiveIngredients-{{ section.id }} .pai__media {
+      position: relative;
+      top: auto;
+      right: auto;
+      bottom: auto;
+      width: 100%;
+      height: auto;
+      aspect-ratio: 16 / 9;
+      margin: 36px 0 0;
+      pointer-events: auto;
+    }
+
+    #PwActiveIngredients-{{ section.id }} .pai__media::before {
+      display: none;
+    }
+
+    #PwActiveIngredients-{{ section.id }} .pai__image,
+    #PwActiveIngredients-{{ section.id }} .pai__placeholder {
+      object-position: center center;
+    }
+  }
+
+  @media screen and (max-width: 560px) {
+    #PwActiveIngredients-{{ section.id }} {
+      --pw-gutter: 20px;
+      --pw-inner: 1320px;
+    }
+
+    #PwActiveIngredients-{{ section.id }} .pw-container.pai__inner {
+      padding-top: 34px;
+    }
+
+    #PwActiveIngredients-{{ section.id }} .pai__rule {
+      width: 56px;
+      margin-bottom: 18px;
+    }
+
+    #PwActiveIngredients-{{ section.id }} .pai__eyebrow {
+      font-size: 16px !important;
+    }
+
+    #PwActiveIngredients-{{ section.id }} .pai__heading {
+      font-size: 36px !important;
+      line-height: 1 !important;
+    }
+
+    #PwActiveIngredients-{{ section.id }} .pai__features {
+      grid-template-columns: 1fr;
+      gap: 24px;
+      margin-top: 30px;
+    }
+
+    #PwActiveIngredients-{{ section.id }} .pai__feature {
+      display: grid;
+      grid-template-columns: 58px minmax(0, 1fr);
+      align-items: center;
+      gap: 16px;
+    }
+
+    #PwActiveIngredients-{{ section.id }} .pai__icon {
+      width: 54px;
+      height: 54px;
+      margin: 0;
+    }
+
+    #PwActiveIngredients-{{ section.id }} .pai__feature-title,
+    #PwActiveIngredients-{{ section.id }} .pai__feature-sub {
+      font-size: 14px !important;
+    }
+
+    #PwActiveIngredients-{{ section.id }} .pai__media {
+      aspect-ratio: 4 / 3;
+      margin-top: 32px;
+    }
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "40 Active Ingredients",
+  "tag": "section",
+  "class": "pw-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Layout — Figma 1920 × 669"
+    },
+    {
+      "type": "range",
+      "id": "section_height",
+      "label": "Section height",
+      "min": 500,
+      "max": 900,
+      "step": 10,
+      "unit": "px",
+      "default": 670,
+      "info": "Figma: 668.8px"
+    },
+    {
+      "type": "range",
+      "id": "image_panel_width",
+      "label": "Right image panel width",
+      "min": 48,
+      "max": 68,
+      "step": 1,
+      "unit": "%",
+      "default": 58
+    },
+    {
+      "type": "header",
+      "content": "Product image"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Right product image"
+    },
+    {
+      "type": "text",
+      "id": "fallback_image_url",
+      "label": "Or paste image URL"
+    },
+    {
+      "type": "range",
+      "id": "image_position_x",
+      "label": "Image horizontal position",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 58
+    },
+    {
+      "type": "range",
+      "id": "image_position_y",
+      "label": "Image vertical position",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 50
+    },
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Gold eyebrow",
+      "default": "Two Years Later:"
+    },
+    {
+      "type": "textarea",
+      "id": "heading",
+      "label": "Main heading",
+      "default": "40 Active\nIngredients."
+    },
+    {
+      "type": "text",
+      "id": "feature_1_title",
+      "label": "Feature 1 title (gold)",
+      "default": "Every One"
+    },
+    {
+      "type": "text",
+      "id": "feature_1_subtitle",
+      "label": "Feature 1 subtitle",
+      "default": "Listed."
+    },
+    {
+      "type": "text",
+      "id": "icon_1_svg",
+      "label": "Feature 1 SVG URL / asset filename",
+      "info": "Shopify Files SVG URL ya theme asset filename."
+    },
+    {
+      "type": "image_picker",
+      "id": "icon_1_image",
+      "label": "Feature 1 PNG / WebP icon"
+    },
+    {
+      "type": "text",
+      "id": "feature_2_title",
+      "label": "Feature 2 title (gold)",
+      "default": "Every Amount"
+    },
+    {
+      "type": "text",
+      "id": "feature_2_subtitle",
+      "label": "Feature 2 subtitle",
+      "default": "Shown."
+    },
+    {
+      "type": "text",
+      "id": "icon_2_svg",
+      "label": "Feature 2 SVG URL / asset filename"
+    },
+    {
+      "type": "image_picker",
+      "id": "icon_2_image",
+      "label": "Feature 2 PNG / WebP icon"
+    },
+    {
+      "type": "text",
+      "id": "feature_3_title",
+      "label": "Feature 3 title (gold)",
+      "default": "No Proprietary Blends."
+    },
+    {
+      "type": "text",
+      "id": "feature_3_subtitle",
+      "label": "Feature 3 subtitle",
+      "default": "Nothing Hidden."
+    },
+    {
+      "type": "text",
+      "id": "icon_3_svg",
+      "label": "Feature 3 SVG URL / asset filename"
+    },
+    {
+      "type": "image_picker",
+      "id": "icon_3_image",
+      "label": "Feature 3 PNG / WebP icon"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#04100C"
+    },
+    {
+      "type": "color",
+      "id": "gold_color",
+      "label": "Gold",
+      "default": "#C89A3D"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "White heading",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "muted_text_color",
+      "label": "Feature subtitle",
+      "default": "#CDD2CB"
+    }
+  ],
+  "presets": [
+    {
+      "name": "40 Active Ingredients"
+    }
+  ]
+}
+{% endschema %}
