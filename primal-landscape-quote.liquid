@@ -1,13 +1,12 @@
 {%- liquid
   assign bg_alt = section.settings.bg_image.alt | default: section.settings.heading | escape
-  assign gradient_alpha = section.settings.gradient_opacity | times: 0.01
 -%}
 
 <section
   id="PwLandscapeQuote-{{ section.id }}"
   class="pw-landscape-quote"
   style="
-    --plq-gradient-color: {{ section.settings.gradient_color | color_modify: 'alpha', gradient_alpha }};
+    --plq-bg: {{ section.settings.background_color }};
     --plq-accent: {{ section.settings.accent_color }};
     --plq-heading-color: {{ section.settings.heading_color }};
     --plq-body-color: {{ section.settings.body_color }};
@@ -16,44 +15,46 @@
     --plq-content-gap: {{ section.settings.content_gap }}px;
     --plq-heading-size: {{ section.settings.heading_font_size }}px;
     --plq-body-size: {{ section.settings.body_font_size }}px;
-    --plq-gradient-stop: {{ section.settings.gradient_stop }}%;
+    --plq-image-width: {{ section.settings.image_panel_width }}vw;
+    --plq-image-max: {{ section.settings.image_panel_max }}px;
+    --plq-image-mask: {{ section.settings.image_mask_feather }}%;
   "
 >
-  <div class="pw-landscape-quote__bg" aria-hidden="true">
+  <div class="pw-landscape-quote__media" aria-hidden="true">
     {%- if section.settings.bg_image != blank -%}
       {{
         section.settings.bg_image
-        | image_url: width: 2400
+        | image_url: width: 2000
         | image_tag:
           loading: 'lazy',
-          widths: '750, 1100, 1500, 1920, 2400',
-          sizes: '100vw',
+          widths: '600, 900, 1200, 1600, 2000',
+          sizes: '(min-width: 961px) 55vw, 100vw',
           width: section.settings.bg_image.width,
           height: section.settings.bg_image.height,
           alt: bg_alt,
-          class: 'pw-landscape-quote__bg-img'
+          class: 'pw-landscape-quote__img'
       }}
     {%- else -%}
-      <div class="pw-landscape-quote__bg-placeholder">
+      <div class="pw-landscape-quote__placeholder">
         {{ 'lifestyle-2' | placeholder_svg_tag: 'placeholder-svg' }}
       </div>
     {%- endif -%}
   </div>
 
-  <div class="pw-landscape-quote__gradient" aria-hidden="true"></div>
-
   <div class="pw-container pw-landscape-quote__container">
-    <div class="pw-landscape-quote__content">
-      <div class="pw-landscape-quote__accent" aria-hidden="true"></div>
+    <div class="pw-landscape-quote__inner">
+      <div class="pw-landscape-quote__content">
+        <div class="pw-landscape-quote__accent" aria-hidden="true"></div>
 
-      <div class="pw-landscape-quote__copy">
-        {%- if section.settings.heading != blank -%}
-          <h2 class="pw-landscape-quote__heading">{{ section.settings.heading | escape }}</h2>
-        {%- endif -%}
+        <div class="pw-landscape-quote__copy">
+          {%- if section.settings.heading != blank -%}
+            <h2 class="pw-landscape-quote__heading">{{ section.settings.heading | escape }}</h2>
+          {%- endif -%}
 
-        {%- if section.settings.body != blank -%}
-          <p class="pw-landscape-quote__body">{{ section.settings.body | escape }}</p>
-        {%- endif -%}
+          {%- if section.settings.body != blank -%}
+            <p class="pw-landscape-quote__body">{{ section.settings.body | escape }}</p>
+          {%- endif -%}
+        </div>
       </div>
     </div>
   </div>
@@ -64,6 +65,9 @@
 
   #PwLandscapeQuote-{{ section.id }} {
     {% render 'pw-align-vars' %}
+    --pw-content: 1280px;
+    --pw-gutter: 48px;
+    --pw-inner: calc(var(--pw-content) + 2 * var(--pw-gutter));
   }
 
   #shopify-section-{{ section.id }} {
@@ -72,6 +76,7 @@
     max-width: none !important;
     margin: 0 !important;
     padding: 0 !important;
+    overflow: visible !important;
   }
 
   #shopify-section-{{ section.id }} .page-width,
@@ -92,61 +97,61 @@
     position: relative;
     width: 100%;
     min-height: var(--plq-min-height);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
+    background: var(--plq-bg);
+    color: var(--plq-heading-color);
     font-family: 'Inter', Inter, system-ui, sans-serif;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
+    overflow: hidden;
+    isolation: isolate;
   }
 
-  #PwLandscapeQuote-{{ section.id }} .pw-landscape-quote__bg {
+  #PwLandscapeQuote-{{ section.id }} .pw-landscape-quote__media {
     position: absolute;
-    inset: 0;
     z-index: 0;
-    width: 100%;
+    top: 0;
+    right: 0;
+    width: var(--plq-image-width);
+    max-width: var(--plq-image-max);
     height: 100%;
+    min-height: var(--plq-min-height);
+    pointer-events: none;
   }
 
-  #PwLandscapeQuote-{{ section.id }} .pw-landscape-quote__bg-img,
-  #PwLandscapeQuote-{{ section.id }} .pw-landscape-quote__bg img {
+  #PwLandscapeQuote-{{ section.id }} .pw-landscape-quote__img,
+  #PwLandscapeQuote-{{ section.id }} .pw-landscape-quote__media img {
     width: 100%;
     height: 100%;
+    min-height: var(--plq-min-height);
     object-fit: cover;
-    object-position: center;
+    object-position: {{ section.settings.image_position }};
     display: block;
+    -webkit-mask-image: linear-gradient(
+      to right,
+      transparent 0%,
+      #000 var(--plq-image-mask)
+    );
+    mask-image: linear-gradient(
+      to right,
+      transparent 0%,
+      #000 var(--plq-image-mask)
+    );
   }
 
-  #PwLandscapeQuote-{{ section.id }} .pw-landscape-quote__bg-placeholder {
+  #PwLandscapeQuote-{{ section.id }} .pw-landscape-quote__placeholder {
     width: 100%;
     height: 100%;
-    background: #e8ebe6;
+    min-height: var(--plq-min-height);
+    background: #dde2dc;
     display: flex;
     align-items: center;
     justify-content: center;
   }
 
-  #PwLandscapeQuote-{{ section.id }} .pw-landscape-quote__bg-placeholder svg {
+  #PwLandscapeQuote-{{ section.id }} .pw-landscape-quote__placeholder svg {
     width: 40%;
     height: auto;
     opacity: 0.35;
-  }
-
-  #PwLandscapeQuote-{{ section.id }} .pw-landscape-quote__gradient {
-    position: absolute;
-    inset: 0;
-    z-index: 1;
-    pointer-events: none;
-    background: linear-gradient(
-      90deg,
-      var(--plq-gradient-color) 0%,
-      var(--plq-gradient-color) calc(var(--plq-gradient-stop) - 18%),
-      {{ section.settings.gradient_color | color_modify: 'alpha', 0.72 }} calc(var(--plq-gradient-stop) - 10%),
-      {{ section.settings.gradient_color | color_modify: 'alpha', 0.32 }} calc(var(--plq-gradient-stop) - 2%),
-      {{ section.settings.gradient_color | color_modify: 'alpha', 0.08 }} var(--plq-gradient-stop),
-      transparent calc(var(--plq-gradient-stop) + 8%)
-    );
   }
 
   #PwLandscapeQuote-{{ section.id }} .pw-container.pw-landscape-quote__container {
@@ -159,12 +164,22 @@
     padding-block: clamp(48px, 8vw, 72px);
   }
 
+  #PwLandscapeQuote-{{ section.id }} .pw-landscape-quote__inner {
+    width: 100%;
+    max-width: var(--pw-content);
+    margin-inline: 0;
+    min-height: calc(var(--plq-min-height) - clamp(96px, 16vw, 144px));
+    display: flex;
+    align-items: center;
+  }
+
   #PwLandscapeQuote-{{ section.id }} .pw-landscape-quote__content {
     display: flex;
     align-items: stretch;
     gap: var(--plq-content-gap);
     width: 100%;
     max-width: {{ section.settings.content_max_width }}px;
+    overflow: visible;
   }
 
   #PwLandscapeQuote-{{ section.id }} .pw-landscape-quote__accent {
@@ -177,35 +192,79 @@
   #PwLandscapeQuote-{{ section.id }} .pw-landscape-quote__copy {
     flex: 1 1 auto;
     min-width: 0;
+    overflow: visible;
+    padding-right: 8px;
   }
 
   #PwLandscapeQuote-{{ section.id }} .pw-landscape-quote__heading {
     margin: 0 0 18px;
+    padding-left: 1px;
     font-family: 'Montserrat', Montserrat, system-ui, sans-serif;
     font-weight: 800;
     font-size: clamp(28px, 3.2vw, var(--plq-heading-size));
     line-height: 1.15;
-    letter-spacing: -0.3px;
+    letter-spacing: 0;
     color: var(--plq-heading-color);
+    overflow: visible;
   }
 
   #PwLandscapeQuote-{{ section.id }} .pw-landscape-quote__body {
     margin: 0;
+    padding-left: 1px;
     font-family: 'Inter', Inter, system-ui, sans-serif;
     font-weight: 400;
     font-size: clamp(16px, 1.6vw, var(--plq-body-size));
     line-height: 1.7;
     color: var(--plq-body-color);
     max-width: {{ section.settings.body_max_width }}px;
+    overflow: visible;
   }
 
-  @media screen and (max-width: 749px) {
-    #PwLandscapeQuote-{{ section.id }} .pw-landscape-quote__content {
-      max-width: none;
+  @media screen and (max-width: 1180px) {
+    #PwLandscapeQuote-{{ section.id }} {
+      --pw-gutter: 34px;
+    }
+  }
+
+  @media screen and (max-width: 860px) {
+    #PwLandscapeQuote-{{ section.id }} {
+      --pw-gutter: 22px;
     }
 
+    #PwLandscapeQuote-{{ section.id }} .pw-landscape-quote__media {
+      position: relative;
+      width: 100%;
+      max-width: none;
+      height: 280px;
+      min-height: 280px;
+    }
+
+    #PwLandscapeQuote-{{ section.id }} .pw-landscape-quote__img,
+    #PwLandscapeQuote-{{ section.id }} .pw-landscape-quote__media img,
+    #PwLandscapeQuote-{{ section.id }} .pw-landscape-quote__placeholder {
+      min-height: 280px;
+      -webkit-mask-image: none;
+      mask-image: none;
+    }
+
+    #PwLandscapeQuote-{{ section.id }} .pw-container.pw-landscape-quote__container {
+      padding-top: 40px;
+      padding-bottom: 48px;
+    }
+
+    #PwLandscapeQuote-{{ section.id }} .pw-landscape-quote__inner {
+      min-height: 0;
+    }
+
+    #PwLandscapeQuote-{{ section.id }} .pw-landscape-quote__content,
     #PwLandscapeQuote-{{ section.id }} .pw-landscape-quote__body {
       max-width: none;
+    }
+  }
+
+  @media screen and (max-width: 560px) {
+    #PwLandscapeQuote-{{ section.id }} {
+      --pw-gutter: 20px;
     }
   }
 {% endstyle %}
@@ -223,33 +282,55 @@
     {
       "type": "image_picker",
       "id": "bg_image",
-      "label": "Background image"
+      "label": "Landscape image"
     },
     {
       "type": "color",
-      "id": "gradient_color",
-      "label": "Left gradient color",
-      "default": "#ffffff"
+      "id": "background_color",
+      "label": "Left panel background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "select",
+      "id": "image_position",
+      "label": "Image focal point",
+      "default": "center center",
+      "options": [
+        { "value": "center center", "label": "Center" },
+        { "value": "right center", "label": "Right center" },
+        { "value": "70% center", "label": "Right (hikers)" },
+        { "value": "left center", "label": "Left center" }
+      ]
     },
     {
       "type": "range",
-      "id": "gradient_opacity",
-      "label": "Gradient opacity",
-      "min": 0,
-      "max": 100,
+      "id": "image_panel_width",
+      "label": "Image panel width (desktop)",
+      "min": 40,
+      "max": 65,
       "step": 1,
-      "unit": "%",
-      "default": 100
-    },
-    {
-      "type": "range",
-      "id": "gradient_stop",
-      "label": "Gradient fade end",
-      "min": 35,
-      "max": 70,
-      "step": 1,
-      "unit": "%",
+      "unit": "vw",
       "default": 52
+    },
+    {
+      "type": "range",
+      "id": "image_panel_max",
+      "label": "Image panel max width",
+      "min": 700,
+      "max": 1200,
+      "step": 10,
+      "unit": "px",
+      "default": 980
+    },
+    {
+      "type": "range",
+      "id": "image_mask_feather",
+      "label": "Image left fade",
+      "min": 5,
+      "max": 25,
+      "step": 1,
+      "unit": "%",
+      "default": 12
     },
     {
       "type": "range",
