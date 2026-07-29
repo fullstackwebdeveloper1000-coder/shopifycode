@@ -1,0 +1,373 @@
+{%- liquid
+  assign bg_alt = section.settings.bg_image.alt | default: section.settings.heading | escape
+  assign gradient_alpha = section.settings.gradient_opacity | times: 0.01
+-%}
+
+<section
+  id="PwLandscapeQuote-{{ section.id }}"
+  class="pw-landscape-quote"
+  style="
+    --plq-gradient-color: {{ section.settings.gradient_color | color_modify: 'alpha', gradient_alpha }};
+    --plq-accent: {{ section.settings.accent_color }};
+    --plq-heading-color: {{ section.settings.heading_color }};
+    --plq-body-color: {{ section.settings.body_color }};
+    --plq-min-height: {{ section.settings.min_height }}px;
+    --plq-accent-width: {{ section.settings.accent_width }}px;
+    --plq-content-gap: {{ section.settings.content_gap }}px;
+    --plq-heading-size: {{ section.settings.heading_font_size }}px;
+    --plq-body-size: {{ section.settings.body_font_size }}px;
+    --plq-gradient-stop: {{ section.settings.gradient_stop }}%;
+  "
+>
+  <div class="pw-landscape-quote__bg" aria-hidden="true">
+    {%- if section.settings.bg_image != blank -%}
+      {{
+        section.settings.bg_image
+        | image_url: width: 2400
+        | image_tag:
+          loading: 'lazy',
+          widths: '750, 1100, 1500, 1920, 2400',
+          sizes: '100vw',
+          width: section.settings.bg_image.width,
+          height: section.settings.bg_image.height,
+          alt: bg_alt,
+          class: 'pw-landscape-quote__bg-img'
+      }}
+    {%- else -%}
+      <div class="pw-landscape-quote__bg-placeholder">
+        {{ 'lifestyle-2' | placeholder_svg_tag: 'placeholder-svg' }}
+      </div>
+    {%- endif -%}
+  </div>
+
+  <div class="pw-landscape-quote__gradient" aria-hidden="true"></div>
+
+  <div class="pw-container pw-landscape-quote__container">
+    <div class="pw-landscape-quote__content">
+      <div class="pw-landscape-quote__accent" aria-hidden="true"></div>
+
+      <div class="pw-landscape-quote__copy">
+        {%- if section.settings.heading != blank -%}
+          <h2 class="pw-landscape-quote__heading">{{ section.settings.heading | escape }}</h2>
+        {%- endif -%}
+
+        {%- if section.settings.body != blank -%}
+          <p class="pw-landscape-quote__body">{{ section.settings.body | escape }}</p>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% style %}
+  @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Inter:wght@400;500&display=swap');
+
+  #PwLandscapeQuote-{{ section.id }} {
+    {% render 'pw-align-vars' %}
+  }
+
+  #shopify-section-{{ section.id }} {
+    display: block !important;
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  #shopify-section-{{ section.id }} .page-width,
+  #shopify-section-{{ section.id }} > .page-width {
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  #PwLandscapeQuote-{{ section.id }},
+  #PwLandscapeQuote-{{ section.id }} *,
+  #PwLandscapeQuote-{{ section.id }} *::before,
+  #PwLandscapeQuote-{{ section.id }} *::after {
+    box-sizing: border-box;
+  }
+
+  #PwLandscapeQuote-{{ section.id }} {
+    position: relative;
+    width: 100%;
+    min-height: var(--plq-min-height);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    font-family: 'Inter', Inter, system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  #PwLandscapeQuote-{{ section.id }} .pw-landscape-quote__bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  #PwLandscapeQuote-{{ section.id }} .pw-landscape-quote__bg-img,
+  #PwLandscapeQuote-{{ section.id }} .pw-landscape-quote__bg img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+  }
+
+  #PwLandscapeQuote-{{ section.id }} .pw-landscape-quote__bg-placeholder {
+    width: 100%;
+    height: 100%;
+    background: #e8ebe6;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #PwLandscapeQuote-{{ section.id }} .pw-landscape-quote__bg-placeholder svg {
+    width: 40%;
+    height: auto;
+    opacity: 0.35;
+  }
+
+  #PwLandscapeQuote-{{ section.id }} .pw-landscape-quote__gradient {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background: linear-gradient(
+      90deg,
+      var(--plq-gradient-color) 0%,
+      var(--plq-gradient-color) calc(var(--plq-gradient-stop) - 18%),
+      {{ section.settings.gradient_color | color_modify: 'alpha', 0.72 }} calc(var(--plq-gradient-stop) - 10%),
+      {{ section.settings.gradient_color | color_modify: 'alpha', 0.32 }} calc(var(--plq-gradient-stop) - 2%),
+      {{ section.settings.gradient_color | color_modify: 'alpha', 0.08 }} var(--plq-gradient-stop),
+      transparent calc(var(--plq-gradient-stop) + 8%)
+    );
+  }
+
+  #PwLandscapeQuote-{{ section.id }} .pw-container.pw-landscape-quote__container {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: var(--pw-inner);
+    margin-inline: auto;
+    padding-inline: var(--pw-gutter);
+    padding-block: clamp(48px, 8vw, 72px);
+  }
+
+  #PwLandscapeQuote-{{ section.id }} .pw-landscape-quote__content {
+    display: flex;
+    align-items: stretch;
+    gap: var(--plq-content-gap);
+    width: 100%;
+    max-width: {{ section.settings.content_max_width }}px;
+  }
+
+  #PwLandscapeQuote-{{ section.id }} .pw-landscape-quote__accent {
+    flex: 0 0 var(--plq-accent-width);
+    width: var(--plq-accent-width);
+    background: var(--plq-accent);
+    border-radius: 1px;
+  }
+
+  #PwLandscapeQuote-{{ section.id }} .pw-landscape-quote__copy {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  #PwLandscapeQuote-{{ section.id }} .pw-landscape-quote__heading {
+    margin: 0 0 18px;
+    font-family: 'Montserrat', Montserrat, system-ui, sans-serif;
+    font-weight: 800;
+    font-size: clamp(28px, 3.2vw, var(--plq-heading-size));
+    line-height: 1.15;
+    letter-spacing: -0.3px;
+    color: var(--plq-heading-color);
+  }
+
+  #PwLandscapeQuote-{{ section.id }} .pw-landscape-quote__body {
+    margin: 0;
+    font-family: 'Inter', Inter, system-ui, sans-serif;
+    font-weight: 400;
+    font-size: clamp(16px, 1.6vw, var(--plq-body-size));
+    line-height: 1.7;
+    color: var(--plq-body-color);
+    max-width: {{ section.settings.body_max_width }}px;
+  }
+
+  @media screen and (max-width: 749px) {
+    #PwLandscapeQuote-{{ section.id }} .pw-landscape-quote__content {
+      max-width: none;
+    }
+
+    #PwLandscapeQuote-{{ section.id }} .pw-landscape-quote__body {
+      max-width: none;
+    }
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "Landscape Quote",
+  "tag": "section",
+  "class": "pw-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Background"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background image"
+    },
+    {
+      "type": "color",
+      "id": "gradient_color",
+      "label": "Left gradient color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "gradient_opacity",
+      "label": "Gradient opacity",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "gradient_stop",
+      "label": "Gradient fade end",
+      "min": 35,
+      "max": 70,
+      "step": 1,
+      "unit": "%",
+      "default": 52
+    },
+    {
+      "type": "range",
+      "id": "min_height",
+      "label": "Section min height",
+      "min": 320,
+      "max": 900,
+      "step": 1,
+      "unit": "px",
+      "default": 669
+    },
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "That's Primal Win."
+    },
+    {
+      "type": "textarea",
+      "id": "body",
+      "label": "Body text",
+      "default": "Built by people who wanted a product that actually works, for people who hold themselves to a higher standard."
+    },
+    {
+      "type": "range",
+      "id": "content_max_width",
+      "label": "Content max width",
+      "min": 360,
+      "max": 720,
+      "step": 10,
+      "unit": "px",
+      "default": 500
+    },
+    {
+      "type": "range",
+      "id": "body_max_width",
+      "label": "Body text max width",
+      "min": 280,
+      "max": 560,
+      "step": 10,
+      "unit": "px",
+      "default": 400
+    },
+    {
+      "type": "header",
+      "content": "Accent bar"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Gold bar color",
+      "default": "#C89A3D"
+    },
+    {
+      "type": "range",
+      "id": "accent_width",
+      "label": "Bar width",
+      "min": 2,
+      "max": 8,
+      "step": 1,
+      "unit": "px",
+      "default": 3
+    },
+    {
+      "type": "range",
+      "id": "content_gap",
+      "label": "Gap between bar and text",
+      "min": 16,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 26
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading color",
+      "default": "#1F2326"
+    },
+    {
+      "type": "range",
+      "id": "heading_font_size",
+      "label": "Heading font size",
+      "min": 24,
+      "max": 56,
+      "step": 1,
+      "unit": "px",
+      "default": 38
+    },
+    {
+      "type": "color",
+      "id": "body_color",
+      "label": "Body color",
+      "default": "#3A403B"
+    },
+    {
+      "type": "range",
+      "id": "body_font_size",
+      "label": "Body font size",
+      "min": 14,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 18
+    }
+  ],
+  "presets": [
+    {
+      "name": "Landscape Quote"
+    }
+  ]
+}
+{% endschema %}
