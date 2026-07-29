@@ -248,6 +248,7 @@
     max-width: none !important;
     margin: 0 !important;
     padding: 0 !important;
+    overflow: visible !important;
     background: var(--pw-choose-bg) !important;
   }
 
@@ -266,12 +267,13 @@
   }
 
   #PwChoosePricing-{{ section.id }} {
-    padding: 56px 0 64px;
+    padding: 56px 0 80px;
     background: var(--pw-choose-bg);
     color: var(--pw-choose-charcoal);
     font-family: Inter, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
+    overflow: visible;
   }
 
   #PwChoosePricing-{{ section.id }} .pw-container.choose__wrap {
@@ -316,32 +318,42 @@
   #PwChoosePricing-{{ section.id }} .plans {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 28px;
-    align-items: end;
+    gap: 32px;
+    align-items: stretch;
     width: 100%;
     max-width: var(--pw-content);
     margin-inline: auto;
-    padding-top: 18px;
+    padding: 18px 0 32px;
+    overflow: visible;
   }
 
   #PwChoosePricing-{{ section.id }} .plan {
+    position: relative;
     background: var(--pw-choose-white);
-    border: 1px solid rgba(31, 35, 38, 0.08);
-    border-radius: 12px;
+    border: 1px solid rgba(31, 35, 38, 0.06);
+    border-radius: 10px;
     padding: 30px 26px 28px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    box-shadow:
+      0 2px 4px rgba(0, 0, 0, 0.02),
+      0 8px 18px rgba(0, 0, 0, 0.04),
+      0 20px 40px rgba(0, 0, 0, 0.06),
+      0 36px 72px rgba(0, 0, 0, 0.08);
     display: flex;
     flex-direction: column;
     height: 100%;
     min-height: 0;
+    overflow: visible;
   }
 
   #PwChoosePricing-{{ section.id }} .plan.feat {
     border: 2px solid var(--pw-choose-gold);
     padding-top: 0;
-    overflow: hidden;
     margin-top: -18px;
-    box-shadow: 0 14px 34px rgba(0, 0, 0, 0.12);
+    box-shadow:
+      0 4px 8px rgba(0, 0, 0, 0.03),
+      0 12px 24px rgba(0, 0, 0, 0.05),
+      0 24px 48px rgba(0, 0, 0, 0.07),
+      0 40px 80px rgba(0, 0, 0, 0.1);
   }
 
   #PwChoosePricing-{{ section.id }} .ribbon {
@@ -354,7 +366,9 @@
     text-transform: uppercase;
     text-align: center;
     padding: 9px 0;
-    margin: 0 -26px 26px;
+    margin: -2px -2px 26px;
+    width: calc(100% + 4px);
+    border-radius: 8px 8px 0 0;
   }
 
   #PwChoosePricing-{{ section.id }} .plan h3 {
@@ -378,9 +392,12 @@
   }
 
   #PwChoosePricing-{{ section.id }} .plan-media {
-    background: linear-gradient(150deg, #e6e6e8, #cfd0d3);
-    border-radius: 12px;
-    aspect-ratio: 16 / 11;
+    background:
+      radial-gradient(circle at 18% 22%, rgba(255, 255, 255, 0.45) 0%, transparent 42%),
+      radial-gradient(circle at 82% 78%, rgba(255, 255, 255, 0.28) 0%, transparent 38%),
+      linear-gradient(150deg, #e8e8ea 0%, #d0d1d4 100%);
+    border-radius: 10px;
+    aspect-ratio: 269.34 / 161.61;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -516,9 +533,10 @@
 
   #PwChoosePricing-{{ section.id }} .btn-outline {
     color: var(--pw-choose-gold) !important;
-    background: transparent !important;
+    background: var(--pw-choose-white) !important;
     border: 1.6px solid var(--pw-choose-gold) !important;
     padding: 15px 26px;
+    box-shadow: none;
   }
 
   #PwChoosePricing-{{ section.id }} .btn-gold:disabled,
@@ -533,12 +551,6 @@
     font-size: 12px;
     line-height: 1.45;
     color: var(--pw-choose-slate);
-  }
-
-  @media screen and (min-width: 1081px) {
-    #PwChoosePricing-{{ section.id }} .plan:not(.feat) {
-      min-height: calc(100% - 18px);
-    }
   }
 
   @media screen and (max-width: 1080px) {
