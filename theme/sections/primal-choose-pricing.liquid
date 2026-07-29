@@ -1,0 +1,888 @@
+{%- liquid
+  assign sub_product = section.settings.subscribe_product
+  assign onetime_product = section.settings.onetime_product | default: sub_product
+  assign shaker_product = section.settings.shaker_product
+
+  if sub_product != blank
+    assign sub_variant = sub_product.selected_or_first_available_variant
+  endif
+
+  if onetime_product != blank
+    assign onetime_variant = onetime_product.selected_or_first_available_variant
+  endif
+
+  if shaker_product != blank
+    assign shaker_variant = shaker_product.selected_or_first_available_variant
+  endif
+
+  assign selling_plan_id = section.settings.selling_plan_id | strip
+
+  if selling_plan_id == blank and sub_product != blank and sub_product.selling_plan_groups.size > 0
+    for group in sub_product.selling_plan_groups
+      for plan in group.selling_plans
+        assign selling_plan_id = plan.id
+        break
+      endfor
+      if selling_plan_id != blank
+        break
+      endif
+    endfor
+  endif
+-%}
+
+<section id="PwChoosePricing-{{ section.id }}" class="pw-choose-pricing choose">
+  <div class="pw-container choose__wrap">
+    <div class="choose-head">
+      <h2>
+        {{ section.settings.heading_before | escape }}
+        {%- if section.settings.heading_gold != blank -%}
+          <span class="gold">{{ section.settings.heading_gold | escape }}</span>
+        {%- endif -%}
+      </h2>
+      {%- if section.settings.subheading != blank -%}
+        <p>{{ section.settings.subheading | escape }}</p>
+      {%- endif -%}
+    </div>
+
+    <div class="plans">
+      <article class="plan feat">
+        {%- if section.settings.plan_1_ribbon != blank -%}
+          <div class="ribbon">{{ section.settings.plan_1_ribbon | escape }}</div>
+        {%- endif -%}
+
+        {%- if section.settings.plan_1_title != blank -%}
+          <h3>{{ section.settings.plan_1_title | escape }}</h3>
+        {%- endif -%}
+        {%- if section.settings.plan_1_lede != blank -%}
+          <p class="lede">{{ section.settings.plan_1_lede | escape }}</p>
+        {%- endif -%}
+
+        <div class="plan-media">
+          {%- if section.settings.plan_1_image != blank -%}
+            {{ section.settings.plan_1_image | image_url: width: 800 | image_tag: loading: 'lazy', alt: section.settings.plan_1_title }}
+          {%- elsif section.settings.shared_product_image != blank -%}
+            {{ section.settings.shared_product_image | image_url: width: 800 | image_tag: loading: 'lazy', alt: section.settings.plan_1_title }}
+          {%- else -%}
+            {{ 'product-1' | placeholder_svg_tag }}
+          {%- endif -%}
+        </div>
+
+        {%- if section.settings.plan_1_servings != blank -%}
+          <p class="servings">{{ section.settings.plan_1_servings | escape }}</p>
+        {%- endif -%}
+        <p class="price">{{ section.settings.plan_1_price | escape }} <span class="per">{{ section.settings.plan_1_price_suffix | escape }}</span></p>
+        {%- if section.settings.plan_1_rrp != blank -%}
+          <p class="rrp">{{ section.settings.plan_1_rrp | escape }}</p>
+        {%- else -%}
+          <p class="no-rrp" aria-hidden="true"></p>
+        {%- endif -%}
+
+        <ul class="feats">
+          {%- assign plan_1_features = section.settings.plan_1_features | newline_to_br | split: '<br />' -%}
+          {%- for feature in plan_1_features -%}
+            {%- assign feature_text = feature | strip -%}
+            {%- if feature_text != blank -%}
+              <li>
+                <span class="ck" aria-hidden="true">
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l4 4L19 7"/></svg>
+                </span>
+                {{ feature_text | escape }}
+              </li>
+            {%- endif -%}
+          {%- endfor -%}
+        </ul>
+
+        {%- if sub_product != blank and sub_variant != blank -%}
+          {%- capture sub_form_id -%}PwChooseSubForm-{{ section.id }}{%- endcapture -%}
+          {%- form 'product', sub_product, class: 'pai-cart-form', id: sub_form_id -%}
+            <input type="hidden" name="id" value="{{ sub_variant.id }}">
+            {%- if selling_plan_id != blank -%}
+              <input type="hidden" name="selling_plan" value="{{ selling_plan_id }}">
+            {%- endif -%}
+            <button type="submit" class="btn-gold" {% unless sub_variant.available %}disabled{% endunless %}>
+              {{ section.settings.plan_1_button | escape }}
+            </button>
+          {%- endform -%}
+        {%- else -%}
+          <button type="button" class="btn-gold" disabled>{{ section.settings.plan_1_button | escape }}</button>
+        {%- endif -%}
+
+        {%- if section.settings.plan_1_footnote != blank -%}
+          <p class="foot-note">{{ section.settings.plan_1_footnote | escape }}</p>
+        {%- endif -%}
+      </article>
+
+      <article class="plan">
+        {%- if section.settings.plan_2_title != blank -%}
+          <h3>{{ section.settings.plan_2_title | escape }}</h3>
+        {%- endif -%}
+        {%- if section.settings.plan_2_lede != blank -%}
+          <p class="lede">{{ section.settings.plan_2_lede | escape }}</p>
+        {%- endif -%}
+
+        <div class="plan-media">
+          {%- if section.settings.plan_2_image != blank -%}
+            {{ section.settings.plan_2_image | image_url: width: 800 | image_tag: loading: 'lazy', alt: section.settings.plan_2_title }}
+          {%- elsif section.settings.shared_product_image != blank -%}
+            {{ section.settings.shared_product_image | image_url: width: 800 | image_tag: loading: 'lazy', alt: section.settings.plan_2_title }}
+          {%- else -%}
+            {{ 'product-1' | placeholder_svg_tag }}
+          {%- endif -%}
+        </div>
+
+        {%- if section.settings.plan_2_servings != blank -%}
+          <p class="servings">{{ section.settings.plan_2_servings | escape }}</p>
+        {%- endif -%}
+        <p class="price">{{ section.settings.plan_2_price | escape }} <span class="per">{{ section.settings.plan_2_price_suffix | escape }}</span></p>
+        <p class="no-rrp" aria-hidden="true"></p>
+
+        <ul class="feats">
+          {%- assign plan_2_features = section.settings.plan_2_features | newline_to_br | split: '<br />' -%}
+          {%- for feature in plan_2_features -%}
+            {%- assign feature_text = feature | strip -%}
+            {%- if feature_text != blank -%}
+              <li>
+                <span class="rd" aria-hidden="true"></span>
+                {{ feature_text | escape }}
+              </li>
+            {%- endif -%}
+          {%- endfor -%}
+        </ul>
+
+        {%- if onetime_product != blank and onetime_variant != blank -%}
+          {%- capture onetime_form_id -%}PwChooseOneForm-{{ section.id }}{%- endcapture -%}
+          {%- form 'product', onetime_product, class: 'pai-cart-form', id: onetime_form_id -%}
+            <input type="hidden" name="id" value="{{ onetime_variant.id }}">
+            <button type="submit" class="btn-outline" {% unless onetime_variant.available %}disabled{% endunless %}>
+              {{ section.settings.plan_2_button | escape }}
+            </button>
+          {%- endform -%}
+        {%- else -%}
+          <button type="button" class="btn-outline" disabled>{{ section.settings.plan_2_button | escape }}</button>
+        {%- endif -%}
+
+        {%- if section.settings.plan_2_footnote != blank -%}
+          <p class="foot-note">{{ section.settings.plan_2_footnote | escape }}</p>
+        {%- endif -%}
+      </article>
+
+      <article class="plan">
+        {%- if section.settings.plan_3_title != blank -%}
+          <h3>{{ section.settings.plan_3_title | escape }}</h3>
+        {%- endif -%}
+        {%- if section.settings.plan_3_lede != blank -%}
+          <p class="lede">{{ section.settings.plan_3_lede | escape }}</p>
+        {%- endif -%}
+
+        <div class="plan-media">
+          {%- if section.settings.plan_3_image != blank -%}
+            {{ section.settings.plan_3_image | image_url: width: 800 | image_tag: loading: 'lazy', alt: section.settings.plan_3_title }}
+          {%- else -%}
+            <div class="shaker-ph" aria-hidden="true">
+              <svg width="88" height="150" viewBox="0 0 88 150" fill="none">
+                <rect x="20" y="30" width="48" height="105" rx="10" fill="#1b1f22" stroke="#3a3f44" stroke-width="2"/>
+                <rect x="18" y="18" width="52" height="18" rx="6" fill="#26120a"/>
+                <rect x="30" y="10" width="28" height="12" rx="4" fill="#1b1f22"/>
+                <path d="M35 74h18M35 84h18M35 94h18" stroke="#C89A3D" stroke-width="2" stroke-linecap="round"/>
+                <path d="M44 55l-6 8h12l-6 8" stroke="#C89A3D" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+          {%- endif -%}
+        </div>
+
+        {%- if section.settings.plan_3_servings != blank -%}
+          <p class="servings">{{ section.settings.plan_3_servings | escape }}</p>
+        {%- endif -%}
+        <p class="price">{{ section.settings.plan_3_price | escape }} <span class="per">{{ section.settings.plan_3_price_suffix | escape }}</span></p>
+        <p class="no-rrp" aria-hidden="true"></p>
+
+        <ul class="feats">
+          {%- assign plan_3_features = section.settings.plan_3_features | newline_to_br | split: '<br />' -%}
+          {%- for feature in plan_3_features -%}
+            {%- assign feature_text = feature | strip -%}
+            {%- if feature_text != blank -%}
+              <li>
+                <span class="rd" aria-hidden="true"></span>
+                {{ feature_text | escape }}
+              </li>
+            {%- endif -%}
+          {%- endfor -%}
+        </ul>
+
+        {%- if shaker_product != blank and shaker_variant != blank -%}
+          {%- capture shaker_form_id -%}PwChooseShakerForm-{{ section.id }}{%- endcapture -%}
+          {%- form 'product', shaker_product, class: 'pai-cart-form', id: shaker_form_id -%}
+            <input type="hidden" name="id" value="{{ shaker_variant.id }}">
+            <button type="submit" class="btn-outline" {% unless shaker_variant.available %}disabled{% endunless %}>
+              {{ section.settings.plan_3_button | escape }}
+            </button>
+          {%- endform -%}
+        {%- else -%}
+          <button type="button" class="btn-outline" disabled>{{ section.settings.plan_3_button | escape }}</button>
+        {%- endif -%}
+
+        {%- if section.settings.plan_3_footnote != blank -%}
+          <p class="foot-note">{{ section.settings.plan_3_footnote | escape }}</p>
+        {%- endif -%}
+      </article>
+    </div>
+  </div>
+</section>
+
+{% style %}
+  @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800;900&family=Inter:wght@400;500;600&display=swap');
+
+  #PwChoosePricing-{{ section.id }} {
+    {% render 'pw-align-vars' %}
+    --pw-choose-bg: {{ section.settings.background_color }};
+    --pw-choose-gold: {{ section.settings.gold_color }};
+    --pw-choose-charcoal: {{ section.settings.text_color }};
+    --pw-choose-slate: {{ section.settings.muted_color }};
+    --pw-choose-white: {{ section.settings.card_color }};
+    --pw-choose-ink: {{ section.settings.button_text_color }};
+  }
+
+  #shopify-section-{{ section.id }} {
+    display: block !important;
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: var(--pw-choose-bg) !important;
+  }
+
+  #shopify-section-{{ section.id }} .page-width,
+  #shopify-section-{{ section.id }} > .page-width {
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  #PwChoosePricing-{{ section.id }},
+  #PwChoosePricing-{{ section.id }} *,
+  #PwChoosePricing-{{ section.id }} *::before,
+  #PwChoosePricing-{{ section.id }} *::after {
+    box-sizing: border-box;
+  }
+
+  #PwChoosePricing-{{ section.id }} {
+    padding: 56px 0 64px;
+    background: var(--pw-choose-bg);
+    color: var(--pw-choose-charcoal);
+    font-family: Inter, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  #PwChoosePricing-{{ section.id }} .pw-container.choose__wrap {
+    width: 100%;
+    max-width: var(--pw-inner);
+    margin-inline: auto;
+    padding-inline: var(--pw-gutter);
+  }
+
+  #PwChoosePricing-{{ section.id }} .choose-head {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+
+  #PwChoosePricing-{{ section.id }} .choose-head h2 {
+    margin: 0 0 10px;
+    color: var(--pw-choose-charcoal) !important;
+    font-family: Montserrat, Arial, sans-serif !important;
+    font-weight: 900 !important;
+    font-size: 40px !important;
+    line-height: 1.05 !important;
+    letter-spacing: -0.5px !important;
+    text-transform: uppercase !important;
+    background: transparent !important;
+    border: 0 !important;
+  }
+
+  #PwChoosePricing-{{ section.id }} .choose-head .gold {
+    color: var(--pw-choose-gold) !important;
+  }
+
+  #PwChoosePricing-{{ section.id }} .choose-head p {
+    margin: 0;
+    font-size: 16px;
+    line-height: 1.5;
+    color: var(--pw-choose-slate);
+  }
+
+  #PwChoosePricing-{{ section.id }} .plans {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 24px;
+    align-items: start;
+  }
+
+  #PwChoosePricing-{{ section.id }} .plan {
+    background: var(--pw-choose-white);
+    border: 1px solid rgba(31, 35, 38, 0.08);
+    border-radius: 16px;
+    padding: 30px 26px 28px;
+    box-shadow: 0 20px 50px -34px rgba(0, 0, 0, 0.4);
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+  }
+
+  #PwChoosePricing-{{ section.id }} .plan.feat {
+    border: 2px solid var(--pw-choose-gold);
+    padding-top: 0;
+    overflow: hidden;
+    margin-top: -18px;
+  }
+
+  #PwChoosePricing-{{ section.id }} .ribbon {
+    background: var(--pw-choose-gold);
+    color: var(--pw-choose-ink);
+    font-family: Montserrat, Arial, sans-serif;
+    font-weight: 800;
+    font-size: 12px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    text-align: center;
+    padding: 9px 0;
+    margin: 0 -26px 26px;
+  }
+
+  #PwChoosePricing-{{ section.id }} .plan h3 {
+    margin: 0 0 6px;
+    color: var(--pw-choose-charcoal) !important;
+    font-family: Montserrat, Arial, sans-serif !important;
+    font-weight: 800 !important;
+    font-size: 21px !important;
+    line-height: 1.15 !important;
+    letter-spacing: 0.2px !important;
+    text-transform: uppercase !important;
+    background: transparent !important;
+    border: 0 !important;
+  }
+
+  #PwChoosePricing-{{ section.id }} .lede {
+    margin: 0 0 20px;
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--pw-choose-slate);
+  }
+
+  #PwChoosePricing-{{ section.id }} .plan-media {
+    background: linear-gradient(150deg, #e6e6e8, #cfd0d3);
+    border-radius: 12px;
+    aspect-ratio: 16 / 11;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    margin-bottom: 20px;
+  }
+
+  #PwChoosePricing-{{ section.id }} .plan-media img,
+  #PwChoosePricing-{{ section.id }} .plan-media svg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  #PwChoosePricing-{{ section.id }} .shaker-ph {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: radial-gradient(circle at 50% 40%, #9a9ca0, #6f7175);
+  }
+
+  #PwChoosePricing-{{ section.id }} .servings {
+    margin: 0 0 6px;
+    font-family: Montserrat, Arial, sans-serif;
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--pw-choose-slate);
+  }
+
+  #PwChoosePricing-{{ section.id }} .price {
+    margin: 0 0 4px;
+    font-family: Montserrat, Arial, sans-serif;
+    font-weight: 900;
+    font-size: 40px;
+    line-height: 1;
+    color: var(--pw-choose-charcoal);
+  }
+
+  #PwChoosePricing-{{ section.id }} .price .per {
+    font-family: Montserrat, Arial, sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--pw-choose-slate);
+    letter-spacing: 0.3px;
+  }
+
+  #PwChoosePricing-{{ section.id }} .rrp {
+    margin: 0 0 18px;
+    font-size: 13px;
+    color: var(--pw-choose-slate);
+    text-decoration: line-through;
+  }
+
+  #PwChoosePricing-{{ section.id }} .no-rrp {
+    height: 14px;
+    margin: 0 0 18px;
+  }
+
+  #PwChoosePricing-{{ section.id }} .feats {
+    list-style: none;
+    margin: 0 0 22px;
+    padding: 0;
+    display: grid;
+    gap: 12px;
+    flex: 1 1 auto;
+  }
+
+  #PwChoosePricing-{{ section.id }} .feats li {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    font-size: 14px;
+    line-height: 1.4;
+    color: var(--pw-choose-charcoal);
+  }
+
+  #PwChoosePricing-{{ section.id }} .ck {
+    flex: 0 0 auto;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--pw-choose-gold);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--pw-choose-ink);
+  }
+
+  #PwChoosePricing-{{ section.id }} .rd {
+    flex: 0 0 auto;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    border: 1.6px solid var(--pw-choose-slate);
+  }
+
+  #PwChoosePricing-{{ section.id }} .pai-cart-form {
+    width: 100%;
+    margin: 0;
+  }
+
+  #PwChoosePricing-{{ section.id }} .btn-gold,
+  #PwChoosePricing-{{ section.id }} .btn-outline {
+    width: 100%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    font-family: Montserrat, Arial, sans-serif;
+    font-weight: 800;
+    font-size: 14px;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+    border-radius: 10px;
+    padding: 16px 26px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: opacity 0.2s ease;
+  }
+
+  #PwChoosePricing-{{ section.id }} .btn-gold {
+    color: var(--pw-choose-ink) !important;
+    background: var(--pw-choose-gold) !important;
+    border: 0 !important;
+  }
+
+  #PwChoosePricing-{{ section.id }} .btn-outline {
+    color: var(--pw-choose-gold) !important;
+    background: transparent !important;
+    border: 1.6px solid var(--pw-choose-gold) !important;
+    padding: 15px 26px;
+  }
+
+  #PwChoosePricing-{{ section.id }} .btn-gold:disabled,
+  #PwChoosePricing-{{ section.id }} .btn-outline:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+  }
+
+  #PwChoosePricing-{{ section.id }} .foot-note {
+    margin: 14px 0 0;
+    text-align: center;
+    font-size: 12px;
+    line-height: 1.45;
+    color: var(--pw-choose-slate);
+  }
+
+  @media screen and (max-width: 1080px) {
+    #PwChoosePricing-{{ section.id }} .plans {
+      grid-template-columns: 1fr;
+      max-width: 460px;
+      margin-inline: auto;
+    }
+
+    #PwChoosePricing-{{ section.id }} .plan.feat {
+      margin-top: 0;
+    }
+  }
+
+  @media screen and (max-width: 560px) {
+    #PwChoosePricing-{{ section.id }} .choose-head h2 {
+      font-size: 30px !important;
+    }
+  }
+{% endstyle %}
+
+<script>
+  (function () {
+    var root = document.getElementById('PwChoosePricing-{{ section.id }}');
+    if (!root) return;
+
+    root.querySelectorAll('.pai-cart-form').forEach(function (form) {
+      form.addEventListener('submit', function (event) {
+        event.preventDefault();
+
+        var button = form.querySelector('button[type="submit"]');
+        if (!button || button.disabled) return;
+
+        var originalText = button.textContent;
+        button.disabled = true;
+        button.textContent = 'Adding...';
+
+        fetch((window.Shopify && window.Shopify.routes ? window.Shopify.routes.root : '/') + 'cart/add.js', {
+          method: 'POST',
+          headers: {
+            'Accept': 'application/json'
+          },
+          body: new FormData(form)
+        })
+          .then(function (response) {
+            return response.json().then(function (data) {
+              if (!response.ok) throw data;
+              return data;
+            });
+          })
+          .then(function () {
+            button.textContent = 'Added';
+            document.dispatchEvent(new CustomEvent('cart:refresh'));
+            document.dispatchEvent(new CustomEvent('cart:updated'));
+            if (typeof window.publish === 'function') {
+              window.publish('cart-update');
+            }
+            setTimeout(function () {
+              button.textContent = originalText;
+              button.disabled = false;
+            }, 1400);
+          })
+          .catch(function () {
+            button.textContent = 'Try again';
+            button.disabled = false;
+            setTimeout(function () {
+              button.textContent = originalText;
+            }, 1600);
+          });
+      });
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Choose How You Win",
+  "tag": "section",
+  "class": "pw-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Header"
+    },
+    {
+      "type": "text",
+      "id": "heading_before",
+      "label": "Heading before gold word",
+      "default": "Choose How You "
+    },
+    {
+      "type": "text",
+      "id": "heading_gold",
+      "label": "Gold heading word",
+      "default": "Win"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "every scoop delivers the same premium formula."
+    },
+    {
+      "type": "header",
+      "content": "Shopify products (Add to cart)"
+    },
+    {
+      "type": "product",
+      "id": "subscribe_product",
+      "label": "Subscribe product"
+    },
+    {
+      "type": "text",
+      "id": "selling_plan_id",
+      "label": "Selling plan ID (optional)",
+      "info": "Blank = first subscription plan auto-used."
+    },
+    {
+      "type": "product",
+      "id": "onetime_product",
+      "label": "One-time product",
+      "info": "Leave blank to use subscribe product."
+    },
+    {
+      "type": "product",
+      "id": "shaker_product",
+      "label": "Shaker product"
+    },
+    {
+      "type": "image_picker",
+      "id": "shared_product_image",
+      "label": "Shared pouch image (cards 1 & 2)"
+    },
+    {
+      "type": "header",
+      "content": "Card 1 — Subscribe & Save"
+    },
+    {
+      "type": "text",
+      "id": "plan_1_ribbon",
+      "label": "Ribbon",
+      "default": "Most Popular — Save 20%"
+    },
+    {
+      "type": "text",
+      "id": "plan_1_title",
+      "label": "Title",
+      "default": "Subscribe & Save"
+    },
+    {
+      "type": "text",
+      "id": "plan_1_lede",
+      "label": "Subtitle",
+      "default": "Never run out. Always perform."
+    },
+    {
+      "type": "image_picker",
+      "id": "plan_1_image",
+      "label": "Image override"
+    },
+    {
+      "type": "text",
+      "id": "plan_1_servings",
+      "label": "Servings label",
+      "default": "30 Servings"
+    },
+    {
+      "type": "text",
+      "id": "plan_1_price",
+      "label": "Price",
+      "default": "£59.99"
+    },
+    {
+      "type": "text",
+      "id": "plan_1_price_suffix",
+      "label": "Price suffix",
+      "default": "/ per month"
+    },
+    {
+      "type": "text",
+      "id": "plan_1_rrp",
+      "label": "RRP",
+      "default": "RRP £74.99"
+    },
+    {
+      "type": "textarea",
+      "id": "plan_1_features",
+      "label": "Features (one per line)",
+      "default": "Free Delivery Always\nCancel or Pause Anytime\nBest Value Guaranteed\nPriority Access to New Releases"
+    },
+    {
+      "type": "text",
+      "id": "plan_1_button",
+      "label": "Button text",
+      "default": "Choose Subscription"
+    },
+    {
+      "type": "text",
+      "id": "plan_1_footnote",
+      "label": "Footnote",
+      "default": "Delivered every 30 days. Modify or cancel anytime."
+    },
+    {
+      "type": "header",
+      "content": "Card 2 — One-Time Purchase"
+    },
+    {
+      "type": "text",
+      "id": "plan_2_title",
+      "label": "Title",
+      "default": "One-Time Purchase"
+    },
+    {
+      "type": "text",
+      "id": "plan_2_lede",
+      "label": "Subtitle",
+      "default": "One-time payment. Simple choice."
+    },
+    {
+      "type": "image_picker",
+      "id": "plan_2_image",
+      "label": "Image override"
+    },
+    {
+      "type": "text",
+      "id": "plan_2_servings",
+      "label": "Servings label",
+      "default": "30 Servings"
+    },
+    {
+      "type": "text",
+      "id": "plan_2_price",
+      "label": "Price",
+      "default": "£74.99"
+    },
+    {
+      "type": "text",
+      "id": "plan_2_price_suffix",
+      "label": "Price suffix",
+      "default": "/ one-time"
+    },
+    {
+      "type": "textarea",
+      "id": "plan_2_features",
+      "label": "Features (one per line)",
+      "default": "Single Delivery Only\nNo Commitment Required\nStandard Shipping Fees\nStandard Dispatch Priority"
+    },
+    {
+      "type": "text",
+      "id": "plan_2_button",
+      "label": "Button text",
+      "default": "Add to Cart"
+    },
+    {
+      "type": "text",
+      "id": "plan_2_footnote",
+      "label": "Footnote",
+      "default": "Free shipping on orders above £100"
+    },
+    {
+      "type": "header",
+      "content": "Card 3 — Add A Shaker"
+    },
+    {
+      "type": "text",
+      "id": "plan_3_title",
+      "label": "Title",
+      "default": "Add a Shaker"
+    },
+    {
+      "type": "text",
+      "id": "plan_3_lede",
+      "label": "Subtitle",
+      "default": "The perfect partner for performance."
+    },
+    {
+      "type": "image_picker",
+      "id": "plan_3_image",
+      "label": "Shaker image"
+    },
+    {
+      "type": "text",
+      "id": "plan_3_servings",
+      "label": "Label",
+      "default": "Stainless Steel"
+    },
+    {
+      "type": "text",
+      "id": "plan_3_price",
+      "label": "Price",
+      "default": "£14.99"
+    },
+    {
+      "type": "text",
+      "id": "plan_3_price_suffix",
+      "label": "Price suffix",
+      "default": "/ add-on"
+    },
+    {
+      "type": "textarea",
+      "id": "plan_3_features",
+      "label": "Features (one per line)",
+      "default": "Double-Wall Insulated\nHeavy Duty Durable Build\nBPA Free Materials\nPrimal Win Custom Brand Engraving"
+    },
+    {
+      "type": "text",
+      "id": "plan_3_button",
+      "label": "Button text",
+      "default": "Add to Cart"
+    },
+    {
+      "type": "text",
+      "id": "plan_3_footnote",
+      "label": "Footnote",
+      "default": "100% leakproof lock system"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Section background",
+      "default": "#EFE5DD"
+    },
+    {
+      "type": "color",
+      "id": "card_color",
+      "label": "Card background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "gold_color",
+      "label": "Gold",
+      "default": "#C89A3D"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Heading text",
+      "default": "#1F2326"
+    },
+    {
+      "type": "color",
+      "id": "muted_color",
+      "label": "Muted text",
+      "default": "#737A80"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Gold button text",
+      "default": "#14171A"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Choose How You Win"
+    }
+  ]
+}
+{% endschema %}
