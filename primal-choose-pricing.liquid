@@ -1,18 +1,26 @@
 {%- liquid
   assign sub_product = section.settings.subscribe_product
-  assign onetime_product = section.settings.onetime_product | default: sub_product
+  assign onetime_product = section.settings.onetime_product
   assign shaker_product = section.settings.shaker_product
 
-  if sub_product != blank
-    assign sub_variant = sub_product.selected_or_first_available_variant
+  if onetime_product == blank
+    assign onetime_product = sub_product
   endif
 
-  if onetime_product != blank
-    assign onetime_variant = onetime_product.selected_or_first_available_variant
+  assign sub_variant_id = section.settings.subscribe_variant_id | strip
+  assign onetime_variant_id = section.settings.onetime_variant_id | strip
+  assign shaker_variant_id = section.settings.shaker_variant_id | strip
+
+  if sub_product != blank and sub_variant_id == blank
+    assign sub_variant_id = sub_product.selected_or_first_available_variant.id
   endif
 
-  if shaker_product != blank
-    assign shaker_variant = shaker_product.selected_or_first_available_variant
+  if onetime_product != blank and onetime_variant_id == blank
+    assign onetime_variant_id = onetime_product.selected_or_first_available_variant.id
+  endif
+
+  if shaker_product != blank and shaker_variant_id == blank
+    assign shaker_variant_id = shaker_product.selected_or_first_available_variant.id
   endif
 
   assign selling_plan_id = section.settings.selling_plan_id | strip
@@ -28,6 +36,8 @@
       endif
     endfor
   endif
+
+  assign cart_add_url = routes.cart_add_url
 -%}
 
 <section id="PwChoosePricing-{{ section.id }}" class="pw-choose-pricing choose">
@@ -92,20 +102,31 @@
           {%- endfor -%}
         </ul>
 
-        {%- if sub_product != blank and sub_variant != blank -%}
-          {%- capture sub_form_id -%}PwChooseSubForm-{{ section.id }}{%- endcapture -%}
-          {%- form 'product', sub_product, class: 'pai-cart-form', id: sub_form_id -%}
-            <input type="hidden" name="id" value="{{ sub_variant.id }}">
-            {%- if selling_plan_id != blank -%}
-              <input type="hidden" name="selling_plan" value="{{ selling_plan_id }}">
-            {%- endif -%}
-            <button type="submit" class="btn-gold" {% unless sub_variant.available %}disabled{% endunless %}>
-              {{ section.settings.plan_1_button | escape }}
-            </button>
-          {%- endform -%}
-        {%- else -%}
-          <button type="button" class="btn-gold" disabled>{{ section.settings.plan_1_button | escape }}</button>
-        {%- endif -%}
+        <form
+          class="pai-cart-form"
+          action="{{ cart_add_url }}"
+          method="post"
+          accept-charset="UTF-8"
+          enctype="multipart/form-data"
+          data-pw-cart-form
+          {% if selling_plan_id != blank %}data-has-selling-plan="true"{% endif %}
+        >
+          <input type="hidden" name="form_type" value="product">
+          <input type="hidden" name="utf8" value="✓">
+          <input type="hidden" name="id" value="{{ sub_variant_id }}">
+          <input type="hidden" name="quantity" value="1">
+          {%- if selling_plan_id != blank -%}
+            <input type="hidden" name="selling_plan" value="{{ selling_plan_id }}">
+          {%- endif -%}
+          <button
+            type="submit"
+            class="btn-gold"
+            name="add"
+            {% if sub_variant_id == blank %}data-missing-variant="true"{% endif %}
+          >
+            {{ section.settings.plan_1_button | escape }}
+          </button>
+        </form>
 
         {%- if section.settings.plan_1_footnote != blank -%}
           <p class="foot-note">{{ section.settings.plan_1_footnote | escape }}</p>
@@ -149,17 +170,27 @@
           {%- endfor -%}
         </ul>
 
-        {%- if onetime_product != blank and onetime_variant != blank -%}
-          {%- capture onetime_form_id -%}PwChooseOneForm-{{ section.id }}{%- endcapture -%}
-          {%- form 'product', onetime_product, class: 'pai-cart-form', id: onetime_form_id -%}
-            <input type="hidden" name="id" value="{{ onetime_variant.id }}">
-            <button type="submit" class="btn-outline" {% unless onetime_variant.available %}disabled{% endunless %}>
-              {{ section.settings.plan_2_button | escape }}
-            </button>
-          {%- endform -%}
-        {%- else -%}
-          <button type="button" class="btn-outline" disabled>{{ section.settings.plan_2_button | escape }}</button>
-        {%- endif -%}
+        <form
+          class="pai-cart-form"
+          action="{{ cart_add_url }}"
+          method="post"
+          accept-charset="UTF-8"
+          enctype="multipart/form-data"
+          data-pw-cart-form
+        >
+          <input type="hidden" name="form_type" value="product">
+          <input type="hidden" name="utf8" value="✓">
+          <input type="hidden" name="id" value="{{ onetime_variant_id }}">
+          <input type="hidden" name="quantity" value="1">
+          <button
+            type="submit"
+            class="btn-outline"
+            name="add"
+            {% if onetime_variant_id == blank %}data-missing-variant="true"{% endif %}
+          >
+            {{ section.settings.plan_2_button | escape }}
+          </button>
+        </form>
 
         {%- if section.settings.plan_2_footnote != blank -%}
           <p class="foot-note">{{ section.settings.plan_2_footnote | escape }}</p>
@@ -209,17 +240,27 @@
           {%- endfor -%}
         </ul>
 
-        {%- if shaker_product != blank and shaker_variant != blank -%}
-          {%- capture shaker_form_id -%}PwChooseShakerForm-{{ section.id }}{%- endcapture -%}
-          {%- form 'product', shaker_product, class: 'pai-cart-form', id: shaker_form_id -%}
-            <input type="hidden" name="id" value="{{ shaker_variant.id }}">
-            <button type="submit" class="btn-outline" {% unless shaker_variant.available %}disabled{% endunless %}>
-              {{ section.settings.plan_3_button | escape }}
-            </button>
-          {%- endform -%}
-        {%- else -%}
-          <button type="button" class="btn-outline" disabled>{{ section.settings.plan_3_button | escape }}</button>
-        {%- endif -%}
+        <form
+          class="pai-cart-form"
+          action="{{ cart_add_url }}"
+          method="post"
+          accept-charset="UTF-8"
+          enctype="multipart/form-data"
+          data-pw-cart-form
+        >
+          <input type="hidden" name="form_type" value="product">
+          <input type="hidden" name="utf8" value="✓">
+          <input type="hidden" name="id" value="{{ shaker_variant_id }}">
+          <input type="hidden" name="quantity" value="1">
+          <button
+            type="submit"
+            class="btn-outline"
+            name="add"
+            {% if shaker_variant_id == blank %}data-missing-variant="true"{% endif %}
+          >
+            {{ section.settings.plan_3_button | escape }}
+          </button>
+        </form>
 
         {%- if section.settings.plan_3_footnote != blank -%}
           <p class="foot-note">{{ section.settings.plan_3_footnote | escape }}</p>
@@ -349,6 +390,7 @@
     border: 2px solid var(--pw-choose-gold);
     padding-top: 0;
     margin-top: -18px;
+    z-index: 1;
     box-shadow:
       0 4px 8px rgba(0, 0, 0, 0.03),
       0 12px 24px rgba(0, 0, 0, 0.05),
@@ -504,10 +546,15 @@
   #PwChoosePricing-{{ section.id }} .pai-cart-form {
     width: 100%;
     margin: 0;
+    position: relative;
+    z-index: 5;
+    pointer-events: auto;
   }
 
   #PwChoosePricing-{{ section.id }} .btn-gold,
   #PwChoosePricing-{{ section.id }} .btn-outline {
+    position: relative;
+    z-index: 6;
     width: 100%;
     display: inline-flex;
     align-items: center;
@@ -520,9 +567,23 @@
     text-transform: uppercase;
     border-radius: 10px;
     padding: 16px 26px;
-    cursor: pointer;
+    cursor: pointer !important;
+    pointer-events: auto !important;
     text-decoration: none;
-    transition: opacity 0.2s ease;
+    transition: opacity 0.2s ease, transform 0.15s ease;
+    -webkit-appearance: none;
+    appearance: none;
+    touch-action: manipulation;
+  }
+
+  #PwChoosePricing-{{ section.id }} .btn-gold:hover,
+  #PwChoosePricing-{{ section.id }} .btn-outline:hover {
+    opacity: 0.92;
+  }
+
+  #PwChoosePricing-{{ section.id }} .btn-gold:active,
+  #PwChoosePricing-{{ section.id }} .btn-outline:active {
+    transform: translateY(1px);
   }
 
   #PwChoosePricing-{{ section.id }} .btn-gold {
@@ -539,10 +600,10 @@
     box-shadow: none;
   }
 
-  #PwChoosePricing-{{ section.id }} .btn-gold:disabled,
-  #PwChoosePricing-{{ section.id }} .btn-outline:disabled {
-    opacity: 0.45;
-    cursor: not-allowed;
+  #PwChoosePricing-{{ section.id }} .btn-gold.is-loading,
+  #PwChoosePricing-{{ section.id }} .btn-outline.is-loading {
+    opacity: 0.7;
+    cursor: wait !important;
   }
 
   #PwChoosePricing-{{ section.id }} .foot-note {
@@ -587,70 +648,81 @@
 
     function updateCartCount(itemCount) {
       document.querySelectorAll('.peh__cart-count, [data-cart-count], .cart-count-bubble, .cart-count').forEach(function (el) {
-        el.textContent = itemCount;
-        el.style.display = itemCount > 0 ? '' : 'none';
+        el.textContent = String(itemCount);
+        if (itemCount > 0) {
+          el.removeAttribute('hidden');
+          el.style.display = '';
+        }
       });
 
-      document.querySelectorAll('.peh__cart, [data-cart-icon], a[href*="/cart"]').forEach(function (el) {
-        if (itemCount > 0) {
-          el.setAttribute('aria-label', 'Cart, ' + itemCount + ' items');
-        }
+      document.querySelectorAll('.peh__cart, a[href*="/cart"]').forEach(function (el) {
+        el.setAttribute('aria-label', 'Cart, ' + itemCount + ' items');
       });
     }
 
     function openThemeCart(cartItem) {
       if (!openDrawer) return;
 
-      var drawer = document.querySelector('cart-drawer');
-      if (drawer) {
-        if (typeof drawer.renderContents === 'function' && cartItem) {
-          drawer.renderContents({
-            id: cartItem.variant_id || cartItem.id,
-            key: cartItem.key,
-            quantity: cartItem.quantity || 1,
-            product_id: cartItem.product_id,
-            variant_id: cartItem.variant_id,
-            title: cartItem.product_title,
-            image: cartItem.image,
-            price: cartItem.price,
-            sections: {}
-          });
-        }
-        if (typeof drawer.open === 'function') {
+      try {
+        var drawer = document.querySelector('cart-drawer');
+        if (drawer && typeof drawer.open === 'function') {
           drawer.open();
           return;
         }
-      }
+      } catch (e) {}
 
-      var notification = document.querySelector('cart-notification');
-      if (notification) {
-        if (typeof notification.renderContents === 'function' && cartItem) {
-          notification.renderContents(cartItem);
-        }
-        if (typeof notification.open === 'function') {
+      try {
+        var notification = document.querySelector('cart-notification');
+        if (notification && typeof notification.open === 'function') {
           notification.open();
           return;
         }
-      }
+      } catch (e) {}
 
       document.dispatchEvent(new CustomEvent('cart:open', { bubbles: true }));
+      window.location.href = cartRoot() + 'cart';
     }
 
-    root.querySelectorAll('.pai-cart-form').forEach(function (form) {
+    root.querySelectorAll('[data-pw-cart-form]').forEach(function (form) {
       form.addEventListener('submit', function (event) {
+        var button = form.querySelector('button[type="submit"]');
+        if (!button) return;
+
+        var variantInput = form.querySelector('input[name="id"]');
+        var variantId = variantInput ? String(variantInput.value || '').trim() : '';
+
+        if (!variantId || button.getAttribute('data-missing-variant') === 'true') {
+          event.preventDefault();
+          alert('Theme editor mein product / Variant ID assign karein — phir Add to Cart kaam karega.');
+          return;
+        }
+
         event.preventDefault();
 
-        var button = form.querySelector('button[type="submit"]');
-        if (!button || button.disabled) return;
+        if (button.classList.contains('is-loading')) return;
 
         var originalText = button.textContent;
-        button.disabled = true;
+        button.classList.add('is-loading');
+        button.setAttribute('aria-busy', 'true');
         button.textContent = 'Adding...';
+
+        var body = {
+          id: Number(variantId),
+          quantity: 1
+        };
+
+        var sellingPlan = form.querySelector('input[name="selling_plan"]');
+        if (sellingPlan && sellingPlan.value) {
+          body.selling_plan = Number(sellingPlan.value) || sellingPlan.value;
+        }
 
         fetch(cartRoot() + 'cart/add.js', {
           method: 'POST',
-          headers: { Accept: 'application/json' },
-          body: new FormData(form)
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(body)
         })
           .then(function (response) {
             return response.json().then(function (data) {
@@ -659,10 +731,12 @@
             });
           })
           .then(function (cartItem) {
-            return fetch(cartRoot() + 'cart.js')
+            return fetch(cartRoot() + 'cart.js', {
+              headers: { Accept: 'application/json' }
+            })
               .then(function (r) { return r.json(); })
               .then(function (cart) {
-                updateCartCount(cart.item_count);
+                updateCartCount(cart.item_count || 0);
                 return cartItem;
               });
           })
@@ -671,20 +745,21 @@
             document.dispatchEvent(new CustomEvent('cart:refresh', { bubbles: true }));
             document.dispatchEvent(new CustomEvent('cart:updated', { bubbles: true }));
             if (typeof window.publish === 'function') {
-              window.publish('cart-update');
+              try { window.publish('cart-update', { source: 'pw-choose-pricing' }); } catch (e) {}
             }
             openThemeCart(cartItem);
             setTimeout(function () {
               button.textContent = originalText;
-              button.disabled = false;
-            }, 1400);
+              button.classList.remove('is-loading');
+              button.removeAttribute('aria-busy');
+            }, 1200);
           })
           .catch(function () {
-            button.textContent = 'Try again';
-            button.disabled = false;
-            setTimeout(function () {
-              button.textContent = originalText;
-            }, 1600);
+            // Fallback: normal form submit if AJAX blocked
+            button.textContent = originalText;
+            button.classList.remove('is-loading');
+            button.removeAttribute('aria-busy');
+            form.submit();
           });
       });
     });
@@ -730,6 +805,12 @@
     },
     {
       "type": "text",
+      "id": "subscribe_variant_id",
+      "label": "Subscribe variant ID (optional)",
+      "info": "Product select na ho to Variant ID paste karein."
+    },
+    {
+      "type": "text",
       "id": "selling_plan_id",
       "label": "Selling plan ID (optional)",
       "info": "Blank = first subscription plan auto-used."
@@ -741,14 +822,24 @@
       "info": "Leave blank to use subscribe product."
     },
     {
+      "type": "text",
+      "id": "onetime_variant_id",
+      "label": "One-time variant ID (optional)"
+    },
+    {
       "type": "product",
       "id": "shaker_product",
       "label": "Shaker product"
     },
     {
+      "type": "text",
+      "id": "shaker_variant_id",
+      "label": "Shaker variant ID (optional)"
+    },
+    {
       "type": "checkbox",
       "id": "open_cart_drawer",
-      "label": "Open cart drawer after add",
+      "label": "Open cart / go to cart after add",
       "default": true
     },
     {
