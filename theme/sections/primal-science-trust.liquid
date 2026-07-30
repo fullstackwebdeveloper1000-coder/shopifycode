@@ -1,0 +1,99 @@
+<section id="PwScienceTrust-{{ section.id }}" class="pw-sci-trust">
+  <div class="pw-sci-trust__container">
+    <div class="pw-sci-trust__grid">
+      <div class="pw-sci-trust__photo">
+        {%- if section.settings.image != blank -%}
+          {{ section.settings.image | image_url: width: 800 | image_tag: loading: 'lazy', class: 'pw-sci-trust__photo-img', alt: section.settings.image.alt }}
+        {%- else -%}
+          <span class="pw-sci-trust__sil" aria-hidden="true">
+            <svg width="150" height="150" viewBox="0 0 80 96" fill="currentColor"><circle cx="40" cy="28" r="16"/><path d="M10 96c0-20 13-30 30-30s30 10 30 30z"/></svg>
+          </span>
+        {%- endif -%}
+      </div>
+      <div class="pw-sci-trust__mid">
+        {%- if section.settings.heading != blank -%}<h2>{{ section.settings.heading }}</h2>{%- endif -%}
+        <ul class="pw-sci-trust__list">
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'point' -%}
+              <li {{ block.shopify_attributes }}>
+                <span class="pw-sci-trust__tick" aria-hidden="true">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l4 4L19 7"/></svg>
+                </span>
+                {{ block.settings.text }}
+              </li>
+            {%- endif -%}
+          {%- endfor -%}
+        </ul>
+      </div>
+      <div class="pw-sci-trust__certs">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'cert' -%}
+            <div class="pw-sci-trust__cert" {{ block.shopify_attributes }}>
+              {%- if block.settings.logo != blank -%}
+                <div class="pw-sci-trust__logo">{{ block.settings.logo }}</div>
+              {%- endif -%}
+              {%- if block.settings.text != blank -%}<p>{{ block.settings.text }}</p>{%- endif -%}
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% style %}
+  #PwScienceTrust-{{ section.id }} { background: #14171a; color: #fff; padding: 56px 0; }
+  #PwScienceTrust-{{ section.id }} .pw-sci-trust__container { max-width: 1180px; margin: 0 auto; padding: 0 48px; }
+  #PwScienceTrust-{{ section.id }} .pw-sci-trust__grid { display: grid; grid-template-columns: 1fr 1.1fr 1.1fr; gap: 30px; align-items: center; }
+  #PwScienceTrust-{{ section.id }} .pw-sci-trust__photo { position: relative; aspect-ratio: 1/1; overflow: hidden; border-radius: 14px; background: linear-gradient(160deg,#2a3138,#0f1418); }
+  #PwScienceTrust-{{ section.id }} .pw-sci-trust__photo-img { width: 100%; height: 100%; object-fit: cover; }
+  #PwScienceTrust-{{ section.id }} .pw-sci-trust__sil { position: absolute; left: 50%; bottom: 0; transform: translateX(-50%); color: rgba(255,255,255,.10); }
+  #PwScienceTrust-{{ section.id }} .pw-sci-trust__mid h2 { margin: 0 0 20px; font-family: Montserrat, Arial, sans-serif; font-weight: 800; font-size: 26px; text-transform: uppercase; color: #fff; }
+  #PwScienceTrust-{{ section.id }} .pw-sci-trust__list { margin: 0; padding: 0; list-style: none; display: grid; gap: 16px; }
+  #PwScienceTrust-{{ section.id }} .pw-sci-trust__list li { display: flex; gap: 12px; font-family: Inter, Arial, sans-serif; font-size: 14px; line-height: 1.4; color: #edebe7; }
+  #PwScienceTrust-{{ section.id }} .pw-sci-trust__tick { flex: 0 0 22px; width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; border: 1.5px solid #c89a3d; border-radius: 50%; color: #c89a3d; }
+  #PwScienceTrust-{{ section.id }} .pw-sci-trust__certs { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; padding: 26px; border-radius: 14px; background: #fff; color: #1f2326; }
+  #PwScienceTrust-{{ section.id }} .pw-sci-trust__logo { margin: 0 0 4px; font-family: Montserrat, Arial, sans-serif; font-weight: 800; font-size: 22px; letter-spacing: 0.3px; color: #1f2326; }
+  #PwScienceTrust-{{ section.id }} .pw-sci-trust__cert p:last-child { margin: 0; font-family: Inter, Arial, sans-serif; font-size: 12px; color: #737a80; }
+  @media (max-width: 960px) {
+    #PwScienceTrust-{{ section.id }} .pw-sci-trust__container { padding: 0 34px; }
+    #PwScienceTrust-{{ section.id }} .pw-sci-trust__grid { grid-template-columns: 1fr; gap: 26px; }
+    #PwScienceTrust-{{ section.id }} .pw-sci-trust__photo { max-width: 420px; aspect-ratio: 16/10; }
+  }
+  @media (max-width: 560px) {
+    #PwScienceTrust-{{ section.id }} .pw-sci-trust__container { padding: 0 20px; }
+    #PwScienceTrust-{{ section.id }} .pw-sci-trust__certs { grid-template-columns: 1fr; }
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "Science — Trust",
+  "tag": "section",
+  "class": "pw-section",
+  "settings": [
+    { "type": "image_picker", "id": "image", "label": "Photo (optional)" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Trust In The Science" }
+  ],
+  "blocks": [
+    { "type": "point", "name": "Bullet point", "settings": [{ "type": "text", "id": "text", "label": "Text", "default": "Backed by human clinical studies" }] },
+    { "type": "cert", "name": "Certification", "settings": [
+      { "type": "html", "id": "logo", "label": "Logo text (HTML ok)", "default": "NIH<span style=\"color:#1a6bb5\">›</span>" },
+      { "type": "text", "id": "text", "label": "Description", "default": "National Institutes of Health" }
+    ]}
+  ],
+  "presets": [{
+    "name": "Science — Trust",
+    "blocks": [
+      { "type": "point", "settings": { "text": "Backed by human clinical studies" } },
+      { "type": "point", "settings": { "text": "Doses set to be effective, not token amounts" } },
+      { "type": "point", "settings": { "text": "Formulated by experts in nutrition, performance and longevity" } },
+      { "type": "point", "settings": { "text": "Tested for purity, heavy metals and potency in every batch" } },
+      { "type": "cert", "settings": { "logo": "NIH<span style=\"color:#1a6bb5\">›</span>", "text": "National Institutes of Health" } },
+      { "type": "cert", "settings": { "logo": "Pub<span style=\"color:#1a6bb5\">Med</span>", "text": "Peer-reviewed Research" } },
+      { "type": "cert", "settings": { "logo": "<span style=\"color:#1a6bb5\">efsa</span>", "text": "European Food Safety Authority" } },
+      { "type": "cert", "settings": { "logo": "Cochrane", "text": "Trusted Evidence" } }
+    ]
+  }]
+}
+{% endschema %}
