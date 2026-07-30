@@ -1,0 +1,353 @@
+{% liquid
+  assign heading_font = section.settings.heading_font
+  assign body_font = section.settings.body_font
+%}
+
+<section
+  id="PrimalTrustExact-{{ section.id }}"
+  class="pte-trust"
+  style="
+    --pte-bg: {{ section.settings.background_color }};
+    --pte-heading: {{ section.settings.heading_color }};
+    --pte-body: {{ section.settings.body_color }};
+    --pte-gold: {{ section.settings.icon_color }};
+  "
+>
+  <div class="pw-container pte-trust__wrap">
+    <div
+      class="pte-trust__grid"
+      style="--pte-cols: {{ section.blocks.size | at_least: 1 }};"
+    >
+      {%- for block in section.blocks -%}
+        <article class="pte-trust__item" {{ block.shopify_attributes }}>
+          <div class="pte-trust__icon" aria-hidden="true">
+            {%- if block.settings.icon != blank -%}
+              {{
+                block.settings.icon
+                | image_url: width: 80
+                | image_tag:
+                  alt: '',
+                  loading: 'lazy',
+                  width: 34,
+                  height: 34,
+                  class: 'pte-trust__icon-img'
+              }}
+            {%- else -%}
+              {%- case forloop.index -%}
+                {%- when 1 -%}
+                  <svg class="pte-trust__icon-svg" width="34" height="34" viewBox="0 0 40 40" fill="none" aria-hidden="true" focusable="false">
+                    <circle cx="20" cy="20" r="19" stroke="currentColor" stroke-width="1.4"/>
+                    <path d="M13 26c0-7 6-13 14-13 0 7-6 13-14 13Z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/>
+                    <path d="M14 26c3-4 6-6 11-8" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+                  </svg>
+                {%- when 2 -%}
+                  <svg class="pte-trust__icon-svg" width="34" height="34" viewBox="0 0 40 40" fill="none" aria-hidden="true" focusable="false">
+                    <circle cx="20" cy="20" r="19" stroke="currentColor" stroke-width="1.4"/>
+                    <path d="M17 11h6M18 11v7l-5 8.5A2 2 0 0 0 14.7 30h10.6a2 2 0 0 0 1.7-3.5L22 18v-7" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/>
+                  </svg>
+                {%- when 3 -%}
+                  <svg class="pte-trust__icon-svg" width="34" height="34" viewBox="0 0 40 40" fill="none" aria-hidden="true" focusable="false">
+                    <path d="M20 4l13 5v9c0 8-5.5 13-13 16-7.5-3-13-8-13-16V9l13-5Z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/>
+                    <path d="M15 20l3.5 3.5L26 16" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                {%- when 4 -%}
+                  <svg class="pte-trust__icon-svg" width="34" height="34" viewBox="0 0 40 40" fill="none" aria-hidden="true" focusable="false">
+                    <circle cx="20" cy="20" r="19" stroke="currentColor" stroke-width="1.4"/>
+                    <path d="M20 1v38M1 20h38M6 6l28 28M34 6L6 34" stroke="currentColor" stroke-width="1"/>
+                  </svg>
+                {%- else -%}
+                  <svg class="pte-trust__icon-svg" width="34" height="34" viewBox="0 0 40 40" fill="none" aria-hidden="true" focusable="false">
+                    <circle cx="20" cy="20" r="19" stroke="currentColor" stroke-width="1.4"/>
+                    <path d="M13 20.5l4.5 4.5L28 14" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+              {%- endcase -%}
+            {%- endif -%}
+          </div>
+
+          <div class="pte-trust__copy">
+            {%- if block.settings.title != blank -%}
+              <h3 class="pte-trust__title">{{ block.settings.title | newline_to_br }}</h3>
+            {%- endif -%}
+            {%- if block.settings.text != blank -%}
+              <p class="pte-trust__text">{{ block.settings.text | newline_to_br }}</p>
+            {%- endif -%}
+          </div>
+        </article>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% style %}
+  {{ heading_font | font_face: font_display: 'swap' }}
+  {{ body_font | font_face: font_display: 'swap' }}
+
+  #PrimalTrustExact-{{ section.id }} {
+    {% render 'pw-align-vars' %}
+  }
+
+  #shopify-section-{{ section.id }} {
+    display: block !important;
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow-x: clip !important;
+  }
+
+  #shopify-section-{{ section.id }} .page-width,
+  #shopify-section-{{ section.id }} > .page-width {
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  #PrimalTrustExact-{{ section.id }},
+  #PrimalTrustExact-{{ section.id }} *,
+  #PrimalTrustExact-{{ section.id }} *::before,
+  #PrimalTrustExact-{{ section.id }} *::after {
+    box-sizing: border-box;
+  }
+
+  #PrimalTrustExact-{{ section.id }} {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    background: var(--pte-bg);
+    border-top: 1px solid rgba(31, 35, 38, 0.10);
+    border-bottom: 1px solid rgba(31, 35, 38, 0.10);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  #PrimalTrustExact-{{ section.id }} .pw-container.pte-trust__wrap {
+    width: 100%;
+    max-width: var(--pw-inner);
+    margin-inline: auto;
+    padding-inline: var(--pw-gutter);
+    overflow: hidden;
+  }
+
+  #PrimalTrustExact-{{ section.id }} .pte-trust__grid {
+    display: grid;
+    grid-template-columns: repeat(var(--pte-cols, 5), minmax(0, 1fr));
+    width: 100%;
+    margin: 0;
+    padding: 0;
+  }
+
+  #PrimalTrustExact-{{ section.id }} .pte-trust__item {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 14px;
+    min-width: 0;
+    padding: 30px 22px;
+    margin: 0;
+    border-left: 1px solid rgba(31, 35, 38, 0.10);
+  }
+
+  #PrimalTrustExact-{{ section.id }} .pte-trust__item:first-child {
+    border-left: 0;
+    padding-left: 0;
+  }
+
+  #PrimalTrustExact-{{ section.id }} .pte-trust__item:last-child {
+    padding-right: 0;
+  }
+
+  #PrimalTrustExact-{{ section.id }} .pte-trust__icon {
+    flex: 0 0 34px;
+    width: 34px;
+    height: 34px;
+    color: var(--pte-gold);
+    line-height: 0;
+  }
+
+  #PrimalTrustExact-{{ section.id }} .pte-trust__icon-img,
+  #PrimalTrustExact-{{ section.id }} .pte-trust__icon-svg {
+    display: block;
+    width: 34px;
+    height: 34px;
+    object-fit: contain;
+  }
+
+  #PrimalTrustExact-{{ section.id }} .pte-trust__copy {
+    flex: 1;
+    min-width: 0;
+  }
+
+  #PrimalTrustExact-{{ section.id }} .pte-trust__title {
+    margin: 0 0 8px;
+    padding: 0;
+    color: var(--pte-heading);
+    font-family: {{ heading_font.family }}, 'Montserrat', Arial, sans-serif;
+    font-style: {{ heading_font.style }};
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 1.2;
+    letter-spacing: 0.4px;
+    text-transform: uppercase;
+  }
+
+  #PrimalTrustExact-{{ section.id }} .pte-trust__text {
+    margin: 0;
+    padding: 0;
+    color: var(--pte-body);
+    font-family: {{ body_font.family }}, 'Inter', Arial, sans-serif;
+    font-style: {{ body_font.style }};
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 1.5;
+  }
+
+  @media screen and (max-width: 989px) {
+    #PrimalTrustExact-{{ section.id }} .pw-container.pte-trust__wrap {
+      padding-inline: 0;
+    }
+
+    #PrimalTrustExact-{{ section.id }} .pte-trust__grid {
+      display: flex;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+
+    #PrimalTrustExact-{{ section.id }} .pte-trust__grid::-webkit-scrollbar {
+      display: none;
+    }
+
+    #PrimalTrustExact-{{ section.id }} .pte-trust__item {
+      flex: 0 0 min(82vw, 320px);
+      scroll-snap-align: start;
+      border-left: 0;
+      border-right: 1px solid rgba(31, 35, 38, 0.10);
+      padding: 24px 20px;
+    }
+
+    #PrimalTrustExact-{{ section.id }} .pte-trust__item:first-child {
+      padding-left: var(--pw-gutter);
+    }
+
+    #PrimalTrustExact-{{ section.id }} .pte-trust__item:last-child {
+      padding-right: var(--pw-gutter);
+      border-right: 0;
+    }
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "Primal Trust Exact",
+  "tag": "section",
+  "class": "section-primal-trust-exact",
+  "max_blocks": 5,
+  "settings": [
+    {
+      "type": "font_picker",
+      "id": "heading_font",
+      "label": "Heading font",
+      "default": "montserrat_n7"
+    },
+    {
+      "type": "font_picker",
+      "id": "body_font",
+      "label": "Body font",
+      "default": "inter_n4"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading colour",
+      "default": "#1F2326"
+    },
+    {
+      "type": "color",
+      "id": "body_color",
+      "label": "Body colour",
+      "default": "#737A80"
+    },
+    {
+      "type": "color",
+      "id": "icon_color",
+      "label": "Default icon colour",
+      "default": "#C89A3D"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "item",
+      "name": "Trust item",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "icon",
+          "label": "Icon (optional — client can upload later)",
+          "info": "34 x 34 px recommended. Khali chhoro to default gold icon lagega."
+        },
+        {
+          "type": "textarea",
+          "id": "title",
+          "label": "Heading (Enter = new line)",
+          "default": "Clean &\nTransparent"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Description",
+          "default": "No fillers. No shortcuts.\nJust what your body\nneeds to perform."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Primal Trust Exact",
+      "blocks": [
+        {
+          "type": "item",
+          "settings": {
+            "title": "Clean &\nTransparent",
+            "text": "No fillers. No shortcuts.\nJust what your body\nneeds to perform."
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "title": "Science\nBacked",
+            "text": "Formulated by experts.\nBuilt on research.\nProven in real life."
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "title": "Third-Party\nTested",
+            "text": "Independently tested\nfor purity, potency and\nquality."
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "title": "Made In\nThe UK",
+            "text": "Manufactured to the\nhighest standards in\nthe United Kingdom."
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "title": "Performance\nYou Feel",
+            "text": "Designed to fuel your\nenergy, focus, recovery\nand resilience."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,59 @@
+================================================================================
+PRIMAL WIN — GLOBAL 1440 / 1280 ALIGNMENT (ONE-TIME SETUP)
+================================================================================
+
+Yeh ek baar lagao — phir har nayi section mein sirf HTML classes use karo.
+
+STEP 1 — snippets/pw-align-global.liquid (NEW FILE)
+  → Paste: theme/snippets/pw-align-global.liquid
+
+STEP 2 — layout/theme.liquid (EDIT ONE LINE)
+  → <head> ke andar, </head> se pehle yeh line add karo:
+
+    {% render 'pw-align-global' %}
+
+  Example:
+    <head>
+      ...
+      {{ content_for_header }}
+      {% render 'pw-align-global' %}
+    </head>
+
+STEP 3 — Har custom section ke schema mein (agar nahi hai):
+    "class": "pw-section"
+
+================================================================================
+CSS TOKENS (auto available everywhere)
+================================================================================
+  --pw-frame / --pw-max  = 1440px
+  --pw-content           = 1280px
+  --pw-gutter            = 48px (responsive)
+  --pw-inner             = 1376px (1280 + 2×48)
+
+================================================================================
+HAR NAYI SECTION MEIN HTML
+================================================================================
+
+  <section id="YourSection-{{ section.id }}">
+    <div class="pw-container">
+      <div class="pw-content">
+        heading / text yahan — 1280 column
+      </div>
+    </div>
+
+    <div class="pw-frame">
+      carousel / wide band — 1440 (arrows bahar)
+    </div>
+  </section>
+
+================================================================================
+PURANI SECTIONS
+================================================================================
+  Jo sections pehle se pw-container + pw-section use karti hain — woh theek rahengi.
+  Jo Dawn default sections hain (page-width) — unko manually pw-section class
+  schema mein add karna hoga YA section replace karni hogi.
+
+  100% magic nahi: section ke andar HTML mein pw-container wrap zaroori hai.
+  Global file CSS + Dawn reset deti hai — structure HTML se aata hai.
+
+================================================================================
