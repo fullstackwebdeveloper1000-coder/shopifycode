@@ -35,7 +35,7 @@ STEP 4 — Save + Preview
 - UK trust badge dikhe
 - Background full width, content header/footer ke saath align
 
-RAW GITHUB LINKS (branch: cursor/primal-ingredients-align-7eea)
+RAW GITHUB LINKS (branch: cursor/primal-win-integration-c79e)
 ---------------------------------------------------------------
 Full file:
 https://raw.githubusercontent.com/fullstackwebdeveloper1000-coder/shopifycode/cursor/primal-ingredients-align-7eea/INGREDIENTS-PASTE-FULL.liquid
