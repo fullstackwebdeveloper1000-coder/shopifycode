@@ -713,8 +713,8 @@
     font: 12px/1.4 Inter, Arial, sans-serif;
   }
 
-  /* Tablet: keep 3-col features when possible, tighten card */
-  @media screen and (max-width: 989px) and (min-width: 821px) {
+  /* Tablet (iPad Mini/Air, Nexus 7–10, Tab S4): 3-col features + stacked card */
+  @media screen and (max-width: 989px) and (min-width: 750px) {
     #PrimalPrelaunch-{{ section.id }} {
       padding: 36px 0 40px;
     }
@@ -722,6 +722,7 @@
     #PrimalPrelaunch-{{ section.id }} .primal-launch__features {
       grid-template-columns: repeat(3, minmax(0, 1fr));
       max-width: 100%;
+      width: 100%;
       min-height: 110px;
       height: auto;
       margin-bottom: 56px;
@@ -747,16 +748,40 @@
     }
 
     #PrimalPrelaunch-{{ section.id }} .primal-launch__card {
-      aspect-ratio: auto;
+      display: flex;
+      flex-direction: column;
+      grid-template-columns: none;
+      aspect-ratio: auto !important;
+      height: auto !important;
       min-height: 0;
+      border-radius: 20px;
+    }
+
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__card::after {
+      display: none !important;
     }
 
     #PrimalPrelaunch-{{ section.id }} .primal-launch__offer {
-      padding: 36px 28px 36px 32px;
+      align-items: center;
+      text-align: center;
+      padding: 28px 32px 20px !important;
     }
 
     #PrimalPrelaunch-{{ section.id }} .primal-launch__signup {
-      padding: 32px 28px 28px 24px;
+      padding: 20px 32px 24px !important;
+      border-top: 1px solid rgba(200, 154, 61, 0.3);
+    }
+
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__offer h2 {
+      text-align: center;
+    }
+
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__badge {
+      margin-inline: auto;
+    }
+
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__discount {
+      justify-content: center;
     }
 
     #PrimalPrelaunch-{{ section.id }} .primal-launch__number {
@@ -768,10 +793,12 @@
     }
   }
 
-  /* Phone / small tablet: compact stack — no empty card length */
-  @media screen and (max-width: 820px) {
+  /* Phone: compact stack — no empty card length
+     Covers iPhone SE/XR/12/14, Pixels, Galaxies, Moto, Lumia, etc. */
+  @media screen and (max-width: 749px) {
     #PrimalPrelaunch-{{ section.id }} {
       padding: 16px 0 18px;
+      overflow-x: hidden;
     }
 
     #PrimalPrelaunch-{{ section.id }} .pw-container.primal-launch__container {
@@ -784,7 +811,8 @@
       max-width: 100%;
       width: 100%;
       height: auto;
-      margin-bottom: 20px;
+      min-height: 0;
+      margin-bottom: 28px;
       gap: 0;
     }
 
@@ -841,7 +869,7 @@
     #PrimalPrelaunch-{{ section.id }} .primal-launch__icon {
       width: 44px;
       height: 44px;
-      flex-basis: 44px;
+      flex: 0 0 44px;
     }
 
     #PrimalPrelaunch-{{ section.id }} .primal-launch__card {
@@ -954,6 +982,7 @@
       height: auto !important;
       min-height: 0;
       padding: 0 1px;
+      min-width: 0;
     }
 
     #PrimalPrelaunch-{{ section.id }} .primal-launch__time strong {
@@ -1036,7 +1065,7 @@
     }
 
     #PrimalPrelaunch-{{ section.id }} .primal-launch__features {
-      margin-bottom: 10px;
+      margin-bottom: 24px;
     }
 
     #PrimalPrelaunch-{{ section.id }} .primal-launch__offer {
@@ -1100,17 +1129,22 @@
     }
   }
 
+  /* iPhone SE / Lumia 520 / small Androids */
   @media screen and (max-width: 360px) {
     #PrimalPrelaunch-{{ section.id }} .pw-container.primal-launch__container {
       padding-inline: 8px;
     }
 
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__features {
+      margin-bottom: 22px;
+    }
+
     #PrimalPrelaunch-{{ section.id }} .primal-launch__offer {
-      padding: 12px 10px 8px;
+      padding: 12px 10px 8px !important;
     }
 
     #PrimalPrelaunch-{{ section.id }} .primal-launch__signup {
-      padding: 8px 10px 10px;
+      padding: 8px 10px 10px !important;
     }
 
     #PrimalPrelaunch-{{ section.id }} .primal-launch__number {
@@ -1125,14 +1159,111 @@
       font-size: 20px;
     }
 
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__feature strong {
+      font-size: 13px !important;
+      line-height: 16px !important;
+    }
+
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__time strong {
+      font-size: clamp(14px, 5vw, 18px);
+    }
+
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__time span {
+      font-size: 6px;
+      letter-spacing: 0.3px;
+    }
+
     #PrimalPrelaunch-{{ section.id }} .primal-launch__date strong {
       font-size: 9px;
       letter-spacing: 0.8px;
+      white-space: normal;
+      text-align: center;
     }
 
     #PrimalPrelaunch-{{ section.id }} .primal-launch__button {
       font-size: 8.5px;
       grid-template-columns: 1fr 36px;
+    }
+  }
+
+  /* JioPhone 2 / very narrow (≈240–320) */
+  @media screen and (max-width: 320px) {
+    #PrimalPrelaunch-{{ section.id }} {
+      padding: 10px 0 12px;
+    }
+
+    #PrimalPrelaunch-{{ section.id }} .pw-container.primal-launch__container {
+      padding-inline: 6px;
+    }
+
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__icon {
+      width: 36px;
+      height: 36px;
+      flex: 0 0 36px;
+    }
+
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__feature strong {
+      font-size: 11px !important;
+      line-height: 14px !important;
+      letter-spacing: 0.2px !important;
+    }
+
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__feature p {
+      font-size: 11px;
+    }
+
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__number {
+      font-size: 40px;
+    }
+
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__percent {
+      font-size: 18px;
+    }
+
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__off {
+      font-size: 16px;
+    }
+
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__offer h2 {
+      font-size: 12px;
+    }
+
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__badge {
+      height: 32px;
+      font-size: 8px;
+      letter-spacing: 0.8px;
+    }
+
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__launching {
+      font-size: 9px;
+      letter-spacing: 1.2px;
+    }
+
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__time strong {
+      font-size: 13px;
+    }
+
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__time span {
+      font-size: 5px;
+    }
+
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__email,
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__button {
+      height: 38px;
+    }
+
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__button {
+      font-size: 7.5px;
+      grid-template-columns: 1fr 32px;
+    }
+
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__button > span:first-child {
+      padding-left: 4px;
+      padding-right: 2px;
+    }
+
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__note p {
+      font-size: 9px;
     }
   }
 {% endstyle %}
