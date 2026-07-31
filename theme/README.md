@@ -18,7 +18,7 @@ These files extend **Shopify Dawn** (or similar). They are maintained against th
 | `primal-hero-perfect.liquid` | Homepage hero (620px) |
 | `primal-homeingredient.liquid` | Homepage ingredient cards + deep links |
 | `primal-ingredient-grid.liquid` | Alternate homepage grid |
-| `primal-trust-bar.liquid` / `primal-trust-fixed.liquid` | Trust strip (desktop / mobile swipe) |
+| `pw-trust-bar.liquid` | Trust bar — 1440/1280 header-aligned, SVG upload |
 | `primal-ingredients.liquid` | Full ingredients page |
 | `primal-science-*.liquid`, `pw-science-*.liquid` | The Science page (see `templates/page.the-science.json`) |
 | `primal-story-hero.liquid` | Our Story |
