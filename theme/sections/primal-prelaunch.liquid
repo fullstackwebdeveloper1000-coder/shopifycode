@@ -339,10 +339,15 @@
     display: block;
     color: var(--dark);
     font-family: Montserrat, Arial, sans-serif;
-    font-size: clamp(13px, 1.34cqw, 15px);
-    font-weight: 800;
-    line-height: 1.15;
-    letter-spacing: 0.2px;
+    font-weight: 700;
+    font-style: normal;
+    font-size: 16.62px;
+    font-size: min(1.29375cqw, 16.62px);
+    line-height: 19.95px;
+    line-height: min(1.552734cqw, 19.95px);
+    letter-spacing: 0.44px;
+    text-transform: uppercase;
+    vertical-align: middle;
   }
 
   #PrimalPrelaunch-{{ section.id }} .primal-launch__feature p {
@@ -746,7 +751,12 @@
     }
 
     #PrimalPrelaunch-{{ section.id }} .primal-launch__feature strong {
-      font-size: 13px;
+      font-family: Montserrat, Arial, sans-serif;
+      font-weight: 700;
+      font-size: 15px;
+      line-height: 18px;
+      letter-spacing: 0.44px;
+      text-transform: uppercase;
     }
 
     #PrimalPrelaunch-{{ section.id }} .primal-launch__feature p {
