@@ -14,6 +14,7 @@ These files extend **Shopify Dawn** (or similar). They are maintained against th
 | Section file | Use |
 |--------------|-----|
 | `primal-prelaunch.liquid` | Trust row + pre-launch offer card (1280 align) |
+| `primal-win-hero-password.liquid` | Password / holding hero (1440×730) |
 | `primal-hero-perfect.liquid` | Homepage hero (620px) |
 | `primal-homeingredient.liquid` | Homepage ingredient cards + deep links |
 | `primal-ingredient-grid.liquid` | Alternate homepage grid |
