@@ -1,0 +1,471 @@
+{% comment %}
+  Primal Trust Bar — 1440 section / 1280 content (header-aligned).
+  SVG upload: raw <svg>, Files URL, Assets filename, or image_picker.
+{% endcomment %}
+
+<section
+  id="PwTrustBar-{{ section.id }}"
+  class="pw-trust-bar"
+  style="
+    --ptb-background: {{ section.settings.background_color }};
+    --ptb-text: {{ section.settings.text_color }};
+    --ptb-icon: {{ section.settings.icon_color }};
+    --ptb-border: {{ section.settings.border_color }};
+  "
+>
+  <div class="pw-container pw-trust-bar__container">
+    <div class="pw-trust-bar__stage" role="list">
+      {% for block in section.blocks limit: 5 %}
+        {% liquid
+          assign ptb_svg_value = block.settings.svg_source | strip
+          assign ptb_svg_url = ''
+          assign ptb_inline_svg = false
+
+          if ptb_svg_value != blank
+            if ptb_svg_value contains '<svg'
+              assign ptb_inline_svg = true
+            elsif ptb_svg_value contains '://'
+              assign ptb_svg_url = ptb_svg_value
+            elsif ptb_svg_value contains '//cdn.'
+              assign ptb_svg_url = ptb_svg_value
+            elsif block.settings.svg_location == 'files'
+              assign ptb_svg_filename = ptb_svg_value | remove_first: 'files/' | remove_first: '/files/'
+              assign ptb_svg_url = ptb_svg_filename | file_url
+            else
+              assign ptb_svg_url = ptb_svg_value | asset_url
+            endif
+          endif
+        %}
+
+        <div
+          class="pw-trust-bar__item"
+          role="listitem"
+          {{ block.shopify_attributes }}
+        >
+          <span class="pw-trust-bar__icon" aria-hidden="true">
+            {% if ptb_inline_svg %}
+              <span class="pw-trust-bar__inline-svg">
+                {{ ptb_svg_value }}
+              </span>
+            {% elsif ptb_svg_url != blank %}
+              <img
+                src="{{ ptb_svg_url }}"
+                alt=""
+                width="24"
+                height="24"
+                loading="lazy"
+              >
+            {% elsif block.settings.icon_image != blank %}
+              {{
+                block.settings.icon_image
+                | image_url: width: 96
+                | image_tag:
+                  loading: 'lazy',
+                  width: 24,
+                  height: 24,
+                  alt: ''
+              }}
+            {% else %}
+              {% case forloop.index %}
+                {% when 1 %}
+                  <svg viewBox="0 0 24 24" role="presentation">
+                    <path d="M8 3h8M9 3v5l-4.3 8.3A2.4 2.4 0 0 0 6.8 20h10.4a2.4 2.4 0 0 0 2.1-3.7L15 8V3"/>
+                    <path d="M7.5 15h9"/>
+                    <path d="m10 13 1 1 2-2 2 2"/>
+                  </svg>
+                {% when 2 %}
+                  <svg viewBox="0 0 24 24" role="presentation">
+                    <path d="M12 2.5 20 6v6.2c0 5.2-3.1 8.2-8 10.3-4.9-2.1-8-5.1-8-10.3V6l8-3.5Z"/>
+                    <path d="m8.5 12.2 2.2 2.2 4.8-5"/>
+                  </svg>
+                {% when 3 %}
+                  <svg viewBox="0 0 24 24" role="presentation">
+                    <path d="M20.5 3.5C12.8 4.1 7 8.4 7 14.8c0 3.2 2.3 5.5 5.5 5.5 6.4 0 10.5-5.9 11-13.5Z"/>
+                    <path d="M3.5 21c4.5-5.2 8.6-9 15.2-12.8"/>
+                  </svg>
+                {% when 4 %}
+                  <svg viewBox="0 0 24 24" role="presentation">
+                    <rect x="2" y="3" width="20" height="18" rx="1"/>
+                    <path d="M2 3 22 21M22 3 2 21M12 3v18M2 12h20"/>
+                    <path d="M2 6.5h4.5V3M17.5 3v3.5H22M22 17.5h-4.5V21M6.5 21v-3.5H2"/>
+                  </svg>
+                {% else %}
+                  <svg viewBox="0 0 24 24" role="presentation">
+                    <path d="M12 2.5 20 6v6.2c0 5.2-3.1 8.2-8 10.3-4.9-2.1-8-5.1-8-10.3V6l8-3.5Z"/>
+                    <path d="m12 8 .9 1.9 2.1.3-1.5 1.5.4 2.1-1.9-1-1.9 1 .4-2.1L9 10.2l2.1-.3L12 8Z"/>
+                  </svg>
+              {% endcase %}
+            {% endif %}
+          </span>
+
+          {% if block.settings.label != blank %}
+            <span class="pw-trust-bar__label">
+              {{ block.settings.label | escape }}
+            </span>
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% style %}
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@700&display=swap');
+
+  #PwTrustBar-{{ section.id }} {
+    {% render 'pw-align-vars' %}
+  }
+
+  #shopify-section-{{ section.id }} {
+    display: block !important;
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: var(--ptb-background, #FFFFFF) !important;
+    overflow: hidden !important;
+  }
+
+  #shopify-section-{{ section.id }} .page-width,
+  #shopify-section-{{ section.id }} > .page-width {
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  #PwTrustBar-{{ section.id }},
+  #PwTrustBar-{{ section.id }} *,
+  #PwTrustBar-{{ section.id }} *::before,
+  #PwTrustBar-{{ section.id }} *::after {
+    box-sizing: border-box;
+  }
+
+  #PwTrustBar-{{ section.id }} {
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background: var(--ptb-background, #FFFFFF);
+    border-bottom: 1px solid var(--ptb-border, #E5E7EB);
+    color: var(--ptb-text, #10251B);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* 1280 content + gutters — same line as Primal Exact Header */
+  #PwTrustBar-{{ section.id }} .pw-container.pw-trust-bar__container {
+    width: 100%;
+    max-width: var(--pw-inner);
+    margin-inline: auto;
+    padding-inline: var(--pw-gutter);
+  }
+
+  #PwTrustBar-{{ section.id }} .pw-trust-bar__stage {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: clamp(12px, 1.5vw, 24px);
+    width: 100%;
+    min-height: 88px;
+    margin: 0;
+    padding: 0;
+  }
+
+  #PwTrustBar-{{ section.id }} .pw-trust-bar__item {
+    display: inline-flex;
+    flex: 0 1 auto;
+    align-items: center;
+    gap: 14px;
+    width: auto;
+    min-width: 0;
+    margin: 0;
+    padding: 0;
+    white-space: nowrap;
+  }
+
+  #PwTrustBar-{{ section.id }} .pw-trust-bar__icon {
+    display: grid;
+    flex: 0 0 24px;
+    place-items: center;
+    width: 24px;
+    height: 24px;
+    color: var(--ptb-icon, #10251B);
+  }
+
+  #PwTrustBar-{{ section.id }} .pw-trust-bar__icon img,
+  #PwTrustBar-{{ section.id }} .pw-trust-bar__icon > svg,
+  #PwTrustBar-{{ section.id }} .pw-trust-bar__inline-svg {
+    display: block;
+    width: 24px;
+    height: 24px;
+    max-width: 24px;
+    max-height: 24px;
+    object-fit: contain;
+  }
+
+  #PwTrustBar-{{ section.id }} .pw-trust-bar__inline-svg {
+    line-height: 0;
+  }
+
+  #PwTrustBar-{{ section.id }} .pw-trust-bar__inline-svg svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  #PwTrustBar-{{ section.id }} .pw-trust-bar__icon > svg {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  #PwTrustBar-{{ section.id }} .pw-trust-bar__label {
+    color: var(--ptb-text, #10251B);
+    font-family: Inter, Arial, sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 14px;
+    letter-spacing: 0;
+    text-align: left;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  /* Large tablets / small laptops */
+  @media screen and (max-width: 1180px) {
+    #PwTrustBar-{{ section.id }} .pw-trust-bar__stage {
+      min-height: 80px;
+      gap: 16px;
+    }
+
+    #PwTrustBar-{{ section.id }} .pw-trust-bar__item {
+      gap: 10px;
+    }
+
+    #PwTrustBar-{{ section.id }} .pw-trust-bar__label {
+      font-size: 10px;
+      line-height: 13px;
+    }
+  }
+
+  /* Tablet: wrap to grid, stay on 1280 gutters */
+  @media screen and (max-width: 989px) {
+    #PwTrustBar-{{ section.id }} .pw-trust-bar__stage {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      column-gap: 20px;
+      row-gap: 18px;
+      min-height: 0;
+      padding: 22px 0;
+      justify-content: stretch;
+    }
+
+    #PwTrustBar-{{ section.id }} .pw-trust-bar__item {
+      width: 100%;
+      white-space: normal;
+      justify-content: flex-start;
+    }
+
+    #PwTrustBar-{{ section.id }} .pw-trust-bar__label {
+      white-space: normal;
+      line-height: 1.3;
+    }
+
+    #PwTrustBar-{{ section.id }} .pw-trust-bar__item:nth-child(4) {
+      grid-column: 1;
+    }
+
+    #PwTrustBar-{{ section.id }} .pw-trust-bar__item:nth-child(5) {
+      grid-column: 2;
+    }
+  }
+
+  /* Mobile: 2 columns */
+  @media screen and (max-width: 749px) {
+    #PwTrustBar-{{ section.id }} .pw-trust-bar__stage {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      column-gap: 12px;
+      row-gap: 14px;
+      padding: 18px 0;
+    }
+
+    #PwTrustBar-{{ section.id }} .pw-trust-bar__item {
+      gap: 10px;
+      min-height: 0;
+    }
+
+    #PwTrustBar-{{ section.id }} .pw-trust-bar__item:nth-child(4),
+    #PwTrustBar-{{ section.id }} .pw-trust-bar__item:nth-child(5) {
+      grid-column: auto;
+    }
+
+    #PwTrustBar-{{ section.id }} .pw-trust-bar__item:last-child:nth-child(odd) {
+      grid-column: 1 / -1;
+      width: max-content;
+      max-width: 100%;
+      justify-self: center;
+    }
+
+    #PwTrustBar-{{ section.id }} .pw-trust-bar__icon {
+      flex-basis: 22px;
+      width: 22px;
+      height: 22px;
+    }
+
+    #PwTrustBar-{{ section.id }} .pw-trust-bar__icon img,
+    #PwTrustBar-{{ section.id }} .pw-trust-bar__icon > svg,
+    #PwTrustBar-{{ section.id }} .pw-trust-bar__inline-svg {
+      width: 22px;
+      height: 22px;
+      max-width: 22px;
+      max-height: 22px;
+    }
+
+    #PwTrustBar-{{ section.id }} .pw-trust-bar__label {
+      font-size: clamp(9px, 2.6vw, 10px);
+      line-height: 1.28;
+      white-space: normal;
+    }
+  }
+
+  /* Narrow phones: single column */
+  @media screen and (max-width: 390px) {
+    #PwTrustBar-{{ section.id }} .pw-trust-bar__stage {
+      grid-template-columns: 1fr;
+      row-gap: 12px;
+      padding: 16px 0;
+    }
+
+    #PwTrustBar-{{ section.id }} .pw-trust-bar__item,
+    #PwTrustBar-{{ section.id }} .pw-trust-bar__item:last-child:nth-child(odd) {
+      grid-column: auto;
+      width: 100%;
+      justify-self: stretch;
+    }
+
+    #PwTrustBar-{{ section.id }} .pw-trust-bar__label {
+      font-size: 10px;
+    }
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "Primal Trust Bar",
+  "tag": "section",
+  "class": "pw-primal-trust-bar-section",
+  "max_blocks": 5,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Colours"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text",
+      "default": "#10251B"
+    },
+    {
+      "type": "color",
+      "id": "icon_color",
+      "label": "Icons",
+      "default": "#10251B"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Bottom border",
+      "default": "#E5E7EB"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "trust_item",
+      "name": "Trust item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Text",
+          "default": "DEVELOPED BY SCIENTISTS"
+        },
+        {
+          "type": "textarea",
+          "id": "svg_source",
+          "label": "SVG / URL / filename",
+          "info": "Raw <svg>, Files URL, or Assets filename."
+        },
+        {
+          "type": "select",
+          "id": "svg_location",
+          "label": "SVG file location",
+          "default": "files",
+          "options": [
+            {
+              "value": "files",
+              "label": "Content > Files"
+            },
+            {
+              "value": "assets",
+              "label": "Theme Assets"
+            }
+          ]
+        },
+        {
+          "type": "image_picker",
+          "id": "icon_image",
+          "label": "PNG / WebP icon"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Primal Trust Bar",
+      "blocks": [
+        {
+          "type": "trust_item",
+          "settings": {
+            "label": "DEVELOPED BY SCIENTISTS"
+          }
+        },
+        {
+          "type": "trust_item",
+          "settings": {
+            "label": "THIRD-PARTY TESTED"
+          }
+        },
+        {
+          "type": "trust_item",
+          "settings": {
+            "label": "CLEAN & TRANSPARENT"
+          }
+        },
+        {
+          "type": "trust_item",
+          "settings": {
+            "label": "MADE IN THE UK"
+          }
+        },
+        {
+          "type": "trust_item",
+          "settings": {
+            "label": "GMP CERTIFIED"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
