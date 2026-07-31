@@ -46,7 +46,7 @@
             </svg>
           {% endif %}
         </div>
-        <div>
+        <div class="primal-launch__copy">
           <strong>40 ACTIVE<br>INGREDIENTS</strong>
           <p>Powerful blends for energy, focus<br> and vitality.</p>
         </div>
@@ -73,7 +73,7 @@
             </svg>
           {% endif %}
         </div>
-        <div>
+        <div class="primal-launch__copy">
           <strong>UK<br>MANUFACTURED</strong>
           <p>Made in the UK to the highest<br> standards.</p>
         </div>
@@ -100,7 +100,7 @@
             </svg>
           {% endif %}
         </div>
-        <div>
+        <div class="primal-launch__copy">
           <strong>FULL LABEL<br>TRANSPARENCY</strong>
           <p>Honest ingredients. Nothing to<br> hide.</p>
         </div>
@@ -303,13 +303,13 @@
 
   #PrimalPrelaunch-{{ section.id }} .primal-launch__feature {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     gap: 17px;
     width: 382px;
     max-width: 100%;
     height: 110px;
     margin: 0;
-    padding: 0 23px;
+    padding: 25.5px 23px 0;
     border: none;
     border-left: 1.11px solid rgba(31, 35, 38, 0.17);
     box-sizing: border-box;
@@ -328,6 +328,17 @@
     width: 59px;
     height: 59px;
     flex: 0 0 59px;
+    margin: 0;
+    line-height: 0;
+  }
+
+  /* Heading (2×19.95 = 39.9) vertically centers with 59px icon — body hangs below */
+  #PrimalPrelaunch-{{ section.id }} .primal-launch__copy {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    min-width: 0;
+    padding-top: 9.55px;
   }
 
   /* Below Figma row width: keep 110px tall equal columns */
@@ -715,14 +726,18 @@
       width: auto;
       max-width: none;
       height: 110px;
-      align-items: center;
-      padding: 0 12px;
+      align-items: flex-start;
+      padding: 25.5px 12px 0;
       border-left: 1.11px solid rgba(31, 35, 38, 0.17);
     }
 
     #PrimalPrelaunch-{{ section.id }} .primal-launch__feature:first-child {
       border-left: none;
       padding-left: 4px;
+    }
+
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__copy {
+      padding-top: 9.55px;
     }
 
     #PrimalPrelaunch-{{ section.id }} .primal-launch__card {
@@ -774,12 +789,17 @@
       max-width: none;
       height: auto;
       min-height: 0;
+      align-items: flex-start;
       padding: 10px 0;
       border: none;
       border-left: none;
       border-right: 0;
       border-bottom: 1px solid rgba(31, 35, 38, 0.16);
       gap: 12px;
+    }
+
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__copy {
+      padding-top: 5px;
     }
 
     #PrimalPrelaunch-{{ section.id }} .primal-launch__feature:last-child {
