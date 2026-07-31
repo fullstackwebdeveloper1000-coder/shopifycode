@@ -1,0 +1,397 @@
+{% comment %}
+  Custom Trust Specs — scientists band
+  1440 section / 1280 content (header-aligned). No JS scale.
+{% endcomment %}
+
+<section
+  id="PwTrustSpecs-{{ section.id }}"
+  class="pw-trust-specs"
+  style="
+    --pts-bg: {{ section.settings.background_color }};
+    --pts-text: {{ section.settings.text_color }};
+    --pts-gold: {{ section.settings.highlight_color }};
+    --pts-rule: {{ section.settings.divider_color }};
+  "
+>
+  <div class="pw-container pw-trust-specs__container">
+    {% if section.settings.heading_part_1 != blank or section.settings.heading_part_2 != blank %}
+      <h2 class="pw-trust-specs__heading">
+        {% if section.settings.heading_part_1 != blank %}
+          <span class="pw-trust-specs__heading-main">{{ section.settings.heading_part_1 | escape }}</span>
+        {% endif %}
+        {% if section.settings.heading_part_2 != blank %}
+          <span class="pw-trust-specs__heading-gold">{{ section.settings.heading_part_2 | escape }}</span>
+        {% endif %}
+      </h2>
+    {% endif %}
+
+    <hr class="pw-trust-specs__rule" aria-hidden="true">
+
+    <div class="pw-trust-specs__grid" role="list">
+      {% for block in section.blocks limit: 4 %}
+        <div
+          class="pw-trust-specs__item"
+          role="listitem"
+          {{ block.shopify_attributes }}
+        >
+          {% if block.settings.custom_svg != blank %}
+            <span class="pw-trust-specs__icon" aria-hidden="true">
+              {{ block.settings.custom_svg }}
+            </span>
+          {% endif %}
+          {% if block.settings.title != blank %}
+            <span class="pw-trust-specs__label">{{ block.settings.title | escape }}</span>
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+
+    {% if section.settings.bottom_text != blank %}
+      <p class="pw-trust-specs__footer">{{ section.settings.bottom_text | escape }}</p>
+    {% endif %}
+  </div>
+</section>
+
+{% style %}
+  @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap');
+
+  #PwTrustSpecs-{{ section.id }} {
+    {% render 'pw-align-vars' %}
+  }
+
+  #shopify-section-{{ section.id }} {
+    display: block !important;
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: var(--pts-bg, #14171A) !important;
+    overflow: hidden !important;
+  }
+
+  #shopify-section-{{ section.id }} .page-width,
+  #shopify-section-{{ section.id }} > .page-width {
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  #PwTrustSpecs-{{ section.id }},
+  #PwTrustSpecs-{{ section.id }} *,
+  #PwTrustSpecs-{{ section.id }} *::before,
+  #PwTrustSpecs-{{ section.id }} *::after {
+    box-sizing: border-box;
+  }
+
+  #PwTrustSpecs-{{ section.id }} {
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    padding: 40px 0 34px;
+    overflow: hidden;
+    background: var(--pts-bg, #14171A);
+    color: var(--pts-text, #ffffff);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* 1280 content + gutters — same line as Primal Exact Header */
+  #PwTrustSpecs-{{ section.id }} .pw-container.pw-trust-specs__container {
+    width: 100%;
+    max-width: var(--pw-inner);
+    margin-inline: auto;
+    padding-inline: var(--pw-gutter);
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  #PwTrustSpecs-{{ section.id }} .pw-trust-specs__heading {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-style: normal;
+    font-size: 40px;
+    line-height: 100%;
+    letter-spacing: -0.3px;
+    text-align: center;
+    text-transform: uppercase;
+    white-space: nowrap;
+    margin: 0 0 26px;
+    color: var(--pts-text, #ffffff);
+  }
+
+  #PwTrustSpecs-{{ section.id }} .pw-trust-specs__heading-gold {
+    color: var(--pts-gold, #C89A3D);
+  }
+
+  #PwTrustSpecs-{{ section.id }} .pw-trust-specs__rule {
+    width: 100%;
+    max-width: none;
+    height: 1px;
+    margin: 0 0 26px;
+    border: none;
+    background: var(--pts-rule, rgba(200, 154, 61, 0.35));
+  }
+
+  #PwTrustSpecs-{{ section.id }} .pw-trust-specs__grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    width: 100%;
+    margin: 0 0 24px;
+    padding: 0;
+  }
+
+  #PwTrustSpecs-{{ section.id }} .pw-trust-specs__item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    min-width: 0;
+    padding: 0 12px;
+    color: var(--pts-text, #ffffff);
+  }
+
+  #PwTrustSpecs-{{ section.id }} .pw-trust-specs__item + .pw-trust-specs__item {
+    border-left: 1px solid rgba(255, 255, 255, 0.14);
+  }
+
+  #PwTrustSpecs-{{ section.id }} .pw-trust-specs__icon {
+    display: flex;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: center;
+    width: 18px;
+    height: 18px;
+    color: var(--pts-gold, #C89A3D);
+    line-height: 0;
+  }
+
+  #PwTrustSpecs-{{ section.id }} .pw-trust-specs__icon svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.5;
+  }
+
+  #PwTrustSpecs-{{ section.id }} .pw-trust-specs__label {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-style: normal;
+    font-size: 15px;
+    line-height: 100%;
+    letter-spacing: 1px;
+    text-align: center;
+    text-transform: uppercase;
+    color: var(--pts-text, #ffffff);
+  }
+
+  #PwTrustSpecs-{{ section.id }} .pw-trust-specs__footer {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-style: normal;
+    font-size: 17px;
+    line-height: 100%;
+    letter-spacing: 2px;
+    text-align: center;
+    text-transform: uppercase;
+    color: var(--pts-gold, #C89A3D);
+    margin: 0;
+  }
+
+  @media screen and (max-width: 1180px) {
+    #PwTrustSpecs-{{ section.id }} .pw-trust-specs__heading {
+      white-space: normal;
+      font-size: 34px;
+      line-height: 1.1;
+    }
+  }
+
+  @media screen and (max-width: 900px) {
+    #PwTrustSpecs-{{ section.id }} {
+      padding: 36px 0 30px;
+    }
+
+    #PwTrustSpecs-{{ section.id }} .pw-trust-specs__heading {
+      font-size: 32px;
+      line-height: 1.15;
+      margin-bottom: 22px;
+    }
+
+    #PwTrustSpecs-{{ section.id }} .pw-trust-specs__rule {
+      margin-bottom: 22px;
+    }
+
+    #PwTrustSpecs-{{ section.id }} .pw-trust-specs__grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      margin-bottom: 22px;
+    }
+
+    #PwTrustSpecs-{{ section.id }} .pw-trust-specs__item {
+      justify-content: flex-start;
+      padding: 12px 16px;
+    }
+
+    #PwTrustSpecs-{{ section.id }} .pw-trust-specs__item + .pw-trust-specs__item {
+      border-left: 1px solid rgba(255, 255, 255, 0.14);
+    }
+
+    #PwTrustSpecs-{{ section.id }} .pw-trust-specs__item:nth-child(odd) {
+      border-left: none;
+    }
+
+    #PwTrustSpecs-{{ section.id }} .pw-trust-specs__item:nth-child(n + 3) {
+      border-top: 1px solid rgba(255, 255, 255, 0.12);
+    }
+  }
+
+  @media screen and (max-width: 560px) {
+    #PwTrustSpecs-{{ section.id }} {
+      padding: 32px 0 28px;
+    }
+
+    #PwTrustSpecs-{{ section.id }} .pw-trust-specs__heading {
+      font-size: 24px;
+      line-height: 1.2;
+      margin-bottom: 18px;
+    }
+
+    #PwTrustSpecs-{{ section.id }} .pw-trust-specs__rule {
+      margin-bottom: 18px;
+    }
+
+    #PwTrustSpecs-{{ section.id }} .pw-trust-specs__grid {
+      grid-template-columns: 1fr;
+      margin-bottom: 20px;
+    }
+
+    #PwTrustSpecs-{{ section.id }} .pw-trust-specs__item {
+      justify-content: center;
+      padding: 14px 0;
+    }
+
+    #PwTrustSpecs-{{ section.id }} .pw-trust-specs__item + .pw-trust-specs__item,
+    #PwTrustSpecs-{{ section.id }} .pw-trust-specs__item:nth-child(odd),
+    #PwTrustSpecs-{{ section.id }} .pw-trust-specs__item:nth-child(n + 3) {
+      border-left: none;
+      border-top: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    #PwTrustSpecs-{{ section.id }} .pw-trust-specs__footer {
+      font-size: 14px;
+      letter-spacing: 1.5px;
+      line-height: 1.35;
+    }
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "Custom Trust Specs",
+  "tag": "section",
+  "class": "section-pw-trust-specs",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading_part_1",
+      "label": "Heading Part 1",
+      "default": "DEVELOPED BY SCIENTISTS."
+    },
+    {
+      "type": "text",
+      "id": "heading_part_2",
+      "label": "Heading Part 2 (Gold)",
+      "default": "BUILT FOR LIFE."
+    },
+    {
+      "type": "text",
+      "id": "bottom_text",
+      "label": "Bottom Text",
+      "default": "NO FILLERS. NO SHORTCUTS. JUST RESULTS."
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#14171A"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "highlight_color",
+      "label": "Gold / Highlight",
+      "default": "#C89A3D"
+    },
+    {
+      "type": "color",
+      "id": "divider_color",
+      "label": "Divider Color",
+      "default": "#C89A3D59"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "feature",
+      "name": "Feature Badge",
+      "limit": 4,
+      "settings": [
+        {
+          "type": "html",
+          "id": "custom_svg",
+          "label": "Custom SVG Code",
+          "info": "Paste raw SVG icon code."
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Feature Text",
+          "default": "Feature Name"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom Trust Specs",
+      "blocks": [
+        {
+          "type": "feature",
+          "settings": {
+            "title": "SCIENCE BACKED",
+            "custom_svg": "<svg viewBox='0 0 24 24'><circle cx='12' cy='12' r='10'/><path d='M9 12l2 2 4-4'/></svg>"
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "title": "THIRD-PARTY TESTED",
+            "custom_svg": "<svg viewBox='0 0 24 24'><path d='M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z'/><path d='M9 12l2 2 4-4'/></svg>"
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "title": "CLEAN & TRANSPARENT",
+            "custom_svg": "<svg viewBox='0 0 24 24'><path d='M9 3h6v6l4 10H5l4-10V3z'/></svg>"
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "title": "MADE IN THE UK",
+            "custom_svg": "<svg viewBox='0 0 24 24'><circle cx='12' cy='12' r='10'/><path d='M12 2v20M2 12h20M4.93 4.93l14.14 14.14M4.93 19.07L19.07 4.93'/></svg>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
