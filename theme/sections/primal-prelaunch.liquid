@@ -766,24 +766,11 @@
       overflow: hidden;
     }
 
-    /* Divider between stacked offer / signup — no fixed top gap */
     #PrimalPrelaunch-{{ section.id }} .primal-launch__card::after {
-      content: "";
-      position: static;
-      display: block;
-      order: 2;
-      width: calc(100% - 40px);
-      height: 1px;
-      margin: 0 auto;
-      background: rgba(200, 154, 61, 0.3);
-      top: auto;
-      right: auto;
-      bottom: auto;
-      left: auto;
+      display: none;
     }
 
     #PrimalPrelaunch-{{ section.id }} .primal-launch__offer {
-      order: 1;
       min-height: 0;
       height: auto;
       padding: 28px 20px 22px;
@@ -792,9 +779,9 @@
     }
 
     #PrimalPrelaunch-{{ section.id }} .primal-launch__signup {
-      order: 3;
       min-height: 0;
       padding: 22px 20px 24px;
+      border-top: 1px solid rgba(200, 154, 61, 0.3);
     }
 
     #PrimalPrelaunch-{{ section.id }} .primal-launch__eyebrow {
@@ -926,10 +913,6 @@
 
     #PrimalPrelaunch-{{ section.id }} .primal-launch__signup {
       padding: 18px 16px 20px;
-    }
-
-    #PrimalPrelaunch-{{ section.id }} .primal-launch__card::after {
-      width: calc(100% - 32px);
     }
 
     #PrimalPrelaunch-{{ section.id }} .primal-launch__number {
