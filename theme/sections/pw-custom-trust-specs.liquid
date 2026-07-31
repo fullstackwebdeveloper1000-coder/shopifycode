@@ -250,40 +250,74 @@
 
   @media screen and (max-width: 560px) {
     #PwTrustSpecs-{{ section.id }} {
-      padding: 32px 0 28px;
+      padding: 28px 0 24px;
     }
 
+    /* Heading: two clean lines (white / gold), tighter with icon row */
     #PwTrustSpecs-{{ section.id }} .pw-trust-specs__heading {
-      font-size: 24px;
-      line-height: 1.2;
-      margin-bottom: 18px;
+      font-size: clamp(18px, 5.2vw, 22px);
+      line-height: 1.25;
+      letter-spacing: -0.2px;
+      margin-bottom: 14px;
+    }
+
+    #PwTrustSpecs-{{ section.id }} .pw-trust-specs__heading-main,
+    #PwTrustSpecs-{{ section.id }} .pw-trust-specs__heading-gold {
+      display: block;
     }
 
     #PwTrustSpecs-{{ section.id }} .pw-trust-specs__rule {
       margin-bottom: 18px;
     }
 
+    /* 4 equal icons in one horizontal line */
     #PwTrustSpecs-{{ section.id }} .pw-trust-specs__grid {
-      grid-template-columns: 1fr;
-      margin-bottom: 20px;
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 0;
+      margin-bottom: 18px;
     }
 
     #PwTrustSpecs-{{ section.id }} .pw-trust-specs__item {
-      justify-content: center;
-      padding: 14px 0;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
+      gap: 8px;
+      padding: 0 4px;
+      text-align: center;
     }
 
     #PwTrustSpecs-{{ section.id }} .pw-trust-specs__item + .pw-trust-specs__item,
     #PwTrustSpecs-{{ section.id }} .pw-trust-specs__item:nth-child(odd),
     #PwTrustSpecs-{{ section.id }} .pw-trust-specs__item:nth-child(n + 3) {
       border-left: none;
-      border-top: 1px solid rgba(255, 255, 255, 0.12);
+      border-top: none;
+    }
+
+    #PwTrustSpecs-{{ section.id }} .pw-trust-specs__item + .pw-trust-specs__item {
+      border-left: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    #PwTrustSpecs-{{ section.id }} .pw-trust-specs__icon {
+      width: 16px;
+      height: 16px;
+    }
+
+    #PwTrustSpecs-{{ section.id }} .pw-trust-specs__label {
+      font-size: clamp(8px, 2.4vw, 10px);
+      line-height: 1.25;
+      letter-spacing: 0.4px;
+      white-space: normal;
+      word-break: break-word;
+      hyphens: auto;
     }
 
     #PwTrustSpecs-{{ section.id }} .pw-trust-specs__footer {
-      font-size: 14px;
-      letter-spacing: 1.5px;
+      font-size: clamp(11px, 3.2vw, 13px);
+      letter-spacing: 1.2px;
       line-height: 1.35;
+      max-width: 22em;
+      margin-inline: auto;
     }
   }
 {% endstyle %}
