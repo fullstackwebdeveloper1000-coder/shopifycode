@@ -1,228 +1,238 @@
 {% comment %}
-  Primal Win — pre-launch trust row + offer card (holding page).
-  Aligns to header via pw-align-vars / pw-container (--pw-inner, --pw-gutter).
+  Primal pre-launch — Figma holding card (user layout preserved).
+  Only adds: SVG icon uploads + 1440/1280 pw-align with header.
 {% endcomment %}
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link
-  href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@500;600;700;800;900&display=swap"
-  rel="stylesheet"
->
-
-{% liquid
-  assign deadline = section.settings.launch_deadline | strip
-  if deadline == blank
-    assign deadline = '2026-08-30T09:00:00Z'
-  endif
-
-  assign date_label = section.settings.launch_date_label | strip
-  if date_label == blank
-    assign date_label = '30TH AUGUST 2026'
-  endif
-
-  assign claim_id = 'primal-launch-claim-' | append: section.id
-%}
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet">
 
 <section
   id="PrimalPrelaunch-{{ section.id }}"
   class="primal-launch"
+  data-deadline="{{ section.settings.launch_deadline | escape }}"
   style="
-    --pl-bg: {{ section.settings.background_color }};
-    --pl-card: {{ section.settings.card_color }};
-    --pl-gold: {{ section.settings.gold_color }};
-    --pl-stone: #F7F5F1;
-    --pl-charcoal: #1F2326;
-    --pl-slate: #737A80;
-    --pl-ink-900: #14171A;
+    --background: {{ section.settings.background_color_exact }};
+    --card: {{ section.settings.card_color_exact }};
+    --gold: {{ section.settings.gold_color_exact }};
+    --dark: #1f2326;
+    --stone: #f7f5f1;
+    --slate: #737a80;
   "
 >
   <div class="pw-container primal-launch__container">
-    <div class="primal-launch__trust">
-      <div class="primal-launch__trust-grid">
-        <article class="primal-launch__trust-item">
-          <span class="primal-launch__icon" aria-hidden="true">
-            {% if section.settings.icon_ingredients != blank %}
-              {{
-                section.settings.icon_ingredients
-                | image_url: width: 128
-                | image_tag:
-                  class: 'primal-launch__icon-img',
-                  widths: '64, 128',
-                  sizes: '64px',
-                  loading: 'lazy',
-                  alt: ''
-              }}
-            {% else %}
-              <svg class="primal-launch__icon-svg" width="42" height="42" viewBox="0 0 42 42" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true" focusable="false">
-                <circle cx="21" cy="21" r="20"/>
-                <path d="M14 27c0-7 6-13 14-13 0 7-6 13-14 13Z" stroke-linejoin="round"/>
-                <path d="M15 27c3-4 6-6 11-8" stroke-linecap="round"/>
-              </svg>
-            {% endif %}
-          </span>
-          <div class="primal-launch__trust-copy">
-            <h3 class="primal-launch__trust-title">{{ section.settings.feature_1_title | newline_to_br }}</h3>
-            <p class="primal-launch__trust-text">{{ section.settings.feature_1_text }}</p>
-          </div>
-        </article>
 
-        <article class="primal-launch__trust-item">
-          <span class="primal-launch__icon" aria-hidden="true">
-            {% if section.settings.icon_uk != blank %}
-              {{
-                section.settings.icon_uk
-                | image_url: width: 128
-                | image_tag:
-                  class: 'primal-launch__icon-img',
-                  widths: '64, 128',
-                  sizes: '64px',
-                  loading: 'lazy',
-                  alt: ''
-              }}
-            {% else %}
-              <svg class="primal-launch__icon-svg" width="42" height="42" viewBox="0 0 42 42" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true" focusable="false">
-                <circle cx="21" cy="21" r="20"/>
-                <rect x="11" y="14" width="20" height="14" rx="1"/>
-                <path d="M11 14l20 14M31 14L11 28M21 14v14M11 21h20" stroke-width="1.1"/>
-              </svg>
-            {% endif %}
-          </span>
-          <div class="primal-launch__trust-copy">
-            <h3 class="primal-launch__trust-title">{{ section.settings.feature_2_title | newline_to_br }}</h3>
-            <p class="primal-launch__trust-text">{{ section.settings.feature_2_text }}</p>
-          </div>
-        </article>
+    <div class="primal-launch__features">
 
-        <article class="primal-launch__trust-item">
-          <span class="primal-launch__icon" aria-hidden="true">
-            {% if section.settings.icon_transparency != blank %}
-              {{
-                section.settings.icon_transparency
-                | image_url: width: 128
-                | image_tag:
-                  class: 'primal-launch__icon-img',
-                  widths: '64, 128',
-                  sizes: '64px',
-                  loading: 'lazy',
-                  alt: ''
-              }}
-            {% else %}
-              <svg class="primal-launch__icon-svg" width="42" height="42" viewBox="0 0 42 42" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true" focusable="false">
-                <circle cx="21" cy="21" r="20"/>
-                <path d="M21 11l7 3v6c0 5-3 8-7 10-4-2-7-5-7-10v-6l7-3Z" stroke-linejoin="round"/>
-                <path d="M18 21l2.2 2.2L25 19" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            {% endif %}
-          </span>
-          <div class="primal-launch__trust-copy">
-            <h3 class="primal-launch__trust-title">{{ section.settings.feature_3_title | newline_to_br }}</h3>
-            <p class="primal-launch__trust-text">{{ section.settings.feature_3_text }}</p>
-          </div>
-        </article>
+      <div class="primal-launch__feature">
+        <div class="primal-launch__icon">
+          {% if section.settings.icon_ingredients != blank %}
+            {{
+              section.settings.icon_ingredients
+              | image_url: width: 128
+              | image_tag:
+                class: 'primal-launch__icon-img',
+                widths: '64, 128',
+                sizes: '59px',
+                loading: 'lazy',
+                alt: ''
+            }}
+          {% else %}
+            <svg viewBox="0 0 64 64" fill="none" aria-hidden="true" focusable="false">
+              <circle cx="32" cy="32" r="30"/>
+              <path d="M19 43C22 29 32 20 46 18C44 32 35 42 19 43Z"/>
+              <path d="M20 42C27 34 34 28 43 22"/>
+              <path d="M30 32L25 28M36 27L34 22"/>
+            </svg>
+          {% endif %}
+        </div>
+        <div>
+          <strong>40 ACTIVE<br>INGREDIENTS</strong>
+          <p>Powerful blends for energy, focus<br> and vitality.</p>
+        </div>
       </div>
+
+      <div class="primal-launch__feature">
+        <div class="primal-launch__icon">
+          {% if section.settings.icon_uk != blank %}
+            {{
+              section.settings.icon_uk
+              | image_url: width: 128
+              | image_tag:
+                class: 'primal-launch__icon-img',
+                widths: '64, 128',
+                sizes: '59px',
+                loading: 'lazy',
+                alt: ''
+            }}
+          {% else %}
+            <svg viewBox="0 0 64 64" fill="none" aria-hidden="true" focusable="false">
+              <circle cx="32" cy="32" r="30"/>
+              <rect x="18" y="20" width="28" height="24"/>
+              <path d="M18 20L46 44M46 20L18 44M32 20V44M18 32H46"/>
+            </svg>
+          {% endif %}
+        </div>
+        <div>
+          <strong>UK<br>MANUFACTURED</strong>
+          <p>Made in the UK to the highest<br> standards.</p>
+        </div>
+      </div>
+
+      <div class="primal-launch__feature">
+        <div class="primal-launch__icon">
+          {% if section.settings.icon_transparency != blank %}
+            {{
+              section.settings.icon_transparency
+              | image_url: width: 128
+              | image_tag:
+                class: 'primal-launch__icon-img',
+                widths: '64, 128',
+                sizes: '59px',
+                loading: 'lazy',
+                alt: ''
+            }}
+          {% else %}
+            <svg viewBox="0 0 64 64" fill="none" aria-hidden="true" focusable="false">
+              <circle cx="32" cy="32" r="30"/>
+              <path d="M32 15L44 20V31C44 39 39 45 32 49C25 45 20 39 20 31V20L32 15Z"/>
+              <path d="M26 32L30 36L39 27"/>
+            </svg>
+          {% endif %}
+        </div>
+        <div>
+          <strong>FULL LABEL<br>TRANSPARENCY</strong>
+          <p>Honest ingredients. Nothing to<br> hide.</p>
+        </div>
+      </div>
+
     </div>
 
-    <div class="primal-launch__offer">
-      <div class="primal-launch__offer-card">
-        <div class="primal-launch__offer-left">
-          <p class="primal-launch__eyebrow">{{ section.settings.offer_eyebrow | escape }}</p>
-          <div class="primal-launch__big-off" aria-hidden="true">
-            <span class="primal-launch__big-num">{{ section.settings.discount_percent | escape }}</span>
-            <span class="primal-launch__big-suffix">{{ section.settings.discount_suffix | escape }}</span>
-          </div>
-          <p class="primal-launch__offer-label">{{ section.settings.offer_label | newline_to_br }}</p>
-          <a class="primal-launch__btn-ghost" href="#{{ claim_id }}">{{ section.settings.ghost_button_label | escape }}</a>
+    <div class="primal-launch__card">
+
+      <div class="primal-launch__offer">
+        <p class="primal-launch__eyebrow">
+          LIMITED TIME PRE-LAUNCH OFFER
+        </p>
+
+        <div class="primal-launch__discount">
+          <span class="primal-launch__number">30</span>
+          <span class="primal-launch__discount-side">
+            <span class="primal-launch__percent">%</span>
+            <span class="primal-launch__off">OFF</span>
+          </span>
         </div>
 
-        <div class="primal-launch__offer-div" aria-hidden="true"></div>
+        <h2>
+          YOUR EXCLUSIVE<br>
+          LAUNCH DISCOUNT CODE
+        </h2>
 
-        <div class="primal-launch__offer-right">
-          <p class="primal-launch__launch-in">{{ section.settings.countdown_heading | escape }}</p>
-
-          <div
-            class="primal-launch__countdown"
-            data-deadline="{{ deadline | escape }}"
-            data-countdown-root
-          >
-            <div class="primal-launch__cd-cell">
-              <div class="primal-launch__cd-num" data-u="weeks">--</div>
-              <div class="primal-launch__cd-lab">Weeks</div>
-            </div>
-            <div class="primal-launch__cd-cell">
-              <div class="primal-launch__cd-num" data-u="days">--</div>
-              <div class="primal-launch__cd-lab">Days</div>
-            </div>
-            <div class="primal-launch__cd-cell">
-              <div class="primal-launch__cd-num" data-u="hours">--</div>
-              <div class="primal-launch__cd-lab">Hours</div>
-            </div>
-            <div class="primal-launch__cd-cell">
-              <div class="primal-launch__cd-num" data-u="minutes">--</div>
-              <div class="primal-launch__cd-lab">Minutes</div>
-            </div>
-            <div class="primal-launch__cd-cell">
-              <div class="primal-launch__cd-num" data-u="seconds">--</div>
-              <div class="primal-launch__cd-lab">Seconds</div>
-            </div>
-          </div>
-
-          <div class="primal-launch__launch-date">
-            <span data-launch-label>{{ date_label | escape }}</span>
-          </div>
-
-          {% form 'customer', class: 'primal-launch__form', id: claim_id %}
-            <input type="hidden" name="contact[tags]" value="newsletter,pre-launch">
-            <label class="primal-launch__visually-hidden" for="PrimalLaunchEmail-{{ section.id }}">Email address</label>
-            <input
-              id="PrimalLaunchEmail-{{ section.id }}"
-              class="primal-launch__field"
-              type="email"
-              name="contact[email]"
-              value="{{ form.email }}"
-              placeholder="{{ section.settings.email_placeholder | escape }}"
-              autocomplete="email"
-              required
-            >
-            <button class="primal-launch__btn-gold" type="submit">
-              <span class="primal-launch__btn-gold-text">{{ section.settings.submit_label | escape }}</span>
-              <span class="primal-launch__btn-gold-arw" aria-hidden="true">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M5 12h14M13 6l6 6-6 6"/>
-                </svg>
-              </span>
-            </button>
-            {% if form.posted_successfully? %}
-              <p class="primal-launch__form-msg primal-launch__form-msg--ok">{{ section.settings.success_message | escape }}</p>
-            {% elsif form.errors %}
-              <p class="primal-launch__form-msg primal-launch__form-msg--err">{{ form.errors.messages.email | default: section.settings.error_message | escape }}</p>
-            {% endif %}
-          {% endform %}
-
-          <div class="primal-launch__assurance">
-            <span class="primal-launch__lock" aria-hidden="true">
-              {% if section.settings.icon_lock != blank %}
-                {{
-                  section.settings.icon_lock
-                  | image_url: width: 32
-                  | image_tag:
-                    class: 'primal-launch__icon-img primal-launch__lock-img',
-                    widths: '15, 30',
-                    sizes: '15px',
-                    loading: 'lazy',
-                    alt: ''
-                }}
-              {% else %}
-                <svg class="primal-launch__lock-svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true" focusable="false">
-                  <rect x="5" y="11" width="14" height="10" rx="2"/>
-                  <path d="M8 11V8a4 4 0 0 1 8 0v3"/>
-                </svg>
-              {% endif %}
-            </span>
-            <p>{{ section.settings.lock_note }}</p>
-          </div>
+        <div class="primal-launch__badge">
+          BE THE FIRST TO WIN.
         </div>
       </div>
+
+      <div class="primal-launch__signup">
+        <p class="primal-launch__launching" data-countdown-title>
+          LAUNCHING IN
+        </p>
+
+        <div class="primal-launch__countdown">
+          <div class="primal-launch__time">
+            <strong data-weeks>00</strong>
+            <span>WEEKS</span>
+          </div>
+          <div class="primal-launch__time">
+            <strong data-days>00</strong>
+            <span>DAYS</span>
+          </div>
+          <div class="primal-launch__time">
+            <strong data-hours>00</strong>
+            <span>HOURS</span>
+          </div>
+          <div class="primal-launch__time">
+            <strong data-minutes>00</strong>
+            <span>MINUTES</span>
+          </div>
+          <div class="primal-launch__time">
+            <strong data-seconds>00</strong>
+            <span>SECONDS</span>
+          </div>
+        </div>
+
+        <div class="primal-launch__date">
+          <span></span>
+          <strong>{{ section.settings.launch_date_label }}</strong>
+          <span></span>
+        </div>
+
+        {% form 'customer', class: 'primal-launch__form' %}
+          <input
+            type="hidden"
+            name="contact[tags]"
+            value="newsletter,primal-win-prelaunch,30-percent-discount"
+          >
+
+          <label class="primal-launch__hidden" for="PrimalEmail-{{ section.id }}">
+            Email address
+          </label>
+
+          <input
+            id="PrimalEmail-{{ section.id }}"
+            class="primal-launch__email"
+            type="email"
+            name="contact[email]"
+            placeholder="Enter your email address"
+            autocomplete="email"
+            required
+          >
+
+          <button class="primal-launch__button" type="submit">
+            <span>CLAIM MY 30% LAUNCH DISCOUNT</span>
+            <span class="primal-launch__arrow">→</span>
+          </button>
+
+          {% if form.posted_successfully? %}
+            <p class="primal-launch__success">
+              Thank you. Your registration is confirmed.
+            </p>
+          {% endif %}
+
+          {% if form.errors %}
+            <div class="primal-launch__error">
+              {{ form.errors | default_errors }}
+            </div>
+          {% endif %}
+        {% endform %}
+
+        <div class="primal-launch__note">
+          {% if section.settings.icon_lock != blank %}
+            {{
+              section.settings.icon_lock
+              | image_url: width: 32
+              | image_tag:
+                class: 'primal-launch__icon-img primal-launch__lock-img',
+                widths: '15, 30',
+                sizes: '15px',
+                loading: 'lazy',
+                alt: ''
+            }}
+          {% else %}
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
+              <rect x="5" y="10" width="14" height="11" rx="2"/>
+              <path d="M8 10V7A4 4 0 0116 7V10"/>
+            </svg>
+          {% endif %}
+
+          <p>
+            Register now and we will email you your exclusive 30%<br>
+            discount code the moment Primal Win goes live. No spam.<br>
+            Unsubscribe any time.
+          </p>
+        </div>
+      </div>
+
     </div>
   </div>
 </section>
@@ -238,86 +248,84 @@
     max-width: none !important;
     margin: 0 !important;
     padding: 0 !important;
-    overflow-x: clip !important;
-  }
-
-  #shopify-section-{{ section.id }} .page-width,
-  #shopify-section-{{ section.id }} > .page-width {
-    max-width: none !important;
-    margin: 0 !important;
-    padding: 0 !important;
   }
 
   #PrimalPrelaunch-{{ section.id }},
-  #PrimalPrelaunch-{{ section.id }} *,
-  #PrimalPrelaunch-{{ section.id }} *::before,
-  #PrimalPrelaunch-{{ section.id }} *::after {
+  #PrimalPrelaunch-{{ section.id }} * {
     box-sizing: border-box;
   }
 
   #PrimalPrelaunch-{{ section.id }} {
     width: 100%;
     margin: 0;
-    padding: 0;
-    background: var(--pl-bg);
-    color: var(--pl-charcoal);
-    font-family: 'Inter', system-ui, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    text-rendering: optimizeLegibility;
+    padding: 48px 0 55px;
+    overflow: hidden;
+    background: var(--background);
+    color: var(--dark);
   }
 
-  #PrimalPrelaunch-{{ section.id }} .pw-container.primal-launch__container {
-    width: 100%;
-    max-width: var(--pw-inner);
-    margin-inline: auto;
-    padding-inline: var(--pw-gutter);
-    container-type: inline-size;
+  #PrimalPrelaunch-{{ section.id }} p,
+  #PrimalPrelaunch-{{ section.id }} h2 {
+    margin: 0;
   }
 
-  #PrimalPrelaunch-{{ section.id }} .primal-launch__visually-hidden {
-    position: absolute;
+  #PrimalPrelaunch-{{ section.id }} .primal-launch__hidden {
+    position: absolute !important;
     width: 1px;
     height: 1px;
-    padding: 0;
     margin: -1px;
     overflow: hidden;
     clip: rect(0, 0, 0, 0);
     white-space: nowrap;
-    border: 0;
   }
 
-  #PrimalPrelaunch-{{ section.id }} .primal-launch__trust {
-    padding: 60px 0 34px;
-  }
-
-  #PrimalPrelaunch-{{ section.id }} .primal-launch__trust-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
+  /* Header-aligned content: 1280 + gutters (same as primal-exact-header) */
+  #PrimalPrelaunch-{{ section.id }} .pw-container.primal-launch__container {
+    container-type: inline-size;
     width: 100%;
-    margin: 0;
+    max-width: var(--pw-inner);
+    margin-inline: auto;
+    padding-inline: var(--pw-gutter);
   }
 
-  #PrimalPrelaunch-{{ section.id }} .primal-launch__trust-item {
+  #PrimalPrelaunch-{{ section.id }} .primal-launch__features {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    height: clamp(88px, 9.107cqw, 102px);
+    margin-bottom: clamp(18px, 1.964cqw, 22px);
+  }
+
+  #PrimalPrelaunch-{{ section.id }} .primal-launch__feature {
     display: flex;
-    gap: 18px;
-    align-items: flex-start;
-    padding: 6px 34px;
-    margin: 0;
+    align-items: center;
+    gap: clamp(13px, 1.518cqw, 17px);
+    padding: 8px clamp(18px, 2.054cqw, 23px);
+    border-right: 1px solid rgba(31, 35, 38, 0.17);
   }
 
-  #PrimalPrelaunch-{{ section.id }} .primal-launch__trust-item + .primal-launch__trust-item {
-    border-left: 1px solid rgba(31, 35, 38, 0.14);
+  #PrimalPrelaunch-{{ section.id }} .primal-launch__feature:first-child {
+    padding-left: 4px;
+  }
+
+  #PrimalPrelaunch-{{ section.id }} .primal-launch__feature:last-child {
+    padding-right: 0;
+    border-right: 0;
   }
 
   #PrimalPrelaunch-{{ section.id }} .primal-launch__icon {
-    flex: 0 0 64px;
-    width: 64px;
-    height: 64px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--pl-charcoal);
-    line-height: 0;
+    width: clamp(50px, 5.268cqw, 59px);
+    height: clamp(50px, 5.268cqw, 59px);
+    flex: 0 0 clamp(50px, 5.268cqw, 59px);
+  }
+
+  #PrimalPrelaunch-{{ section.id }} .primal-launch__icon svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+    stroke: var(--dark);
+    stroke-width: 1.6;
+    stroke-linecap: round;
+    stroke-linejoin: round;
   }
 
   #PrimalPrelaunch-{{ section.id }} .primal-launch__icon-img {
@@ -327,374 +335,475 @@
     object-fit: contain;
   }
 
-  #PrimalPrelaunch-{{ section.id }} .primal-launch__icon-svg {
+  #PrimalPrelaunch-{{ section.id }} .primal-launch__feature strong {
     display: block;
-    width: 56px;
-    height: 56px;
+    color: var(--dark);
+    font-family: Montserrat, Arial, sans-serif;
+    font-size: clamp(13px, 1.34cqw, 15px);
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: 0.2px;
   }
 
-  #PrimalPrelaunch-{{ section.id }} .primal-launch__trust-title {
-    font-family: 'Montserrat', system-ui, sans-serif;
-    font-weight: 700;
-    font-size: 15px;
-    letter-spacing: 0.4px;
-    color: var(--pl-charcoal);
-    margin: 2px 0 7px;
-    line-height: 1.2;
-    text-transform: uppercase;
-  }
-
-  #PrimalPrelaunch-{{ section.id }} .primal-launch__trust-text {
-    font-size: 14px;
+  #PrimalPrelaunch-{{ section.id }} .primal-launch__feature p {
+    margin-top: 8px;
+    color: #3d4246;
+    font-family: Inter, Arial, sans-serif;
+    font-size: clamp(12px, 1.25cqw, 14px);
     line-height: 1.5;
-    color: var(--pl-charcoal);
-    margin: 0;
+  }
+
+  #PrimalPrelaunch-{{ section.id }} .primal-launch__card {
+    position: relative;
+    display: grid;
+    grid-template-columns: 45.446% minmax(0, 1fr);
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1280 / 517;
+    overflow: hidden;
+    border-radius: 26px;
+    background: linear-gradient(
+      100deg,
+      #192924 0%,
+      #1b2726 48%,
+      var(--card) 100%
+    );
+  }
+
+  #PrimalPrelaunch-{{ section.id }} .primal-launch__card::after {
+    content: "";
+    position: absolute;
+    top: 9.956%;
+    bottom: 6.637%;
+    left: 45.446%;
+    width: 1px;
+    background: rgba(200, 154, 61, 0.3);
   }
 
   #PrimalPrelaunch-{{ section.id }} .primal-launch__offer {
-    padding: 6px 0 30px;
-  }
-
-  #PrimalPrelaunch-{{ section.id }} .primal-launch__offer-card {
     position: relative;
-    width: 100%;
-    aspect-ratio: 1280 / 517;
-    background: radial-gradient(120% 140% at 20% 10%, #24282b 0%, var(--pl-card) 55%);
-    border-radius: 22px;
-    padding: 44px 52px;
-    display: grid;
-    grid-template-columns: 1fr 1px 1.25fr;
-    gap: 44px;
-    align-items: center;
-    box-shadow: 0 30px 70px -30px rgba(0, 0, 0, 0.5);
-  }
-
-  #PrimalPrelaunch-{{ section.id }} .primal-launch__offer-div {
-    background: rgba(200, 154, 61, 0.28);
-    width: 1px;
-    height: 82%;
-    align-self: center;
-    justify-self: center;
+    z-index: 1;
+    display: flex;
+    padding: 0 4.286cqw 0 4.464cqw;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
   }
 
   #PrimalPrelaunch-{{ section.id }} .primal-launch__eyebrow {
-    font-family: 'Montserrat', system-ui, sans-serif;
-    font-weight: 700;
-    font-size: 13px;
-    letter-spacing: 2.5px;
-    color: var(--pl-gold);
-    text-transform: uppercase;
-    margin: 0 0 6px;
-  }
-
-  #PrimalPrelaunch-{{ section.id }} .primal-launch__big-off {
-    font-family: 'Montserrat', system-ui, sans-serif;
-    font-weight: 900;
-    color: var(--pl-gold);
-    line-height: 0.9;
-    display: flex;
-    align-items: flex-start;
-    gap: 4px;
-    text-shadow: 0 0 34px rgba(200, 154, 61, 0.55);
-    margin: 2px 0 14px;
-  }
-
-  #PrimalPrelaunch-{{ section.id }} .primal-launch__big-num {
-    font-size: clamp(80px, 9.2vw, 118px);
-    letter-spacing: -2px;
-  }
-
-  #PrimalPrelaunch-{{ section.id }} .primal-launch__big-suffix {
-    font-size: clamp(30px, 3.1vw, 44px);
+    margin-bottom: clamp(10px, 1.161cqw, 13px);
+    color: var(--gold);
+    font-family: Montserrat, Arial, sans-serif;
+    font-size: clamp(10px, 1.071cqw, 12px);
     font-weight: 800;
-    margin-top: 14px;
-  }
-
-  #PrimalPrelaunch-{{ section.id }} .primal-launch__offer-label {
-    font-family: 'Montserrat', system-ui, sans-serif;
-    font-weight: 700;
-    font-size: 24px;
-    line-height: 1.15;
-    color: var(--pl-stone);
-    letter-spacing: 0.3px;
-    margin: 0 0 22px;
-  }
-
-  #PrimalPrelaunch-{{ section.id }} .primal-launch__btn-ghost {
-    display: inline-block;
-    font-family: 'Montserrat', system-ui, sans-serif;
-    font-weight: 700;
-    font-size: 15px;
-    letter-spacing: 1px;
-    color: var(--pl-gold);
-    border: 1.5px solid var(--pl-gold);
-    border-radius: 8px;
-    padding: 15px 30px;
-    text-transform: uppercase;
-    text-decoration: none;
-  }
-
-  #PrimalPrelaunch-{{ section.id }} .primal-launch__offer-right {
-    text-align: center;
-    min-width: 0;
-  }
-
-  #PrimalPrelaunch-{{ section.id }} .primal-launch__launch-in {
-    font-family: 'Montserrat', system-ui, sans-serif;
-    font-weight: 600;
-    font-size: 16px;
-    letter-spacing: 3px;
-    color: var(--pl-stone);
-    text-transform: uppercase;
-    margin: 0 0 16px;
-  }
-
-  #PrimalPrelaunch-{{ section.id }} .primal-launch__countdown {
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    gap: 0;
-    margin: 0 auto 14px;
-    max-width: 100%;
-  }
-
-  #PrimalPrelaunch-{{ section.id }} .primal-launch__cd-cell {
-    padding: 0 20px;
-    min-width: 78px;
-  }
-
-  #PrimalPrelaunch-{{ section.id }} .primal-launch__cd-cell + .primal-launch__cd-cell {
-    border-left: 1px solid rgba(200, 154, 61, 0.35);
-  }
-
-  #PrimalPrelaunch-{{ section.id }} .primal-launch__cd-num {
-    font-family: 'Montserrat', system-ui, sans-serif;
-    font-weight: 800;
-    font-size: 52px;
     line-height: 1;
-    color: var(--pl-gold);
-  }
-
-  #PrimalPrelaunch-{{ section.id }} .primal-launch__cd-lab {
-    font-family: 'Montserrat', system-ui, sans-serif;
-    font-weight: 600;
-    font-size: 11px;
-    letter-spacing: 1.5px;
-    color: var(--pl-stone);
-    text-transform: uppercase;
-    margin-top: 8px;
-  }
-
-  #PrimalPrelaunch-{{ section.id }} .primal-launch__launch-date {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 16px;
-    margin: 6px 0 20px;
-  }
-
-  #PrimalPrelaunch-{{ section.id }} .primal-launch__launch-date span {
-    font-family: 'Montserrat', system-ui, sans-serif;
-    font-weight: 700;
-    font-size: 17px;
-    letter-spacing: 2px;
-    color: var(--pl-gold);
+    letter-spacing: clamp(2px, 0.268cqw, 3px);
     white-space: nowrap;
   }
 
-  #PrimalPrelaunch-{{ section.id }} .primal-launch__launch-date::before,
-  #PrimalPrelaunch-{{ section.id }} .primal-launch__launch-date::after {
-    content: '';
-    height: 1px;
-    flex: 1;
-    max-width: 70px;
-    background: rgba(200, 154, 61, 0.4);
-  }
-
-  #PrimalPrelaunch-{{ section.id }} .primal-launch__field {
-    width: 100%;
-    border: 0;
-    border-radius: 10px;
-    background: var(--pl-stone);
-    color: var(--pl-charcoal);
-    font-family: 'Inter', system-ui, sans-serif;
-    font-size: 16px;
-    padding: 17px 20px;
-    margin: 0 0 14px;
-  }
-
-  #PrimalPrelaunch-{{ section.id }} .primal-launch__field::placeholder {
-    color: var(--pl-slate);
-  }
-
-  #PrimalPrelaunch-{{ section.id }} .primal-launch__btn-gold {
-    width: 100%;
-    border: 0;
-    cursor: pointer;
-    background: var(--pl-gold);
-    color: var(--pl-ink-900);
-    font-family: 'Montserrat', system-ui, sans-serif;
-    font-weight: 800;
-    font-size: 16px;
-    letter-spacing: 0.8px;
-    text-transform: uppercase;
-    border-radius: 10px;
-    padding: 0;
+  #PrimalPrelaunch-{{ section.id }} .primal-launch__discount {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    height: 56px;
-  }
-
-  #PrimalPrelaunch-{{ section.id }} .primal-launch__btn-gold-text {
-    padding: 0 52px 0 16px;
-    line-height: 1.2;
-  }
-
-  #PrimalPrelaunch-{{ section.id }} .primal-launch__btn-gold-arw {
-    position: absolute;
-    right: 8px;
-    top: 8px;
-    bottom: 8px;
-    width: 44px;
-    border-left: 1.5px solid rgba(31, 35, 38, 0.35);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  #PrimalPrelaunch-{{ section.id }} .primal-launch__form-msg {
-    margin: 10px 0 0;
-    font-size: 13px;
-    line-height: 1.45;
-  }
-
-  #PrimalPrelaunch-{{ section.id }} .primal-launch__form-msg--ok {
-    color: var(--pl-stone);
-  }
-
-  #PrimalPrelaunch-{{ section.id }} .primal-launch__form-msg--err {
-    color: #f5b4b4;
-  }
-
-  #PrimalPrelaunch-{{ section.id }} .primal-launch__assurance {
-    display: flex;
-    gap: 10px;
+    height: clamp(86px, 9.196cqw, 103px);
+    margin-bottom: clamp(18px, 1.964cqw, 22px);
     align-items: flex-start;
-    justify-content: center;
-    margin-top: 18px;
   }
 
-  #PrimalPrelaunch-{{ section.id }} .primal-launch__lock {
-    flex: 0 0 auto;
-    color: var(--pl-slate);
-    margin-top: 2px;
-    width: 15px;
-    height: 15px;
-    line-height: 0;
+  #PrimalPrelaunch-{{ section.id }} .primal-launch__number,
+  #PrimalPrelaunch-{{ section.id }} .primal-launch__percent,
+  #PrimalPrelaunch-{{ section.id }} .primal-launch__off {
+    display: block;
+    background: none;
+    color: var(--gold);
+    -webkit-text-fill-color: currentColor;
+    text-shadow: 0 0 34px rgba(200, 154, 61, 0.55);
   }
 
+  #PrimalPrelaunch-{{ section.id }} .primal-launch__number {
+    font-family: Montserrat, Arial, sans-serif;
+    font-size: clamp(92px, 10cqw, 112px);
+    font-weight: 900;
+    line-height: 0.82;
+    letter-spacing: -4px;
+  }
+
+  #PrimalPrelaunch-{{ section.id }} .primal-launch__discount-side {
+    display: flex;
+    margin: 2px 0 0 clamp(8px, 0.982cqw, 11px);
+    flex-direction: column;
+    font-family: Montserrat, Arial, sans-serif;
+    font-weight: 900;
+  }
+
+  #PrimalPrelaunch-{{ section.id }} .primal-launch__percent {
+    font-size: clamp(32px, 3.571cqw, 40px);
+    line-height: 0.95;
+  }
+
+  #PrimalPrelaunch-{{ section.id }} .primal-launch__off {
+    margin-top: 3px;
+    font-size: clamp(30px, 3.393cqw, 38px);
+    line-height: 0.95;
+    letter-spacing: -1px;
+  }
+
+  #PrimalPrelaunch-{{ section.id }} .primal-launch__offer h2 {
+    margin-bottom: clamp(18px, 1.964cqw, 22px);
+    color: #ffffff;
+    font-family: Montserrat, Arial, sans-serif;
+    font-size: clamp(20px, 2.143cqw, 24px);
+    font-weight: 700;
+    line-height: 1.14;
+    letter-spacing: 0.1px;
+  }
+
+  #PrimalPrelaunch-{{ section.id }} .primal-launch__badge {
+    display: grid;
+    width: clamp(210px, 21.607cqw, 242px);
+    height: clamp(44px, 4.375cqw, 49px);
+    place-items: center;
+    border: 1px solid var(--gold);
+    border-radius: 8px;
+    color: var(--gold);
+    font-family: Montserrat, Arial, sans-serif;
+    font-size: clamp(10px, 1.071cqw, 12px);
+    font-weight: 800;
+    letter-spacing: clamp(1.4px, 0.179cqw, 2px);
+  }
+
+  #PrimalPrelaunch-{{ section.id }} .primal-launch__signup {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    min-width: 0;
+    padding: 3.929cqw 4.464cqw 2.679cqw 3.75cqw;
+    flex-direction: column;
+  }
+
+  #PrimalPrelaunch-{{ section.id }} .primal-launch__launching {
+    color: #ffffff;
+    font-family: Montserrat, Arial, sans-serif;
+    font-size: clamp(13px, 1.339cqw, 15px);
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: clamp(3px, 0.357cqw, 4px);
+    text-align: center;
+  }
+
+  #PrimalPrelaunch-{{ section.id }} .primal-launch__countdown {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    width: 100%;
+    height: clamp(60px, 6.25cqw, 70px);
+    margin-top: clamp(11px, 1.25cqw, 14px);
+  }
+
+  #PrimalPrelaunch-{{ section.id }} .primal-launch__time {
+    display: flex;
+    min-width: 0;
+    height: clamp(60px, 6.25cqw, 70px);
+    flex-direction: column;
+    align-items: center;
+    border-right: 1px solid rgba(200, 154, 61, 0.32);
+  }
+
+  #PrimalPrelaunch-{{ section.id }} .primal-launch__time:last-child {
+    border-right: 0;
+  }
+
+  #PrimalPrelaunch-{{ section.id }} .primal-launch__time strong {
+    color: var(--gold);
+    font-family: Montserrat, Arial, sans-serif;
+    font-size: clamp(40px, 4.286cqw, 48px);
+    font-weight: 800;
+    line-height: 0.98;
+    letter-spacing: 1px;
+    font-variant-numeric: tabular-nums;
+  }
+
+  #PrimalPrelaunch-{{ section.id }} .primal-launch__time span {
+    margin-top: clamp(4px, 0.536cqw, 6px);
+    color: #ffffff;
+    font-family: Montserrat, Arial, sans-serif;
+    font-size: clamp(8px, 0.893cqw, 10px);
+    font-weight: 700;
+    letter-spacing: 1.4px;
+  }
+
+  #PrimalPrelaunch-{{ section.id }} .primal-launch__date {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    margin-top: clamp(10px, 1.161cqw, 13px);
+    align-items: center;
+    gap: clamp(13px, 1.518cqw, 17px);
+  }
+
+  #PrimalPrelaunch-{{ section.id }} .primal-launch__date span {
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(200, 154, 61, 0.5)
+    );
+  }
+
+  #PrimalPrelaunch-{{ section.id }} .primal-launch__date span:last-child {
+    background: linear-gradient(
+      90deg,
+      rgba(200, 154, 61, 0.5),
+      transparent
+    );
+  }
+
+  #PrimalPrelaunch-{{ section.id }} .primal-launch__date strong {
+    color: var(--gold);
+    font-family: Montserrat, Arial, sans-serif;
+    font-size: clamp(13px, 1.339cqw, 15px);
+    font-weight: 800;
+    letter-spacing: clamp(2px, 0.268cqw, 3px);
+    white-space: nowrap;
+  }
+
+  #PrimalPrelaunch-{{ section.id }} .primal-launch__form {
+    display: grid;
+    margin-top: clamp(16px, 1.696cqw, 19px);
+    gap: clamp(10px, 1.071cqw, 12px);
+  }
+
+  #PrimalPrelaunch-{{ section.id }} .primal-launch__email {
+    width: 100%;
+    height: clamp(48px, 4.732cqw, 53px);
+    margin: 0;
+    padding: 0 clamp(16px, 1.696cqw, 19px);
+    border: 0;
+    border-radius: 10px;
+    outline: 0;
+    background: var(--stone);
+    color: var(--dark);
+    font-family: Inter, Arial, sans-serif;
+    font-size: clamp(14px, 1.339cqw, 15px);
+  }
+
+  #PrimalPrelaunch-{{ section.id }} .primal-launch__email::placeholder {
+    color: #858c92;
+    opacity: 1;
+  }
+
+  #PrimalPrelaunch-{{ section.id }} .primal-launch__email:focus {
+    outline: 2px solid var(--gold);
+    outline-offset: 2px;
+  }
+
+  #PrimalPrelaunch-{{ section.id }} .primal-launch__button {
+    display: grid;
+    grid-template-columns: 1fr clamp(46px, 4.554cqw, 51px);
+    width: 100%;
+    height: clamp(50px, 4.911cqw, 55px);
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    border: 0;
+    border-radius: 10px;
+    background: var(--gold);
+    color: #111416;
+    cursor: pointer;
+    font-family: Montserrat, Arial, sans-serif;
+    font-size: clamp(13px, 1.339cqw, 15px);
+    font-weight: 800;
+  }
+
+  #PrimalPrelaunch-{{ section.id }} .primal-launch__button > span:first-child {
+    display: grid;
+    padding-left: clamp(20px, 2.5cqw, 28px);
+    place-items: center;
+  }
+
+  #PrimalPrelaunch-{{ section.id }} .primal-launch__arrow {
+    display: grid;
+    height: clamp(32px, 3.214cqw, 36px);
+    margin: auto 0;
+    place-items: center;
+    border-left: 1px solid rgba(17, 20, 22, 0.28);
+    font-family: Inter, Arial, sans-serif;
+    font-size: clamp(20px, 2.143cqw, 24px);
+    font-weight: 400;
+  }
+
+  #PrimalPrelaunch-{{ section.id }} .primal-launch__button:hover {
+    filter: brightness(1.07);
+  }
+
+  #PrimalPrelaunch-{{ section.id }} .primal-launch__note {
+    display: flex;
+    margin: clamp(15px, 1.607cqw, 18px) auto 0;
+    align-items: flex-start;
+    gap: 10px;
+    color: #c7cbce;
+  }
+
+  #PrimalPrelaunch-{{ section.id }} .primal-launch__note svg,
   #PrimalPrelaunch-{{ section.id }} .primal-launch__lock-img {
     width: 15px;
     height: 15px;
+    margin-top: 2px;
+    flex: 0 0 15px;
   }
 
-  #PrimalPrelaunch-{{ section.id }} .primal-launch__lock-svg {
-    display: block;
-    width: 15px;
-    height: 15px;
+  #PrimalPrelaunch-{{ section.id }} .primal-launch__note svg {
+    stroke: var(--gold);
+    stroke-width: 1.5;
   }
 
-  #PrimalPrelaunch-{{ section.id }} .primal-launch__assurance p {
-    font-size: 13px;
+  #PrimalPrelaunch-{{ section.id }} .primal-launch__note p {
+    font-family: Inter, Arial, sans-serif;
+    font-size: clamp(11px, 1.071cqw, 12px);
     line-height: 1.55;
-    color: var(--pl-slate);
-    margin: 0;
-    text-align: left;
-    max-width: 360px;
   }
 
-  @media screen and (max-width: 1180px) {
-    #PrimalPrelaunch-{{ section.id }} .primal-launch__cd-num {
-      font-size: 44px;
-    }
-
-    #PrimalPrelaunch-{{ section.id }} .primal-launch__cd-cell {
-      padding: 0 13px;
-      min-width: 0;
-    }
+  #PrimalPrelaunch-{{ section.id }} .primal-launch__success {
+    color: var(--gold);
+    font: 12px/1.4 Inter, Arial, sans-serif;
   }
 
-  @media screen and (max-width: 960px) {
-    #PrimalPrelaunch-{{ section.id }} .primal-launch__trust-grid {
+  #PrimalPrelaunch-{{ section.id }} .primal-launch__error {
+    color: #ff9090;
+    font: 12px/1.4 Inter, Arial, sans-serif;
+  }
+
+  @media screen and (max-width: 820px) {
+    #PrimalPrelaunch-{{ section.id }} {
+      padding: 30px 0;
+    }
+
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__features {
       grid-template-columns: 1fr;
+      height: auto;
+      margin-bottom: 24px;
     }
 
-    #PrimalPrelaunch-{{ section.id }} .primal-launch__trust-item {
-      padding: 22px 4px;
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__feature,
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__feature:first-child,
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__feature:last-child {
+      min-height: 92px;
+      padding: 16px 4px;
+      border-right: 0;
+      border-bottom: 1px solid rgba(31, 35, 38, 0.16);
     }
 
-    #PrimalPrelaunch-{{ section.id }} .primal-launch__trust-item + .primal-launch__trust-item {
-      border-left: 0;
-      border-top: 1px solid rgba(31, 35, 38, 0.14);
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__feature:last-child {
+      border-bottom: 0;
     }
 
-    #PrimalPrelaunch-{{ section.id }} .primal-launch__offer-card {
-      grid-template-columns: 1fr;
-      gap: 34px;
-      padding: 38px 34px;
-      aspect-ratio: auto;
-    }
-
-    #PrimalPrelaunch-{{ section.id }} .primal-launch__offer-div {
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__feature p br {
       display: none;
     }
 
-    #PrimalPrelaunch-{{ section.id }} .primal-launch__assurance {
-      justify-content: center;
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__card {
+      grid-template-columns: 1fr;
+      height: auto;
+      aspect-ratio: auto;
+      border-radius: 20px;
+    }
+
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__card::after {
+      top: 410px;
+      right: 24px;
+      bottom: auto;
+      left: 24px;
+      width: auto;
+      height: 1px;
+    }
+
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__offer {
+      min-height: 410px;
+      padding: 52px 30px 48px;
+    }
+
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__signup {
+      padding: 46px 24px 38px;
+    }
+
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__number {
+      font-size: 102px;
+    }
+
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__time strong {
+      font-size: clamp(28px, 9vw, 42px);
+    }
+
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__time span {
+      font-size: 7px;
+      letter-spacing: 0.6px;
+    }
+
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__date {
+      gap: 9px;
+    }
+
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__date strong {
+      font-size: 11px;
+      letter-spacing: 1.3px;
+    }
+
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__button {
+      grid-template-columns: 1fr 46px;
+      font-size: 11px;
+    }
+
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__button > span:first-child {
+      padding-left: 10px;
+    }
+
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__note p {
+      font-size: 11px;
+    }
+
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__note p br {
+      display: none;
     }
   }
 
-  @media screen and (max-width: 560px) {
-    #PrimalPrelaunch-{{ section.id }} .primal-launch__offer-card {
-      padding: 30px 22px;
+  @media screen and (max-width: 390px) {
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__offer {
+      min-height: 390px;
+      padding: 44px 22px 40px;
     }
 
-    #PrimalPrelaunch-{{ section.id }} .primal-launch__eyebrow {
-      letter-spacing: 1.8px;
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__card::after {
+      top: 390px;
     }
 
-    #PrimalPrelaunch-{{ section.id }} .primal-launch__cd-cell {
-      padding: 0 7px;
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__number {
+      font-size: 88px;
     }
 
-    #PrimalPrelaunch-{{ section.id }} .primal-launch__cd-cell + .primal-launch__cd-cell {
-      border-left: 1px solid rgba(200, 154, 61, 0.3);
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__percent {
+      font-size: 34px;
     }
 
-    #PrimalPrelaunch-{{ section.id }} .primal-launch__cd-num {
-      font-size: 32px;
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__off {
+      font-size: 31px;
     }
 
-    #PrimalPrelaunch-{{ section.id }} .primal-launch__cd-lab {
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__signup {
+      padding-right: 14px;
+      padding-left: 14px;
+    }
+
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__time strong {
+      font-size: 27px;
+    }
+
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__time span {
+      font-size: 6px;
+    }
+
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__date strong {
       font-size: 9px;
-      letter-spacing: 1px;
-      margin-top: 6px;
+      letter-spacing: 0.7px;
     }
 
-    #PrimalPrelaunch-{{ section.id }} .primal-launch__launch-date span {
-      font-size: 15px;
-      letter-spacing: 1.5px;
-    }
-
-    #PrimalPrelaunch-{{ section.id }} .primal-launch__field {
-      font-size: 15px;
-    }
-
-    #PrimalPrelaunch-{{ section.id }} .primal-launch__btn-gold {
-      font-size: 12.5px;
-      letter-spacing: 0.2px;
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__button {
+      font-size: 9.5px;
     }
   }
 {% endstyle %}
@@ -704,61 +813,50 @@
     var root = document.getElementById('PrimalPrelaunch-{{ section.id }}');
     if (!root) return;
 
-    var countdown = root.querySelector('[data-countdown-root]');
-    if (!countdown) return;
+    var timerKey = 'primalTimer_{{ section.id }}';
+    if (window[timerKey]) clearInterval(window[timerKey]);
 
-    var deadlineRaw = countdown.getAttribute('data-deadline');
-    if (!deadlineRaw) return;
+    var target = new Date(root.getAttribute('data-deadline')).getTime();
+    var title = root.querySelector('[data-countdown-title]');
+    var weeksNode = root.querySelector('[data-weeks]');
+    var daysNode = root.querySelector('[data-days]');
+    var hoursNode = root.querySelector('[data-hours]');
+    var minutesNode = root.querySelector('[data-minutes]');
+    var secondsNode = root.querySelector('[data-seconds]');
 
-    var LAUNCH_DATE = new Date(deadlineRaw);
-    if (isNaN(LAUNCH_DATE.getTime())) return;
-
-    var labelEl = root.querySelector('[data-launch-label]');
-    if (labelEl) {
-      var day = LAUNCH_DATE.getUTCDate();
-      var ord = function (d) {
-        var s = ['TH', 'ST', 'ND', 'RD'];
-        var v = d % 100;
-        return d + (s[(v - 20) % 10] || s[v] || s[0]);
-      };
-      var months = [
-        'JANUARY', 'FEBRUARY', 'MARCH', 'APRIL', 'MAY', 'JUNE',
-        'JULY', 'AUGUST', 'SEPTEMBER', 'OCTOBER', 'NOVEMBER', 'DECEMBER'
-      ];
-      labelEl.textContent =
-        ord(day) + ' ' + months[LAUNCH_DATE.getUTCMonth()] + ' ' + LAUNCH_DATE.getUTCFullYear();
+    function formatNumber(number) {
+      return String(Math.max(0, number)).padStart(2, '0');
     }
 
-    var cells = {};
-    countdown.querySelectorAll('[data-u]').forEach(function (el) {
-      cells[el.dataset.u] = el;
-    });
+    function updateCountdown() {
+      if (isNaN(target)) {
+        if (title) title.textContent = 'LAUNCH DATE TBC';
+        return;
+      }
 
-    var pad = function (n) {
-      return String(n).padStart(2, '0');
-    };
+      var remaining = Math.max(0, target - Date.now());
+      var totalSeconds = Math.floor(remaining / 1000);
+      var totalDays = Math.floor(totalSeconds / 86400);
+      var weeks = Math.floor(totalDays / 7);
+      var days = totalDays % 7;
+      var hours = Math.floor((totalSeconds % 86400) / 3600);
+      var minutes = Math.floor((totalSeconds % 3600) / 60);
+      var seconds = totalSeconds % 60;
 
-    function tick() {
-      var diff = Math.max(0, Math.floor((LAUNCH_DATE - new Date()) / 1000));
-      var weeks = Math.floor(diff / (7 * 86400));
-      diff -= weeks * 7 * 86400;
-      var days = Math.floor(diff / 86400);
-      diff -= days * 86400;
-      var hours = Math.floor(diff / 3600);
-      diff -= hours * 3600;
-      var mins = Math.floor(diff / 60);
-      diff -= mins * 60;
-      var secs = diff;
+      if (weeksNode) weeksNode.textContent = formatNumber(weeks);
+      if (daysNode) daysNode.textContent = formatNumber(days);
+      if (hoursNode) hoursNode.textContent = formatNumber(hours);
+      if (minutesNode) minutesNode.textContent = formatNumber(minutes);
+      if (secondsNode) secondsNode.textContent = formatNumber(seconds);
 
-      if (cells.weeks) cells.weeks.textContent = pad(weeks);
-      if (cells.days) cells.days.textContent = pad(days);
-      if (cells.hours) cells.hours.textContent = pad(hours);
-      if (cells.minutes) cells.minutes.textContent = pad(mins);
-      if (cells.seconds) cells.seconds.textContent = pad(secs);
+      if (remaining <= 0) {
+        if (title) title.textContent = 'NOW LIVE';
+        clearInterval(window[timerKey]);
+      }
     }
 
-    tick();
-    setInterval(tick, 1000);
+    updateCountdown();
+    window[timerKey] = setInterval(updateCountdown, 1000);
   })();
 </script>
 
@@ -769,48 +867,39 @@
   "class": "section-primal-prelaunch",
   "settings": [
     {
-      "type": "header",
-      "content": "Launch"
-    },
-    {
       "type": "text",
       "id": "launch_deadline",
-      "label": "Launch deadline ISO",
-      "default": "2026-08-30T09:00:00Z",
-      "info": "Used for countdown (UTC)."
+      "label": "Launch deadline",
+      "default": "2026-08-30T00:00:00+05:00",
+      "info": "Format: 2026-08-30T00:00:00+05:00"
     },
     {
       "type": "text",
       "id": "launch_date_label",
-      "label": "Launch date label",
-      "default": "30TH AUGUST 2026",
-      "info": "Overridden by script when deadline parses."
-    },
-    {
-      "type": "header",
-      "content": "Colours"
+      "label": "Displayed launch date",
+      "default": "30TH AUGUST 2026"
     },
     {
       "type": "color",
-      "id": "background_color",
-      "label": "Background",
+      "id": "background_color_exact",
+      "label": "Background color",
       "default": "#EFE5DD"
     },
     {
       "type": "color",
-      "id": "card_color",
-      "label": "Card base",
-      "default": "#14171A"
+      "id": "card_color_exact",
+      "label": "Card color",
+      "default": "#1F2326"
     },
     {
       "type": "color",
-      "id": "gold_color",
-      "label": "Gold accent",
+      "id": "gold_color_exact",
+      "label": "Gold color",
       "default": "#C89A3D"
     },
     {
       "type": "header",
-      "content": "Trust icons"
+      "content": "Icons (SVG or PNG)"
     },
     {
       "type": "image_picker",
@@ -831,116 +920,6 @@
       "type": "image_picker",
       "id": "icon_lock",
       "label": "Lock icon"
-    },
-    {
-      "type": "header",
-      "content": "Trust copy"
-    },
-    {
-      "type": "textarea",
-      "id": "feature_1_title",
-      "label": "Feature 1 title",
-      "default": "40 Active\nIngredients"
-    },
-    {
-      "type": "text",
-      "id": "feature_1_text",
-      "label": "Feature 1 text",
-      "default": "Powerful blends for energy, focus and vitality."
-    },
-    {
-      "type": "textarea",
-      "id": "feature_2_title",
-      "label": "Feature 2 title",
-      "default": "UK\nManufactured"
-    },
-    {
-      "type": "text",
-      "id": "feature_2_text",
-      "label": "Feature 2 text",
-      "default": "Made in the UK to the highest standards."
-    },
-    {
-      "type": "textarea",
-      "id": "feature_3_title",
-      "label": "Feature 3 title",
-      "default": "Full Label\nTransparency"
-    },
-    {
-      "type": "text",
-      "id": "feature_3_text",
-      "label": "Feature 3 text",
-      "default": "Honest ingredients. Nothing to hide."
-    },
-    {
-      "type": "header",
-      "content": "Offer card"
-    },
-    {
-      "type": "text",
-      "id": "offer_eyebrow",
-      "label": "Offer eyebrow",
-      "default": "Limited Time Pre-Launch Offer"
-    },
-    {
-      "type": "text",
-      "id": "discount_percent",
-      "label": "Discount number",
-      "default": "30%"
-    },
-    {
-      "type": "text",
-      "id": "discount_suffix",
-      "label": "Discount suffix",
-      "default": "OFF"
-    },
-    {
-      "type": "textarea",
-      "id": "offer_label",
-      "label": "Offer label",
-      "default": "Your Exclusive\nLaunch Discount Code"
-    },
-    {
-      "type": "text",
-      "id": "ghost_button_label",
-      "label": "Ghost button",
-      "default": "Be The First To Win."
-    },
-    {
-      "type": "text",
-      "id": "countdown_heading",
-      "label": "Countdown heading",
-      "default": "Launching In"
-    },
-    {
-      "type": "text",
-      "id": "email_placeholder",
-      "label": "Email placeholder",
-      "default": "Enter your email address"
-    },
-    {
-      "type": "text",
-      "id": "submit_label",
-      "label": "Submit button",
-      "default": "Claim My 30% Launch Discount"
-    },
-    {
-      "type": "textarea",
-      "id": "lock_note",
-      "label": "Lock note",
-      "default": "Register now and we will email you your exclusive 30% discount code the moment Primal Win goes live. No spam. Unsubscribe any time."
-    },
-    {
-      "type": "text",
-      "id": "success_message",
-      "label": "Success message",
-      "default": "Thanks — you're on the list."
-    },
-    {
-      "type": "text",
-      "id": "error_message",
-      "label": "Error message",
-      "default": "Please enter a valid email."
     }
   ],
   "presets": [
