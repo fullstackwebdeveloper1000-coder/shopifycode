@@ -131,12 +131,16 @@
     box-sizing: border-box;
   }
 
+  /*
+   * Web = same framing as iPad/tablet:
+   * wider photo pane + contain so scientist / tubes stay fully visible.
+   */
   #PwPipette-{{ section.id }} {
     position: relative;
     width: 100%;
-    height: clamp(410px, 34.7947vw, 500px);
-    min-height: 410px;
-    max-height: 500px;
+    height: clamp(420px, 38vw, 520px);
+    min-height: 420px;
+    max-height: 520px;
     margin: 0;
     overflow: hidden;
     border-radius: 0;
@@ -151,33 +155,31 @@
     z-index: 6;
     top: 50%;
     left: max(
-      var(--pw-gutter, 80px),
+      var(--pw-gutter, 48px),
       calc(
         (100% - var(--pw-max, 1440px)) / 2 +
-        var(--pw-gutter, 80px)
+        var(--pw-gutter, 48px)
       )
     );
     display: flex;
-    width: min(490px, 39vw);
+    width: min(460px, 40%);
     height: auto;
     min-height: 0;
     margin: 0;
     padding: 0;
     align-items: center;
-    gap: 30px;
+    gap: 24px;
     transform: translateY(-50%);
   }
 
+  /* Wider image pane — matches tablet full-image look */
   #PwPipette-{{ section.id }} .band-media {
     position: absolute;
     z-index: 1;
     top: 0;
     right: 0;
     bottom: 0;
-    left: max(
-      48.238%,
-      calc((100% - 1437px) / 2 + 693.18px)
-    );
+    left: 42%;
     overflow: hidden;
     border-radius: 0;
     background: #ffffff;
@@ -198,32 +200,30 @@
   }
 
   /*
-   * Figma-style fade: mask the PHOTO (not a white overlay).
-   * Left edge dissolves into white — same soft feather as design.
+   * Full image (contain) + soft fill behind.
+   * Mask feathers left into white — same as iPad / Figma.
    */
   #PwPipette-{{ section.id }} .band-img--bg {
     z-index: 1;
     object-fit: cover !important;
-    object-position: 72% center !important;
-    filter: blur(14px);
-    opacity: 0.18;
+    object-position: right center !important;
+    filter: blur(12px);
+    opacity: 0.2;
     transform: scale(1.04);
     -webkit-mask-image: linear-gradient(
       90deg,
       transparent 0%,
-      rgba(0, 0, 0, 0.12) 12%,
-      rgba(0, 0, 0, 0.45) 22%,
-      rgba(0, 0, 0, 0.85) 34%,
-      #000000 44%,
+      rgba(0, 0, 0, 0.15) 14%,
+      rgba(0, 0, 0, 0.55) 26%,
+      #000000 40%,
       #000000 100%
     );
     mask-image: linear-gradient(
       90deg,
       transparent 0%,
-      rgba(0, 0, 0, 0.12) 12%,
-      rgba(0, 0, 0, 0.45) 22%,
-      rgba(0, 0, 0, 0.85) 34%,
-      #000000 44%,
+      rgba(0, 0, 0, 0.15) 14%,
+      rgba(0, 0, 0, 0.55) 26%,
+      #000000 40%,
       #000000 100%
     );
     -webkit-mask-size: 100% 100%;
@@ -234,26 +234,24 @@
 
   #PwPipette-{{ section.id }} .band-img--main {
     z-index: 2;
-    object-fit: cover !important;
-    object-position: 72% center !important;
+    object-fit: contain !important;
+    object-position: right center !important;
     background: transparent !important;
     transform: none !important;
     -webkit-mask-image: linear-gradient(
       90deg,
       transparent 0%,
-      rgba(0, 0, 0, 0.1) 10%,
-      rgba(0, 0, 0, 0.4) 20%,
-      rgba(0, 0, 0, 0.78) 32%,
-      #000000 42%,
+      rgba(0, 0, 0, 0.12) 12%,
+      rgba(0, 0, 0, 0.5) 24%,
+      #000000 38%,
       #000000 100%
     );
     mask-image: linear-gradient(
       90deg,
       transparent 0%,
-      rgba(0, 0, 0, 0.1) 10%,
-      rgba(0, 0, 0, 0.4) 20%,
-      rgba(0, 0, 0, 0.78) 32%,
-      #000000 42%,
+      rgba(0, 0, 0, 0.12) 12%,
+      rgba(0, 0, 0, 0.5) 24%,
+      #000000 38%,
       #000000 100%
     );
     -webkit-mask-size: 100% 100%;
@@ -326,19 +324,20 @@
     line-height: 1.45;
   }
 
+  /* iPad / small laptop — same full-image split as web, tighter type only */
   @media screen and (min-width: 861px) and (max-width: 1199px) {
     #PwPipette-{{ section.id }} {
-      height: clamp(410px, 43vw, 500px);
+      height: clamp(420px, 44vw, 520px);
     }
 
     #PwPipette-{{ section.id }} .container {
-      left: var(--pw-gutter, 40px);
-      width: 43%;
-      gap: 20px;
+      left: var(--pw-gutter, 34px);
+      width: 40%;
+      gap: 18px;
     }
 
     #PwPipette-{{ section.id }} .band-media {
-      left: 46%;
+      left: 40%;
     }
 
     #PwPipette-{{ section.id }} .ic-circle {
