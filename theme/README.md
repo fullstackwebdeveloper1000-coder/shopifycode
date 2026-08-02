@@ -21,6 +21,7 @@ These files extend **Shopify Dawn** (or similar). They are maintained against th
 | `pw-trust-bar.liquid` | Trust bar — 1440/1280 header-aligned, SVG upload |
 | `pw-value-bar.liquid` | Value bar (One Scoop / Every Day / Built To Win) |
 | `pw-custom-trust-specs.liquid` | Scientists band — 1440/1280, SVG badges |
+| `pw-landscape-final.liquid` | Landscape band — content over image, responsive overlay |
 | `primal-ingredients.liquid` | Full ingredients page |
 | `primal-science-*.liquid`, `pw-science-*.liquid` | The Science page (see `templates/page.the-science.json`) |
 | `primal-story-hero.liquid` | Our Story |
