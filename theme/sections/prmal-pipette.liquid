@@ -56,7 +56,14 @@
         height="800"
       >
     {%- endif -%}
+
+    {%- comment -%} Real fade nodes — always visible, not relying on ::after alone {%- endcomment -%}
+    <span class="band-fade band-fade--side" aria-hidden="true"></span>
+    <span class="band-fade band-fade--bottom" aria-hidden="true"></span>
   </div>
+
+  {%- comment -%} Desktop bridge: white → photo across the split {%- endcomment -%}
+  <span class="band-fade band-fade--bridge" aria-hidden="true"></span>
 
   <div class="container band-in">
     <span class="ic-circle" aria-hidden="true">
@@ -132,20 +139,16 @@
     max-height: 500px;
     margin: 0;
     overflow: hidden;
-    border-radius: 15.96px;
+    border-radius: 0;
     background: #ffffff;
     color: #1f2326;
     font-family: Inter, system-ui, sans-serif;
     isolation: isolate;
   }
 
-  /*
-   * Header-aligned content:
-   * same centered max-width and gutter used by the Primal header.
-   */
   #PwPipette-{{ section.id }} .container {
     position: absolute;
-    z-index: 4;
+    z-index: 6;
     top: 50%;
     left: max(
       var(--pw-gutter, 80px),
@@ -165,9 +168,6 @@
     transform: translateY(-50%);
   }
 
-  /*
-   * Image frame starts at the Figma split and always reaches the right edge.
-   */
   #PwPipette-{{ section.id }} .band-media {
     position: absolute;
     z-index: 1;
@@ -179,8 +179,8 @@
       calc((100% - 1437px) / 2 + 693.18px)
     );
     overflow: hidden;
-    border-radius: 0 15.96px 15.96px 0;
-    background: #eef1f1;
+    border-radius: 0;
+    background: #ffffff;
   }
 
   #PwPipette-{{ section.id }} .band-img {
@@ -197,51 +197,69 @@
     box-shadow: none !important;
   }
 
-  /*
-   * Background layer fills the frame.
-   * Main layer remains fully visible, so the scientist is not cropped.
-   */
+  /* Soft fill behind contain so scientist stays full + frame never empty */
   #PwPipette-{{ section.id }} .band-img--bg {
     z-index: 1;
     object-fit: cover !important;
     object-position: right center !important;
-    filter: blur(10px);
-    opacity: 0.30;
-    transform: scale(1.045);
+    filter: blur(12px);
+    opacity: 0.28;
+    transform: scale(1.06);
   }
 
   #PwPipette-{{ section.id }} .band-img--main {
     z-index: 2;
     object-fit: contain !important;
     object-position: right center !important;
-    background: transparent;
+    background: transparent !important;
     transform: none !important;
   }
 
-  /*
-   * Smooth white fade between content and the complete image.
-   */
-  #PwPipette-{{ section.id }}::after {
-    content: "";
+  #PwPipette-{{ section.id }} .band-fade {
+    pointer-events: none;
+  }
+
+  /* Inside media: white soft-edge over the photo */
+  #PwPipette-{{ section.id }} .band-fade--side {
     position: absolute;
-    z-index: 3;
+    z-index: 5;
     top: 0;
     bottom: 0;
-    left: max(
-      calc(48.238% - 155px),
-      calc((100% - 1437px) / 2 + 538.18px)
-    );
-    width: 240px;
-    pointer-events: none;
+    left: 0;
+    width: min(340px, 46%);
     background: linear-gradient(
       90deg,
       #ffffff 0%,
-      #ffffff 24%,
-      rgba(255, 255, 255, 0.98) 37%,
-      rgba(255, 255, 255, 0.88) 50%,
-      rgba(255, 255, 255, 0.66) 64%,
-      rgba(255, 255, 255, 0.38) 77%,
-      rgba(255, 255, 255, 0.14) 89%,
+      rgba(255, 255, 255, 0.97) 18%,
+      rgba(255, 255, 255, 0.82) 40%,
+      rgba(255, 255, 255, 0.45) 68%,
+      rgba(255, 255, 255, 0) 100%
+    );
+  }
+
+  #PwPipette-{{ section.id }} .band-fade--bottom {
+    display: none;
+  }
+
+  /* Section bridge — sits across white copy → image split */
+  #PwPipette-{{ section.id }} .band-fade--bridge {
+    position: absolute;
+    z-index: 4;
+    top: 0;
+    bottom: 0;
+    left: max(
+      calc(48.238% - 200px),
+      calc((100% - 1437px) / 2 + 493px)
+    );
+    width: 360px;
+    background: linear-gradient(
+      90deg,
+      #ffffff 0%,
+      #ffffff 22%,
+      rgba(255, 255, 255, 0.95) 40%,
+      rgba(255, 255, 255, 0.7) 58%,
+      rgba(255, 255, 255, 0.35) 76%,
+      rgba(255, 255, 255, 0.1) 90%,
       rgba(255, 255, 255, 0) 100%
     );
   }
@@ -296,52 +314,6 @@
     line-height: 1.45;
   }
 
-  /*
-   * Desktop only:
-   * gradient attached to the image frame edge — where white ends.
-   */
-  @media screen and (min-width: 861px) {
-    #PwPipette-{{ section.id }} .band-media {
-      background: #ffffff !important;
-    }
-
-    #PwPipette-{{ section.id }} .band-img--bg {
-      display: none !important;
-    }
-
-    #PwPipette-{{ section.id }} .band-img--main {
-      background: #ffffff !important;
-    }
-
-    #PwPipette-{{ section.id }}::after {
-      display: none !important;
-    }
-
-    #PwPipette-{{ section.id }} .band-media::after {
-      content: "";
-      position: absolute;
-      z-index: 4;
-      top: 0;
-      bottom: 0;
-      left: 0;
-      width: 280px;
-      max-width: 42%;
-      pointer-events: none;
-      background: linear-gradient(
-        90deg,
-        #ffffff 0%,
-        rgba(255, 255, 255, 0.99) 12%,
-        rgba(255, 255, 255, 0.96) 24%,
-        rgba(255, 255, 255, 0.88) 38%,
-        rgba(255, 255, 255, 0.72) 52%,
-        rgba(255, 255, 255, 0.50) 66%,
-        rgba(255, 255, 255, 0.28) 80%,
-        rgba(255, 255, 255, 0.10) 91%,
-        rgba(255, 255, 255, 0) 100%
-      );
-    }
-  }
-
   @media screen and (min-width: 861px) and (max-width: 1199px) {
     #PwPipette-{{ section.id }} {
       height: clamp(410px, 43vw, 500px);
@@ -354,17 +326,16 @@
     }
 
     #PwPipette-{{ section.id }} .band-media {
-      left: 48%;
+      left: 46%;
     }
 
-    #PwPipette-{{ section.id }}::after {
-      left: calc(48% - 125px);
-      width: 200px;
+    #PwPipette-{{ section.id }} .band-fade--bridge {
+      left: calc(46% - 180px);
+      width: 300px;
     }
 
-    #PwPipette-{{ section.id }} .band-media::after {
-      width: 220px;
-      max-width: 48%;
+    #PwPipette-{{ section.id }} .band-fade--side {
+      width: min(280px, 50%);
     }
 
     #PwPipette-{{ section.id }} .ic-circle {
@@ -392,62 +363,47 @@
   }
 
   /*
-   * Responsive:
-   * full image visible; copy on lower edge; white→image soft gradient.
+   * Mobile / tablet:
+   * full image (contain — scientist complete), copy under soft white fade.
    */
   @media screen and (max-width: 860px) {
     #PwPipette-{{ section.id }} {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr);
-      grid-template-rows: auto;
-      width: 100%;
+      display: flex;
+      flex-direction: column;
       height: auto;
       min-height: 0;
       max-height: none;
       overflow: hidden;
-      border-radius: 0;
-      background: #eef1f1;
+      background: #ffffff;
     }
 
-    #PwPipette-{{ section.id }}::after {
+    #PwPipette-{{ section.id }} .band-fade--bridge {
+      display: none;
+    }
+
+    #PwPipette-{{ section.id }} .band-fade--side {
       display: none;
     }
 
     #PwPipette-{{ section.id }} .band-media {
       position: relative;
       z-index: 1;
-      grid-area: 1 / 1;
-      inset: auto;
+      top: auto;
+      right: auto;
+      bottom: auto;
+      left: auto;
+      order: 1;
       width: 100%;
+      height: auto;
       min-height: 0;
-      aspect-ratio: 3 / 2;
-      border-radius: 0;
-      background: #eef1f1;
-    }
-
-    /* Where white ends into the photo — soft fade under copy */
-    #PwPipette-{{ section.id }} .band-media::after {
-      content: "";
-      position: absolute;
-      z-index: 3;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      height: 55%;
-      pointer-events: none;
-      background: linear-gradient(
-        0deg,
-        #ffffff 0%,
-        rgba(255, 255, 255, 0.96) 18%,
-        rgba(255, 255, 255, 0.78) 40%,
-        rgba(255, 255, 255, 0.4) 68%,
-        rgba(255, 255, 255, 0) 100%
-      );
+      aspect-ratio: 16 / 10;
+      background: #f3f5f5;
     }
 
     #PwPipette-{{ section.id }} .band-img--bg {
-      opacity: 0.34;
-      filter: blur(8px);
+      display: block;
+      opacity: 0.22;
+      filter: blur(10px);
     }
 
     #PwPipette-{{ section.id }} .band-img--main {
@@ -455,33 +411,43 @@
       object-position: center center !important;
     }
 
+    /* Soft white where image meets copy */
+    #PwPipette-{{ section.id }} .band-fade--bottom {
+      display: block;
+      position: absolute;
+      z-index: 5;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 42%;
+      background: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.35) 28%,
+        rgba(255, 255, 255, 0.82) 62%,
+        #ffffff 100%
+      );
+    }
+
     #PwPipette-{{ section.id }} .container {
       position: relative;
-      z-index: 4;
-      grid-area: 1 / 1;
+      z-index: 6;
       top: auto;
       left: auto;
-      align-self: end;
+      order: 2;
       display: flex;
-      width: calc(100% - (var(--pw-gutter, 28px) * 2));
-      max-width: 680px;
+      width: 100%;
+      max-width: none;
       height: auto;
-      margin:
-        0
-        auto
-        clamp(20px, 4vw, 34px);
-      padding: clamp(20px, 3.5vw, 28px);
+      margin: 0;
+      padding: 8px var(--pw-gutter, 22px) 36px;
       gap: 20px;
-      border: 1px solid rgba(31, 35, 38, 0.10);
-      border-radius: 18px;
-      background:
-        linear-gradient(
-          135deg,
-          rgba(255, 255, 255, 0.97) 0%,
-          rgba(255, 255, 255, 0.86) 100%
-        );
-      box-shadow: 0 16px 40px rgba(31, 35, 38, 0.14);
-      backdrop-filter: blur(9px);
+      align-items: center;
+      border: 0;
+      border-radius: 0;
+      background: #ffffff;
+      box-shadow: none;
+      backdrop-filter: none;
       transform: none;
     }
 
@@ -518,26 +484,20 @@
   }
 
   @media screen and (max-width: 560px) {
+    /* Wider frame so full pipette shot stays visible */
     #PwPipette-{{ section.id }} .band-media {
-      aspect-ratio: 4 / 5;
+      aspect-ratio: 4 / 3;
     }
 
-    #PwPipette-{{ section.id }} .band-img--main {
-      object-position: center top !important;
-    }
-
-    #PwPipette-{{ section.id }} .band-media::after {
-      height: 58%;
+    #PwPipette-{{ section.id }} .band-fade--bottom {
+      height: 36%;
     }
 
     #PwPipette-{{ section.id }} .container {
-      width: calc(100% - (var(--pw-gutter, 16px) * 2));
-      margin-bottom: 16px;
-      padding: 18px 16px;
+      padding: 4px var(--pw-gutter, 16px) 28px;
       flex-direction: column;
       align-items: flex-start;
       gap: 15px;
-      border-radius: 15px;
     }
 
     #PwPipette-{{ section.id }} .ic-circle {
@@ -565,9 +525,12 @@
   }
 
   @media screen and (max-width: 360px) {
+    #PwPipette-{{ section.id }} .band-media {
+      aspect-ratio: 5 / 4;
+    }
+
     #PwPipette-{{ section.id }} .container {
-      width: calc(100% - 24px);
-      padding: 16px 14px;
+      padding: 0 14px 24px;
     }
 
     #PwPipette-{{ section.id }} p.body {
