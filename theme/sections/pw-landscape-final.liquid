@@ -249,18 +249,29 @@
   }
 
   /*
-    Tablet + phones: keep CONTENT OVER image.
-    Full-bleed image + soft white overlay for readable copy.
+    Tablet + phones: STACK — full clear image on top, copy band below.
+    No text over faces.
   */
   @media screen and (max-width: 860px) {
     #PwLandscapeFinal-{{ section.id }} {
-      min-height: 560px;
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+      height: auto;
       aspect-ratio: auto;
+      background: #ffffff;
     }
 
     #PwLandscapeFinal-{{ section.id }} .pw-landscape-final__media {
-      position: absolute;
-      inset: 0;
+      position: relative;
+      z-index: 0;
+      order: 1;
+      inset: auto;
+      width: 100%;
+      height: auto;
+      min-height: 0;
+      aspect-ratio: 4 / 3;
+      flex: 0 0 auto;
     }
 
     #PwLandscapeFinal-{{ section.id }} .pw-landscape-final__image,
@@ -268,48 +279,47 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      object-position: var(--plf-image-x) var(--plf-image-y);
-      /* Show more of the photo; fade only gently on the left for text */
+      object-position: center center;
       -webkit-mask-image: none;
       mask-image: none;
     }
 
-    /* Soft overlay: image stays clear, text stays readable */
     #PwLandscapeFinal-{{ section.id }} .pw-landscape-final__fade {
-      background: linear-gradient(
-        90deg,
-        rgba(255, 255, 255, 0.92) 0%,
-        rgba(255, 255, 255, 0.78) 38%,
-        rgba(255, 255, 255, 0.35) 62%,
-        rgba(255, 255, 255, 0.08) 82%,
-        rgba(255, 255, 255, 0) 100%
-      );
+      display: none;
     }
 
     #PwLandscapeFinal-{{ section.id }} .pw-landscape-final__container {
       position: relative;
       z-index: 2;
-      align-items: center;
+      order: 2;
+      display: flex;
+      align-items: flex-start;
+      width: 100%;
+      max-width: none;
       height: auto;
-      min-height: 560px;
-      padding-block: 48px;
+      min-height: 0;
+      margin: 0;
+      padding: 36px var(--pw-gutter) 40px;
+      background: #ffffff;
     }
 
     #PwLandscapeFinal-{{ section.id }} .pw-landscape-final__content {
       grid-template-columns: 7px minmax(0, 1fr);
       column-gap: 22px;
-      width: min(100%, 560px);
+      width: 100%;
+      max-width: 640px;
       transform: none;
     }
 
     #PwLandscapeFinal-{{ section.id }} .pw-landscape-final__divider {
       width: 7px;
-      min-height: 150px;
+      min-height: 120px;
+      align-self: stretch;
     }
 
     #PwLandscapeFinal-{{ section.id }} .pw-landscape-final__heading {
-      font-size: clamp(32px, 5.5vw, 38px);
-      margin-bottom: 18px;
+      font-size: clamp(32px, 5.5vw, 40px);
+      margin-bottom: 16px;
     }
 
     #PwLandscapeFinal-{{ section.id }} .pw-landscape-final__body {
@@ -319,47 +329,33 @@
     }
   }
 
-  /* Phones */
   @media screen and (max-width: 560px) {
-    #PwLandscapeFinal-{{ section.id }} {
-      min-height: 520px;
+    #PwLandscapeFinal-{{ section.id }} .pw-landscape-final__media {
+      aspect-ratio: 5 / 4;
     }
 
     #PwLandscapeFinal-{{ section.id }} .pw-landscape-final__image,
     #PwLandscapeFinal-{{ section.id }} .pw-landscape-final__placeholder {
-      object-position: 70% var(--plf-image-y);
-    }
-
-    #PwLandscapeFinal-{{ section.id }} .pw-landscape-final__fade {
-      background: linear-gradient(
-        180deg,
-        rgba(255, 255, 255, 0.88) 0%,
-        rgba(255, 255, 255, 0.72) 42%,
-        rgba(255, 255, 255, 0.28) 70%,
-        rgba(255, 255, 255, 0.06) 100%
-      );
+      object-position: center 40%;
     }
 
     #PwLandscapeFinal-{{ section.id }} .pw-landscape-final__container {
-      min-height: 520px;
-      align-items: flex-start;
-      padding-block: 40px 36px;
+      padding: 28px 20px 32px;
     }
 
     #PwLandscapeFinal-{{ section.id }} .pw-landscape-final__content {
       grid-template-columns: 5px minmax(0, 1fr);
       column-gap: 16px;
-      width: 100%;
     }
 
     #PwLandscapeFinal-{{ section.id }} .pw-landscape-final__divider {
       width: 5px;
-      min-height: 140px;
+      min-height: 100px;
     }
 
     #PwLandscapeFinal-{{ section.id }} .pw-landscape-final__heading {
-      margin-bottom: 14px;
-      font-size: clamp(28px, 8.2vw, 32px);
+      margin-bottom: 12px;
+      font-size: clamp(28px, 8vw, 32px);
       letter-spacing: -0.4px;
     }
 
@@ -369,15 +365,13 @@
     }
   }
 
-  /* iPhone SE / Lumia */
   @media screen and (max-width: 380px) {
-    #PwLandscapeFinal-{{ section.id }} {
-      min-height: 480px;
+    #PwLandscapeFinal-{{ section.id }} .pw-landscape-final__media {
+      aspect-ratio: 1 / 1;
     }
 
     #PwLandscapeFinal-{{ section.id }} .pw-landscape-final__container {
-      min-height: 480px;
-      padding-block: 32px 28px;
+      padding: 24px 16px 28px;
     }
 
     #PwLandscapeFinal-{{ section.id }} .pw-landscape-final__heading {
@@ -389,20 +383,13 @@
     }
 
     #PwLandscapeFinal-{{ section.id }} .pw-landscape-final__divider {
-      min-height: 120px;
+      min-height: 90px;
     }
   }
 
-  /* JioPhone / very narrow */
   @media screen and (max-width: 320px) {
-    #PwLandscapeFinal-{{ section.id }} {
-      min-height: 440px;
-    }
-
     #PwLandscapeFinal-{{ section.id }} .pw-landscape-final__container {
-      min-height: 440px;
-      padding-inline: 12px;
-      padding-block: 28px 24px;
+      padding: 20px 14px 24px;
     }
 
     #PwLandscapeFinal-{{ section.id }} .pw-landscape-final__heading {
