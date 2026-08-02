@@ -219,20 +219,22 @@
     pointer-events: none;
   }
 
-  /* Inside media: white soft-edge over the photo */
+  /*
+   * ONE clean edge fade only (no double bridge).
+   * Short + soft so scientist does not get a milky wash.
+   */
   #PwPipette-{{ section.id }} .band-fade--side {
     position: absolute;
     z-index: 5;
     top: 0;
     bottom: 0;
     left: 0;
-    width: min(340px, 46%);
+    width: min(168px, 26%);
     background: linear-gradient(
       90deg,
       #ffffff 0%,
-      rgba(255, 255, 255, 0.97) 18%,
-      rgba(255, 255, 255, 0.82) 40%,
-      rgba(255, 255, 255, 0.45) 68%,
+      rgba(255, 255, 255, 0.72) 34%,
+      rgba(255, 255, 255, 0.28) 68%,
       rgba(255, 255, 255, 0) 100%
     );
   }
@@ -241,27 +243,9 @@
     display: none;
   }
 
-  /* Section bridge — sits across white copy → image split */
+  /* Bridge off — double fade was making the milky look */
   #PwPipette-{{ section.id }} .band-fade--bridge {
-    position: absolute;
-    z-index: 4;
-    top: 0;
-    bottom: 0;
-    left: max(
-      calc(48.238% - 200px),
-      calc((100% - 1437px) / 2 + 493px)
-    );
-    width: 360px;
-    background: linear-gradient(
-      90deg,
-      #ffffff 0%,
-      #ffffff 22%,
-      rgba(255, 255, 255, 0.95) 40%,
-      rgba(255, 255, 255, 0.7) 58%,
-      rgba(255, 255, 255, 0.35) 76%,
-      rgba(255, 255, 255, 0.1) 90%,
-      rgba(255, 255, 255, 0) 100%
-    );
+    display: none;
   }
 
   #PwPipette-{{ section.id }} .ic-circle {
@@ -329,13 +313,8 @@
       left: 46%;
     }
 
-    #PwPipette-{{ section.id }} .band-fade--bridge {
-      left: calc(46% - 180px);
-      width: 300px;
-    }
-
     #PwPipette-{{ section.id }} .band-fade--side {
-      width: min(280px, 50%);
+      width: min(140px, 24%);
     }
 
     #PwPipette-{{ section.id }} .ic-circle {
