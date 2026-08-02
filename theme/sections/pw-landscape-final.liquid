@@ -249,29 +249,22 @@
   }
 
   /*
-    Tablet + phones: STACK — full clear image on top, copy band below.
-    No text over faces.
+    Tablet + phones: ONE frame — full image, copy at bottom on soft panel.
+    Image stays visible above; text never sits on faces.
   */
   @media screen and (max-width: 860px) {
     #PwLandscapeFinal-{{ section.id }} {
-      display: flex;
-      flex-direction: column;
-      min-height: 0;
+      display: block;
+      min-height: 640px;
       height: auto;
       aspect-ratio: auto;
-      background: #ffffff;
+      background: #0f1412;
     }
 
     #PwLandscapeFinal-{{ section.id }} .pw-landscape-final__media {
-      position: relative;
+      position: absolute;
       z-index: 0;
-      order: 1;
-      inset: auto;
-      width: 100%;
-      height: auto;
-      min-height: 0;
-      aspect-ratio: 4 / 3;
-      flex: 0 0 auto;
+      inset: 0;
     }
 
     #PwLandscapeFinal-{{ section.id }} .pw-landscape-final__image,
@@ -279,99 +272,115 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      object-position: center center;
+      object-position: center 28%;
       -webkit-mask-image: none;
       mask-image: none;
     }
 
+    /* Top keeps photo clear; bottom lifts copy */
     #PwLandscapeFinal-{{ section.id }} .pw-landscape-final__fade {
-      display: none;
+      display: block;
+      background: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0) 38%,
+        rgba(255, 255, 255, 0.55) 58%,
+        rgba(255, 255, 255, 0.92) 78%,
+        #ffffff 100%
+      );
     }
 
     #PwLandscapeFinal-{{ section.id }} .pw-landscape-final__container {
       position: relative;
       z-index: 2;
-      order: 2;
       display: flex;
-      align-items: flex-start;
+      align-items: flex-end;
       width: 100%;
       max-width: none;
       height: auto;
-      min-height: 0;
+      min-height: 640px;
       margin: 0;
-      padding: 36px var(--pw-gutter) 40px;
-      background: #ffffff;
+      padding: 0;
+      background: transparent;
     }
 
     #PwLandscapeFinal-{{ section.id }} .pw-landscape-final__content {
       grid-template-columns: 7px minmax(0, 1fr);
-      column-gap: 22px;
+      column-gap: 20px;
       width: 100%;
-      max-width: 640px;
+      max-width: none;
+      margin: 0;
+      padding: 28px var(--pw-gutter) 36px;
       transform: none;
+      background: transparent;
     }
 
     #PwLandscapeFinal-{{ section.id }} .pw-landscape-final__divider {
       width: 7px;
-      min-height: 120px;
+      min-height: 110px;
       align-self: stretch;
     }
 
     #PwLandscapeFinal-{{ section.id }} .pw-landscape-final__heading {
       font-size: clamp(32px, 5.5vw, 40px);
-      margin-bottom: 16px;
+      margin-bottom: 14px;
     }
 
     #PwLandscapeFinal-{{ section.id }} .pw-landscape-final__body {
-      max-width: none;
+      max-width: 36em;
       font-size: 17px;
-      line-height: 1.6;
-    }
-  }
-
-  @media screen and (max-width: 560px) {
-    #PwLandscapeFinal-{{ section.id }} .pw-landscape-final__media {
-      aspect-ratio: 5 / 4;
-    }
-
-    #PwLandscapeFinal-{{ section.id }} .pw-landscape-final__image,
-    #PwLandscapeFinal-{{ section.id }} .pw-landscape-final__placeholder {
-      object-position: center 40%;
-    }
-
-    #PwLandscapeFinal-{{ section.id }} .pw-landscape-final__container {
-      padding: 28px 20px 32px;
-    }
-
-    #PwLandscapeFinal-{{ section.id }} .pw-landscape-final__content {
-      grid-template-columns: 5px minmax(0, 1fr);
-      column-gap: 16px;
-    }
-
-    #PwLandscapeFinal-{{ section.id }} .pw-landscape-final__divider {
-      width: 5px;
-      min-height: 100px;
-    }
-
-    #PwLandscapeFinal-{{ section.id }} .pw-landscape-final__heading {
-      margin-bottom: 12px;
-      font-size: clamp(28px, 8vw, 32px);
-      letter-spacing: -0.4px;
-    }
-
-    #PwLandscapeFinal-{{ section.id }} .pw-landscape-final__body {
-      font-size: 16px;
       line-height: 1.55;
     }
   }
 
-  @media screen and (max-width: 380px) {
-    #PwLandscapeFinal-{{ section.id }} .pw-landscape-final__media {
-      aspect-ratio: 1 / 1;
+  @media screen and (max-width: 560px) {
+    #PwLandscapeFinal-{{ section.id }} {
+      min-height: 580px;
+    }
+
+    #PwLandscapeFinal-{{ section.id }} .pw-landscape-final__image,
+    #PwLandscapeFinal-{{ section.id }} .pw-landscape-final__placeholder {
+      object-position: center 32%;
     }
 
     #PwLandscapeFinal-{{ section.id }} .pw-landscape-final__container {
-      padding: 24px 16px 28px;
+      min-height: 580px;
+    }
+
+    #PwLandscapeFinal-{{ section.id }} .pw-landscape-final__content {
+      grid-template-columns: 5px minmax(0, 1fr);
+      column-gap: 14px;
+      padding: 24px 18px 28px;
+    }
+
+    #PwLandscapeFinal-{{ section.id }} .pw-landscape-final__divider {
+      width: 5px;
+      min-height: 96px;
+    }
+
+    #PwLandscapeFinal-{{ section.id }} .pw-landscape-final__heading {
+      margin-bottom: 10px;
+      font-size: clamp(28px, 7.5vw, 32px);
+      letter-spacing: -0.4px;
+    }
+
+    #PwLandscapeFinal-{{ section.id }} .pw-landscape-final__body {
+      font-size: 15px;
+      line-height: 1.5;
+    }
+  }
+
+  @media screen and (max-width: 380px) {
+    #PwLandscapeFinal-{{ section.id }} {
+      min-height: 540px;
+    }
+
+    #PwLandscapeFinal-{{ section.id }} .pw-landscape-final__container {
+      min-height: 540px;
+    }
+
+    #PwLandscapeFinal-{{ section.id }} .pw-landscape-final__content {
+      padding: 20px 14px 24px;
     }
 
     #PwLandscapeFinal-{{ section.id }} .pw-landscape-final__heading {
@@ -379,17 +388,21 @@
     }
 
     #PwLandscapeFinal-{{ section.id }} .pw-landscape-final__body {
-      font-size: 15px;
+      font-size: 14px;
     }
 
     #PwLandscapeFinal-{{ section.id }} .pw-landscape-final__divider {
-      min-height: 90px;
+      min-height: 88px;
     }
   }
 
   @media screen and (max-width: 320px) {
+    #PwLandscapeFinal-{{ section.id }} {
+      min-height: 500px;
+    }
+
     #PwLandscapeFinal-{{ section.id }} .pw-landscape-final__container {
-      padding: 20px 14px 24px;
+      min-height: 500px;
     }
 
     #PwLandscapeFinal-{{ section.id }} .pw-landscape-final__heading {
@@ -397,8 +410,7 @@
     }
 
     #PwLandscapeFinal-{{ section.id }} .pw-landscape-final__body {
-      font-size: 14px;
-      line-height: 1.5;
+      font-size: 13px;
     }
   }
 {% endstyle %}
