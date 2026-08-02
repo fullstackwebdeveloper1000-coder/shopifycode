@@ -197,54 +197,82 @@
     box-shadow: none !important;
   }
 
-  /* Soft fill behind contain so scientist stays full + frame never empty */
+  /*
+   * Figma-style fade: mask the PHOTO (not a white overlay).
+   * Left edge dissolves into white — same soft feather as design.
+   */
   #PwPipette-{{ section.id }} .band-img--bg {
     z-index: 1;
     object-fit: cover !important;
-    object-position: right center !important;
-    filter: blur(12px);
-    opacity: 0.28;
-    transform: scale(1.06);
+    object-position: 72% center !important;
+    filter: blur(14px);
+    opacity: 0.18;
+    transform: scale(1.04);
+    -webkit-mask-image: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(0, 0, 0, 0.12) 12%,
+      rgba(0, 0, 0, 0.45) 22%,
+      rgba(0, 0, 0, 0.85) 34%,
+      #000000 44%,
+      #000000 100%
+    );
+    mask-image: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(0, 0, 0, 0.12) 12%,
+      rgba(0, 0, 0, 0.45) 22%,
+      rgba(0, 0, 0, 0.85) 34%,
+      #000000 44%,
+      #000000 100%
+    );
+    -webkit-mask-size: 100% 100%;
+    mask-size: 100% 100%;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
   }
 
   #PwPipette-{{ section.id }} .band-img--main {
     z-index: 2;
-    object-fit: contain !important;
-    object-position: right center !important;
+    object-fit: cover !important;
+    object-position: 72% center !important;
     background: transparent !important;
     transform: none !important;
+    -webkit-mask-image: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(0, 0, 0, 0.1) 10%,
+      rgba(0, 0, 0, 0.4) 20%,
+      rgba(0, 0, 0, 0.78) 32%,
+      #000000 42%,
+      #000000 100%
+    );
+    mask-image: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(0, 0, 0, 0.1) 10%,
+      rgba(0, 0, 0, 0.4) 20%,
+      rgba(0, 0, 0, 0.78) 32%,
+      #000000 42%,
+      #000000 100%
+    );
+    -webkit-mask-size: 100% 100%;
+    mask-size: 100% 100%;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
   }
 
   #PwPipette-{{ section.id }} .band-fade {
     pointer-events: none;
   }
 
-  /*
-   * ONE clean edge fade only (no double bridge).
-   * Short + soft so scientist does not get a milky wash.
-   */
-  #PwPipette-{{ section.id }} .band-fade--side {
-    position: absolute;
-    z-index: 5;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    width: min(168px, 26%);
-    background: linear-gradient(
-      90deg,
-      #ffffff 0%,
-      rgba(255, 255, 255, 0.72) 34%,
-      rgba(255, 255, 255, 0.28) 68%,
-      rgba(255, 255, 255, 0) 100%
-    );
-  }
-
-  #PwPipette-{{ section.id }} .band-fade--bottom {
+  /* Overlay fades off on desktop — mask does the Figma edge */
+  #PwPipette-{{ section.id }} .band-fade--side,
+  #PwPipette-{{ section.id }} .band-fade--bridge {
     display: none;
   }
 
-  /* Bridge off — double fade was making the milky look */
-  #PwPipette-{{ section.id }} .band-fade--bridge {
+  #PwPipette-{{ section.id }} .band-fade--bottom {
     display: none;
   }
 
@@ -313,10 +341,6 @@
       left: 46%;
     }
 
-    #PwPipette-{{ section.id }} .band-fade--side {
-      width: min(140px, 24%);
-    }
-
     #PwPipette-{{ section.id }} .ic-circle {
       width: 74px;
       height: 74px;
@@ -383,6 +407,12 @@
       display: block;
       opacity: 0.22;
       filter: blur(10px);
+    }
+
+    #PwPipette-{{ section.id }} .band-img--bg,
+    #PwPipette-{{ section.id }} .band-img--main {
+      -webkit-mask-image: none;
+      mask-image: none;
     }
 
     #PwPipette-{{ section.id }} .band-img--main {

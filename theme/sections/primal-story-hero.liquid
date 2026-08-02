@@ -137,8 +137,29 @@
     border: 0 !important;
     border-radius: 0 !important;
     box-shadow: none !important;
-    -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 18%);
-    mask-image: linear-gradient(to right, transparent 0%, #000 18%);
+    /* Figma: dark left → photo soft feather (not a hard cut) */
+    -webkit-mask-image: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(0, 0, 0, 0.08) 10%,
+      rgba(0, 0, 0, 0.35) 20%,
+      rgba(0, 0, 0, 0.72) 32%,
+      #000000 44%,
+      #000000 100%
+    );
+    mask-image: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(0, 0, 0, 0.08) 10%,
+      rgba(0, 0, 0, 0.35) 20%,
+      rgba(0, 0, 0, 0.72) 32%,
+      #000000 44%,
+      #000000 100%
+    );
+    -webkit-mask-size: 100% 100%;
+    mask-size: 100% 100%;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
   }
 
   /* Desktop uses side mask; top/bottom fades reserved for stacked layout */
