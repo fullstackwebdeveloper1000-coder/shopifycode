@@ -249,22 +249,27 @@
   }
 
   /*
-    Tablet + phones: ONE frame — full image, copy at bottom on soft panel.
-    Image stays visible above; text never sits on faces.
+    Tablet + phones: image on top (wide crop so BOTH hikers stay in frame),
+    copy band below. Tall portrait crops were cutting the second person.
   */
   @media screen and (max-width: 860px) {
     #PwLandscapeFinal-{{ section.id }} {
-      display: block;
-      min-height: 640px;
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
       height: auto;
       aspect-ratio: auto;
-      background: #0f1412;
+      background: #ffffff;
     }
 
     #PwLandscapeFinal-{{ section.id }} .pw-landscape-final__media {
-      position: absolute;
+      position: relative;
       z-index: 0;
-      inset: 0;
+      inset: auto;
+      flex: 0 0 auto;
+      width: 100%;
+      aspect-ratio: 3 / 2;
+      min-height: 0;
     }
 
     #PwLandscapeFinal-{{ section.id }} .pw-landscape-final__image,
@@ -272,36 +277,29 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      object-position: center 28%;
+      /* Focus on ridge / both figures — theme sliders still apply */
+      object-position: var(--plf-image-x) var(--plf-image-y);
       -webkit-mask-image: none;
       mask-image: none;
     }
 
-    /* Top keeps photo clear; bottom lifts copy */
     #PwLandscapeFinal-{{ section.id }} .pw-landscape-final__fade {
-      display: block;
-      background: linear-gradient(
-        180deg,
-        rgba(255, 255, 255, 0) 0%,
-        rgba(255, 255, 255, 0) 38%,
-        rgba(255, 255, 255, 0.55) 58%,
-        rgba(255, 255, 255, 0.92) 78%,
-        #ffffff 100%
-      );
+      display: none;
     }
 
     #PwLandscapeFinal-{{ section.id }} .pw-landscape-final__container {
       position: relative;
       z-index: 2;
       display: flex;
-      align-items: flex-end;
+      align-items: center;
+      flex: 0 0 auto;
       width: 100%;
       max-width: none;
       height: auto;
-      min-height: 640px;
+      min-height: 0;
       margin: 0;
       padding: 0;
-      background: transparent;
+      background: #ffffff;
     }
 
     #PwLandscapeFinal-{{ section.id }} .pw-landscape-final__content {
@@ -312,7 +310,7 @@
       margin: 0;
       padding: 28px var(--pw-gutter) 36px;
       transform: none;
-      background: transparent;
+      background: #ffffff;
     }
 
     #PwLandscapeFinal-{{ section.id }} .pw-landscape-final__divider {
@@ -334,17 +332,9 @@
   }
 
   @media screen and (max-width: 560px) {
-    #PwLandscapeFinal-{{ section.id }} {
-      min-height: 580px;
-    }
-
-    #PwLandscapeFinal-{{ section.id }} .pw-landscape-final__image,
-    #PwLandscapeFinal-{{ section.id }} .pw-landscape-final__placeholder {
-      object-position: center 32%;
-    }
-
-    #PwLandscapeFinal-{{ section.id }} .pw-landscape-final__container {
-      min-height: 580px;
+    #PwLandscapeFinal-{{ section.id }} .pw-landscape-final__media {
+      /* Slightly taller than 3/2 but still wide enough for both people */
+      aspect-ratio: 4 / 3;
     }
 
     #PwLandscapeFinal-{{ section.id }} .pw-landscape-final__content {
@@ -371,12 +361,8 @@
   }
 
   @media screen and (max-width: 380px) {
-    #PwLandscapeFinal-{{ section.id }} {
-      min-height: 540px;
-    }
-
-    #PwLandscapeFinal-{{ section.id }} .pw-landscape-final__container {
-      min-height: 540px;
+    #PwLandscapeFinal-{{ section.id }} .pw-landscape-final__media {
+      aspect-ratio: 5 / 4;
     }
 
     #PwLandscapeFinal-{{ section.id }} .pw-landscape-final__content {
@@ -397,12 +383,8 @@
   }
 
   @media screen and (max-width: 320px) {
-    #PwLandscapeFinal-{{ section.id }} {
-      min-height: 500px;
-    }
-
-    #PwLandscapeFinal-{{ section.id }} .pw-landscape-final__container {
-      min-height: 500px;
+    #PwLandscapeFinal-{{ section.id }} .pw-landscape-final__media {
+      aspect-ratio: 5 / 4;
     }
 
     #PwLandscapeFinal-{{ section.id }} .pw-landscape-final__heading {
