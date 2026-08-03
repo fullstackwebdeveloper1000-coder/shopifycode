@@ -1,0 +1,21 @@
+{%- comment -%}
+  Primal Win — shared alignment tokens
+  Content column: 1280px | gutters: 48px | container max: 1376px
+{%- endcomment -%}
+  --pw-frame: 1440px;
+  --pw-max: 1440px;
+  --pw-content: 1280px;
+  --pw-gutter: 48px;
+  --pw-inner: calc(var(--pw-content) + 2 * var(--pw-gutter));
+
+  @media screen and (max-width: 1180px) {
+    --pw-gutter: 34px;
+  }
+
+  @media screen and (max-width: 860px) {
+    --pw-gutter: 22px;
+  }
+
+  @media screen and (max-width: 560px) {
+    --pw-gutter: 20px;
+  }

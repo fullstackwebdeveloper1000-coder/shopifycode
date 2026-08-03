@@ -1,0 +1,1109 @@
+{% liquid
+  assign pw_collection_heading_font = section.settings.pw_heading_font
+  assign pw_collection_body_font = section.settings.pw_body_font
+%}
+
+{{ 'template-collection.css' | asset_url | stylesheet_tag }}
+{{ 'component-card.css' | asset_url | stylesheet_tag }}
+{{ 'component-price.css' | asset_url | stylesheet_tag }}
+
+{% if section.settings.image_shape == 'blob' %}
+  {{ 'mask-blobs.css' | asset_url | stylesheet_tag }}
+{%- endif -%}
+
+{%- unless section.settings.quick_add == 'none' -%}
+  {{ 'quick-add.css' | asset_url | stylesheet_tag }}
+{%- endunless -%}
+
+{%- if section.settings.quick_add == 'standard' -%}
+  <script src="{{ 'quick-add.js' | asset_url }}" defer="defer"></script>
+  <script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
+{%- endif -%}
+
+{%- if section.settings.quick_add == 'bulk' -%}
+  <script src="{{ 'quick-add-bulk.js' | asset_url }}" defer="defer"></script>
+  <script src="{{ 'quantity-popover.js' | asset_url }}" defer="defer"></script>
+  <script src="{{ 'price-per-item.js' | asset_url }}" defer="defer"></script>
+  <script src="{{ 'quick-order-list.js' | asset_url }}" defer="defer"></script>
+{%- endif -%}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+{% style %}
+  {{ pw_collection_heading_font | font_face: font_display: 'swap' }}
+  {{ pw_collection_body_font | font_face: font_display: 'swap' }}
+
+  #PrimalCollection-{{ section.id }} {
+    {% render 'pw-align-vars' %}
+    --pw-content: 1280px;
+    --pw-gutter: 48px;
+    --pw-inner: 1376px;
+    --pw-max: 1440px;
+  }
+
+  #shopify-section-{{ section.id }} {
+    display: block !important;
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow-x: clip !important;
+    background: var(--pcol-page) !important;
+  }
+
+  #PrimalCollection-{{ section.id }},
+  #PrimalCollection-{{ section.id }} *,
+  #PrimalCollection-{{ section.id }} *::before,
+  #PrimalCollection-{{ section.id }} *::after {
+    box-sizing: border-box;
+  }
+
+  #PrimalCollection-{{ section.id }} {
+    display: block;
+    width: 100%;
+    margin: 0;
+    background: var(--pcol-page);
+    color: var(--pcol-text);
+    font-family: {{ pw_collection_body_font.family }}, {{ pw_collection_body_font.fallback_families }};
+    font-style: {{ pw_collection_body_font.style }};
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  #PrimalCollection-{{ section.id }} > .section-{{ section.id }}-padding {
+    background: var(--pcol-page) !important;
+  }
+
+  #PrimalCollection-{{ section.id }} .page-width,
+  #PrimalCollection-{{ section.id }} .pw-container {
+    width: 100%;
+    max-width: var(--pw-inner);
+    margin-inline: auto;
+    padding-inline: var(--pw-gutter);
+  }
+
+  /* ── Collection intro (brand header) ── */
+  #PrimalCollection-{{ section.id }} .pcol-intro {
+    padding-top: clamp(40px, 4.5vw, 68px);
+    padding-bottom: clamp(22px, 3vw, 40px);
+  }
+
+  #PrimalCollection-{{ section.id }} .pcol-intro__eyebrow {
+    margin: 0 0 12px;
+    color: var(--pcol-gold);
+    font-family: {{ pw_collection_heading_font.family }}, {{ pw_collection_heading_font.fallback_families }};
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  #PrimalCollection-{{ section.id }} .pcol-intro__rule {
+    display: block;
+    width: 56px;
+    height: 3px;
+    margin: 0 0 22px;
+    background: var(--pcol-gold);
+    border: 0;
+  }
+
+  #PrimalCollection-{{ section.id }} .pcol-intro__row {
+    display: flex;
+    width: 100%;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 28px;
+    padding-bottom: 28px;
+    border-bottom: 1px solid var(--pcol-border);
+  }
+
+  #PrimalCollection-{{ section.id }} .pcol-intro__copy {
+    min-width: 0;
+    max-width: 820px;
+  }
+
+  #PrimalCollection-{{ section.id }} .pcol-intro__title {
+    margin: 0;
+    color: var(--pcol-heading);
+    font-family: {{ pw_collection_heading_font.family }}, {{ pw_collection_heading_font.fallback_families }};
+    font-style: {{ pw_collection_heading_font.style }};
+    font-size: clamp(36px, 4vw, 58px);
+    font-weight: 900;
+    line-height: 0.96;
+    letter-spacing: -1.6px;
+    text-transform: uppercase;
+    overflow-wrap: break-word;
+  }
+
+  #PrimalCollection-{{ section.id }} .pcol-intro__description {
+    width: min(100%, 640px);
+    margin-top: 16px;
+    color: var(--pcol-text);
+    font-size: clamp(15px, 1.15vw, 17px);
+    line-height: 1.65;
+  }
+
+  #PrimalCollection-{{ section.id }} .pcol-intro__description p {
+    margin: 0;
+  }
+
+  #PrimalCollection-{{ section.id }} .pcol-intro__count {
+    display: flex;
+    min-width: 112px;
+    flex-direction: column;
+    align-items: flex-end;
+    padding: 14px 18px;
+    border: 1px solid var(--pcol-border);
+    border-radius: 12px;
+    background: var(--pcol-card);
+    box-shadow: 0 10px 28px rgba(31, 35, 38, 0.05);
+    color: var(--pcol-muted);
+    font-family: {{ pw_collection_heading_font.family }}, {{ pw_collection_heading_font.fallback_families }};
+    text-align: right;
+    text-transform: uppercase;
+  }
+
+  #PrimalCollection-{{ section.id }} .pcol-intro__count strong {
+    color: var(--pcol-gold);
+    font-size: 30px;
+    font-weight: 900;
+    line-height: 1;
+    letter-spacing: -0.5px;
+  }
+
+  #PrimalCollection-{{ section.id }} .pcol-intro__count span {
+    margin-top: 6px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+  }
+
+  /* ── Filters / sorting ── */
+  #PrimalCollection-{{ section.id }} .facets-wrapper,
+  #PrimalCollection-{{ section.id }} .facets-vertical-sort {
+    margin-bottom: 28px;
+  }
+
+  #PrimalCollection-{{ section.id }} .facets-container,
+  #PrimalCollection-{{ section.id }} .facets-vertical-form {
+    border-color: var(--pcol-border);
+  }
+
+  #PrimalCollection-{{ section.id }} .facets__form,
+  #PrimalCollection-{{ section.id }} .facets-vertical-form {
+    color: var(--pcol-text);
+  }
+
+  #PrimalCollection-{{ section.id }} .facet-filters__label,
+  #PrimalCollection-{{ section.id }} .facets__heading,
+  #PrimalCollection-{{ section.id }} .product-count__text,
+  #PrimalCollection-{{ section.id }} .mobile-facets__open-label {
+    color: var(--pcol-heading);
+    font-family: {{ pw_collection_heading_font.family }}, {{ pw_collection_heading_font.fallback_families }};
+    font-weight: 700;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+  }
+
+  #PrimalCollection-{{ section.id }} .select__select,
+  #PrimalCollection-{{ section.id }} .facet-filters__sort {
+    min-height: 46px;
+    padding-right: 40px;
+    border: 1px solid var(--pcol-border);
+    border-radius: 10px;
+    background: var(--pcol-card);
+    color: var(--pcol-heading);
+    font-family: {{ pw_collection_body_font.family }}, {{ pw_collection_body_font.fallback_families }};
+    box-shadow: 0 6px 16px rgba(31, 35, 38, 0.04);
+  }
+
+  #PrimalCollection-{{ section.id }} .facets__summary {
+    color: var(--pcol-heading);
+    font-family: {{ pw_collection_heading_font.family }}, {{ pw_collection_heading_font.fallback_families }};
+    font-weight: 700;
+  }
+
+  #PrimalCollection-{{ section.id }} .facets__summary:hover {
+    color: var(--pcol-gold);
+  }
+
+  #PrimalCollection-{{ section.id }} .active-facets__button-inner {
+    border-color: var(--pcol-border);
+    border-radius: 999px;
+    background: var(--pcol-card);
+    color: var(--pcol-heading);
+  }
+
+  #PrimalCollection-{{ section.id }} .active-facets__button:hover .active-facets__button-inner {
+    border-color: var(--pcol-gold);
+    color: var(--pcol-gold);
+  }
+
+  /* ── Product grid cards ── */
+  #PrimalCollection-{{ section.id }} .collection {
+    padding-top: 0;
+  }
+
+  #PrimalCollection-{{ section.id }} #product-grid {
+    display: grid;
+    grid-template-columns: repeat({{ section.settings.columns_desktop }}, minmax(0, 1fr));
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    gap: clamp(18px, 1.7vw, 24px);
+  }
+
+  #PrimalCollection-{{ section.id }} #product-grid > .grid__item {
+    width: 100%;
+    max-width: none;
+    min-width: 0;
+  }
+
+  #PrimalCollection-{{ section.id }} .card-wrapper {
+    height: 100%;
+  }
+
+  #PrimalCollection-{{ section.id }} .card {
+    height: 100%;
+    overflow: hidden;
+    border: 1px solid var(--pcol-border);
+    border-radius: 16px;
+    background: var(--pcol-card);
+    box-shadow:
+      0 4px 10px rgba(20, 23, 26, 0.03),
+      0 18px 36px rgba(20, 23, 26, 0.07);
+    transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
+  }
+
+  #PrimalCollection-{{ section.id }} .card-wrapper:hover .card {
+    transform: translateY(-5px);
+    border-color: rgba(200, 154, 61, 0.55);
+    box-shadow:
+      0 8px 18px rgba(20, 23, 26, 0.05),
+      0 26px 50px rgba(20, 23, 26, 0.11);
+  }
+
+  #PrimalCollection-{{ section.id }} .card__inner {
+    overflow: hidden;
+    border-radius: 15px 15px 0 0;
+    background:
+      radial-gradient(circle at 50% 40%, rgba(200, 154, 61, 0.16) 0%, rgba(200, 154, 61, 0.06) 34%, transparent 70%),
+      linear-gradient(160deg, var(--pcol-media) 0%, #e4ddd2 100%);
+  }
+
+  #PrimalCollection-{{ section.id }} .card__media,
+  #PrimalCollection-{{ section.id }} .media {
+    overflow: hidden;
+  }
+
+  #PrimalCollection-{{ section.id }} .card__media img {
+    object-fit: contain;
+    object-position: center;
+    padding: 8% 10%;
+    transition: transform 0.35s ease;
+  }
+
+  #PrimalCollection-{{ section.id }} .card-wrapper:hover .card__media img {
+    transform: scale(1.04);
+  }
+
+  #PrimalCollection-{{ section.id }} .card__badge {
+    top: 14px;
+    right: 14px;
+    bottom: auto;
+    left: auto;
+  }
+
+  #PrimalCollection-{{ section.id }} .badge {
+    padding: 7px 11px;
+    border: 0;
+    border-radius: 999px;
+    background: var(--pcol-gold);
+    color: #14171a;
+    font-family: {{ pw_collection_heading_font.family }}, {{ pw_collection_heading_font.fallback_families }};
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 0.75px;
+    text-transform: uppercase;
+  }
+
+  #PrimalCollection-{{ section.id }} .card__content {
+    display: flex;
+    height: 100%;
+    min-height: 186px;
+    padding: 22px 20px 22px;
+    flex-direction: column;
+  }
+
+  #PrimalCollection-{{ section.id }} .card__information {
+    display: flex;
+    height: 100%;
+    padding: 0;
+    flex-direction: column;
+  }
+
+  #PrimalCollection-{{ section.id }} .card-information {
+    height: 100%;
+  }
+
+  #PrimalCollection-{{ section.id }} .caption-with-letter-spacing {
+    margin-bottom: 8px;
+    color: var(--pcol-gold);
+    font-family: {{ pw_collection_heading_font.family }}, {{ pw_collection_heading_font.fallback_families }};
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  #PrimalCollection-{{ section.id }} .card__heading {
+    margin: 0;
+    color: var(--pcol-heading);
+    font-family: {{ pw_collection_heading_font.family }}, {{ pw_collection_heading_font.fallback_families }};
+    font-size: clamp(15px, 1.2vw, 18px);
+    font-weight: 800;
+    line-height: 1.2;
+    letter-spacing: -0.2px;
+    text-transform: uppercase;
+  }
+
+  #PrimalCollection-{{ section.id }} .card__heading a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  #PrimalCollection-{{ section.id }} .card__heading a:hover {
+    color: var(--pcol-gold);
+  }
+
+  #PrimalCollection-{{ section.id }} .card-information > .price {
+    margin-top: 14px;
+  }
+
+  #PrimalCollection-{{ section.id }} .price,
+  #PrimalCollection-{{ section.id }} .price-item {
+    color: var(--pcol-heading);
+    font-family: {{ pw_collection_heading_font.family }}, {{ pw_collection_heading_font.fallback_families }};
+    font-size: clamp(18px, 1.4vw, 22px);
+    font-weight: 900;
+    line-height: 1.15;
+  }
+
+  #PrimalCollection-{{ section.id }} .price--on-sale .price-item--regular {
+    color: var(--pcol-muted);
+    font-size: 13px;
+    font-weight: 500;
+  }
+
+  #PrimalCollection-{{ section.id }} .price--on-sale .price-item--sale {
+    color: var(--pcol-gold);
+  }
+
+  #PrimalCollection-{{ section.id }} .rating-wrapper {
+    margin-top: 10px;
+  }
+
+  #PrimalCollection-{{ section.id }} .rating-star {
+    --color-rating-star: var(--pcol-gold);
+  }
+
+  #PrimalCollection-{{ section.id }} .quick-add {
+    margin: auto 0 0;
+    padding-top: 18px;
+  }
+
+  #PrimalCollection-{{ section.id }} .quick-add__submit,
+  #PrimalCollection-{{ section.id }} .product-form__submit {
+    width: 100%;
+    min-height: 48px;
+    margin: 0;
+    border: 1.6px solid var(--pcol-gold);
+    border-radius: 10px;
+    background: transparent;
+    color: var(--pcol-heading);
+    font-family: {{ pw_collection_heading_font.family }}, {{ pw_collection_heading_font.fallback_families }};
+    font-size: 12px;
+    font-weight: 800;
+    line-height: 1.2;
+    letter-spacing: 0.7px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background-color 0.18s ease, color 0.18s ease, border-color 0.18s ease;
+  }
+
+  #PrimalCollection-{{ section.id }} .quick-add__submit::after,
+  #PrimalCollection-{{ section.id }} .product-form__submit::after {
+    display: none;
+  }
+
+  #PrimalCollection-{{ section.id }} .quick-add__submit:hover,
+  #PrimalCollection-{{ section.id }} .product-form__submit:hover {
+    background: var(--pcol-gold);
+    border-color: var(--pcol-gold);
+    color: #14171a;
+  }
+
+  /* Empty state */
+  #PrimalCollection-{{ section.id }} .collection--empty .title {
+    color: var(--pcol-heading);
+    font-family: {{ pw_collection_heading_font.family }}, {{ pw_collection_heading_font.fallback_families }};
+    font-weight: 800;
+    text-transform: uppercase;
+  }
+
+  #PrimalCollection-{{ section.id }} .collection--empty .underlined-link {
+    color: var(--pcol-gold);
+  }
+
+  /* Pagination */
+  #PrimalCollection-{{ section.id }} .pagination-wrapper {
+    margin-top: clamp(40px, 5vw, 68px);
+  }
+
+  #PrimalCollection-{{ section.id }} .pagination__item {
+    border-radius: 10px;
+    color: var(--pcol-heading);
+    font-family: {{ pw_collection_heading_font.family }}, {{ pw_collection_heading_font.fallback_families }};
+    font-weight: 700;
+  }
+
+  #PrimalCollection-{{ section.id }} .pagination__item--current {
+    background: var(--pcol-gold);
+    color: #14171a;
+  }
+
+  @media screen and (max-width: 1180px) {
+    #PrimalCollection-{{ section.id }} {
+      --pw-gutter: 34px;
+    }
+  }
+
+  @media screen and (min-width: 1024px) and (max-width: 1199px) {
+    #PrimalCollection-{{ section.id }} #product-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  @media screen and (min-width: 600px) and (max-width: 1023px) {
+    #PrimalCollection-{{ section.id }} {
+      --pw-gutter: 28px;
+    }
+
+    #PrimalCollection-{{ section.id }} .pcol-intro__row {
+      align-items: flex-start;
+    }
+
+    #PrimalCollection-{{ section.id }} #product-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    #PrimalCollection-{{ section.id }} .card__content {
+      min-height: 168px;
+      padding: 18px;
+    }
+  }
+
+  @media screen and (max-width: 599px) {
+    #PrimalCollection-{{ section.id }} {
+      --pw-gutter: 20px;
+    }
+
+    #PrimalCollection-{{ section.id }} .pcol-intro {
+      padding-top: 32px;
+      padding-bottom: 22px;
+    }
+
+    #PrimalCollection-{{ section.id }} .pcol-intro__row {
+      align-items: flex-start;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    #PrimalCollection-{{ section.id }} .pcol-intro__title {
+      font-size: clamp(32px, 10vw, 42px);
+      letter-spacing: -1.1px;
+    }
+
+    #PrimalCollection-{{ section.id }} .pcol-intro__count {
+      min-width: 0;
+      align-items: flex-start;
+      text-align: left;
+    }
+
+    #PrimalCollection-{{ section.id }} #product-grid {
+      grid-template-columns: repeat({{ section.settings.columns_mobile }}, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    #PrimalCollection-{{ section.id }} .card {
+      border-radius: 14px;
+    }
+
+    #PrimalCollection-{{ section.id }} .card__content {
+      min-height: 150px;
+      padding: 14px;
+    }
+
+    #PrimalCollection-{{ section.id }} .card__heading {
+      font-size: clamp(13px, 4vw, 16px);
+    }
+
+    #PrimalCollection-{{ section.id }} .price,
+    #PrimalCollection-{{ section.id }} .price-item {
+      font-size: clamp(16px, 4.5vw, 19px);
+    }
+
+    #PrimalCollection-{{ section.id }} .quick-add {
+      padding-top: 12px;
+    }
+
+    #PrimalCollection-{{ section.id }} .quick-add__submit,
+    #PrimalCollection-{{ section.id }} .product-form__submit {
+      min-height: 44px;
+      padding: 10px 8px;
+      font-size: 10px;
+    }
+  }
+
+  @media screen and (max-width: 359px) {
+    #PrimalCollection-{{ section.id }} {
+      --pw-gutter: 16px;
+    }
+
+    #PrimalCollection-{{ section.id }} #product-grid {
+      grid-template-columns: 1fr;
+    }
+
+    #PrimalCollection-{{ section.id }} .card__content {
+      min-height: 0;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    #PrimalCollection-{{ section.id }} *,
+    #PrimalCollection-{{ section.id }} *::before,
+    #PrimalCollection-{{ section.id }} *::after {
+      animation: none !important;
+      transition: none !important;
+    }
+  }
+{% endstyle %}
+
+<collection-component
+  id="PrimalCollection-{{ section.id }}"
+  class="primal-collection"
+  style="
+    --pcol-page: {{ section.settings.pw_page_bg }};
+    --pcol-card: {{ section.settings.pw_card_bg }};
+    --pcol-heading: {{ section.settings.pw_heading_color }};
+    --pcol-text: {{ section.settings.pw_text_color }};
+    --pcol-muted: {{ section.settings.pw_muted_color }};
+    --pcol-gold: {{ section.settings.pw_gold }};
+    --pcol-border: {{ section.settings.pw_border }};
+    --pcol-media: {{ section.settings.pw_media_bg }};
+  "
+  {% if collection %}
+    view-event-payload="{{ collection | standard_event_data: 'view' | escape }}"
+    data-collection-id="{{ collection.id }}"
+  {% endif %}
+>
+  <div class="section-{{ section.id }}-padding gradient color-{{ section.settings.color_scheme }}">
+    {%- paginate collection.products by section.settings.products_per_page -%}
+      {% if section.settings.pw_show_intro %}
+        <div class="pcol-intro page-width">
+          {% if section.settings.pw_eyebrow != blank %}
+            <p class="pcol-intro__eyebrow">{{ section.settings.pw_eyebrow | escape }}</p>
+          {% endif %}
+          <span class="pcol-intro__rule" aria-hidden="true"></span>
+
+          <div class="pcol-intro__row">
+            <div class="pcol-intro__copy">
+              <h1 class="pcol-intro__title">{{ collection.title | escape }}</h1>
+
+              {% if section.settings.pw_show_description and collection.description != blank %}
+                <div class="pcol-intro__description rte">
+                  {{ collection.description }}
+                </div>
+              {% endif %}
+            </div>
+
+            <div class="pcol-intro__count">
+              <strong>{{ collection.products_count }}</strong>
+              <span>{{ section.settings.pw_product_count_label | escape }}</span>
+            </div>
+          </div>
+        </div>
+      {% endif %}
+
+      {%- if section.settings.enable_sorting and section.settings.filter_type == 'vertical' -%}
+        <facet-filters-form class="facets facets-vertical-sort page-width small-hide">
+          <form class="facets-vertical-form" id="FacetSortForm">
+            <div class="facet-filters sorting caption">
+              <div class="facet-filters__field">
+                <h2 class="facet-filters__label caption-large text-body">
+                  <label for="SortBy">{{ 'products.facets.sort_by_label' | t }}</label>
+                </h2>
+                <div class="select">
+                  {%- assign sort_by = collection.sort_by | default: collection.default_sort_by -%}
+                  <select
+                    name="sort_by"
+                    class="facet-filters__sort select__select caption-large"
+                    id="SortBy"
+                    aria-describedby="a11y-refresh-page-message"
+                  >
+                    {%- for option in collection.sort_options -%}
+                      <option
+                        value="{{ option.value | escape }}"
+                        {% if option.value == sort_by %}
+                          selected="selected"
+                        {% endif %}
+                      >
+                        {{ option.name | escape }}
+                      </option>
+                    {%- endfor -%}
+                  </select>
+                  <span class="svg-wrapper">
+                    {{- 'icon-caret.svg' | inline_asset_content -}}
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <div class="product-count-vertical light" role="status">
+              <h2 class="product-count__text text-body">
+                <span id="ProductCountDesktop">
+                  {%- if collection.results_count -%}
+                    {{
+                      'templates.search.results_with_count'
+                      | t: terms: collection.terms, count: collection.results_count
+                    }}
+                  {%- elsif collection.products_count == collection.all_products_count -%}
+                    {{ 'products.facets.product_count_simple' | t: count: collection.products_count }}
+                  {%- else -%}
+                    {{
+                      'products.facets.product_count'
+                      | t: product_count: collection.products_count, count: collection.all_products_count
+                    }}
+                  {%- endif -%}
+                </span>
+              </h2>
+              {%- render 'loading-spinner' -%}
+            </div>
+          </form>
+        </facet-filters-form>
+      {%- endif -%}
+
+      <div class="{% if section.settings.filter_type == 'vertical' %} facets-vertical page-width{% endif %}">
+        {{ 'component-facets.css' | asset_url | stylesheet_tag }}
+        <script src="{{ 'facets.js' | asset_url }}" defer="defer"></script>
+        {%- if section.settings.enable_filtering or section.settings.enable_sorting -%}
+          <aside
+            aria-labelledby="verticalTitle"
+            class="facets-wrapper{% unless section.settings.enable_filtering %} facets-wrapper--no-filters{% endunless %}{% if section.settings.filter_type != 'vertical' %} page-width{% endif %}"
+            id="main-collection-filters"
+            data-id="{{ section.id }}"
+          >
+            {% render 'facets',
+              results: collection,
+              enable_filtering: section.settings.enable_filtering,
+              enable_sorting: section.settings.enable_sorting,
+              filter_type: section.settings.filter_type,
+              paginate: paginate
+            %}
+          </aside>
+        {%- endif -%}
+
+        <div
+          class="product-grid-container{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+          id="ProductGridContainer"
+          {% if settings.animations_reveal_on_scroll %}
+            data-cascade
+          {% endif %}
+        >
+          {%- if collection.products.size == 0 -%}
+            <div class="collection collection--empty page-width" id="product-grid" data-id="{{ section.id }}">
+              <div class="loading-overlay gradient"></div>
+              <div class="title-wrapper center">
+                <h2 class="title title--primary">
+                  {{ 'sections.collection_template.empty' | t -}}
+                  <br>
+                  {{
+                    'sections.collection_template.use_fewer_filters_html'
+                    | t: link: collection.url, class: 'underlined-link link'
+                  }}
+                </h2>
+              </div>
+            </div>
+          {%- else -%}
+            <div class="collection{% if section.settings.filter_type != 'vertical' %} page-width{% endif %}">
+              <div class="loading-overlay gradient"></div>
+              <ul
+                id="product-grid"
+                data-id="{{ section.id }}"
+                class="
+                  grid product-grid grid--{{ section.settings.columns_mobile }}-col-tablet-down
+                  grid--{{ section.settings.columns_desktop }}-col-desktop
+                  {% if section.settings.quick_add == 'bulk' %} collection-quick-add-bulk{% endif %}
+                "
+              >
+                {% assign skip_card_product_styles = false %}
+                {%- for product in collection.products -%}
+                  {% assign lazy_load = false %}
+                  {%- if forloop.index > 2 -%}
+                    {%- assign lazy_load = true -%}
+                  {%- endif -%}
+                  <li
+                    class="grid__item{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+                    {% if settings.animations_reveal_on_scroll %}
+                      data-cascade
+                      style="--animation-order: {{ forloop.index }};"
+                    {% endif %}
+                  >
+                    {% render 'card-product',
+                      card_product: product,
+                      media_aspect_ratio: section.settings.image_ratio,
+                      image_shape: section.settings.image_shape,
+                      show_secondary_image: section.settings.show_secondary_image,
+                      show_vendor: section.settings.show_vendor,
+                      show_rating: section.settings.show_rating,
+                      lazy_load: lazy_load,
+                      skip_styles: skip_card_product_styles,
+                      quick_add: section.settings.quick_add,
+                      section_id: section.id,
+                      product_view_context: 'collection'
+                    %}
+                  </li>
+                  {%- assign skip_card_product_styles = true -%}
+                {%- endfor -%}
+              </ul>
+
+              {%- if paginate.pages > 1 -%}
+                {% render 'pagination', paginate: paginate, anchor: '' %}
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+        </div>
+      </div>
+    {%- endpaginate -%}
+    {% if section.settings.image_shape == 'arch' %}
+      {{ 'mask-arch.svg' | inline_asset_content }}
+    {%- endif -%}
+  </div>
+</collection-component>
+
+{% schema %}
+{
+  "name": "t:sections.main-collection-product-grid.name",
+  "class": "section pw-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Primal Win collection"
+    },
+    {
+      "type": "checkbox",
+      "id": "pw_show_intro",
+      "label": "Show collection heading",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "pw_eyebrow",
+      "label": "Collection eyebrow",
+      "default": "PRIMAL WIN FORMULAS"
+    },
+    {
+      "type": "checkbox",
+      "id": "pw_show_description",
+      "label": "Show collection description",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "pw_product_count_label",
+      "label": "Product count label",
+      "default": "PRODUCTS"
+    },
+    {
+      "type": "font_picker",
+      "id": "pw_heading_font",
+      "label": "Heading font",
+      "default": "montserrat_n8"
+    },
+    {
+      "type": "font_picker",
+      "id": "pw_body_font",
+      "label": "Body font",
+      "default": "inter_n4"
+    },
+    {
+      "type": "color",
+      "id": "pw_page_bg",
+      "label": "Page background",
+      "default": "#EFE5DD"
+    },
+    {
+      "type": "color",
+      "id": "pw_card_bg",
+      "label": "Product card background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "pw_heading_color",
+      "label": "Heading color",
+      "default": "#1F2326"
+    },
+    {
+      "type": "color",
+      "id": "pw_text_color",
+      "label": "Body text color",
+      "default": "#3A403B"
+    },
+    {
+      "type": "color",
+      "id": "pw_muted_color",
+      "label": "Muted text color",
+      "default": "#737A80"
+    },
+    {
+      "type": "color",
+      "id": "pw_gold",
+      "label": "Brand gold",
+      "default": "#C89A3D"
+    },
+    {
+      "type": "color",
+      "id": "pw_border",
+      "label": "Borders",
+      "default": "#E6E0D7"
+    },
+    {
+      "type": "color",
+      "id": "pw_media_bg",
+      "label": "Product image background",
+      "default": "#ECE7DE"
+    },
+    {
+      "type": "range",
+      "id": "products_per_page",
+      "min": 8,
+      "max": 36,
+      "step": 4,
+      "default": 16,
+      "label": "t:sections.main-collection-product-grid.settings.products_per_page.label"
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "min": 1,
+      "max": 6,
+      "step": 1,
+      "default": 4,
+      "label": "t:sections.main-collection-product-grid.settings.columns_desktop.label"
+    },
+    {
+      "type": "select",
+      "id": "columns_mobile",
+      "default": "2",
+      "label": "t:sections.main-collection-product-grid.settings.columns_mobile.label",
+      "options": [
+        {
+          "value": "1",
+          "label": "t:sections.main-collection-product-grid.settings.columns_mobile.options__1.label"
+        },
+        {
+          "value": "2",
+          "label": "t:sections.main-collection-product-grid.settings.columns_mobile.options__2.label"
+        }
+      ]
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.colors.label",
+      "info": "t:sections.all.colors.has_cards_info",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.main-collection-product-grid.settings.header__3.content"
+    },
+    {
+      "type": "select",
+      "id": "image_ratio",
+      "options": [
+        {
+          "value": "adapt",
+          "label": "t:sections.main-collection-product-grid.settings.image_ratio.options__1.label"
+        },
+        {
+          "value": "portrait",
+          "label": "t:sections.main-collection-product-grid.settings.image_ratio.options__2.label"
+        },
+        {
+          "value": "square",
+          "label": "t:sections.main-collection-product-grid.settings.image_ratio.options__3.label"
+        }
+      ],
+      "default": "square",
+      "label": "t:sections.main-collection-product-grid.settings.image_ratio.label"
+    },
+    {
+      "type": "select",
+      "id": "image_shape",
+      "options": [
+        {
+          "value": "default",
+          "label": "t:sections.all.image_shape.options__1.label"
+        },
+        {
+          "value": "arch",
+          "label": "t:sections.all.image_shape.options__2.label"
+        },
+        {
+          "value": "blob",
+          "label": "t:sections.all.image_shape.options__3.label"
+        },
+        {
+          "value": "chevronleft",
+          "label": "t:sections.all.image_shape.options__4.label"
+        },
+        {
+          "value": "chevronright",
+          "label": "t:sections.all.image_shape.options__5.label"
+        },
+        {
+          "value": "diamond",
+          "label": "t:sections.all.image_shape.options__6.label"
+        },
+        {
+          "value": "parallelogram",
+          "label": "t:sections.all.image_shape.options__7.label"
+        },
+        {
+          "value": "round",
+          "label": "t:sections.all.image_shape.options__8.label"
+        }
+      ],
+      "default": "default",
+      "label": "t:sections.all.image_shape.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_secondary_image",
+      "default": false,
+      "label": "t:sections.main-collection-product-grid.settings.show_secondary_image.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_vendor",
+      "default": false,
+      "label": "t:sections.main-collection-product-grid.settings.show_vendor.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_rating",
+      "default": false,
+      "label": "t:sections.main-collection-product-grid.settings.show_rating.label",
+      "info": "t:sections.main-collection-product-grid.settings.show_rating.info"
+    },
+    {
+      "type": "select",
+      "id": "quick_add",
+      "default": "standard",
+      "label": "t:sections.main-collection-product-grid.settings.quick_add.label",
+      "options": [
+        {
+          "value": "none",
+          "label": "t:sections.main-collection-product-grid.settings.quick_add.options.option_1"
+        },
+        {
+          "value": "standard",
+          "label": "t:sections.main-collection-product-grid.settings.quick_add.options.option_2"
+        },
+        {
+          "value": "bulk",
+          "label": "t:sections.main-collection-product-grid.settings.quick_add.options.option_3"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "t:sections.main-collection-product-grid.settings.header__1.content"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_filtering",
+      "default": true,
+      "label": "t:sections.main-collection-product-grid.settings.enable_filtering.label",
+      "info": "t:sections.main-collection-product-grid.settings.enable_filtering.info"
+    },
+    {
+      "type": "select",
+      "id": "filter_type",
+      "options": [
+        {
+          "value": "horizontal",
+          "label": "t:sections.main-collection-product-grid.settings.filter_type.options__1.label"
+        },
+        {
+          "value": "vertical",
+          "label": "t:sections.main-collection-product-grid.settings.filter_type.options__2.label"
+        },
+        {
+          "value": "drawer",
+          "label": "t:sections.main-collection-product-grid.settings.filter_type.options__3.label"
+        }
+      ],
+      "default": "horizontal",
+      "label": "t:sections.main-collection-product-grid.settings.filter_type.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_sorting",
+      "default": true,
+      "label": "t:sections.main-collection-product-grid.settings.enable_sorting.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.all.padding.section_padding_heading"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 56
+    }
+  ]
+}
+{% endschema %}
