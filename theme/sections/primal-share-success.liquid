@@ -1,0 +1,413 @@
+{% liquid
+  assign heading_font = section.settings.heading_font
+  assign body_font = section.settings.body_font
+
+  assign description_html = section.settings.description
+  if description_html != blank
+    assign description_html = description_html | replace: ' who recommend', '&nbsp;who recommend'
+    assign description_html = description_html | replace: 'who recommend', 'who&nbsp;recommend'
+  endif
+%}
+
+{% style %}
+  {{ heading_font | font_face: font_display: 'swap' }}
+  {{ body_font | font_face: font_display: 'swap' }}
+
+  #PWShareSuccess-{{ section.id }} {
+    {% render 'pw-align-vars' %}
+    --pw-content: 1280px;
+    --pw-gutter: 48px;
+    --pw-inner: 1376px;
+    --pw-bg: {{ section.settings.background_color }};
+    --pw-ink: {{ section.settings.heading_color }};
+    --pw-muted: {{ section.settings.text_color }};
+    --pw-gold: {{ section.settings.accent_color }};
+    --pw-bar: {{ section.settings.bar_color }};
+  }
+
+  #shopify-section-{{ section.id }} {
+    display: block !important;
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: var(--pw-bg) !important;
+  }
+
+  #PWShareSuccess-{{ section.id }},
+  #PWShareSuccess-{{ section.id }} *,
+  #PWShareSuccess-{{ section.id }} *::before,
+  #PWShareSuccess-{{ section.id }} *::after {
+    box-sizing: border-box;
+  }
+
+  #PWShareSuccess-{{ section.id }} {
+    width: 100%;
+    background: var(--pw-bg);
+    overflow: hidden;
+  }
+
+  #PWShareSuccess-{{ section.id }} .pw-share-success__inner {
+    width: 100%;
+    max-width: var(--pw-inner);
+    margin-inline: auto;
+    padding: clamp(64px, 6vw, 88px) var(--pw-gutter) clamp(56px, 5.5vw, 80px);
+  }
+
+  /* Intro */
+  #PWShareSuccess-{{ section.id }} .pw-share-success__intro {
+    max-width: 920px;
+    margin: 0 auto 36px;
+    text-align: center;
+  }
+
+  #PWShareSuccess-{{ section.id }} .pw-share-success__title-row {
+    display: grid;
+    grid-template-columns: minmax(48px, 1fr) auto minmax(48px, 1fr);
+    align-items: center;
+    gap: 18px;
+    max-width: 720px;
+    margin-inline: auto;
+  }
+
+  #PWShareSuccess-{{ section.id }} .pw-share-success__line {
+    display: block;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--pw-gold));
+  }
+
+  #PWShareSuccess-{{ section.id }} .pw-share-success__line--right {
+    background: linear-gradient(90deg, var(--pw-gold), transparent);
+  }
+
+  #PWShareSuccess-{{ section.id }} .pw-share-success__heading {
+    margin: 0;
+    color: var(--pw-ink);
+    font-family: {{ heading_font.family }}, {{ heading_font.fallback_families }};
+    font-style: {{ heading_font.style }};
+    font-size: clamp(28px, 2.4vw, 36px);
+    font-weight: 900;
+    line-height: 1.1;
+    letter-spacing: -0.4px;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  #PWShareSuccess-{{ section.id }} .pw-share-success__text {
+    max-width: 760px;
+    margin: 20px auto 0;
+    color: var(--pw-muted);
+    font-family: {{ body_font.family }}, {{ body_font.fallback_families }};
+    font-style: {{ body_font.style }};
+    font-size: clamp(15px, 1.25vw, 17px);
+    line-height: 1.55;
+    text-align: center;
+  }
+
+  #PWShareSuccess-{{ section.id }} .pw-share-success__text p {
+    margin: 0;
+  }
+
+  #PWShareSuccess-{{ section.id }} .pw-share-success__text br {
+    display: none;
+  }
+
+  /* 5-card Figma grid */
+  #PWShareSuccess-{{ section.id }} .pw-share-success__grid {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 12px;
+    width: 100%;
+  }
+
+  #PWShareSuccess-{{ section.id }} .pw-share-success__card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    overflow: hidden;
+    border-radius: 0;
+    background: #d9d3cb;
+    box-shadow: none;
+  }
+
+  #PWShareSuccess-{{ section.id }} .pw-share-success__media {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    overflow: hidden;
+    background: #d9d3cb;
+  }
+
+  #PWShareSuccess-{{ section.id }} .pw-share-success__image,
+  #PWShareSuccess-{{ section.id }} .pw-share-success__placeholder {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+  }
+
+  #PWShareSuccess-{{ section.id }} .pw-share-success__bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 48px;
+    padding: 12px 10px;
+    background: var(--pw-bar);
+  }
+
+  #PWShareSuccess-{{ section.id }} .pw-share-success__card-title {
+    margin: 0;
+    color: #ffffff;
+    font-family: {{ heading_font.family }}, {{ heading_font.fallback_families }};
+    font-size: clamp(11px, 0.95vw, 13px);
+    font-weight: 800;
+    line-height: 1.2;
+    letter-spacing: 0.4px;
+    text-align: center;
+    text-transform: uppercase;
+  }
+
+  @media screen and (max-width: 1180px) {
+    #PWShareSuccess-{{ section.id }} {
+      --pw-gutter: 34px;
+    }
+
+    #PWShareSuccess-{{ section.id }} .pw-share-success__text {
+      max-width: 700px;
+    }
+  }
+
+  @media screen and (max-width: 1100px) {
+    #PWShareSuccess-{{ section.id }} .pw-share-success__grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    #PWShareSuccess-{{ section.id }} .pw-share-success__heading {
+      white-space: normal;
+    }
+  }
+
+  @media screen and (max-width: 860px) {
+    #PWShareSuccess-{{ section.id }} {
+      --pw-gutter: 22px;
+    }
+
+    #PWShareSuccess-{{ section.id }} .pw-share-success__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    #PWShareSuccess-{{ section.id }} .pw-share-success__intro {
+      margin-bottom: 28px;
+    }
+  }
+
+  @media screen and (max-width: 599px) {
+    #PWShareSuccess-{{ section.id }} {
+      --pw-gutter: 20px;
+    }
+
+    #PWShareSuccess-{{ section.id }} .pw-share-success__inner {
+      padding: 48px var(--pw-gutter) 52px;
+    }
+
+    #PWShareSuccess-{{ section.id }} .pw-share-success__title-row {
+      grid-template-columns: 28px minmax(0, 1fr) 28px;
+      gap: 10px;
+      max-width: none;
+    }
+
+    #PWShareSuccess-{{ section.id }} .pw-share-success__heading {
+      font-size: clamp(24px, 7vw, 30px);
+      white-space: normal;
+    }
+
+    #PWShareSuccess-{{ section.id }} .pw-share-success__text {
+      max-width: 100%;
+      margin-top: 16px;
+      font-size: 15px;
+      line-height: 1.5;
+    }
+
+    #PWShareSuccess-{{ section.id }} .pw-share-success__grid {
+      grid-template-columns: 1fr;
+      gap: 14px;
+      max-width: 420px;
+      margin-inline: auto;
+    }
+
+    #PWShareSuccess-{{ section.id }} .pw-share-success__media {
+      aspect-ratio: 5 / 4;
+    }
+
+    #PWShareSuccess-{{ section.id }} .pw-share-success__bar {
+      min-height: 46px;
+    }
+
+    #PWShareSuccess-{{ section.id }} .pw-share-success__card-title {
+      font-size: 13px;
+    }
+  }
+{% endstyle %}
+
+<section id="PWShareSuccess-{{ section.id }}" class="pw-share-success">
+  <div class="pw-share-success__inner">
+    <div class="pw-share-success__intro">
+      <div class="pw-share-success__title-row">
+        <span class="pw-share-success__line" aria-hidden="true"></span>
+        <h2 class="pw-share-success__heading">{{ section.settings.heading | escape }}</h2>
+        <span class="pw-share-success__line pw-share-success__line--right" aria-hidden="true"></span>
+      </div>
+
+      {%- if description_html != blank -%}
+        <div class="pw-share-success__text">
+          {{ description_html }}
+        </div>
+      {%- endif -%}
+    </div>
+
+    <div class="pw-share-success__grid">
+      {%- for block in section.blocks -%}
+        <article class="pw-share-success__card" {{ block.shopify_attributes }}>
+          <div class="pw-share-success__media">
+            {%- if block.settings.image != blank -%}
+              {{
+                block.settings.image
+                | image_url: width: 1200
+                | image_tag:
+                  class: 'pw-share-success__image',
+                  loading: 'lazy',
+                  widths: '320, 480, 720, 960, 1200',
+                  sizes: '(min-width: 1101px) 20vw, (min-width: 861px) 33vw, (min-width: 600px) 50vw, 100vw',
+                  alt: block.settings.image.alt | default: block.settings.title
+              }}
+            {%- else -%}
+              {{ 'image' | placeholder_svg_tag: 'pw-share-success__placeholder' }}
+            {%- endif -%}
+          </div>
+
+          {%- if block.settings.title != blank -%}
+            <div class="pw-share-success__bar">
+              <h3 class="pw-share-success__card-title">{{ block.settings.title | escape }}</h3>
+            </div>
+          {%- endif -%}
+        </article>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Share in our success",
+  "tag": "section",
+  "class": "section pw-section",
+  "max_blocks": 5,
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "SHARE IN OUR SUCCESS"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Tagline",
+      "default": "<p>Join a growing network of health professionals, coaches, gyms and wellness experts who recommend Primal Win and build a lasting income stream.</p>",
+      "info": "Keep as one paragraph. 'who recommend' is kept together automatically."
+    },
+    {
+      "type": "font_picker",
+      "id": "heading_font",
+      "label": "Heading font",
+      "default": "montserrat_n8"
+    },
+    {
+      "type": "font_picker",
+      "id": "body_font",
+      "label": "Body font",
+      "default": "inter_n4"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading",
+      "default": "#0B2A1A"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Tagline",
+      "default": "#7B8190"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Gold lines",
+      "default": "#C89A3D"
+    },
+    {
+      "type": "color",
+      "id": "bar_color",
+      "label": "Card label bar",
+      "default": "#0B2A1A"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "image_card",
+      "name": "Image card",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Label (bottom bar)",
+          "default": "PERSONAL TRAINERS"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Share in our success",
+      "blocks": [
+        {
+          "type": "image_card",
+          "settings": { "title": "PERSONAL TRAINERS" }
+        },
+        {
+          "type": "image_card",
+          "settings": { "title": "NUTRITIONISTS" }
+        },
+        {
+          "type": "image_card",
+          "settings": { "title": "GYMS & STUDIOS" }
+        },
+        {
+          "type": "image_card",
+          "settings": { "title": "DOCTORS" }
+        },
+        {
+          "type": "image_card",
+          "settings": { "title": "THERAPISTS" }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
