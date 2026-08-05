@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Book a taxi — HENT Oslo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Syne:wght@700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="nav">
+    <div class="container nav-in">
+      <a class="logo" href="index.html">HENT <span>Oslo</span></a>
+      <nav class="nav-links" aria-label="Primary">
+        <a href="index.html">Home</a>
+        <a href="book.html" aria-current="page">Book</a>
+        <a href="fares.html">Fares</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+      <div class="nav-cta">
+        <a class="phone" href="tel:+4722334455">+47 22 33 44 55</a>
+        <a class="btn btn-taxi" href="book.html">Book a ride</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="section">
+    <div class="container">
+      <header class="page-intro" style="padding-top:0;padding-bottom:28px">
+        <h1>Book your ride</h1>
+        <p>Fill in the trip details. This is a design mock — wire the form to your booking system later.</p>
+        <span class="edit-hint">Editable form · book.html</span>
+      </header>
+
+      <form class="form-panel" action="#" method="get" onsubmit="event.preventDefault(); alert('Demo only — connect your booking backend later.');">
+        <div class="form-grid">
+          <div class="field">
+            <label for="pickup">Pickup</label>
+            <input id="pickup" name="pickup" type="text" placeholder="e.g. Oslo S, Jernbanetorget" required />
+          </div>
+          <div class="field">
+            <label for="dropoff">Drop-off</label>
+            <input id="dropoff" name="dropoff" type="text" placeholder="e.g. Gardermoen OSL" required />
+          </div>
+          <div class="field">
+            <label for="date">Date</label>
+            <input id="date" name="date" type="date" required />
+          </div>
+          <div class="field">
+            <label for="time">Time</label>
+            <input id="time" name="time" type="time" required />
+          </div>
+          <div class="field">
+            <label for="passengers">Passengers</label>
+            <select id="passengers" name="passengers">
+              <option>1</option>
+              <option selected>2</option>
+              <option>3</option>
+              <option>4</option>
+              <option>5–8 (van)</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="vehicle">Vehicle</label>
+            <select id="vehicle" name="vehicle">
+              <option>Standard</option>
+              <option>Estate / extra luggage</option>
+              <option>Van</option>
+              <option>Electric</option>
+            </select>
+          </div>
+          <div class="field full">
+            <label for="notes">Notes</label>
+            <textarea id="notes" name="notes" rows="3" placeholder="Flight number, child seat, meeting point…"></textarea>
+          </div>
+          <div class="field">
+            <label for="name">Name</label>
+            <input id="name" name="name" type="text" required />
+          </div>
+          <div class="field">
+            <label for="phone">Phone</label>
+            <input id="phone" name="phone" type="tel" placeholder="+47 …" required />
+          </div>
+        </div>
+        <p class="form-note">By booking you agree we may SMS trip updates. Prices follow the fares page unless fixed airport rate applies.</p>
+        <div style="margin-top:20px">
+          <button class="btn btn-taxi" type="submit">Request taxi</button>
+        </div>
+      </form>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-in">
+        <div>
+          <div class="logo">HENT <span>Oslo</span></div>
+          <p>Independent Oslo taxi service.</p>
+        </div>
+        <div class="footer-links">
+          <a href="book.html">Book</a>
+          <a href="fares.html">Fares</a>
+          <a href="about.html">About</a>
+          <a href="contact.html">Contact</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>Oslo, Norway</span>
+        <span>Demo design</span>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
