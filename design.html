@@ -1,0 +1,421 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Primal Win — Design Mockup</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800;900&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --forest:#234B36;
+    --charcoal:#1F2326;
+    --page:#EFE5DD;
+    --gold:#C89A3D;
+    --gold-deep:#B4842E;
+    --slate:#737A80;
+    --white:#FFFFFF;
+    --ink:#14171A;
+    --font-head:'Montserrat', sans-serif;
+    --font-body:'DM Sans', sans-serif;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    font-family:var(--font-body);
+    color:var(--charcoal);
+    background:
+      radial-gradient(1200px 600px at 10% -10%, rgba(200,154,61,0.18), transparent 55%),
+      radial-gradient(900px 500px at 90% 0%, rgba(35,75,54,0.12), transparent 50%),
+      linear-gradient(180deg, #f4ebe2 0%, var(--page) 40%, #e7ddd3 100%);
+    -webkit-font-smoothing:antialiased;
+  }
+  a{text-decoration:none;color:inherit}
+
+  /* Figma-like board chrome */
+  .board{
+    min-height:100vh;
+    padding:28px 20px 48px;
+  }
+  .board-label{
+    max-width:1200px;
+    margin:0 auto 18px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+  }
+  .board-label h1{
+    margin:0;
+    font-family:var(--font-head);
+    font-size:13px;
+    font-weight:800;
+    letter-spacing:2px;
+    text-transform:uppercase;
+    color:var(--forest);
+  }
+  .board-label span{
+    font-size:12px;
+    color:var(--slate);
+  }
+
+  .frame{
+    max-width:1200px;
+    margin:0 auto;
+    background:var(--page);
+    border:1px solid rgba(31,35,38,0.08);
+    box-shadow:0 30px 80px -40px rgba(20,23,26,0.45);
+    overflow:hidden;
+  }
+
+  /* Nav */
+  .nav{
+    display:flex;
+    align-items:center;
+    gap:28px;
+    height:76px;
+    padding:0 40px;
+    background:rgba(255,255,255,0.92);
+    border-bottom:1px solid rgba(31,35,38,0.06);
+    backdrop-filter:blur(8px);
+  }
+  .logo{
+    font-family:var(--font-head);
+    font-weight:900;
+    font-size:18px;
+    letter-spacing:1px;
+    text-transform:uppercase;
+    color:var(--forest);
+  }
+  .logo em{
+    font-style:normal;
+    color:var(--gold);
+  }
+  .nav-links{
+    display:flex;
+    gap:28px;
+    margin-left:8px;
+  }
+  .nav-links a{
+    font-family:var(--font-head);
+    font-weight:700;
+    font-size:12px;
+    letter-spacing:1px;
+    text-transform:uppercase;
+  }
+  .nav-cta{margin-left:auto}
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    font-family:var(--font-head);
+    font-weight:800;
+    font-size:13px;
+    letter-spacing:0.6px;
+    text-transform:uppercase;
+    color:var(--ink);
+    background:linear-gradient(180deg, #d4ae55, var(--gold));
+    border:0;
+    border-radius:10px;
+    padding:13px 22px;
+    box-shadow:0 10px 24px -14px rgba(180,132,46,0.9);
+    transition:transform .25s ease, box-shadow .25s ease;
+  }
+  .btn:hover{
+    transform:translateY(-1px);
+    box-shadow:0 14px 28px -12px rgba(180,132,46,1);
+  }
+
+  /* Hero — one composition */
+  .hero{
+    position:relative;
+    min-height:640px;
+    padding:72px 40px 80px;
+    overflow:hidden;
+  }
+  .hero::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:
+      linear-gradient(105deg, rgba(239,229,221,0.96) 0%, rgba(239,229,221,0.82) 38%, rgba(239,229,221,0.15) 68%, transparent 100%),
+      url('primal-ingredients-hero.png') right center / cover no-repeat;
+    animation:heroDrift 14s ease-in-out infinite alternate;
+  }
+  @keyframes heroDrift{
+    from{transform:scale(1) translateX(0)}
+    to{transform:scale(1.04) translateX(-1.5%)}
+  }
+  .hero-copy{
+    position:relative;
+    z-index:2;
+    max-width:560px;
+  }
+  .brand-mark{
+    font-family:var(--font-head);
+    font-weight:900;
+    font-size:42px;
+    letter-spacing:1px;
+    text-transform:uppercase;
+    color:var(--forest);
+    margin:0 0 18px;
+    line-height:1;
+    animation:rise .7s ease both;
+  }
+  .brand-mark span{color:var(--gold)}
+  .headline{
+    font-family:var(--font-head);
+    font-weight:900;
+    font-size:64px;
+    line-height:0.92;
+    letter-spacing:-1.5px;
+    text-transform:uppercase;
+    margin:0 0 22px;
+    color:var(--charcoal);
+    animation:rise .8s .08s ease both;
+  }
+  .headline .gold{color:var(--gold)}
+  .rule{
+    width:56px;
+    height:3px;
+    background:var(--gold);
+    border:0;
+    margin:0 0 20px;
+    animation:rise .8s .14s ease both;
+  }
+  .support{
+    font-family:var(--font-head);
+    font-weight:700;
+    font-size:18px;
+    line-height:1.4;
+    text-transform:uppercase;
+    color:var(--charcoal);
+    margin:0 0 28px;
+    max-width:420px;
+    animation:rise .8s .2s ease both;
+  }
+  .cta-row{
+    display:flex;
+    align-items:center;
+    gap:20px;
+    animation:rise .8s .28s ease both;
+  }
+  .watch{
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    font-family:var(--font-head);
+    font-weight:700;
+    font-size:12px;
+    letter-spacing:1.2px;
+    text-transform:uppercase;
+  }
+  .play{
+    width:40px;
+    height:40px;
+    border:1.5px solid var(--charcoal);
+    border-radius:50%;
+    display:grid;
+    place-items:center;
+    transition:background .25s ease, color .25s ease;
+  }
+  .watch:hover .play{
+    background:var(--charcoal);
+    color:var(--white);
+  }
+  @keyframes rise{
+    from{opacity:0;transform:translateY(16px)}
+    to{opacity:1;transform:translateY(0)}
+  }
+
+  /* Second section — one job */
+  .ritual{
+    padding:72px 40px;
+    background:var(--forest);
+    color:var(--white);
+    text-align:center;
+  }
+  .ritual h2{
+    font-family:var(--font-head);
+    font-weight:900;
+    font-size:36px;
+    letter-spacing:-0.5px;
+    text-transform:uppercase;
+    margin:0 0 12px;
+  }
+  .ritual p{
+    margin:0 auto 36px;
+    max-width:480px;
+    font-size:16px;
+    line-height:1.55;
+    color:rgba(255,255,255,0.78);
+  }
+  .pills{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:14px;
+  }
+  .pill{
+    font-family:var(--font-head);
+    font-weight:700;
+    font-size:12px;
+    letter-spacing:1px;
+    text-transform:uppercase;
+    color:var(--gold);
+    border:1px solid rgba(200,154,61,0.45);
+    padding:12px 18px;
+    border-radius:999px;
+    background:rgba(0,0,0,0.15);
+    transition:transform .25s ease, background .25s ease;
+  }
+  .pill:hover{
+    transform:translateY(-2px);
+    background:rgba(200,154,61,0.12);
+  }
+
+  .ingredients{
+    padding:64px 40px 72px;
+    background:var(--white);
+  }
+  .ingredients h2{
+    font-family:var(--font-head);
+    font-weight:800;
+    font-size:28px;
+    text-transform:uppercase;
+    text-align:center;
+    margin:0 0 8px;
+  }
+  .ingredients .sub{
+    text-align:center;
+    color:var(--slate);
+    margin:0 0 36px;
+  }
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:18px;
+    max-width:1040px;
+    margin:0 auto;
+  }
+  .card{
+    background:var(--page);
+    border-radius:14px;
+    overflow:hidden;
+    transition:transform .3s ease;
+  }
+  .card:hover{transform:translateY(-4px)}
+  .card img{
+    width:100%;
+    aspect-ratio:5/4;
+    object-fit:cover;
+    display:block;
+  }
+  .card h3{
+    font-family:var(--font-head);
+    font-weight:800;
+    font-size:14px;
+    letter-spacing:0.4px;
+    text-transform:uppercase;
+    margin:14px 14px 6px;
+  }
+  .card p{
+    font-size:13px;
+    line-height:1.45;
+    color:var(--slate);
+    margin:0 14px 16px;
+  }
+
+  @media (max-width:900px){
+    .nav-links{display:none}
+    .hero{min-height:560px;padding:56px 24px 64px}
+    .brand-mark{font-size:32px}
+    .headline{font-size:44px}
+    .grid{grid-template-columns:repeat(2,1fr)}
+    .nav,.ritual,.ingredients{padding-left:24px;padding-right:24px}
+  }
+  @media (max-width:560px){
+    .headline{font-size:38px}
+    .cta-row{flex-direction:column;align-items:flex-start}
+    .grid{grid-template-columns:1fr}
+  }
+</style>
+</head>
+<body>
+  <div class="board">
+    <div class="board-label">
+      <h1>Design Mockup · Homepage</h1>
+      <span>Desktop · 1200px</span>
+    </div>
+
+    <div class="frame">
+      <nav class="nav">
+        <div class="logo">Primal <em>Win</em></div>
+        <div class="nav-links">
+          <a href="#">The Science</a>
+          <a href="#">Ingredients</a>
+          <a href="#">Our Story</a>
+        </div>
+        <div class="nav-cta">
+          <a class="btn" href="#">Get Primal Win</a>
+        </div>
+      </nav>
+
+      <section class="hero">
+        <div class="hero-copy">
+          <p class="brand-mark">Primal <span>Win</span></p>
+          <h2 class="headline">For Those<br>Who Want<br><span class="gold">To Win.</span></h2>
+          <hr class="rule">
+          <p class="support">More energy. Sharper focus. Stronger body.</p>
+          <div class="cta-row">
+            <a class="btn" href="#">Get Primal Win →</a>
+            <a class="watch" href="#">
+              <span class="play">▶</span>
+              Watch Video
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <section class="ritual">
+        <h2>The First Win Of The Day</h2>
+        <p>One scoop. Every morning. A ritual built for people who refuse to coast.</p>
+        <div class="pills">
+          <span class="pill">Win the Morning</span>
+          <span class="pill">Win the Workout</span>
+          <span class="pill">Win Your Focus</span>
+          <span class="pill">Win Your Health</span>
+        </div>
+      </section>
+
+      <section class="ingredients">
+        <h2>Ingredients That Make A Difference</h2>
+        <p class="sub">Carefully selected. Purposefully dosed. Backed by science.</p>
+        <div class="grid">
+          <article class="card">
+            <img src="primal-ing-magnesium.png" alt="Magnesium">
+            <h3>Magnesium</h3>
+            <p>Muscle function, energy, less tiredness.</p>
+          </article>
+          <article class="card">
+            <img src="primal-ing-lions-mane.png" alt="Lion's Mane">
+            <h3>Lion's Mane</h3>
+            <p>Focus, memory, cognitive performance.</p>
+          </article>
+          <article class="card">
+            <img src="primal-ing-creatine.png" alt="Creatine">
+            <h3>Creatine</h3>
+            <p>Strength, power, physical performance.</p>
+          </article>
+          <article class="card">
+            <img src="primal-ing-ashwagandha.png" alt="Ashwagandha">
+            <h3>Ashwagandha</h3>
+            <p>Stress adaptogen for mental wellbeing.</p>
+          </article>
+        </div>
+      </section>
+    </div>
+  </div>
+</body>
+</html>
