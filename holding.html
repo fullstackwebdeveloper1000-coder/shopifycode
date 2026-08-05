@@ -106,16 +106,29 @@
 
   /* ---------- Offer card ---------- */
   .offer{padding:6px 0 30px;}
+  .offer-heading{
+    font-family:var(--font-head);
+    font-weight:900;
+    font-size:clamp(28px, 3.2vw, 44px);
+    line-height:1.12;
+    letter-spacing:-0.4px;
+    text-align:center;
+    text-transform:uppercase;
+    color:var(--charcoal);
+    margin:0 0 34px;
+  }
+  .offer-heading .gold{color:var(--gold);}
   .offer-card{
     position:relative;
     background:radial-gradient(120% 140% at 20% 10%, #24282b 0%, var(--ink-900) 55%);
+    border:1px solid rgba(200,154,61,0.55);
     border-radius:22px;
     padding:44px 52px;
     display:grid;grid-template-columns:1fr 1px 1.25fr;
     gap:44px;align-items:center;
     box-shadow:0 30px 70px -30px rgba(0,0,0,0.5);
   }
-  .offer-div{background:rgba(200,154,61,0.28);width:1px;height:82%;align-self:center;}
+  .offer-div{background:rgba(200,154,61,0.45);width:1px;height:82%;align-self:center;}
 
   .eyebrow{
     font-family:var(--font-head);font-weight:700;
@@ -147,34 +160,18 @@
   .offer-right{text-align:center;}
   .launch-in{
     font-family:var(--font-head);font-weight:600;
-    font-size:16px;letter-spacing:3px;color:var(--stone);
-    text-transform:uppercase;margin:0 0 16px;
+    font-size:15px;letter-spacing:3px;color:var(--stone);
+    text-transform:uppercase;margin:0 0 10px;
   }
-  .countdown{
-    display:flex;justify-content:center;align-items:flex-start;
-    gap:0;margin:0 auto 14px;
-  }
-  .cd-cell{padding:0 20px;min-width:78px;}
-  .cd-cell + .cd-cell{border-left:1px solid rgba(200,154,61,0.35);}
-  .cd-num{
-    font-family:var(--font-head);font-weight:800;
-    font-size:52px;line-height:1;color:var(--gold);
-  }
-  .cd-lab{
-    font-family:var(--font-head);font-weight:600;
-    font-size:11px;letter-spacing:1.5px;color:var(--stone);
-    text-transform:uppercase;margin-top:8px;
-  }
-  .launch-date{
-    display:flex;align-items:center;justify-content:center;gap:16px;
-    margin:6px 0 20px;
-  }
-  .launch-date span{
-    font-family:var(--font-head);font-weight:700;
-    font-size:17px;letter-spacing:2px;color:var(--gold);white-space:nowrap;
-  }
-  .launch-date::before,.launch-date::after{
-    content:"";height:1px;flex:1;max-width:70px;background:rgba(200,154,61,0.4);
+  .launch-month{
+    font-family:var(--font-head);
+    font-weight:900;
+    font-size:clamp(40px, 4.2vw, 58px);
+    line-height:1;
+    letter-spacing:-0.8px;
+    color:var(--gold);
+    margin:0 0 28px;
+    text-shadow:0 0 34px rgba(200,154,61,0.35);
   }
   .field{
     width:100%;border:0;border-radius:10px;
@@ -254,9 +251,7 @@
     .hero-head .l4{font-size:4.4vw;}
     .hero-copy{max-width:53%;}
     .sci-head{white-space:normal;font-size:34px;}
-    /* keep the countdown inside the narrower offer column */
-    .cd-num{font-size:44px;}
-    .cd-cell{padding:0 13px;min-width:0;}
+    .launch-month{font-size:clamp(36px, 4vw, 52px);}
   }
 
   /* Stack the hero and grids */
@@ -300,16 +295,12 @@
     .hero-sub{font-size:18px;}
     .hero-shot{max-width:100%;}
 
+    .offer-heading{font-size:24px;margin-bottom:26px;}
     .big-off .num{font-size:80px;}
     .big-off .off{font-size:30px;margin-top:8px;}
     .offer-card{padding:30px 22px;}
     .eyebrow{letter-spacing:1.8px;}
-    .countdown{gap:0;}
-    .cd-cell{padding:0 7px;min-width:0;}
-    .cd-cell + .cd-cell{border-left:1px solid rgba(200,154,61,0.3);}
-    .cd-num{font-size:32px;}
-    .cd-lab{font-size:9px;letter-spacing:1px;margin-top:6px;}
-    .launch-date span{font-size:15px;letter-spacing:1.5px;}
+    .launch-month{font-size:34px;margin-bottom:22px;}
     .field{font-size:15px;}
     .btn-gold{font-size:12.5px;letter-spacing:0.2px;padding:0 46px;}
 
@@ -393,9 +384,12 @@
       </div>
     </section>
 
-    <!-- OFFER + COUNTDOWN -->
+    <!-- OFFER + LAUNCH DATE -->
     <section class="offer">
       <div class="container">
+        <h2 class="offer-heading">
+          Developed By Scientists. <span class="gold">Built For Life.</span>
+        </h2>
         <div class="offer-card">
           <div class="offer-left">
             <p class="eyebrow">Limited Time Pre-Launch Offer</p>
@@ -408,14 +402,7 @@
 
           <div class="offer-right">
             <p class="launch-in">Launching In</p>
-            <div class="countdown" id="countdown">
-              <div class="cd-cell"><div class="cd-num" data-u="weeks">--</div><div class="cd-lab">Weeks</div></div>
-              <div class="cd-cell"><div class="cd-num" data-u="days">--</div><div class="cd-lab">Days</div></div>
-              <div class="cd-cell"><div class="cd-num" data-u="hours">--</div><div class="cd-lab">Hours</div></div>
-              <div class="cd-cell"><div class="cd-num" data-u="minutes">--</div><div class="cd-lab">Minutes</div></div>
-              <div class="cd-cell"><div class="cd-num" data-u="seconds">--</div><div class="cd-lab">Seconds</div></div>
-            </div>
-            <div class="launch-date"><span id="launch-date-label">30TH AUGUST 2025</span></div>
+            <p class="launch-month">November 2026</p>
 
             <form id="claim" onsubmit="return false;">
               <input class="field" type="email" placeholder="Enter your email address" aria-label="Email address">
@@ -461,41 +448,5 @@
     </div>
   </footer>
 
-<script>
-  /* ============================================================
-     COUNTDOWN — set the real launch date here.
-     Placeholder date below (30 Aug 2025 in the mockup has passed).
-     Change LAUNCH_DATE and the on-page date label updates too.
-     ============================================================ */
-  const LAUNCH_DATE = new Date('2026-08-30T09:00:00Z'); // <-- EDIT ME
-
-  (function(){
-    const label = document.getElementById('launch-date-label');
-    const day = LAUNCH_DATE.getUTCDate();
-    const ord = (d)=>{const s=['TH','ST','ND','RD'],v=d%100;return d+(s[(v-20)%10]||s[v]||s[0]);};
-    const months=['JANUARY','FEBRUARY','MARCH','APRIL','MAY','JUNE','JULY','AUGUST','SEPTEMBER','OCTOBER','NOVEMBER','DECEMBER'];
-    label.textContent = `${ord(day)} ${months[LAUNCH_DATE.getUTCMonth()]} ${LAUNCH_DATE.getUTCFullYear()}`;
-
-    const cells = {};
-    document.querySelectorAll('#countdown [data-u]').forEach(el=>cells[el.dataset.u]=el);
-    const pad = n => String(n).padStart(2,'0');
-
-    function tick(){
-      let diff = Math.max(0, Math.floor((LAUNCH_DATE - new Date())/1000));
-      const weeks = Math.floor(diff / (7*86400)); diff -= weeks*7*86400;
-      const days  = Math.floor(diff / 86400);     diff -= days*86400;
-      const hours = Math.floor(diff / 3600);       diff -= hours*3600;
-      const mins  = Math.floor(diff / 60);         diff -= mins*60;
-      const secs  = diff;
-      cells.weeks.textContent   = pad(weeks);
-      cells.days.textContent    = pad(days);
-      cells.hours.textContent   = pad(hours);
-      cells.minutes.textContent = pad(mins);
-      cells.seconds.textContent = pad(secs);
-    }
-    tick();
-    setInterval(tick,1000);
-  })();
-</script>
 </body>
 </html>
