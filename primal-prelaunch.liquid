@@ -725,6 +725,13 @@
       margin-bottom: 28px;
       font-size: clamp(28px, 3.6vw, 40px);
       letter-spacing: 1.2px;
+      white-space: normal;
+    }
+
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__offer,
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__signup {
+      padding-top: 36px;
+      padding-bottom: 32px;
     }
 
     #PrimalPrelaunch-{{ section.id }} .primal-launch__feature {
@@ -804,8 +811,16 @@
       min-height: 0;
       margin-bottom: 20px;
       font-size: clamp(20px, 5.6vw, 28px);
-      line-height: 1.15;
+      line-height: 1.2;
       letter-spacing: 0.8px;
+      white-space: normal;
+    }
+
+    /* Keep each phrase intact so wrap is max 2 lines, never "LIFE." alone */
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__heading-dark,
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__heading-gold {
+      display: inline-block;
+      white-space: nowrap;
     }
 
     #PrimalPrelaunch-{{ section.id }} .primal-launch__feature,
@@ -885,6 +900,7 @@
       height: auto !important;
       padding: 16px 14px 10px !important;
       align-items: center;
+      justify-content: flex-start;
       text-align: center;
       gap: 0;
     }
@@ -892,7 +908,9 @@
     #PrimalPrelaunch-{{ section.id }} .primal-launch__signup {
       min-height: 0 !important;
       height: auto !important;
-      padding: 10px 14px 12px !important;
+      padding: 14px 14px 12px !important;
+      align-items: center;
+      justify-content: flex-start;
       border-top: 1px solid rgba(200, 154, 61, 0.3);
     }
 
@@ -974,6 +992,7 @@
       margin: 10px 0 0 !important;
       font-size: clamp(28px, 8vw, 36px);
       letter-spacing: 2.5px;
+      white-space: normal;
     }
 
     #PrimalPrelaunch-{{ section.id }} .primal-launch__form {
