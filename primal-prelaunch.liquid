@@ -114,6 +114,7 @@
         {%- if section.settings.scientists_heading != blank -%}
           <span class="primal-launch__heading-dark">{{ section.settings.scientists_heading | escape }}</span>
         {%- endif -%}
+        {%- if section.settings.scientists_heading != blank and section.settings.scientists_heading_gold != blank %} {% endif -%}
         {%- if section.settings.scientists_heading_gold != blank -%}
           <span class="primal-launch__heading-gold">{{ section.settings.scientists_heading_gold | escape }}</span>
         {%- endif -%}
@@ -146,13 +147,10 @@
       </div>
 
       <div class="primal-launch__signup">
-        <p class="primal-launch__launching">
-          LAUNCHING IN
-        </p>
-
-        <p class="primal-launch__month">
-          {{ section.settings.launch_month_label | escape }}
-        </p>
+        <div class="primal-launch__launch-block">
+          <p class="primal-launch__launching">LAUNCHING IN</p>
+          <p class="primal-launch__month">{{ section.settings.launch_month_label | escape }}</p>
+        </div>
 
         {% form 'customer', class: 'primal-launch__form' %}
           <input
@@ -333,17 +331,22 @@
     padding-top: 9.55px;
   }
 
-  /* Figma: Developed By Scientists. Built For Life. */
+  /* Figma: Developed By Scientists. Built For Life.
+     1167×60 — Montserrat Bold 49 / lh 100% / tracking 1.5px / center */
   #PrimalPrelaunch-{{ section.id }} .primal-launch__heading {
-    margin: 0 0 34px;
+    width: min(100%, 1167px);
+    min-height: 60px;
+    margin: 0 auto 40px;
     color: var(--dark);
     font-family: Montserrat, Arial, sans-serif;
-    font-size: clamp(28px, 3.2cqw, 44px);
-    font-weight: 900;
-    line-height: 1.12;
-    letter-spacing: -0.4px;
+    font-size: 49px;
+    font-weight: 700;
+    font-style: normal;
+    line-height: 1;
+    letter-spacing: 1.5px;
     text-align: center;
     text-transform: uppercase;
+    vertical-align: middle;
   }
 
   #PrimalPrelaunch-{{ section.id }} .primal-launch__heading-dark {
@@ -535,27 +538,46 @@
     justify-content: center;
   }
 
-  #PrimalPrelaunch-{{ section.id }} .primal-launch__launching {
-    color: #ffffff;
-    font-family: Montserrat, Arial, sans-serif;
-    font-size: clamp(13px, 1.339cqw, 15px);
-    font-weight: 800;
-    line-height: 1;
-    letter-spacing: clamp(3px, 0.357cqw, 4px);
+  /* Figma launch stack: LAUNCHING IN sits left-of-center above wide date */
+  #PrimalPrelaunch-{{ section.id }} .primal-launch__launch-block {
+    width: min(100%, 552px);
+    margin: 0 auto clamp(18px, 1.8cqw, 24px);
     text-align: center;
   }
 
-  /* Figma: replaces countdown timer */
+  /* Figma: 167×21 — left ~181 inside the 552 date frame (centered over date) */
+  #PrimalPrelaunch-{{ section.id }} .primal-launch__launching {
+    width: 167px;
+    max-width: 100%;
+    height: 21px;
+    margin: 0 auto;
+    color: #ffffff;
+    font-family: Montserrat, Arial, sans-serif;
+    font-size: 21px;
+    font-weight: 700;
+    font-style: normal;
+    line-height: 1;
+    letter-spacing: 0;
+    text-align: center;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  /* Figma: 552×68 — Montserrat Bold 55.57 / lh 100% / tracking 6.54px / center */
   #PrimalPrelaunch-{{ section.id }} .primal-launch__month {
-    margin: clamp(12px, 1.4cqw, 18px) 0 clamp(22px, 2.4cqw, 30px);
+    width: 100%;
+    min-height: 68px;
+    margin: 26px 0 0;
     color: var(--gold);
     font-family: Montserrat, Arial, sans-serif;
-    font-size: clamp(36px, 4.4cqw, 56px);
-    font-weight: 900;
+    font-size: 55.57px;
+    font-weight: 700;
+    font-style: normal;
     line-height: 1;
-    letter-spacing: -0.8px;
+    letter-spacing: 6.54px;
     text-align: center;
-    text-shadow: 0 0 34px rgba(200, 154, 61, 0.35);
+    vertical-align: middle;
+    text-shadow: none;
   }
 
   #PrimalPrelaunch-{{ section.id }} .primal-launch__form {
@@ -686,7 +708,8 @@
 
     #PrimalPrelaunch-{{ section.id }} .primal-launch__heading {
       margin-bottom: 28px;
-      font-size: clamp(26px, 3.4vw, 36px);
+      font-size: clamp(28px, 3.6vw, 40px);
+      letter-spacing: 1.2px;
     }
 
     #PrimalPrelaunch-{{ section.id }} .primal-launch__feature {
@@ -725,8 +748,17 @@
       font-size: clamp(72px, 9vw, 96px);
     }
 
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__launching {
+      font-size: 18px;
+      height: auto;
+      width: auto;
+    }
+
     #PrimalPrelaunch-{{ section.id }} .primal-launch__month {
-      font-size: clamp(32px, 4.2vw, 48px);
+      min-height: 0;
+      margin-top: 18px;
+      font-size: clamp(36px, 4.6vw, 48px);
+      letter-spacing: 4px;
     }
   }
 
@@ -753,9 +785,12 @@
     }
 
     #PrimalPrelaunch-{{ section.id }} .primal-launch__heading {
+      width: 100%;
+      min-height: 0;
       margin-bottom: 20px;
-      font-size: clamp(22px, 6.2vw, 28px);
-      line-height: 1.18;
+      font-size: clamp(20px, 5.6vw, 28px);
+      line-height: 1.15;
+      letter-spacing: 0.8px;
     }
 
     #PrimalPrelaunch-{{ section.id }} .primal-launch__feature,
@@ -906,15 +941,24 @@
       letter-spacing: 1.2px;
     }
 
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__launch-block {
+      width: 100%;
+      margin: 0 0 14px;
+    }
+
     #PrimalPrelaunch-{{ section.id }} .primal-launch__launching {
-      font-size: 11px;
-      letter-spacing: 2px;
-      margin: 0 !important;
+      width: auto;
+      height: auto;
+      margin: 0 auto;
+      font-size: 14px;
+      letter-spacing: 0.5px;
     }
 
     #PrimalPrelaunch-{{ section.id }} .primal-launch__month {
-      margin: 8px 0 14px !important;
+      min-height: 0;
+      margin: 10px 0 0 !important;
       font-size: clamp(28px, 8vw, 36px);
+      letter-spacing: 2.5px;
     }
 
     #PrimalPrelaunch-{{ section.id }} .primal-launch__form {
@@ -980,7 +1024,8 @@
 
     #PrimalPrelaunch-{{ section.id }} .primal-launch__heading {
       margin-bottom: 16px;
-      font-size: 20px;
+      font-size: 18px;
+      letter-spacing: 0.6px;
     }
 
     #PrimalPrelaunch-{{ section.id }} .primal-launch__offer {
@@ -1014,8 +1059,9 @@
     }
 
     #PrimalPrelaunch-{{ section.id }} .primal-launch__month {
-      margin: 6px 0 12px !important;
-      font-size: clamp(26px, 8vw, 32px);
+      margin: 8px 0 0 !important;
+      font-size: clamp(24px, 7.5vw, 30px);
+      letter-spacing: 1.8px;
     }
 
     #PrimalPrelaunch-{{ section.id }} .primal-launch__form {
@@ -1063,7 +1109,8 @@
     }
 
     #PrimalPrelaunch-{{ section.id }} .primal-launch__month {
-      font-size: 24px;
+      font-size: 22px;
+      letter-spacing: 1.2px;
     }
 
     #PrimalPrelaunch-{{ section.id }} .primal-launch__button {
