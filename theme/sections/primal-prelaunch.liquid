@@ -416,8 +416,15 @@
     line-height: 1.5;
   }
 
-  /* Figma card: 1199×392, radius 30, full content width */
+  /*
+    Figma card: 1199 × 392, radius 30.
+    Equal 50/50 columns. Same top pad so LIMITED TIME ↔ LAUNCHING IN align.
+    Both columns left-aligned (not centered).
+  */
   #PrimalPrelaunch-{{ section.id }} .primal-launch__card {
+    --card-pad-y: 52px;
+    --card-pad-outer: 64px;
+    --card-pad-inner: 48px;
     position: relative;
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -426,23 +433,21 @@
     height: 392px;
     margin-inline: auto;
     overflow: hidden;
-    border: 1px solid rgba(200, 154, 61, 0.45);
+    border: 1px solid rgba(200, 154, 61, 0.4);
     border-radius: 30px;
-    background: linear-gradient(
-      100deg,
-      #192924 0%,
-      #1b2726 48%,
-      var(--card) 100%
-    );
+    background:
+      radial-gradient(120% 140% at 18% 20%, rgba(45, 70, 58, 0.55) 0%, transparent 55%),
+      linear-gradient(100deg, #192924 0%, #1b2726 48%, var(--card) 100%);
   }
 
   #PrimalPrelaunch-{{ section.id }} .primal-launch__card::after {
     content: "";
     position: absolute;
-    top: 12%;
-    bottom: 12%;
+    top: 52px;
+    bottom: 52px;
     left: 50%;
     width: 1px;
+    transform: translateX(-0.5px);
     background: rgba(200, 154, 61, 0.45);
   }
 
@@ -450,27 +455,33 @@
     position: relative;
     z-index: 1;
     display: flex;
-    padding: 48px 4.286cqw 40px 4.464cqw;
+    height: 100%;
+    min-width: 0;
+    padding:
+      var(--card-pad-y)
+      var(--card-pad-inner)
+      var(--card-pad-y)
+      var(--card-pad-outer);
     flex-direction: column;
     align-items: flex-start;
     justify-content: flex-start;
   }
 
   #PrimalPrelaunch-{{ section.id }} .primal-launch__eyebrow {
-    margin-bottom: clamp(10px, 1.161cqw, 13px);
+    margin: 0 0 14px;
     color: var(--gold);
     font-family: Montserrat, Arial, sans-serif;
-    font-size: clamp(10px, 1.071cqw, 12px);
+    font-size: 12px;
     font-weight: 800;
     line-height: 1;
-    letter-spacing: clamp(2px, 0.268cqw, 3px);
+    letter-spacing: 2.5px;
     white-space: nowrap;
   }
 
   #PrimalPrelaunch-{{ section.id }} .primal-launch__discount {
     display: flex;
-    height: clamp(86px, 9.196cqw, 103px);
-    margin-bottom: clamp(18px, 1.964cqw, 22px);
+    height: 96px;
+    margin: 0 0 18px;
     align-items: flex-start;
   }
 
@@ -486,7 +497,7 @@
 
   #PrimalPrelaunch-{{ section.id }} .primal-launch__number {
     font-family: Montserrat, Arial, sans-serif;
-    font-size: clamp(92px, 10cqw, 112px);
+    font-size: 104px;
     font-weight: 900;
     line-height: 0.82;
     letter-spacing: -4px;
@@ -494,69 +505,72 @@
 
   #PrimalPrelaunch-{{ section.id }} .primal-launch__discount-side {
     display: flex;
-    margin: 2px 0 0 clamp(8px, 0.982cqw, 11px);
+    margin: 4px 0 0 10px;
     flex-direction: column;
     font-family: Montserrat, Arial, sans-serif;
     font-weight: 900;
   }
 
   #PrimalPrelaunch-{{ section.id }} .primal-launch__percent {
-    font-size: clamp(32px, 3.571cqw, 40px);
+    font-size: 38px;
     line-height: 0.95;
   }
 
   #PrimalPrelaunch-{{ section.id }} .primal-launch__off {
-    margin-top: 3px;
-    font-size: clamp(30px, 3.393cqw, 38px);
+    margin-top: 2px;
+    font-size: 36px;
     line-height: 0.95;
     letter-spacing: -1px;
   }
 
   #PrimalPrelaunch-{{ section.id }} .primal-launch__offer-title {
-    margin-bottom: clamp(18px, 1.964cqw, 22px);
+    margin: 0 0 22px;
     color: #ffffff;
     font-family: Montserrat, Arial, sans-serif;
-    font-size: clamp(20px, 2.143cqw, 24px);
+    font-size: 22px;
     font-weight: 700;
-    line-height: 1.14;
+    line-height: 1.15;
     letter-spacing: 0.1px;
   }
 
   #PrimalPrelaunch-{{ section.id }} .primal-launch__badge {
     display: grid;
-    width: clamp(210px, 21.607cqw, 242px);
-    height: clamp(44px, 4.375cqw, 49px);
+    width: 242px;
+    height: 48px;
+    margin-top: auto;
     place-items: center;
     border: 1px solid var(--gold);
     border-radius: 8px;
     color: var(--gold);
     font-family: Montserrat, Arial, sans-serif;
-    font-size: clamp(10px, 1.071cqw, 12px);
+    font-size: 12px;
     font-weight: 800;
-    letter-spacing: clamp(1.4px, 0.179cqw, 2px);
+    letter-spacing: 1.6px;
   }
 
+  /* Right column: same top pad as left, left-aligned from divider */
   #PrimalPrelaunch-{{ section.id }} .primal-launch__signup {
     position: relative;
     z-index: 1;
     display: flex;
+    height: 100%;
     min-width: 0;
-    padding: 42px 48px 36px 40px;
+    padding:
+      var(--card-pad-y)
+      var(--card-pad-outer)
+      var(--card-pad-y)
+      var(--card-pad-inner);
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
     justify-content: flex-start;
     text-align: left;
   }
 
-  /*
-    Shrink-wrap to November width, then left-align both labels.
-    This is what makes LAUNCHING IN start exactly at the "N".
-  */
   #PrimalPrelaunch-{{ section.id }} .primal-launch__launch-block {
     display: flex;
-    width: max-content;
+    width: 100%;
     max-width: 100%;
-    margin: 0 auto 24px;
+    margin: 0 0 22px;
     flex-direction: column;
     align-items: flex-start;
     text-align: left !important;
@@ -565,18 +579,16 @@
   #PrimalPrelaunch-{{ section.id }} .primal-launch__launching {
     display: block !important;
     width: auto !important;
-    max-width: none;
     height: 21px;
     margin: 0 !important;
-    margin-inline: 0 !important;
     padding: 0;
     color: #ffffff;
     font-family: Montserrat, Arial, sans-serif;
-    font-size: 21px;
-    font-weight: 700;
+    font-size: 15px;
+    font-weight: 800;
     font-style: normal;
     line-height: 21px;
-    letter-spacing: 0;
+    letter-spacing: 3px;
     text-align: left !important;
     text-transform: uppercase;
     white-space: nowrap;
@@ -587,16 +599,15 @@
     width: auto !important;
     max-width: 100%;
     min-height: 0;
-    margin: 18px 0 0 !important;
-    margin-inline: 0 !important;
+    margin: 12px 0 0 !important;
     padding: 0;
     color: var(--gold);
     font-family: Montserrat, Arial, sans-serif;
-    font-size: 55.57px;
+    font-size: 52px;
     font-weight: 700;
     font-style: normal;
     line-height: 1;
-    letter-spacing: 6.54px;
+    letter-spacing: 5px;
     text-align: left !important;
     text-shadow: none;
     white-space: nowrap;
@@ -604,24 +615,24 @@
 
   #PrimalPrelaunch-{{ section.id }} .primal-launch__form {
     display: grid;
-    width: min(100%, 520px);
-    margin-top: 0;
-    margin-inline: auto;
-    gap: clamp(10px, 1.071cqw, 12px);
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    gap: 12px;
   }
 
   #PrimalPrelaunch-{{ section.id }} .primal-launch__email {
     width: 100%;
-    height: clamp(48px, 4.732cqw, 53px);
+    height: 52px;
     margin: 0;
-    padding: 0 clamp(16px, 1.696cqw, 19px);
+    padding: 0 18px;
     border: 0;
     border-radius: 10px;
     outline: 0;
     background: var(--stone);
     color: var(--dark);
     font-family: Inter, Arial, sans-serif;
-    font-size: clamp(14px, 1.339cqw, 15px);
+    font-size: 15px;
   }
 
   #PrimalPrelaunch-{{ section.id }} .primal-launch__email::placeholder {
@@ -636,9 +647,9 @@
 
   #PrimalPrelaunch-{{ section.id }} .primal-launch__button {
     display: grid;
-    grid-template-columns: 1fr clamp(46px, 4.554cqw, 51px);
+    grid-template-columns: 1fr 50px;
     width: 100%;
-    height: clamp(50px, 4.911cqw, 55px);
+    height: 54px;
     margin: 0;
     padding: 0;
     overflow: hidden;
@@ -648,24 +659,26 @@
     color: #111416;
     cursor: pointer;
     font-family: Montserrat, Arial, sans-serif;
-    font-size: clamp(13px, 1.339cqw, 15px);
+    font-size: 14px;
     font-weight: 800;
   }
 
   #PrimalPrelaunch-{{ section.id }} .primal-launch__button > span:first-child {
     display: grid;
-    padding-left: clamp(20px, 2.5cqw, 28px);
+    padding-left: 18px;
+    padding-right: 8px;
     place-items: center;
+    text-align: center;
   }
 
   #PrimalPrelaunch-{{ section.id }} .primal-launch__arrow {
     display: grid;
-    height: clamp(32px, 3.214cqw, 36px);
+    height: 34px;
     margin: auto 0;
     place-items: center;
     border-left: 1px solid rgba(17, 20, 22, 0.28);
     font-family: Inter, Arial, sans-serif;
-    font-size: clamp(20px, 2.143cqw, 24px);
+    font-size: 22px;
     font-weight: 400;
   }
 
@@ -675,8 +688,9 @@
 
   #PrimalPrelaunch-{{ section.id }} .primal-launch__note {
     display: flex;
-    width: min(100%, 552px);
-    margin: clamp(15px, 1.607cqw, 18px) auto 0;
+    width: 100%;
+    max-width: 100%;
+    margin: 14px 0 0;
     align-items: flex-start;
     gap: 10px;
     color: #c7cbce;
@@ -738,10 +752,17 @@
       white-space: normal;
     }
 
-    #PrimalPrelaunch-{{ section.id }} .primal-launch__offer,
-    #PrimalPrelaunch-{{ section.id }} .primal-launch__signup {
-      padding-top: 36px;
-      padding-bottom: 32px;
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__card {
+      --card-pad-y: 40px;
+      --card-pad-outer: 40px;
+      --card-pad-inner: 32px;
+      height: auto;
+      min-height: 360px;
+    }
+
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__card::after {
+      top: 40px;
+      bottom: 40px;
     }
 
     #PrimalPrelaunch-{{ section.id }} .primal-launch__feature {
@@ -763,17 +784,9 @@
       padding-top: 9.55px;
     }
 
-    #PrimalPrelaunch-{{ section.id }} .primal-launch__card {
-      height: auto;
-      min-height: 360px;
-    }
-
-    #PrimalPrelaunch-{{ section.id }} .primal-launch__offer {
-      padding: 36px 28px 36px 32px;
-    }
-
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__offer,
     #PrimalPrelaunch-{{ section.id }} .primal-launch__signup {
-      padding: 32px 28px 28px 24px;
+      height: auto;
     }
 
     #PrimalPrelaunch-{{ section.id }} .primal-launch__number {
