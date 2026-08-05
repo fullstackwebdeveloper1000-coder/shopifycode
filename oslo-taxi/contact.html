@@ -1,9 +1,9 @@
 <!doctype html>
-<html lang="en">
+<html lang="no">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Contact — HENT Oslo</title>
+  <title>Kontakt — HENT Oslo</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Syne:wght@700;800&display=swap" rel="stylesheet" />
@@ -12,67 +12,66 @@
 <body>
   <header class="nav">
     <div class="container nav-in">
-      <a class="logo" href="index.html">HENT <span>Oslo</span></a>
-      <nav class="nav-links" aria-label="Primary">
-        <a href="index.html">Home</a>
-        <a href="book.html">Book</a>
-        <a href="fares.html">Fares</a>
-        <a href="about.html">About</a>
-        <a href="contact.html" aria-current="page">Contact</a>
+      <a class="logo" href="index.html">HENT <b>Oslo</b></a>
+      <nav class="nav-links" aria-label="Hovedmeny">
+        <a href="index.html">Forside</a>
+        <a href="book.html">Bestill</a>
+        <a href="fares.html">Priser</a>
+        <a href="airport.html">Flyplass</a>
+        <a href="fleet.html">Flåte</a>
+        <a href="business.html">Bedrift</a>
+        <a href="about.html">Om oss</a>
+        <a href="contact.html" aria-current="page">Kontakt</a>
       </nav>
       <div class="nav-cta">
-        <a class="phone" href="tel:+4722334455">+47 22 33 44 55</a>
-        <a class="btn btn-taxi" href="book.html">Book a ride</a>
+        <a class="phone" href="tel:+4722334455">22 33 44 55</a>
+        <a class="btn btn-taxi" href="book.html">Bestill taxi</a>
       </div>
     </div>
   </header>
 
   <main class="section">
-    <div class="container split">
+    <div class="container grid-2">
       <div>
-        <header class="page-intro" style="padding:0;margin-bottom:24px">
-          <h1>Call, SMS, or write</h1>
-          <p>Dispatch desk for Oslo bookings and account enquiries.</p>
-          <span class="edit-hint">Editable contact · contact.html</span>
+        <header class="page-intro" style="padding-top:0">
+          <p class="kicker" style="color:var(--taxi-deep)">Kundeservice</p>
+          <h1>Ring, SMS eller skriv</h1>
+          <p>Bestillingssentral 24/7. Administrasjon hverdager 08–18.</p>
         </header>
-        <ul class="list-plain">
-          <li>
-            <strong>Phone / WhatsApp</strong>
-            <span><a href="tel:+4722334455">+47 22 33 44 55</a></span>
-          </li>
-          <li>
-            <strong>Email</strong>
-            <span><a href="mailto:book@hentoslo.no">book@hentoslo.no</a></span>
-          </li>
-          <li>
-            <strong>Base</strong>
-            <span>Oslo centre · Norway (update street address)</span>
-          </li>
-          <li>
-            <strong>Hours</strong>
-            <span>Dispatch 24/7 · Office 08:00–18:00</span>
-          </li>
+        <ul class="list-plain" style="margin-top:24px">
+          <li><strong>Bestill taxi</strong><span><a href="tel:+4722334455">22 33 44 55</a> · døgnåpent</span></li>
+          <li><strong>Fra utlandet</strong><span>+47 22 33 44 55</span></li>
+          <li><strong>E-post</strong><span><a href="mailto:book@hentoslo.no">book@hentoslo.no</a></span></li>
+          <li><strong>Bedrift</strong><span><a href="mailto:business@hentoslo.no">business@hentoslo.no</a></span></li>
+          <li><strong>Adresse</strong><span>Oslo sentrum · Norge (oppdater gateadresse)</span></li>
+          <li><strong>Tapt &amp; funnet</strong><span>Meld sak innen 7 dager etter tur</span></li>
         </ul>
+        <div class="media-card" style="margin-top:28px;min-height:240px;background-image:url('https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&w=1200&q=80')">
+          <div>
+            <h3>Oslo kart &amp; sone</h3>
+            <p>Vi kjører hele Oslo og nærliggende kommuner.</p>
+          </div>
+        </div>
       </div>
 
-      <form class="form-panel" action="#" method="get" onsubmit="event.preventDefault(); alert('Demo only — connect email later.');">
+      <form class="form-panel" onsubmit="event.preventDefault(); alert('Demo — koble e-post senere.');">
+        <h3 style="font-family:var(--font-display);margin:0 0 14px">Send melding</h3>
         <div class="form-grid">
-          <div class="field full">
-            <label for="c-name">Name</label>
-            <input id="c-name" name="name" type="text" required />
+          <div class="field full"><label>Navn</label><input required /></div>
+          <div class="field full"><label>E-post</label><input type="email" required /></div>
+          <div class="field full"><label>Emne</label>
+            <select>
+              <option>Generelt</option>
+              <option>Tapt eiendel</option>
+              <option>Bedriftsavtale</option>
+              <option>Klage / ros</option>
+              <option>Bli sjåfør</option>
+            </select>
           </div>
-          <div class="field full">
-            <label for="c-email">Email</label>
-            <input id="c-email" name="email" type="email" required />
-          </div>
-          <div class="field full">
-            <label for="c-msg">Message</label>
-            <textarea id="c-msg" name="message" rows="4" required placeholder="Corporate account, lost item, feedback…"></textarea>
-          </div>
+          <div class="field full"><label>Melding</label><textarea rows="5" required></textarea></div>
         </div>
-        <div style="margin-top:18px">
-          <button class="btn btn-dark" type="submit">Send message</button>
-        </div>
+        <div style="margin-top:16px"><button class="btn btn-taxi" type="submit">Send</button></div>
+        <p class="form-note">For akutt bestilling: ring 22 33 44 55.</p>
       </form>
     </div>
   </main>
@@ -80,21 +79,12 @@
   <footer class="footer">
     <div class="container">
       <div class="footer-in">
-        <div>
-          <div class="logo">HENT <span>Oslo</span></div>
-          <p>Independent Oslo taxi service.</p>
-        </div>
-        <div class="footer-links">
-          <a href="book.html">Book</a>
-          <a href="fares.html">Fares</a>
-          <a href="about.html">About</a>
-          <a href="contact.html">Contact</a>
-        </div>
+        <div><div class="logo">HENT <b>Oslo</b></div><p>Vi svarer raskt.</p></div>
+        <div><h4>Sider</h4><a href="book.html">Bestill</a><a href="fares.html">Priser</a><a href="airport.html">Flyplass</a></div>
+        <div><h4>Selskap</h4><a href="business.html">Bedrift</a><a href="fleet.html">Flåte</a><a href="about.html">Om oss</a></div>
+        <div><h4>Kontakt</h4><a href="tel:+4722334455">22 33 44 55</a></div>
       </div>
-      <div class="footer-bottom">
-        <span>Oslo, Norway</span>
-        <span>Demo design</span>
-      </div>
+      <div class="footer-bottom"><span>© HENT Oslo · Demo</span><span>Kontakt-side</span></div>
     </div>
   </footer>
 </body>

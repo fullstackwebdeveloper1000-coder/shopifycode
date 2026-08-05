@@ -1,9 +1,9 @@
 <!doctype html>
-<html lang="en">
+<html lang="no">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Fares — HENT Oslo</title>
+  <title>Priser — HENT Oslo</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Syne:wght@700;800&display=swap" rel="stylesheet" />
@@ -12,74 +12,55 @@
 <body>
   <header class="nav">
     <div class="container nav-in">
-      <a class="logo" href="index.html">HENT <span>Oslo</span></a>
-      <nav class="nav-links" aria-label="Primary">
-        <a href="index.html">Home</a>
-        <a href="book.html">Book</a>
-        <a href="fares.html" aria-current="page">Fares</a>
-        <a href="about.html">About</a>
-        <a href="contact.html">Contact</a>
+      <a class="logo" href="index.html">HENT <b>Oslo</b></a>
+      <nav class="nav-links" aria-label="Hovedmeny">
+        <a href="index.html">Forside</a>
+        <a href="book.html">Bestill</a>
+        <a href="fares.html" aria-current="page">Priser</a>
+        <a href="airport.html">Flyplass</a>
+        <a href="fleet.html">Flåte</a>
+        <a href="business.html">Bedrift</a>
+        <a href="about.html">Om oss</a>
+        <a href="contact.html">Kontakt</a>
       </nav>
       <div class="nav-cta">
-        <a class="phone" href="tel:+4722334455">+47 22 33 44 55</a>
-        <a class="btn btn-taxi" href="book.html">Book a ride</a>
+        <a class="phone" href="tel:+4722334455">22 33 44 55</a>
+        <a class="btn btn-taxi" href="book.html">Bestill taxi</a>
       </div>
     </div>
   </header>
 
   <main class="section">
     <div class="container">
-      <header class="page-intro" style="padding-top:0;padding-bottom:28px">
-        <h1>Fares &amp; routes</h1>
-        <p>Sample Oslo pricing for the design. Replace with your real tariff before launch.</p>
-        <span class="edit-hint">Editable prices · fares.html</span>
+      <header class="page-intro" style="padding-top:0">
+        <p class="kicker" style="color:var(--taxi-deep)">Takst &amp; fastpris</p>
+        <h1>Priser i Oslo</h1>
+        <p>Eksempelpriser for designet. Bytt til deres offisielle takst før lansering. Inspirert av norsk garantipris-modell.</p>
       </header>
 
       <table class="fare-table">
         <thead>
-          <tr>
-            <th>Trip</th>
-            <th>From</th>
-            <th>Notes</th>
-          </tr>
+          <tr><th>Tjeneste</th><th>Pris</th><th>Merknad</th></tr>
         </thead>
         <tbody>
-          <tr>
-            <td><strong>City start fare</strong></td>
-            <td>NOK 79</td>
-            <td>Metered + per km / minute</td>
-          </tr>
-          <tr>
-            <td><strong>Oslo centre → Gardermoen</strong></td>
-            <td>NOK 695</td>
-            <td>Fixed fare · standard car</td>
-          </tr>
-          <tr>
-            <td><strong>Gardermoen → Oslo centre</strong></td>
-            <td>NOK 695</td>
-            <td>Fixed fare · includes waiting buffer</td>
-          </tr>
-          <tr>
-            <td><strong>Oslo → Torp (TRF)</strong></td>
-            <td>NOK 1,450</td>
-            <td>Pre-book only</td>
-          </tr>
-          <tr>
-            <td><strong>Night surcharge</strong></td>
-            <td>+20%</td>
-            <td>00:00–06:00 Fri–Sat</td>
-          </tr>
-          <tr>
-            <td><strong>Van / 5–8 seats</strong></td>
-            <td>+NOK 150</td>
-            <td>On fixed airport fares</td>
-          </tr>
+          <tr><td><strong>Starttakst by</strong></td><td>fra 79 NOK</td><td>Deretter per km / minutt</td></tr>
+          <tr><td><strong>Oslo sentrum → Gardermoen</strong></td><td>695 NOK</td><td>Fastpris · standardbil</td></tr>
+          <tr><td><strong>Gardermoen → Oslo sentrum</strong></td><td>695 NOK</td><td>Fastpris · inkl. buffer</td></tr>
+          <tr><td><strong>Oslo → Torp (TRF)</strong></td><td>1 450 NOK</td><td>Forhåndsbestilling</td></tr>
+          <tr><td><strong>Nattillegg</strong></td><td>+20 %</td><td>fre–lør 00:00–06:00</td></tr>
+          <tr><td><strong>Van 5–8 seter</strong></td><td>+150 NOK</td><td>På fastpris flyplass</td></tr>
+          <tr><td><strong>Ventetid</strong></td><td>8 NOK/min</td><td>Etter 10 min gratis</td></tr>
         </tbody>
       </table>
 
-      <p class="form-note" style="margin-top:20px">Toll roads (bomring) may apply. Card &amp; Vipps accepted.</p>
+      <div class="grid-3" style="margin-top:36px">
+        <article class="tile"><div class="tile-body"><h3>Garantipris</h3><p>Ved digital bestilling med hente- og leveringsadresse — prisen holder selv om trafikken stopper.</p></div></article>
+        <article class="tile"><div class="tile-body"><h3>Takstmeter</h3><p>Ved spontantur ruller takstmeter. Er beløpet under makspris, betaler du takstmeter.</p></div></article>
+        <article class="tile"><div class="tile-body"><h3>Betaling</h3><p>Vipps, Visa/Mastercard, Apple Pay og faktura for bedrift.</p></div></article>
+      </div>
+
       <div style="margin-top:28px">
-        <a class="btn btn-taxi" href="book.html">Book with these rates</a>
+        <a class="btn btn-taxi" href="book.html">Bestill med prisestimat</a>
       </div>
     </div>
   </main>
@@ -87,21 +68,12 @@
   <footer class="footer">
     <div class="container">
       <div class="footer-in">
-        <div>
-          <div class="logo">HENT <span>Oslo</span></div>
-          <p>Independent Oslo taxi service.</p>
-        </div>
-        <div class="footer-links">
-          <a href="book.html">Book</a>
-          <a href="fares.html">Fares</a>
-          <a href="about.html">About</a>
-          <a href="contact.html">Contact</a>
-        </div>
+        <div><div class="logo">HENT <b>Oslo</b></div><p>Åpne priser. Norsk taxi-stil.</p></div>
+        <div><h4>Sider</h4><a href="book.html">Bestill</a><a href="airport.html">Flyplass</a><a href="fleet.html">Flåte</a></div>
+        <div><h4>Selskap</h4><a href="business.html">Bedrift</a><a href="about.html">Om oss</a><a href="contact.html">Kontakt</a></div>
+        <div><h4>Kontakt</h4><a href="tel:+4722334455">22 33 44 55</a></div>
       </div>
-      <div class="footer-bottom">
-        <span>Oslo, Norway</span>
-        <span>Demo design</span>
-      </div>
+      <div class="footer-bottom"><span>© HENT Oslo · Demo</span><span>Priser-side</span></div>
     </div>
   </footer>
 </body>

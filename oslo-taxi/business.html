@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="no">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Bedrift — HENT Oslo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Syne:wght@700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="nav">
+    <div class="container nav-in">
+      <a class="logo" href="index.html">HENT <b>Oslo</b></a>
+      <nav class="nav-links" aria-label="Hovedmeny">
+        <a href="index.html">Forside</a>
+        <a href="book.html">Bestill</a>
+        <a href="fares.html">Priser</a>
+        <a href="airport.html">Flyplass</a>
+        <a href="fleet.html">Flåte</a>
+        <a href="business.html" aria-current="page">Bedrift</a>
+        <a href="about.html">Om oss</a>
+        <a href="contact.html">Kontakt</a>
+      </nav>
+      <div class="nav-cta">
+        <a class="phone" href="tel:+4722334455">22 33 44 55</a>
+        <a class="btn btn-taxi" href="book.html">Bestill taxi</a>
+      </div>
+    </div>
+  </header>
+
+  <section class="hero" style="min-height:58vh">
+    <div class="hero-media hero-business" aria-hidden="true"></div>
+    <div class="container hero-copy">
+      <p class="kicker">Bedrift · Faktura · Portal</p>
+      <p class="brand-hero" style="font-size:clamp(2.4rem,6vw,4rem)">Smidigere <em>jobbreise</em></p>
+      <h1>Taxiavtale for teamet ditt.</h1>
+      <p>Én avtale. App for ansatte. Samlefaktura. Oversikt over alle turer — akkurat som du forventer av en norsk bedriftsløsning.</p>
+      <div class="hero-actions">
+        <a class="btn btn-taxi" href="contact.html">Be om tilbud</a>
+        <a class="btn btn-ghost" href="book.html">Book engangstur</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="grid-3">
+        <article class="feature">
+          <span class="feature-num">01</span>
+          <h3>Ingen utlegg</h3>
+          <p>Ansatte bestiller i app — betaling går på firma. Slutt på kvitteringsjakt.</p>
+        </article>
+        <article class="feature">
+          <span class="feature-num">02</span>
+          <h3>Kostnadskontroll</h3>
+          <p>Månedsrapport, kostnadssted og godkjenningsflyt for ledere.</p>
+        </article>
+        <article class="feature">
+          <span class="feature-num">03</span>
+          <h3>Resepsjon &amp; event</h3>
+          <p>Faste hentinger, VIP-transfer og shuttle for konferanser i Oslo.</p>
+        </article>
+      </div>
+
+      <div class="grid-2" style="margin-top:48px">
+        <div class="media-card" style="background-image:url('https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1200&q=80')">
+          <div>
+            <h3>Oslo business district</h3>
+            <p>Bjørvika · CBD · Lysaker · Fornebu</p>
+          </div>
+        </div>
+        <form class="form-panel" onsubmit="event.preventDefault(); alert('Demo — send til sales senere.');">
+          <h3 style="font-family:var(--font-display);margin:0 0 14px">Be om bedriftsavtale</h3>
+          <div class="form-grid">
+            <div class="field full"><label>Firmanavn</label><input required /></div>
+            <div class="field"><label>Kontaktperson</label><input required /></div>
+            <div class="field"><label>E-post</label><input type="email" required /></div>
+            <div class="field full"><label>Omtrentlig volum / mnd</label>
+              <select><option>Under 20 turer</option><option>20–100 turer</option><option>100+ turer</option></select>
+            </div>
+            <div class="field full"><label>Behov</label><textarea rows="3" placeholder="Faktura, portal, flyplass, event…"></textarea></div>
+          </div>
+          <div style="margin-top:16px"><button class="btn btn-taxi" type="submit">Send forespørsel</button></div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-in">
+        <div><div class="logo">HENT <b>Oslo</b></div><p>Bedriftstaxi Oslo.</p></div>
+        <div><h4>Sider</h4><a href="book.html">Bestill</a><a href="fares.html">Priser</a><a href="airport.html">Flyplass</a></div>
+        <div><h4>Selskap</h4><a href="fleet.html">Flåte</a><a href="about.html">Om oss</a><a href="contact.html">Kontakt</a></div>
+        <div><h4>Kontakt</h4><a href="mailto:business@hentoslo.no">business@hentoslo.no</a></div>
+      </div>
+      <div class="footer-bottom"><span>© HENT Oslo · Demo</span><span>Bedrift-side</span></div>
+    </div>
+  </footer>
+</body>
+</html>

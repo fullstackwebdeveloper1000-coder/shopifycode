@@ -1,9 +1,9 @@
 <!doctype html>
-<html lang="en">
+<html lang="no">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Book a taxi — HENT Oslo</title>
+  <title>Bestill taxi — HENT Oslo</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Syne:wght@700;800&display=swap" rel="stylesheet" />
@@ -12,82 +12,93 @@
 <body>
   <header class="nav">
     <div class="container nav-in">
-      <a class="logo" href="index.html">HENT <span>Oslo</span></a>
-      <nav class="nav-links" aria-label="Primary">
-        <a href="index.html">Home</a>
-        <a href="book.html" aria-current="page">Book</a>
-        <a href="fares.html">Fares</a>
-        <a href="about.html">About</a>
-        <a href="contact.html">Contact</a>
+      <a class="logo" href="index.html">HENT <b>Oslo</b></a>
+      <nav class="nav-links" aria-label="Hovedmeny">
+        <a href="index.html">Forside</a>
+        <a href="book.html" aria-current="page">Bestill</a>
+        <a href="fares.html">Priser</a>
+        <a href="airport.html">Flyplass</a>
+        <a href="fleet.html">Flåte</a>
+        <a href="business.html">Bedrift</a>
+        <a href="about.html">Om oss</a>
+        <a href="contact.html">Kontakt</a>
       </nav>
       <div class="nav-cta">
-        <a class="phone" href="tel:+4722334455">+47 22 33 44 55</a>
-        <a class="btn btn-taxi" href="book.html">Book a ride</a>
+        <a class="phone" href="tel:+4722334455">22 33 44 55</a>
+        <a class="btn btn-taxi" href="book.html">Bestill taxi</a>
       </div>
     </div>
   </header>
 
   <main class="section">
-    <div class="container">
-      <header class="page-intro" style="padding-top:0;padding-bottom:28px">
-        <h1>Book your ride</h1>
-        <p>Fill in the trip details. This is a design mock — wire the form to your booking system later.</p>
-        <span class="edit-hint">Editable form · book.html</span>
-      </header>
+    <div class="container grid-2">
+      <div>
+        <header class="page-intro" style="padding-top:0">
+          <p class="kicker" style="color:var(--taxi-deep)">Bestilling</p>
+          <h1>Bestill taxi i Oslo</h1>
+          <p>Oppgi henting og levering — få prisestimat og bekreftelse. Demo-skjema (koble til backend senere).</p>
+        </header>
+        <div class="media-card" style="margin-top:24px;background-image:url('https://images.unsplash.com/photo-1519501025264-65ba15a82390?auto=format&fit=crop&w=1200&q=80')">
+          <div>
+            <h3>Snitt 8 min i sentrum</h3>
+            <p>Live tracking · SMS · norsk/engelsk sjåfør</p>
+          </div>
+        </div>
+      </div>
 
-      <form class="form-panel" action="#" method="get" onsubmit="event.preventDefault(); alert('Demo only — connect your booking backend later.');">
+      <form class="form-panel" onsubmit="event.preventDefault(); alert('Demo — koble til booking-API senere.');">
         <div class="form-grid">
-          <div class="field">
-            <label for="pickup">Pickup</label>
-            <input id="pickup" name="pickup" type="text" placeholder="e.g. Oslo S, Jernbanetorget" required />
+          <div class="field full">
+            <label for="pickup">Henteadresse</label>
+            <input id="pickup" required placeholder="f.eks. Oslo S / Karl Johans gate 1" />
+          </div>
+          <div class="field full">
+            <label for="dropoff">Leveringsadresse</label>
+            <input id="dropoff" required placeholder="f.eks. Oslo Lufthavn Gardermoen" />
           </div>
           <div class="field">
-            <label for="dropoff">Drop-off</label>
-            <input id="dropoff" name="dropoff" type="text" placeholder="e.g. Gardermoen OSL" required />
+            <label for="date">Dato</label>
+            <input id="date" type="date" required />
           </div>
           <div class="field">
-            <label for="date">Date</label>
-            <input id="date" name="date" type="date" required />
+            <label for="time">Tid</label>
+            <input id="time" type="time" required />
           </div>
           <div class="field">
-            <label for="time">Time</label>
-            <input id="time" name="time" type="time" required />
+            <label for="pax">Passasjerer</label>
+            <select id="pax"><option>1</option><option selected>2</option><option>3</option><option>4</option><option>5–8 (van)</option></select>
           </div>
           <div class="field">
-            <label for="passengers">Passengers</label>
-            <select id="passengers" name="passengers">
-              <option>1</option>
-              <option selected>2</option>
-              <option>3</option>
-              <option>4</option>
-              <option>5–8 (van)</option>
-            </select>
-          </div>
-          <div class="field">
-            <label for="vehicle">Vehicle</label>
-            <select id="vehicle" name="vehicle">
+            <label for="car">Biltype</label>
+            <select id="car">
               <option>Standard</option>
-              <option>Estate / extra luggage</option>
+              <option>Stasjonsvogn</option>
+              <option>El-taxi</option>
               <option>Van</option>
-              <option>Electric</option>
+              <option>Premium</option>
             </select>
           </div>
           <div class="field full">
-            <label for="notes">Notes</label>
-            <textarea id="notes" name="notes" rows="3" placeholder="Flight number, child seat, meeting point…"></textarea>
+            <label for="flight">Flynummer (valgfritt)</label>
+            <input id="flight" placeholder="SK1461" />
           </div>
           <div class="field">
-            <label for="name">Name</label>
-            <input id="name" name="name" type="text" required />
+            <label for="name">Navn</label>
+            <input id="name" required />
           </div>
           <div class="field">
-            <label for="phone">Phone</label>
-            <input id="phone" name="phone" type="tel" placeholder="+47 …" required />
+            <label for="phone">Telefon</label>
+            <input id="phone" type="tel" placeholder="+47 …" required />
+          </div>
+          <div class="field full">
+            <label for="notes">Merknad</label>
+            <textarea id="notes" rows="3" placeholder="Barnebilstol, bagasje, møtepunkt…"></textarea>
           </div>
         </div>
-        <p class="form-note">By booking you agree we may SMS trip updates. Prices follow the fares page unless fixed airport rate applies.</p>
-        <div style="margin-top:20px">
-          <button class="btn btn-taxi" type="submit">Request taxi</button>
+        <p class="form-note">Ved forhåndsbestilling kan du velge garantipris. Bomring kan komme i tillegg.</p>
+        <div style="margin-top:18px;display:flex;gap:10px;flex-wrap:wrap">
+          <button class="btn btn-taxi" type="submit">Bekreft bestilling</button>
+          <a class="btn btn-ghost-dark" href="fares.html">Se priser</a>
         </div>
       </form>
     </div>
@@ -96,21 +107,12 @@
   <footer class="footer">
     <div class="container">
       <div class="footer-in">
-        <div>
-          <div class="logo">HENT <span>Oslo</span></div>
-          <p>Independent Oslo taxi service.</p>
-        </div>
-        <div class="footer-links">
-          <a href="book.html">Book</a>
-          <a href="fares.html">Fares</a>
-          <a href="about.html">About</a>
-          <a href="contact.html">Contact</a>
-        </div>
+        <div><div class="logo">HENT <b>Oslo</b></div><p>Bestill online eller ring 22 33 44 55.</p></div>
+        <div><h4>Sider</h4><a href="fares.html">Priser</a><a href="airport.html">Flyplass</a><a href="fleet.html">Flåte</a></div>
+        <div><h4>Selskap</h4><a href="business.html">Bedrift</a><a href="about.html">Om oss</a><a href="contact.html">Kontakt</a></div>
+        <div><h4>Kontakt</h4><a href="tel:+4722334455">22 33 44 55</a><a href="mailto:book@hentoslo.no">book@hentoslo.no</a></div>
       </div>
-      <div class="footer-bottom">
-        <span>Oslo, Norway</span>
-        <span>Demo design</span>
-      </div>
+      <div class="footer-bottom"><span>© HENT Oslo · Demo</span><span>Bestill-side</span></div>
     </div>
   </footer>
 </body>

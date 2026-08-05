@@ -1,9 +1,9 @@
 <!doctype html>
-<html lang="en">
+<html lang="no">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>About — HENT Oslo</title>
+  <title>Om oss — HENT Oslo</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Syne:wght@700;800&display=swap" rel="stylesheet" />
@@ -12,69 +12,83 @@
 <body>
   <header class="nav">
     <div class="container nav-in">
-      <a class="logo" href="index.html">HENT <span>Oslo</span></a>
-      <nav class="nav-links" aria-label="Primary">
-        <a href="index.html">Home</a>
-        <a href="book.html">Book</a>
-        <a href="fares.html">Fares</a>
-        <a href="about.html" aria-current="page">About</a>
-        <a href="contact.html">Contact</a>
+      <a class="logo" href="index.html">HENT <b>Oslo</b></a>
+      <nav class="nav-links" aria-label="Hovedmeny">
+        <a href="index.html">Forside</a>
+        <a href="book.html">Bestill</a>
+        <a href="fares.html">Priser</a>
+        <a href="airport.html">Flyplass</a>
+        <a href="fleet.html">Flåte</a>
+        <a href="business.html">Bedrift</a>
+        <a href="about.html" aria-current="page">Om oss</a>
+        <a href="contact.html">Kontakt</a>
       </nav>
       <div class="nav-cta">
-        <a class="phone" href="tel:+4722334455">+47 22 33 44 55</a>
-        <a class="btn btn-taxi" href="book.html">Book a ride</a>
+        <a class="phone" href="tel:+4722334455">22 33 44 55</a>
+        <a class="btn btn-taxi" href="book.html">Bestill taxi</a>
       </div>
     </div>
   </header>
 
   <main class="section">
-    <div class="container split">
+    <div class="container grid-2">
       <div>
-        <header class="page-intro" style="padding:0;margin-bottom:24px">
-          <h1>Local drivers. City instinct.</h1>
-          <p>HENT Oslo is a demo brand for an independent Oslo taxi website — calm Nordic design, taxi-yellow accents, built to edit.</p>
-          <span class="edit-hint">Editable story · about.html</span>
+        <header class="page-intro" style="padding-top:0">
+          <p class="kicker" style="color:var(--taxi-deep)">Om HENT Oslo</p>
+          <h1>Lokale sjåfører. Byens rytme.</h1>
+          <p>HENT Oslo er et demomerkе for en moderne Oslo-taxi — svart/gult nordisk uttrykk, tydelige priser og service på norsk og engelsk.</p>
         </header>
-        <ul class="list-plain">
+        <ul class="list-plain" style="margin-top:28px">
           <li>
-            <strong>Licensed &amp; insured</strong>
-            <span>Replace with your real company details and org. number.</span>
+            <strong>Løyve &amp; forsikring</strong>
+            <span>Bytt inn ekte org.nr og Cabotage-/løyveinfo før lansering.</span>
           </li>
           <li>
-            <strong>Norwegian &amp; English</strong>
-            <span>Drivers who can guide tourists and locals alike.</span>
+            <strong>Punktlighet først</strong>
+            <span>Vi måler ankomsttid og kundetilfredshet — ikke bare antall turer.</span>
           </li>
           <li>
-            <strong>Clean fleet</strong>
-            <span>Standard, estate, van, and electric options on request.</span>
+            <strong>Bærekraft</strong>
+            <span>El-taxi i flåten og smartere ruting for færre tomkilometer.</span>
+          </li>
+          <li>
+            <strong>Bli sjåfør</strong>
+            <span>Har du løyve i Oslo? Kontakt oss — vi vokser flåten.</span>
           </li>
         </ul>
       </div>
-      <aside class="map-block" aria-label="Oslo atmosphere">
-        <h3>Oslo at all hours</h3>
-        <p>From Aker Brygge evenings to early OSL check-ins.</p>
+      <aside class="media-card" style="min-height:480px;background-image:url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=1200&q=80')">
+        <div>
+          <h3>Oslo hele døgnet</h3>
+          <p>Fra nattbusser til tidlige OSL-avganger.</p>
+        </div>
       </aside>
     </div>
   </main>
 
+  <section class="section band">
+    <div class="container">
+      <div class="section-head">
+        <h2>Verdier på veien</h2>
+        <p>Det samme kundene forventer av Norges ledende taximerker.</p>
+      </div>
+      <div class="grid-3">
+        <article class="feature"><span class="feature-num">TRYGG</span><h3>Sikkerhet</h3><p>Sporbare turer, verifiserte sjåfører, tydelig pris.</p></article>
+        <article class="feature"><span class="feature-num">ÆRLIG</span><h3>Transparent</h3><p>Ingen skjulte gebyrer — bom og tillegg vises før tur.</p></article>
+        <article class="feature"><span class="feature-num">LOKAL</span><h3>Oslo-kunnskap</h3><p>Snarveier, stengte gater, arrangementer i byen.</p></article>
+      </div>
+    </div>
+  </section>
+
   <footer class="footer">
     <div class="container">
       <div class="footer-in">
-        <div>
-          <div class="logo">HENT <span>Oslo</span></div>
-          <p>Independent Oslo taxi service.</p>
-        </div>
-        <div class="footer-links">
-          <a href="book.html">Book</a>
-          <a href="fares.html">Fares</a>
-          <a href="about.html">About</a>
-          <a href="contact.html">Contact</a>
-        </div>
+        <div><div class="logo">HENT <b>Oslo</b></div><p>Om selskapet.</p></div>
+        <div><h4>Sider</h4><a href="book.html">Bestill</a><a href="fares.html">Priser</a><a href="airport.html">Flyplass</a></div>
+        <div><h4>Selskap</h4><a href="business.html">Bedrift</a><a href="fleet.html">Flåte</a><a href="contact.html">Kontakt</a></div>
+        <div><h4>Kontakt</h4><a href="tel:+4722334455">22 33 44 55</a></div>
       </div>
-      <div class="footer-bottom">
-        <span>Oslo, Norway</span>
-        <span>Demo design</span>
-      </div>
+      <div class="footer-bottom"><span>© HENT Oslo · Demo</span><span>Om oss</span></div>
     </div>
   </footer>
 </body>

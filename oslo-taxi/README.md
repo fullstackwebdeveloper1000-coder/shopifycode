@@ -1,24 +1,26 @@
-# HENT Oslo — taxi website design (editable)
+# HENT Oslo — 8-page Norwegian taxi website design
 
-Multi-page Oslo taxi website mockup. **Not** connected to Primal Win.
+Editable demo inspired by Norwegian taxi sites (Norgestaxi-style flow: bestill, priser, flyplass, bedrift).
 
-## Pages
-- `index.html` — Home / hero
-- `book.html` — Booking form
-- `fares.html` — Fares table
-- `about.html` — About
-- `contact.html` — Contact
-- `styles.css` — **Edit colours, fonts, spacing here**
+## 8 pages
+1. `index.html` — Forside
+2. `book.html` — Bestill
+3. `fares.html` — Priser
+4. `airport.html` — Flyplass (OSL/TRF)
+5. `fleet.html` — Flåte
+6. `business.html` — Bedrift
+7. `about.html` — Om oss
+8. `contact.html` — Kontakt
 
-## Preview locally
+Edit colours/fonts in `styles.css`.
+
+## Preview
 ```bash
-cd oslo-taxi
-python3 -m http.server 8080
+cd oslo-taxi && python3 -m http.server 8080
 ```
-Open: http://127.0.0.1:8080/
+Open http://127.0.0.1:8080/
 
-## Figma (your own account)
-1. Open: https://www.figma.com/login  
-2. Login with the **new** Figma account (not Primal Win)  
-3. New design file: https://www.figma.com/new  
-4. Paste that file link back in chat if you want it rebuilt inside Figma
+## Figma file
+Target blank file: https://www.figma.com/design/fDJm5ivuAMsrSxmHwiW7Jv/Untitled
+
+To push these screens into Figma, connect **Figma MCP** in Cursor with the same account that owns that file, then ask the agent to import the 8 pages.
