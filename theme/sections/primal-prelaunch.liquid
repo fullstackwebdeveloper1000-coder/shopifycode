@@ -904,8 +904,7 @@
       height: auto !important;
       min-height: 0 !important;
       max-height: none;
-      aspect-ratio: auto !important;
-      border-radius: 16px;
+      border-radius: 20px;
       overflow: hidden;
     }
 
@@ -993,26 +992,30 @@
     }
 
     #PrimalPrelaunch-{{ section.id }} .primal-launch__launch-block {
-      width: 100%;
-      margin: 0 0 14px;
+      width: max-content;
+      max-width: 100%;
+      margin: 0 auto 14px;
+      align-items: flex-start;
+      text-align: left !important;
     }
 
     #PrimalPrelaunch-{{ section.id }} .primal-launch__launching {
-      width: auto;
+      width: auto !important;
       height: auto;
-      margin: 0;
+      margin: 0 !important;
       font-size: 14px;
       letter-spacing: 0.5px;
-      text-align: left;
+      text-align: left !important;
     }
 
     #PrimalPrelaunch-{{ section.id }} .primal-launch__month {
       min-height: 0;
+      width: auto !important;
       margin: 10px 0 0 !important;
       font-size: clamp(28px, 8vw, 36px);
       letter-spacing: 2.5px;
-      text-align: left;
-      white-space: normal;
+      text-align: left !important;
+      white-space: nowrap;
     }
 
     #PrimalPrelaunch-{{ section.id }} .primal-launch__form {
