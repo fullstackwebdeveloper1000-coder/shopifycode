@@ -45,7 +45,7 @@
 
   {% if section.settings.show_legal_strip %}
     <div class="pw-trust-specs__legal">
-      <div class="pw-container pw-trust-specs__container pw-trust-specs__legal-inner">
+      <div class="pw-container pw-trust-specs__legal-inner">
         {% if section.settings.legal_left != blank %}
           <span class="pw-trust-specs__legal-left">{{ section.settings.legal_left | escape }}</span>
         {% endif %}
@@ -192,7 +192,7 @@
     margin: 0;
   }
 
-  /* Light legal strip under dark band — Figma */
+  /* Light legal strip — Figma: one centered horizontal line */
   #PwTrustSpecs-{{ section.id }} .pw-trust-specs__legal {
     width: 100%;
     margin: 0;
@@ -200,29 +200,39 @@
     background: var(--pts-legal-bg, #EFE5DD);
   }
 
-  #PwTrustSpecs-{{ section.id }} .pw-trust-specs__legal-inner {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
+  #PwTrustSpecs-{{ section.id }} .pw-container.pw-trust-specs__legal-inner {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap;
+    align-items: center !important;
+    justify-content: center !important;
+    width: min(100%, 1440px);
+    max-width: 1440px;
+    margin-inline: auto;
+    padding-inline: min(8.333333vw, 120px);
     gap: 18px;
     font-family: 'Montserrat', sans-serif;
-    font-weight: 700;
     font-size: 14px;
     letter-spacing: 2px;
     text-transform: uppercase;
     text-align: center;
+    white-space: nowrap;
   }
 
   #PwTrustSpecs-{{ section.id }} .pw-trust-specs__legal-left {
+    display: inline;
     color: var(--pts-legal-ink, #1F2326);
+    font-weight: 700;
   }
 
   #PwTrustSpecs-{{ section.id }} .pw-trust-specs__legal-sep {
+    display: inline;
     color: var(--pts-gold, #C89A3D);
+    font-weight: 700;
   }
 
   #PwTrustSpecs-{{ section.id }} .pw-trust-specs__legal-right {
+    display: inline;
     color: var(--pts-legal-muted, #737A80);
     font-weight: 600;
   }
@@ -313,11 +323,13 @@
       padding: 16px 0 20px;
     }
 
-    #PwTrustSpecs-{{ section.id }} .pw-trust-specs__legal-inner {
+    #PwTrustSpecs-{{ section.id }} .pw-container.pw-trust-specs__legal-inner {
+      flex-direction: row !important;
       flex-wrap: wrap;
       gap: 6px 12px;
       font-size: 12px;
       letter-spacing: 1.4px;
+      white-space: normal;
     }
   }
 
