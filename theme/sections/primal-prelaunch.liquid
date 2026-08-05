@@ -331,10 +331,11 @@
     padding-top: 9.55px;
   }
 
-  /* Figma: Developed By Scientists. Built For Life.
-     1167×60 — Montserrat Bold 49 / lh 100% / tracking 1.5px / center */
+  /* Figma: one line at desktop — Montserrat Bold 49 / lh 100% / tracking 1.5px */
   #PrimalPrelaunch-{{ section.id }} .primal-launch__heading {
-    width: min(100%, 1167px);
+    display: block;
+    width: 100%;
+    max-width: 1167px;
     min-height: 60px;
     margin: 0 auto 40px;
     color: var(--dark);
@@ -346,7 +347,13 @@
     letter-spacing: 1.5px;
     text-align: center;
     text-transform: uppercase;
-    vertical-align: middle;
+    white-space: nowrap;
+  }
+
+  #PrimalPrelaunch-{{ section.id }} .primal-launch__heading-dark,
+  #PrimalPrelaunch-{{ section.id }} .primal-launch__heading-gold {
+    display: inline;
+    white-space: nowrap;
   }
 
   #PrimalPrelaunch-{{ section.id }} .primal-launch__heading-dark {
@@ -442,10 +449,10 @@
     position: relative;
     z-index: 1;
     display: flex;
-    padding: 0 4.286cqw 0 4.464cqw;
+    padding: 48px 4.286cqw 40px 4.464cqw;
     flex-direction: column;
     align-items: flex-start;
-    justify-content: center;
+    justify-content: flex-start;
   }
 
   #PrimalPrelaunch-{{ section.id }} .primal-launch__eyebrow {
@@ -533,41 +540,47 @@
     z-index: 1;
     display: flex;
     min-width: 0;
-    padding: 3.929cqw 4.464cqw 2.679cqw 3.75cqw;
+    /* Same top pad as offer so LAUNCHING IN lines up with LIMITED TIME */
+    padding: 48px 4.464cqw 40px 3.75cqw;
     flex-direction: column;
-    justify-content: center;
+    align-items: center;
+    justify-content: flex-start;
   }
 
-  /* Figma launch stack: LAUNCHING IN sits left-of-center above wide date */
+  /* Figma: date stack centered in right column; LAUNCHING IN centered over it */
   #PrimalPrelaunch-{{ section.id }} .primal-launch__launch-block {
+    display: flex;
     width: min(100%, 552px);
-    margin: 0 auto clamp(18px, 1.8cqw, 24px);
-    text-align: center;
+    margin: 0 auto 28px;
+    flex-direction: column;
+    align-items: center;
   }
 
-  /* Figma: 167×21 — left ~181 inside the 552 date frame (centered over date) */
+  /* Figma: 167×21 — sits on the same top row as left eyebrow */
   #PrimalPrelaunch-{{ section.id }} .primal-launch__launching {
+    display: block;
     width: 167px;
     max-width: 100%;
     height: 21px;
-    margin: 0 auto;
+    margin: 0;
     color: #ffffff;
     font-family: Montserrat, Arial, sans-serif;
     font-size: 21px;
     font-weight: 700;
     font-style: normal;
-    line-height: 1;
+    line-height: 21px;
     letter-spacing: 0;
     text-align: center;
     text-transform: uppercase;
     white-space: nowrap;
   }
 
-  /* Figma: 552×68 — Montserrat Bold 55.57 / lh 100% / tracking 6.54px / center */
+  /* Figma: 552×68 — Montserrat Bold 55.57 / lh 100% / tracking 6.54px */
   #PrimalPrelaunch-{{ section.id }} .primal-launch__month {
+    display: block;
     width: 100%;
     min-height: 68px;
-    margin: 26px 0 0;
+    margin: 20px 0 0;
     color: var(--gold);
     font-family: Montserrat, Arial, sans-serif;
     font-size: 55.57px;
@@ -576,12 +589,13 @@
     line-height: 1;
     letter-spacing: 6.54px;
     text-align: center;
-    vertical-align: middle;
     text-shadow: none;
+    white-space: nowrap;
   }
 
   #PrimalPrelaunch-{{ section.id }} .primal-launch__form {
     display: grid;
+    width: min(100%, 552px);
     margin-top: 0;
     gap: clamp(10px, 1.071cqw, 12px);
   }
@@ -651,6 +665,7 @@
 
   #PrimalPrelaunch-{{ section.id }} .primal-launch__note {
     display: flex;
+    width: min(100%, 552px);
     margin: clamp(15px, 1.607cqw, 18px) auto 0;
     align-items: flex-start;
     gap: 10px;
