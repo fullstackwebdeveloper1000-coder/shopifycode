@@ -547,19 +547,19 @@
     justify-content: flex-start;
   }
 
-  /* Figma: date stack centered in right column; LAUNCHING IN centered over it */
+  /* Date stack centered in right column; LAUNCHING IN left-aligned to November start */
   #PrimalPrelaunch-{{ section.id }} .primal-launch__launch-block {
     display: flex;
     width: min(100%, 552px);
     margin: 0 auto 28px;
     flex-direction: column;
-    align-items: center;
+    align-items: stretch;
   }
 
-  /* Figma: 167×21 — sits on the same top row as left eyebrow */
+  /* Left edge matches November 2026 start */
   #PrimalPrelaunch-{{ section.id }} .primal-launch__launching {
     display: block;
-    width: 167px;
+    width: auto;
     max-width: 100%;
     height: 21px;
     margin: 0;
@@ -570,7 +570,7 @@
     font-style: normal;
     line-height: 21px;
     letter-spacing: 0;
-    text-align: center;
+    text-align: left;
     text-transform: uppercase;
     white-space: nowrap;
   }
@@ -588,7 +588,7 @@
     font-style: normal;
     line-height: 1;
     letter-spacing: 6.54px;
-    text-align: center;
+    text-align: left;
     text-shadow: none;
     white-space: nowrap;
   }
