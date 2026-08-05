@@ -45,16 +45,18 @@
 
   {% if section.settings.show_legal_strip %}
     <div class="pw-trust-specs__legal">
-      <div class="pw-container pw-trust-specs__legal-inner">
-        {% if section.settings.legal_left != blank %}
-          <span class="pw-trust-specs__legal-left">{{ section.settings.legal_left | escape }}</span>
-        {% endif %}
-        {% if section.settings.legal_left != blank and section.settings.legal_right != blank %}
-          <span class="pw-trust-specs__legal-sep" aria-hidden="true">|</span>
-        {% endif %}
-        {% if section.settings.legal_right != blank %}
-          <span class="pw-trust-specs__legal-right">{{ section.settings.legal_right | escape }}</span>
-        {% endif %}
+      <div class="pw-trust-specs__legal-wrap">
+        <p class="pw-trust-specs__legal-line">
+          {%- if section.settings.legal_left != blank -%}
+            <span class="pw-trust-specs__legal-left">{{ section.settings.legal_left | escape }}</span>
+          {%- endif -%}
+          {%- if section.settings.legal_left != blank and section.settings.legal_right != blank -%}
+            <span class="pw-trust-specs__legal-sep">&nbsp;|&nbsp;</span>
+          {%- endif -%}
+          {%- if section.settings.legal_right != blank -%}
+            <span class="pw-trust-specs__legal-right">{{ section.settings.legal_right | escape }}</span>
+          {%- endif -%}
+        </p>
       </div>
     </div>
   {% endif %}
@@ -192,7 +194,7 @@
     margin: 0;
   }
 
-  /* Light legal strip — Figma: one centered horizontal line */
+  /* Light legal strip — Figma: ONE centered inline line (no flex = no stack) */
   #PwTrustSpecs-{{ section.id }} .pw-trust-specs__legal {
     width: 100%;
     margin: 0;
@@ -200,41 +202,58 @@
     background: var(--pts-legal-bg, #EFE5DD);
   }
 
-  #PwTrustSpecs-{{ section.id }} .pw-container.pw-trust-specs__legal-inner {
-    display: flex !important;
-    flex-direction: row !important;
-    flex-wrap: nowrap;
-    align-items: center !important;
-    justify-content: center !important;
+  #PwTrustSpecs-{{ section.id }} .pw-trust-specs__legal-wrap {
+    display: block !important;
     width: min(100%, 1440px);
     max-width: 1440px;
-    margin-inline: auto;
-    padding-inline: min(8.333333vw, 120px);
-    gap: 18px;
-    font-family: 'Montserrat', sans-serif;
-    font-size: 14px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    text-align: center;
-    white-space: nowrap;
+    margin: 0 auto;
+    padding: 0 min(8.333333vw, 120px);
+    text-align: center !important;
+  }
+
+  #PwTrustSpecs-{{ section.id }} .pw-trust-specs__legal-line {
+    display: inline-block !important;
+    width: auto !important;
+    max-width: 100%;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    background: none !important;
+    font-family: 'Montserrat', sans-serif !important;
+    font-size: 14px !important;
+    letter-spacing: 2px !important;
+    line-height: 1.2 !important;
+    text-align: center !important;
+    text-transform: uppercase !important;
+    white-space: nowrap !important;
+  }
+
+  #PwTrustSpecs-{{ section.id }} .pw-trust-specs__legal-line span,
+  #PwTrustSpecs-{{ section.id }} .pw-trust-specs__legal-left,
+  #PwTrustSpecs-{{ section.id }} .pw-trust-specs__legal-sep,
+  #PwTrustSpecs-{{ section.id }} .pw-trust-specs__legal-right {
+    display: inline !important;
+    width: auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    float: none !important;
+    position: static !important;
+    white-space: nowrap !important;
   }
 
   #PwTrustSpecs-{{ section.id }} .pw-trust-specs__legal-left {
-    display: inline;
-    color: var(--pts-legal-ink, #1F2326);
-    font-weight: 700;
+    color: var(--pts-legal-ink, #1F2326) !important;
+    font-weight: 700 !important;
   }
 
   #PwTrustSpecs-{{ section.id }} .pw-trust-specs__legal-sep {
-    display: inline;
-    color: var(--pts-gold, #C89A3D);
-    font-weight: 700;
+    color: var(--pts-gold, #C89A3D) !important;
+    font-weight: 700 !important;
   }
 
   #PwTrustSpecs-{{ section.id }} .pw-trust-specs__legal-right {
-    display: inline;
-    color: var(--pts-legal-muted, #737A80);
-    font-weight: 600;
+    color: var(--pts-legal-muted, #737A80) !important;
+    font-weight: 600 !important;
   }
 
   @media screen and (max-width: 989px) {
@@ -323,13 +342,14 @@
       padding: 16px 0 20px;
     }
 
-    #PwTrustSpecs-{{ section.id }} .pw-container.pw-trust-specs__legal-inner {
-      flex-direction: row !important;
-      flex-wrap: wrap;
-      gap: 6px 12px;
-      font-size: 12px;
-      letter-spacing: 1.4px;
-      white-space: normal;
+    #PwTrustSpecs-{{ section.id }} .pw-trust-specs__legal-wrap {
+      padding-inline: clamp(16px, 5vw, 28px);
+    }
+
+    #PwTrustSpecs-{{ section.id }} .pw-trust-specs__legal-line {
+      font-size: 12px !important;
+      letter-spacing: 1.4px !important;
+      white-space: normal !important;
     }
   }
 
