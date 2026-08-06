@@ -1,27 +1,24 @@
 #!/usr/bin/env python3
-"""CoLab Point — simple, visual pricing proposal (Word)."""
+"""CoLab Point proposal — Word file with maximum visibility (black text, borders)."""
 
 import io
 import urllib.request
 from docx import Document
 from docx.shared import Pt, RGBColor, Cm, Inches
-from docx.enum.text import WD_ALIGN_PARAGRAPH, WD_LINE_SPACING
-from docx.enum.table import WD_TABLE_ALIGNMENT
+from docx.enum.text import WD_ALIGN_PARAGRAPH
+from docx.enum.table import WD_TABLE_ALIGNMENT, WD_ALIGN_VERTICAL
 from docx.oxml import OxmlElement
 from docx.oxml.ns import qn
 
-# Colab Point brand (from colabpoint.com)
+BLACK = RGBColor(0x00, 0x00, 0x00)
 BRAND_DARK = RGBColor(0x04, 0x24, 0x3C)
 BRAND_TEAL = RGBColor(0x06, 0xAC, 0xBA)
-BRAND_GREEN = RGBColor(0x00, 0xD0, 0x84)
 WHITE = RGBColor(0xFF, 0xFF, 0xFF)
-TEXT = RGBColor(0x33, 0x33, 0x33)
-MUTED = RGBColor(0x66, 0x66, 0x66)
 
 HEX_DARK = "04243C"
 HEX_TEAL = "06ACBA"
-HEX_LIGHT = "E8F7F9"
-HEX_WHITE = "FFFFFF"
+HEX_LIGHT = "D4EEF2"
+FONT = "Calibri"
 
 COMPANY = "CoLab Space Point"
 BRAND = "CoLab Point"
@@ -33,368 +30,336 @@ LOGO_URL = "https://colabpoint.com/wp-content/uploads/2024/05/Web-Logo-II-150x14
 OUT = "/workspace/CoLab_Space_Point_Digital_Agency_Proposal.docx"
 
 
+def set_cell_border(cell, color="04243C", size="8"):
+    tc = cell._tc
+    tcPr = tc.get_or_add_tcPr()
+    borders = OxmlElement("w:tcBorders")
+    for edge in ("top", "left", "bottom", "right"):
+        el = OxmlElement(f"w:{edge}")
+        el.set(qn("w:val"), "single")
+        el.set(qn("w:sz"), size)
+        el.set(qn("w:color"), color)
+        borders.append(el)
+    tcPr.append(borders)
+
+
+def set_table_borders(table, color="04243C"):
+    for row in table.rows:
+        for cell in row.cells:
+            set_cell_border(cell, color)
+
+
 def shade(cell, hex_color: str):
-    el = OxmlElement("w:shd")
-    el.set(qn("w:fill"), hex_color)
-    el.set(qn("w:val"), "clear")
-    cell._tc.get_or_add_tcPr().append(el)
+    tcPr = cell._tc.get_or_add_tcPr()
+    shd = OxmlElement("w:shd")
+    shd.set(qn("w:val"), "clear")
+    shd.set(qn("w:fill"), hex_color)
+    tcPr.append(shd)
 
 
-def run_style(run, size=11, bold=False, color=TEXT, name="Segoe UI"):
-    run.font.name = name
-    run.font.size = Pt(size)
+def set_run_font(run, size=12, bold=False, color=BLACK):
     run.bold = bold
+    run.font.size = Pt(size)
+    run.font.name = FONT
     run.font.color.rgb = color
+    r = run._element
+    rPr = r.get_or_add_rPr()
+    rf = OxmlElement("w:rFonts")
+    rf.set(qn("w:ascii"), FONT)
+    rf.set(qn("w:hAnsi"), FONT)
+    rf.set(qn("w:cs"), FONT)
+    rPr.append(rf)
+    # Explicit Word color (fixes invisible text in some viewers)
+    for old in rPr.findall(qn("w:color")):
+        rPr.remove(old)
+    col = OxmlElement("w:color")
+    col.set(qn("w:val"), f"{color.rgb:06X}" if hasattr(color, "rgb") else "000000")
+    rPr.append(col)
 
 
-def para_space(p, before=0, after=6):
-    p.paragraph_format.space_before = Pt(before)
-    p.paragraph_format.space_after = Pt(after)
-    p.paragraph_format.line_spacing = 1.2
+def rgb_hex(c: RGBColor) -> str:
+    return f"{c[0]:02X}{c[1]:02X}{c[2]:02X}"
 
 
-def add_title_bar(doc, title, subtitle=""):
+def set_run_font_ex(run, size=12, bold=False, color=BLACK):
+    run.bold = bold
+    run.font.size = Pt(size)
+    run.font.name = FONT
+    run.font.color.rgb = color
+    r = run._element
+    rPr = r.get_or_add_rPr()
+    rf = OxmlElement("w:rFonts")
+    rf.set(qn("w:ascii"), FONT)
+    rf.set(qn("w:hAnsi"), FONT)
+    rf.set(qn("w:cs"), FONT)
+    rPr.append(rf)
+    for old in rPr.findall(qn("w:color")):
+        rPr.remove(old)
+    col = OxmlElement("w:color")
+    col.set(qn("w:val"), rgb_hex(color))
+    rPr.append(col)
+
+
+def p_text(cell_or_doc, text, size=12, bold=False, color=BLACK, align=None, is_cell=False):
+    if is_cell:
+        p = cell_or_doc.paragraphs[0] if cell_or_doc.paragraphs else cell_or_doc.add_paragraph()
+    else:
+        p = cell_or_doc.add_paragraph()
+    if align:
+        p.alignment = align
+    p.paragraph_format.space_after = Pt(6)
+    p.paragraph_format.space_before = Pt(3)
+    set_run_font_ex(p.add_run(text), size, bold, color)
+    return p
+
+
+def heading_block(doc, title, subtitle=""):
+    doc.add_paragraph()
     t = doc.add_table(rows=1, cols=1)
     t.alignment = WD_TABLE_ALIGNMENT.CENTER
     c = t.rows[0].cells[0]
     shade(c, HEX_DARK)
+    set_cell_border(c, "06ACBA", "12")
     p = c.paragraphs[0]
-    para_space(p, 10, 4)
-    r = p.add_run(title)
-    run_style(r, 20, True, WHITE)
+    p.alignment = WD_ALIGN_PARAGRAPH.LEFT
+    set_run_font_ex(p.add_run(title), 18, True, WHITE)
     if subtitle:
         p2 = c.add_paragraph()
-        para_space(p2, 0, 8)
-        r2 = p2.add_run(subtitle)
-        run_style(r2, 11, False, BRAND_TEAL)
+        set_run_font_ex(p2.add_run(subtitle), 12, False, WHITE)
+    set_table_borders(t)
     doc.add_paragraph()
 
 
-def add_text(doc, text, size=11, bold=False, color=TEXT, center=False):
-    p = doc.add_paragraph()
-    para_space(p, 0, 8)
-    if center:
-        p.alignment = WD_ALIGN_PARAGRAPH.CENTER
-    r = p.add_run(text)
-    run_style(r, size, bold, color)
-    return p
+def body(doc, text, bold=False):
+    p_text(doc, text, 12, bold, BLACK)
 
 
-def add_checks(doc, items):
-    for item in items:
-        p = doc.add_paragraph()
-        para_space(p, 0, 4)
-        r = p.add_run(f"✓  {item}")
-        run_style(r, 11, False, TEXT)
-
-
-def price_card(doc, package_name, price_pkr, suitable, included_label, items, note=None):
-    """One clear pricing block: price + 'is price me ye hoga' list."""
+def package_page(doc, name, price, suitable, features, note=None):
     doc.add_page_break()
-    # Header strip
-    t = doc.add_table(rows=1, cols=1)
-    c = t.rows[0].cells[0]
-    shade(c, HEX_TEAL)
-    p = c.paragraphs[0]
-    para_space(p, 8, 8)
-    p.alignment = WD_ALIGN_PARAGRAPH.CENTER
-    r = p.add_run(package_name.upper())
-    run_style(r, 18, True, WHITE)
+    heading_block(doc, name, f"Package Price: PKR {price}  |  {suitable}")
 
-    # Price box
-    t2 = doc.add_table(rows=1, cols=1)
-    c2 = t2.rows[0].cells[0]
-    shade(c2, HEX_DARK)
-    p2 = c2.paragraphs[0]
-    para_space(p2, 14, 4)
-    p2.alignment = WD_ALIGN_PARAGRAPH.CENTER
-    r2 = p2.add_run("PACKAGE PRICE")
-    run_style(r2, 10, False, BRAND_TEAL)
-    p3 = c2.add_paragraph()
-    p3.alignment = WD_ALIGN_PARAGRAPH.CENTER
-    para_space(p3, 0, 12)
-    r3 = p3.add_run(f"PKR {price_pkr}")
-    run_style(r3, 32, True, WHITE)
-    p4 = c2.add_paragraph()
-    p4.alignment = WD_ALIGN_PARAGRAPH.CENTER
-    para_space(p4, 0, 10)
-    r4 = p4.add_run(f"Suitable for: {suitable}")
-    run_style(r4, 10, False, RGBColor(0xCC, 0xEE, 0xF2))
+    p = doc.add_paragraph()
+    set_run_font_ex(p.add_run("IS PRICE ME YE SHAMIL HOGA:"), 14, True, BRAND_DARK)
 
-    doc.add_paragraph()
-    # Included section
-    t3 = doc.add_table(rows=1, cols=1)
-    c3 = t3.rows[0].cells[0]
-    shade(c3, HEX_LIGHT)
-    p5 = c3.paragraphs[0]
-    para_space(p5, 10, 6)
-    r5 = p5.add_run(included_label)
-    run_style(r5, 13, True, BRAND_DARK)
-    p6 = c3.add_paragraph()
-    para_space(p6, 0, 10)
-    for item in items:
-        bp = c3.add_paragraph()
-        para_space(bp, 0, 5)
-        br = bp.add_run(f"✓  {item}")
-        run_style(br, 11, False, TEXT)
+    for item in features:
+        bp = doc.add_paragraph()
+        bp.paragraph_format.left_indent = Cm(0.5)
+        set_run_font_ex(bp.add_run(f"• {item}"), 12, False, BLACK)
 
     if note:
         doc.add_paragraph()
-        tn = doc.add_table(rows=1, cols=1)
-        cn = tn.rows[0].cells[0]
-        shade(cn, "FFF3CD")
-        pn = cn.paragraphs[0]
-        para_space(pn, 8, 8)
-        rn = pn.add_run(f"Note: {note}")
-        run_style(rn, 10, True, RGBColor(0x85, 0x60, 0x00))
+        np = doc.add_paragraph()
+        set_run_font_ex(np.add_run(f"IMPORTANT: {note}"), 12, True, BRAND_DARK)
 
 
-def three_column_pricing(doc, section_title, packages):
-    """packages: list of (name, price, features list)"""
+def monthly_packages(doc, section_title, packs):
     doc.add_page_break()
-    add_title_bar(doc, section_title, "Monthly packages — price aur included services")
-    for name, price, features in packages:
+    heading_block(doc, section_title, "Monthly price + included services")
+
+    for title, price, features in packs:
         doc.add_paragraph()
         t = doc.add_table(rows=2, cols=1)
-        t.alignment = WD_TABLE_ALIGNMENT.CENTER
-        # Row 1: name + price
-        c0 = t.rows[0].cells[0]
-        shade(c0, HEX_DARK)
-        p = c0.paragraphs[0]
-        para_space(p, 8, 2)
-        r1 = p.add_run(f"{name}  —  PKR {price} / Month")
-        run_style(r1, 14, True, WHITE)
-        # Row 2: included
-        c1 = t.rows[1].cells[0]
-        shade(c1, HEX_WHITE)
-        p2 = c1.paragraphs[0]
-        para_space(p2, 8, 4)
-        r2 = p2.add_run("Is price me ye shamil hai:")
-        run_style(r2, 11, True, BRAND_TEAL)
+        c1 = t.rows[0].cells[0]
+        shade(c1, HEX_TEAL)
+        set_cell_border(c1)
+        p1 = c1.paragraphs[0]
+        set_run_font_ex(
+            p1.add_run(f"{title}  —  PKR {price} per month"),
+            14,
+            True,
+            BLACK,
+        )
+
+        c2 = t.rows[1].cells[0]
+        shade(c2, HEX_LIGHT)
+        set_cell_border(c2)
+        p2 = c2.paragraphs[0]
+        set_run_font_ex(p2.add_run("Is price me ye shamil hai:"), 12, True, BLACK)
         for f in features:
-            fp = c1.add_paragraph()
-            para_space(fp, 0, 3)
-            fr = fp.add_run(f"✓  {f}")
-            run_style(fr, 10, False, TEXT)
-        blank = c1.add_paragraph()
-        para_space(blank, 0, 6)
+            fp = c2.add_paragraph()
+            set_run_font_ex(fp.add_run(f"• {f}"), 11, False, BLACK)
+        set_table_borders(t)
 
 
-def cover(doc):
+def setup_doc(doc):
+    sec = doc.sections[0]
+    sec.top_margin = Cm(2)
+    sec.bottom_margin = Cm(2)
+    sec.left_margin = Cm(2)
+    sec.right_margin = Cm(2)
+    normal = doc.styles["Normal"]
+    normal.font.name = FONT
+    normal.font.size = Pt(12)
+    normal.font.color.rgb = BLACK
+    fp = sec.footer.paragraphs[0]
+    fp.alignment = WD_ALIGN_PARAGRAPH.CENTER
+    set_run_font_ex(fp.add_run(f"{COMPANY} | {WEB} | Gujrat"), 9, False, BLACK)
+
+
+def build():
+    doc = Document()
+    setup_doc(doc)
+
+    # Cover
     try:
         data = urllib.request.urlopen(LOGO_URL, timeout=15).read()
-        p = doc.add_paragraph()
-        p.alignment = WD_ALIGN_PARAGRAPH.CENTER
-        para_space(p, 40, 12)
-        p.add_run().add_picture(io.BytesIO(data), width=Inches(1.4))
+        lp = doc.add_paragraph()
+        lp.alignment = WD_ALIGN_PARAGRAPH.CENTER
+        lp.add_run().add_picture(io.BytesIO(data), width=Inches(1.5))
     except Exception:
         pass
 
-    add_text(doc, BRAND, 14, True, BRAND_TEAL, center=True)
-    add_text(doc, COMPANY, 28, True, BRAND_DARK, center=True)
-    add_text(doc, "Digital Agency Proposal", 16, False, MUTED, center=True)
+    p_text(doc, BRAND, 14, True, BRAND_TEAL, WD_ALIGN_PARAGRAPH.CENTER)
+    p_text(doc, COMPANY, 26, True, BLACK, WD_ALIGN_PARAGRAPH.CENTER)
+    p_text(doc, "Digital Agency Proposal", 16, True, BLACK, WD_ALIGN_PARAGRAPH.CENTER)
     doc.add_paragraph()
-
-    bar = doc.add_table(rows=1, cols=1)
-    bc = bar.rows[0].cells[0]
-    shade(bc, HEX_TEAL)
-    bp = bc.paragraphs[0]
-    para_space(bp, 12, 12)
-    bp.alignment = WD_ALIGN_PARAGRAPH.CENTER
     for line in [
         "Website Designing & Development",
         "Social Media Management",
         "Digital Marketing",
     ]:
-        lp = bc.add_paragraph()
-        lp.alignment = WD_ALIGN_PARAGRAPH.CENTER
-        para_space(lp, 2, 2)
-        lr = lp.add_run(f"◆  {line}")
-        run_style(lr, 12, True, WHITE)
+        p_text(doc, line, 13, False, BLACK, WD_ALIGN_PARAGRAPH.CENTER)
+    p_text(doc, WEB, 12, True, BRAND_DARK, WD_ALIGN_PARAGRAPH.CENTER)
+    p_text(doc, ADDRESS, 11, False, BLACK, WD_ALIGN_PARAGRAPH.CENTER)
+    p_text(doc, PHONE, 11, False, BLACK, WD_ALIGN_PARAGRAPH.CENTER)
+    p_text(doc, EMAIL, 11, False, BLACK, WD_ALIGN_PARAGRAPH.CENTER)
 
-    add_text(doc, WEB, 11, False, MUTED, center=True)
-    add_text(doc, "Gujrat, Pakistan", 11, False, MUTED, center=True)
-
-
-def intro(doc):
     doc.add_page_break()
-    add_title_bar(doc, "Company Profile", "CoLab Point — Gujrat")
-    add_text(
+    heading_block(doc, "Company Profile", "CoLab Point — Gujrat")
+    body(
         doc,
-        f"{COMPANY} CoLab Point ke sath milkar complete digital solutions deta hai: website design "
-        "aur development, WordPress, e-commerce, branding, social media, SEO, Google Ads, Meta Ads, "
-        "aur business growth.",
+        f"{COMPANY} aap ko website design, WordPress, e-commerce, branding, social media, "
+        "SEO, Google Ads, Meta Ads aur business growth ki complete services deta hai.",
     )
-    add_text(
+    body(
         doc,
-        "Neeche har service ka package price clear likha hai — aur har price ke sath detail mein "
-        "bataya gaya hai ke is price me exactly kya kya shamil hoga.",
-        11,
+        "Har section me pehle PACKAGE PRICE likhi hai, phir detail me bataya gaya hai "
+        "ke is price me kya kya shamil hoga.",
         True,
-        BRAND_DARK,
     )
 
+    heading_block(doc, "Why Choose Us", "")
+    for x in [
+        "Experienced team",
+        "Professional support",
+        "Business focused solutions",
+        "Modern technology",
+        "Creative design",
+        "Performance marketing",
+        "Transparent communication",
+        "Long term partnership",
+    ]:
+        bp = doc.add_paragraph()
+        set_run_font_ex(bp.add_run(f"• {x}"), 12, False, BLACK)
 
-def why_us(doc):
-    add_title_bar(doc, "Why CoLab Space Point", "Highlights")
-    points = [
-        "Experienced team — design, development, marketing",
-        "Professional support aur clear communication",
-        "Business-focused solutions — sales & leads focus",
-        "Modern tech: WordPress, WooCommerce, Analytics",
-        "Creative design + performance marketing",
-        "Long-term partnership — support after launch",
-    ]
-    add_checks(doc, points)
-
-
-def website_section(doc):
     doc.add_page_break()
-    add_title_bar(
+    heading_block(
         doc,
         "Website Designing & Development",
-        "WordPress primary platform — custom solutions bhi available",
-    )
-    add_text(
-        doc,
-        "Teen packages neeche diye gaye hain. Har page par pehle PRICE, phir "
-        "'Is Price Me Ye Shamil Hoga' ki full list.",
+        "WordPress primary — custom development available",
     )
 
-    price_card(
+    package_page(
         doc,
-        "Basic Website",
+        "BASIC WEBSITE — PKR 60,000",
         "60,000",
         "Small business & startups",
-        "Is Price Me Ye Shamil Hoga:",
         [
             "Professional business website",
             "Up to 5 pages",
-            "Mobile responsive design",
+            "Responsive mobile design",
             "WordPress CMS",
-            "Custom UI design",
+            "Custom UI",
             "Contact form",
             "WhatsApp integration",
-            "Social media links",
-            "Basic SEO setup",
+            "Social media integration",
+            "Basic SEO",
             "Google Analytics",
             "Speed optimization",
             "SSL configuration",
             "Security setup",
-            "1 training session",
-            "30 days support after launch",
+            "Training",
+            "30 days support",
         ],
-        note="E-Commerce is package me shamil NAHI hai.",
+        "E-Commerce is package me shamil NAHI hai.",
     )
 
-    price_card(
+    package_page(
         doc,
-        "Standard Website",
+        "STANDARD WEBSITE — PKR 120,000",
         "120,000",
-        "Growing brands & online sellers",
-        "Is Price Me Ye Shamil Hoga:",
+        "Growing brands",
         [
             "Up to 10 pages",
-            "Premium UI/UX design",
-            "Blog section",
-            "WooCommerce online store",
-            "Product upload (initial batch)",
-            "Payment gateway integration",
+            "Premium UI/UX",
+            "Blog",
+            "WooCommerce store",
+            "Product upload",
+            "Payment gateway",
             "Google Search Console",
             "Facebook Pixel",
             "Advanced SEO",
             "Speed optimization",
-            "60 days support after launch",
+            "60 days support",
         ],
     )
 
-    price_card(
+    package_page(
         doc,
-        "Premium Website",
+        "PREMIUM WEBSITE — PKR 250,000",
         "250,000",
-        "Enterprise & high-growth business",
-        "Is Price Me Ye Shamil Hoga:",
+        "Enterprise clients",
         [
-            "Unlimited pages (agreed scope)",
+            "Unlimited pages (scope ke andar)",
             "Fully custom design",
-            "Advanced WooCommerce store",
-            "Unlimited products setup",
+            "Advanced WooCommerce",
+            "Unlimited products",
             "Payment gateway",
             "CRM integration",
-            "Booking / appointment system",
-            "API integrations",
-            "Advanced SEO + schema",
+            "Booking system",
+            "API integration",
+            "Advanced SEO",
             "Premium security",
             "Performance optimization",
             "Admin training",
-            "90 days priority support",
+            "90 days support",
         ],
     )
 
-    # Comparison
-    doc.add_page_break()
-    add_title_bar(doc, "Website Packages — Quick Compare", "")
-    headers = ["Feature", "Basic\n60,000", "Standard\n120,000", "Premium\n250,000"]
-    tbl = doc.add_table(rows=1, cols=4)
-    tbl.alignment = WD_TABLE_ALIGNMENT.CENTER
-    for i, h in enumerate(headers):
-        shade(tbl.rows[0].cells[i], HEX_DARK)
-        tbl.rows[0].cells[i].text = ""
-        pr = tbl.rows[0].cells[i].paragraphs[0]
-        run_style(pr.add_run(h), 9, True, WHITE)
-
-    rows = [
-        ("Pages", "5", "10", "Unlimited*"),
-        ("E-Commerce", "No", "Yes", "Advanced"),
-        ("Blog", "No", "Yes", "Yes"),
-        ("Payment Gateway", "No", "Yes", "Yes"),
-        ("CRM / Booking", "No", "No", "Yes"),
-        ("Support", "30 days", "60 days", "90 days"),
-    ]
-    for row in rows:
-        cells = tbl.add_row().cells
-        for i, val in enumerate(row):
-            if i == 0:
-                shade(cells[i], HEX_LIGHT)
-            cells[i].text = ""
-            run_style(cells[i].paragraphs[0].add_run(val), 9, i == 0, TEXT if i else MUTED)
-
-
-def social_section(doc):
-    three_column_pricing(
+    monthly_packages(
         doc,
         "Social Media Management",
         [
             (
-                "Basic Package",
+                "BASIC",
                 "25,000",
                 [
-                    "Facebook management",
-                    "Instagram management",
-                    "12 posts per month",
-                    "Captions writing",
-                    "Hashtag research",
+                    "Facebook",
+                    "Instagram",
+                    "12 posts",
+                    "Captions",
+                    "Hashtags",
                     "Monthly report",
                 ],
             ),
             (
-                "Standard Package",
+                "STANDARD",
                 "45,000",
                 [
                     "Facebook, Instagram, LinkedIn",
-                    "20 posts per month",
+                    "20 posts",
                     "Stories",
                     "Reels planning",
                     "Community management",
-                    "Analytics report",
+                    "Analytics",
                 ],
             ),
             (
-                "Premium Package",
+                "PREMIUM",
                 "75,000",
                 [
                     "Facebook, Instagram, LinkedIn, TikTok",
-                    "30+ posts per month",
+                    "30+ posts",
                     "Daily stories",
                     "Reels strategy",
                     "Community management",
@@ -404,40 +369,37 @@ def social_section(doc):
         ],
     )
 
-
-def marketing_section(doc):
-    three_column_pricing(
+    monthly_packages(
         doc,
         "Digital Marketing",
         [
             (
-                "Basic Package",
+                "BASIC",
                 "35,000",
                 [
-                    "Meta (Facebook/Instagram) Ads",
+                    "Meta Ads",
                     "Audience targeting",
                     "Campaign optimization",
                     "Monthly reporting",
-                    "(Ad spend alag — platform ko direct)",
                 ],
             ),
             (
-                "Standard Package",
+                "STANDARD",
                 "65,000",
                 [
                     "Google Ads + Meta Ads",
-                    "Lead generation campaigns",
+                    "Lead generation",
                     "Conversion tracking",
                     "Landing page recommendations",
                     "Monthly reports",
                 ],
             ),
             (
-                "Premium Package",
+                "PREMIUM",
                 "120,000",
                 [
                     "Google Ads + Meta Ads",
-                    "SEO support",
+                    "SEO",
                     "Remarketing",
                     "Conversion optimization",
                     "Marketing strategy",
@@ -448,95 +410,61 @@ def marketing_section(doc):
         ],
     )
 
-
-def addons(doc):
     doc.add_page_break()
-    add_title_bar(doc, "Add-On Services (Optional)", "Alag se price — jab zaroorat ho")
-    data = [
-        ("Logo Design", "From PKR 15,000"),
-        ("Brand Identity", "From PKR 45,000"),
-        ("Landing Page Design", "From PKR 35,000"),
-        ("Website Maintenance", "From PKR 8,000 / month"),
-        ("Content Writing", "From PKR 3,500 / page"),
-        ("Graphic Design", "From PKR 2,500 / design"),
-        ("Video Editing", "From PKR 5,000 / minute"),
-        ("SEO Audit", "From PKR 25,000"),
-        ("Product Upload", "From PKR 500 / product"),
-        ("Business Email Setup", "From PKR 5,000"),
-        ("Domain & Hosting Help", "Cost + PKR 3,000 setup"),
+    heading_block(doc, "Add-On Services", "Optional — alag price")
+    addons = [
+        ("Logo Design", "PKR 15,000 se"),
+        ("Brand Identity", "PKR 45,000 se"),
+        ("Landing Page", "PKR 35,000 se"),
+        ("Website Maintenance", "PKR 8,000 / month se"),
+        ("Content Writing", "PKR 3,500 / page"),
+        ("Graphic Design", "PKR 2,500"),
+        ("Video Editing", "PKR 5,000 / minute"),
+        ("SEO Audit", "PKR 25,000"),
+        ("Product Upload", "PKR 500 / product"),
+        ("Business Email", "PKR 5,000"),
+        ("Domain & Hosting Help", "Cost + PKR 3,000"),
     ]
     tbl = doc.add_table(rows=1, cols=2)
-    shade(tbl.rows[0].cells[0], HEX_TEAL)
-    shade(tbl.rows[0].cells[1], HEX_TEAL)
-    tbl.rows[0].cells[0].text = ""
-    tbl.rows[0].cells[1].text = ""
-    run_style(tbl.rows[0].cells[0].paragraphs[0].add_run("Service"), 11, True, WHITE)
-    run_style(tbl.rows[0].cells[1].paragraphs[0].add_run("Price"), 11, True, WHITE)
-    for svc, pr in data:
+    hdr = tbl.rows[0].cells
+    shade(hdr[0], HEX_TEAL)
+    shade(hdr[1], HEX_TEAL)
+    set_run_font_ex(hdr[0].paragraphs[0].add_run("Service"), 12, True, BLACK)
+    set_run_font_ex(hdr[1].paragraphs[0].add_run("Price"), 12, True, BLACK)
+    for s, pr in addons:
         row = tbl.add_row().cells
-        row[0].text = ""
-        row[1].text = ""
-        run_style(row[0].paragraphs[0].add_run(svc), 10, False, TEXT)
-        run_style(row[1].paragraphs[0].add_run(pr), 10, True, BRAND_DARK)
-
-
-def process_contact(doc):
-    doc.add_page_break()
-    add_title_bar(doc, "Our Process", "")
-    steps = [
-        "Discovery — goals & requirements",
-        "Planning — sitemap & timeline",
-        "Design — UI approval",
-        "Development — build & content",
-        "Testing — mobile & speed check",
-        "Launch — go live",
-        "Support — training & help",
-    ]
-    add_checks(doc, steps)
+        set_run_font_ex(row[0].paragraphs[0].add_run(s), 11, False, BLACK)
+        set_run_font_ex(row[1].paragraphs[0].add_run(pr), 11, True, BLACK)
+    set_table_borders(tbl)
 
     doc.add_page_break()
-    add_title_bar(doc, "Contact", "Next step: discovery call")
-    t = doc.add_table(rows=5, cols=2)
-    rows = [
-        ("Company", COMPANY),
+    heading_block(doc, "Our Process", "")
+    for step in [
+        "Discovery",
+        "Planning",
+        "Design",
+        "Development",
+        "Testing",
+        "Launch",
+        "Support",
+    ]:
+        sp = doc.add_paragraph()
+        set_run_font_ex(sp.add_run(f"{step}"), 12, True, BRAND_DARK)
+
+    heading_block(doc, "Contact", COMPANY)
+    for label, val in [
         ("Website", WEB),
         ("Phone", PHONE),
         ("Email", EMAIL),
         ("Address", ADDRESS),
-    ]
-    for i, (k, v) in enumerate(rows):
-        shade(t.rows[i].cells[0], HEX_LIGHT)
-        t.rows[i].cells[0].text = ""
-        t.rows[i].cells[1].text = ""
-        run_style(t.rows[i].cells[0].paragraphs[0].add_run(k), 10, True, BRAND_DARK)
-        run_style(t.rows[i].cells[1].paragraphs[0].add_run(v), 10, False, TEXT)
+    ]:
+        cp = doc.add_paragraph()
+        set_run_font_ex(cp.add_run(f"{label}: "), 12, True, BLACK)
+        set_run_font_ex(cp.add_run(val), 12, False, BLACK)
 
-
-def setup(doc):
-    s = doc.sections[0]
-    s.top_margin = Cm(1.5)
-    s.bottom_margin = Cm(1.5)
-    s.left_margin = Cm(1.8)
-    s.right_margin = Cm(1.8)
-    fp = s.footer.paragraphs[0]
-    fp.alignment = WD_ALIGN_PARAGRAPH.CENTER
-    run_style(fp.add_run(f"{COMPANY}  |  {WEB}  |  Colab Point Gujrat"), 8, False, MUTED)
-
-
-def main():
-    doc = Document()
-    setup(doc)
-    cover(doc)
-    intro(doc)
-    why_us(doc)
-    website_section(doc)
-    social_section(doc)
-    marketing_section(doc)
-    addons(doc)
-    process_contact(doc)
     doc.save(OUT)
     print(OUT)
 
 
 if __name__ == "__main__":
-    main()
+    build()
