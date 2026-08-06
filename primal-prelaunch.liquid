@@ -281,7 +281,11 @@
 
   /*
     Every Figma measurement lives here once, expressed as a share of the 1200px
-    inner grid, so the whole block scales instead of jumping at breakpoints.
+    inner grid, so the card stays a scaled copy of the 1199 x 392 frame at every
+    desktop and tablet width instead of drifting out of proportion.
+    The floors are deliberately low: each one is the value the design reaches at
+    roughly an 890px viewport, so nothing is clamped while the two column card
+    is still wide, and the phone layout below takes over before they bite.
     Each value is declared twice: the vw line is the fallback for engines
     without container query units (it resolves to the same number below 1440px),
     the cqw line is what modern browsers use.
@@ -289,87 +293,101 @@
   #PrimalPrelaunch-{{ section.id }} .primal-launch__features,
   #PrimalPrelaunch-{{ section.id }} .primal-launch__heading,
   #PrimalPrelaunch-{{ section.id }} .primal-launch__card {
-    --pad-y: clamp(22px, 3.612vw, 52px);
-    --pad-y: clamp(22px, 4.334cqw, 52px);
-    --pad-outer: clamp(22px, 4.445vw, 64px);
-    --pad-outer: clamp(22px, 5.334cqw, 64px);
-    --pad-inner: clamp(22px, 3.333vw, 48px);
-    --pad-inner: clamp(22px, 4cqw, 48px);
+    --pad-y: clamp(34px, 3.612vw, 52px);
+    --pad-y: clamp(34px, 4.334cqw, 52px);
+    --pad-outer: clamp(42px, 4.445vw, 64px);
+    --pad-outer: clamp(42px, 5.334cqw, 64px);
+    --pad-inner: clamp(32px, 3.333vw, 48px);
+    --pad-inner: clamp(32px, 4cqw, 48px);
     --card-h: min(27.25vw, 392px);
     --card-h: min(32.7cqw, 392px);
-    --radius: clamp(18px, 2.084vw, 30px);
-    --radius: clamp(18px, 2.5cqw, 30px);
+    --radius: clamp(20px, 2.084vw, 30px);
+    --radius: clamp(20px, 2.5cqw, 30px);
 
-    --gap-xs: clamp(8px, 0.972vw, 14px);
-    --gap-xs: clamp(8px, 1.167cqw, 14px);
-    --gap-sm: clamp(10px, 1.112vw, 16px);
-    --gap-sm: clamp(10px, 1.334cqw, 16px);
-    --gap-md: clamp(14px, 1.528vw, 22px);
-    --gap-md: clamp(14px, 1.834cqw, 22px);
-    --gap-lg: clamp(16px, 1.945vw, 28px);
-    --gap-lg: clamp(16px, 2.334cqw, 28px);
-    --gap-discount: clamp(18px, 3.75vw, 54px);
-    --gap-discount: clamp(18px, 4.5cqw, 54px);
-    --gap-launch: clamp(14px, 1.667vw, 24px);
-    --gap-launch: clamp(14px, 2cqw, 24px);
-    --gap-features: clamp(28px, 3.333vw, 48px);
-    --gap-features: clamp(28px, 4cqw, 48px);
-    --gap-heading: clamp(20px, 2.784vw, 40px);
-    --gap-heading: clamp(20px, 3.34cqw, 40px);
+    --gap-xs: clamp(9px, 0.972vw, 14px);
+    --gap-xs: clamp(9px, 1.167cqw, 14px);
+    --gap-sm: clamp(11px, 1.112vw, 16px);
+    --gap-sm: clamp(11px, 1.334cqw, 16px);
+    --gap-md: clamp(15px, 1.528vw, 22px);
+    --gap-md: clamp(15px, 1.834cqw, 22px);
+    --gap-lg: clamp(19px, 1.945vw, 28px);
+    --gap-lg: clamp(19px, 2.334cqw, 28px);
+    --gap-discount: clamp(36px, 3.75vw, 54px);
+    --gap-discount: clamp(36px, 4.5cqw, 54px);
+    --gap-launch: clamp(16px, 1.667vw, 24px);
+    --gap-launch: clamp(16px, 2cqw, 24px);
+    --gap-features: clamp(32px, 3.333vw, 48px);
+    --gap-features: clamp(32px, 4cqw, 48px);
+    --gap-heading: clamp(27px, 2.784vw, 40px);
+    --gap-heading: clamp(27px, 3.34cqw, 40px);
 
-    --fs-heading: clamp(20px, 3.264vw, 47px);
-    --fs-heading: clamp(20px, 3.917cqw, 47px);
-    --ls-heading: clamp(0.6px, 0.104vw, 1.5px);
-    --ls-heading: clamp(0.6px, 0.125cqw, 1.5px);
-    --fs-feature-head: clamp(13px, 1.154vw, 16.62px);
-    --fs-feature-head: clamp(13px, 1.385cqw, 16.62px);
-    --fs-feature-body: clamp(12px, 0.975vw, 14px);
-    --fs-feature-body: clamp(12px, 1.17cqw, 14px);
-    --size-icon: clamp(44px, 4.1vw, 59px);
-    --size-icon: clamp(44px, 4.92cqw, 59px);
-    --gap-feature: clamp(12px, 1.183vw, 17px);
-    --gap-feature: clamp(12px, 1.42cqw, 17px);
-    --pad-feature: clamp(14px, 1.945vw, 28px);
-    --pad-feature: clamp(14px, 2.334cqw, 28px);
-    --pad-copy: clamp(5px, 0.667vw, 9.55px);
-    --pad-copy: clamp(5px, 0.8cqw, 9.55px);
+    --fs-heading: clamp(31px, 3.264vw, 47px);
+    --fs-heading: clamp(31px, 3.917cqw, 47px);
+    --ls-heading: clamp(1px, 0.104vw, 1.5px);
+    --ls-heading: clamp(1px, 0.125cqw, 1.5px);
+    --fs-feature-head: clamp(11px, 1.154vw, 16.62px);
+    --fs-feature-head: clamp(11px, 1.385cqw, 16.62px);
+    --fs-feature-body: clamp(10px, 0.975vw, 14px);
+    --fs-feature-body: clamp(10px, 1.17cqw, 14px);
+    --size-icon: clamp(39px, 4.1vw, 59px);
+    --size-icon: clamp(39px, 4.92cqw, 59px);
+    --gap-feature: clamp(11px, 1.183vw, 17px);
+    --gap-feature: clamp(11px, 1.42cqw, 17px);
+    --pad-feature: clamp(19px, 1.945vw, 28px);
+    --pad-feature: clamp(19px, 2.334cqw, 28px);
+    --pad-feature-y: clamp(12px, 1.25vw, 18px);
+    --pad-feature-y: clamp(12px, 1.5cqw, 18px);
+    --pad-copy: clamp(6px, 0.667vw, 9.55px);
+    --pad-copy: clamp(6px, 0.8cqw, 9.55px);
 
-    --fs-small: clamp(10px, 0.833vw, 12px);
-    --fs-small: clamp(10px, 1cqw, 12px);
-    --ls-eyebrow: clamp(1.4px, 0.174vw, 2.5px);
-    --ls-eyebrow: clamp(1.4px, 0.209cqw, 2.5px);
-    --fs-number: clamp(60px, 7.222vw, 104px);
-    --fs-number: clamp(60px, 8.667cqw, 104px);
-    --fs-percent: clamp(24px, 2.639vw, 38px);
-    --fs-percent: clamp(24px, 3.167cqw, 38px);
-    --fs-off: clamp(22px, 2.5vw, 36px);
-    --fs-off: clamp(22px, 3cqw, 36px);
-    --fs-title: clamp(15px, 1.528vw, 22px);
-    --fs-title: clamp(15px, 1.834cqw, 22px);
-    --w-badge: clamp(186px, 16.806vw, 242px);
-    --w-badge: clamp(186px, 20.167cqw, 242px);
-    --h-badge: clamp(40px, 3.333vw, 48px);
-    --h-badge: clamp(40px, 4cqw, 48px);
-    --ls-badge: clamp(1px, 0.112vw, 1.6px);
-    --ls-badge: clamp(1px, 0.134cqw, 1.6px);
-    --fs-launching: clamp(12px, 1.042vw, 15px);
-    --fs-launching: clamp(12px, 1.25cqw, 15px);
-    --ls-launching: clamp(1.6px, 0.209vw, 3px);
-    --ls-launching: clamp(1.6px, 0.25cqw, 3px);
-    --fs-month: clamp(28px, 3.612vw, 52px);
-    --fs-month: clamp(28px, 4.334cqw, 52px);
-    --ls-month: clamp(1.5px, 0.348vw, 5px);
-    --ls-month: clamp(1.5px, 0.417cqw, 5px);
-    --h-email: clamp(44px, 3.612vw, 52px);
-    --h-email: clamp(44px, 4.334cqw, 52px);
-    --fs-email: clamp(13px, 1.042vw, 15px);
-    --fs-email: clamp(13px, 1.25cqw, 15px);
-    --h-button: clamp(46px, 3.75vw, 54px);
-    --h-button: clamp(46px, 4.5cqw, 54px);
-    --fs-button: clamp(10px, 0.972vw, 14px);
-    --fs-button: clamp(10px, 1.167cqw, 14px);
-    --w-arrow: clamp(38px, 3.473vw, 50px);
-    --w-arrow: clamp(38px, 4.167cqw, 50px);
+    --fs-small: clamp(9px, 0.833vw, 12px);
+    --fs-small: clamp(9px, 1cqw, 12px);
+    --ls-eyebrow: clamp(1.7px, 0.174vw, 2.5px);
+    --ls-eyebrow: clamp(1.7px, 0.209cqw, 2.5px);
+    --fs-number: clamp(69px, 7.222vw, 104px);
+    --fs-number: clamp(69px, 8.667cqw, 104px);
+    --fs-percent: clamp(25px, 2.639vw, 38px);
+    --fs-percent: clamp(25px, 3.167cqw, 38px);
+    --fs-off: clamp(24px, 2.5vw, 36px);
+    --fs-off: clamp(24px, 3cqw, 36px);
+    --gap-discount-side: clamp(7px, 0.695vw, 10px);
+    --gap-discount-side: clamp(7px, 0.834cqw, 10px);
+    --fs-title: clamp(14.5px, 1.528vw, 22px);
+    --fs-title: clamp(14.5px, 1.834cqw, 22px);
+    --w-badge: clamp(161px, 16.806vw, 242px);
+    --w-badge: clamp(161px, 20.167cqw, 242px);
+    --h-badge: clamp(32px, 3.333vw, 48px);
+    --h-badge: clamp(32px, 4cqw, 48px);
+    --ls-badge: clamp(1.1px, 0.112vw, 1.6px);
+    --ls-badge: clamp(1.1px, 0.134cqw, 1.6px);
+    --fs-launching: clamp(10px, 1.042vw, 15px);
+    --fs-launching: clamp(10px, 1.25cqw, 15px);
+    --ls-launching: clamp(2px, 0.209vw, 3px);
+    --ls-launching: clamp(2px, 0.25cqw, 3px);
+    --fs-month: clamp(34px, 3.612vw, 52px);
+    --fs-month: clamp(34px, 4.334cqw, 52px);
+    --ls-month: clamp(3.3px, 0.348vw, 5px);
+    --ls-month: clamp(3.3px, 0.417cqw, 5px);
+    --h-email: clamp(35px, 3.612vw, 52px);
+    --h-email: clamp(35px, 4.334cqw, 52px);
+    --fs-email: clamp(10px, 1.042vw, 15px);
+    --fs-email: clamp(10px, 1.25cqw, 15px);
+    --pad-email: clamp(12px, 1.25vw, 18px);
+    --pad-email: clamp(12px, 1.5cqw, 18px);
+    --h-button: clamp(36px, 3.75vw, 54px);
+    --h-button: clamp(36px, 4.5cqw, 54px);
+    --fs-button: clamp(9.3px, 0.972vw, 14px);
+    --fs-button: clamp(9.3px, 1.167cqw, 14px);
+    --w-arrow: clamp(33px, 3.473vw, 50px);
+    --w-arrow: clamp(33px, 4.167cqw, 50px);
+    --h-arrow: clamp(23px, 2.362vw, 34px);
+    --h-arrow: clamp(23px, 2.834cqw, 34px);
+    --fs-arrow: clamp(15px, 1.528vw, 22px);
+    --fs-arrow: clamp(15px, 1.834cqw, 22px);
+    --size-lock: clamp(10px, 1.042vw, 15px);
+    --size-lock: clamp(10px, 1.25cqw, 15px);
+    --gap-lock: clamp(7px, 0.695vw, 10px);
+    --gap-lock: clamp(7px, 0.834cqw, 10px);
   }
 
   /* Feature row occupies the same full 1200px inner width as the hero content. */
@@ -388,7 +406,7 @@
     gap: var(--gap-feature);
     min-width: 0;
     margin: 0;
-    padding: 18px var(--pad-feature) 22px;
+    padding: var(--pad-feature-y) var(--pad-feature) calc(var(--pad-feature-y) * 1.222);
     border-left: 1.11px solid rgba(31, 35, 38, 0.17);
   }
 
@@ -575,7 +593,7 @@
   #PrimalPrelaunch-{{ section.id }} .primal-launch__discount-side {
     display: flex;
     flex-direction: column;
-    margin: 0.04em 0 0 clamp(6px, 0.834cqw, 10px);
+    margin: 0.04em 0 0 var(--gap-discount-side);
     font-family: Montserrat, Arial, sans-serif;
     font-weight: 900;
   }
@@ -664,7 +682,7 @@
     width: 100%;
     height: var(--h-email);
     margin: 0;
-    padding: 0 clamp(14px, 1.5cqw, 18px);
+    padding: 0 var(--pad-email);
     border: 0;
     border-radius: 10px;
     outline: 0;
@@ -705,19 +723,19 @@
 
   #PrimalPrelaunch-{{ section.id }} .primal-launch__button > span:first-child {
     display: grid;
-    padding-inline: clamp(8px, 1.5cqw, 18px) 8px;
+    padding-inline: var(--pad-email) 8px;
     place-items: center;
     text-align: center;
   }
 
   #PrimalPrelaunch-{{ section.id }} .primal-launch__arrow {
     display: grid;
-    height: 34px;
+    height: var(--h-arrow);
     margin: auto 0;
     place-items: center;
     border-left: 1px solid rgba(17, 20, 22, 0.28);
     font-family: Inter, Arial, sans-serif;
-    font-size: clamp(17px, 1.834cqw, 22px);
+    font-size: var(--fs-arrow);
     font-weight: 400;
   }
 
@@ -730,16 +748,16 @@
     width: 100%;
     margin: var(--gap-md) 0 0;
     align-items: flex-start;
-    gap: clamp(7px, 0.834cqw, 10px);
+    gap: var(--gap-lock);
     color: #c7cbce;
   }
 
   #PrimalPrelaunch-{{ section.id }} .primal-launch__note svg,
   #PrimalPrelaunch-{{ section.id }} .primal-launch__lock-img {
-    width: 15px;
-    height: 15px;
+    width: var(--size-lock);
+    height: var(--size-lock);
     margin-top: 2px;
-    flex: 0 0 15px;
+    flex: 0 0 var(--size-lock);
   }
 
   #PrimalPrelaunch-{{ section.id }} .primal-launch__note svg {
@@ -778,9 +796,10 @@
     }
   }
 
-  /* Phone: single column, everything left aligned. Tablets (750px and up) keep
-     the two-column card — it still holds its Figma proportions there. */
-  @media screen and (max-width: 749px) {
+  /* The two-column card stays an exact scaled copy of the Figma frame down to
+     900px. Below that the design would have to distort to stay in two columns,
+     so it becomes a single left aligned column instead. */
+  @media screen and (max-width: 899px) {
     #PrimalPrelaunch-{{ section.id }} .primal-launch__features,
     #PrimalPrelaunch-{{ section.id }} .primal-launch__heading,
     #PrimalPrelaunch-{{ section.id }} .primal-launch__card {
@@ -804,6 +823,9 @@
       --fs-feature-head: 14px;
       --fs-feature-body: 12.5px;
       --size-icon: 42px;
+      --gap-feature: 14px;
+      --pad-feature: 0px;
+      --pad-feature-y: 14px;
       --pad-copy: 3px;
 
       --fs-small: 11px;
@@ -811,18 +833,25 @@
       --fs-number: clamp(56px, 16vw, 76px);
       --fs-percent: clamp(24px, 6.4vw, 30px);
       --fs-off: clamp(22px, 6vw, 28px);
+      --gap-discount-side: 6px;
       --fs-title: clamp(15px, 4.4vw, 18px);
       --w-badge: min(100%, 242px);
       --h-badge: 44px;
+      --ls-badge: 1.2px;
       --fs-launching: 12.5px;
       --ls-launching: 2px;
       --fs-month: clamp(28px, 8.4vw, 38px);
       --ls-month: 2px;
       --h-email: 46px;
       --fs-email: 14px;
+      --pad-email: 14px;
       --h-button: 48px;
       --fs-button: clamp(10px, 3vw, 12px);
       --w-arrow: 42px;
+      --h-arrow: 30px;
+      --fs-arrow: 18px;
+      --size-lock: 14px;
+      --gap-lock: 8px;
     }
 
     #PrimalPrelaunch-{{ section.id }} {
@@ -840,8 +869,7 @@
     #PrimalPrelaunch-{{ section.id }} .primal-launch__feature,
     #PrimalPrelaunch-{{ section.id }} .primal-launch__feature:first-child,
     #PrimalPrelaunch-{{ section.id }} .primal-launch__feature:last-child {
-      gap: 14px;
-      padding: 14px 0;
+      padding: var(--pad-feature-y) 0;
       border: none;
       border-bottom: 1px solid rgba(31, 35, 38, 0.16);
     }
@@ -885,11 +913,6 @@
 
     #PrimalPrelaunch-{{ section.id }} .primal-launch__badge {
       margin-bottom: 0;
-    }
-
-    #PrimalPrelaunch-{{ section.id }} .primal-launch__arrow {
-      height: 30px;
-      font-size: 18px;
     }
   }
 
