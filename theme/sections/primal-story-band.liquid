@@ -1,0 +1,96 @@
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
+
+<section
+  id="PrimalStory-{{ section.id }}"
+  class="primal-story"
+  style="
+    --bg: {{ section.settings.background_color }};
+    --ink: {{ section.settings.text_color }};
+    --bar: {{ section.settings.bar_color }};
+  "
+>
+  <div class="primal-story__frame">
+
+    <div class="primal-story__media">
+      {% if section.settings.image != blank %}
+        {{
+          section.settings.image
+          | image_url: width: 2400
+          | image_tag:
+            class: 'primal-story__img',
+            widths: '900, 1200, 1600, 2000, 2400',
+            sizes: '84vw',
+            loading: 'lazy',
+            alt: section.settings.image.alt
+        }}
+      {% else %}
+        <div class="primal-story__placeholder">{{ 'lifestyle-1' | placeholder_svg_tag }}</div>
+      {% endif %}
+      <span class="primal-story__fade" aria-hidden="true"></span>
+    </div>
+
+    <div class="primal-story__copy">
+      {% if section.settings.heading != blank %}
+        <h2 class="primal-story__heading">{{ section.settings.heading | escape }}</h2>
+      {% endif %}
+      {% if section.settings.body != blank %}
+        <div class="primal-story__body">{{ section.settings.body }}</div>
+      {% endif %}
+    </div>
+
+  </div>
+</section>
+
+{%- assign sel = '#PrimalStory-' | append: section.id -%}
+
+{% style %}
+#shopify-section-{{ section.id }}{display: block;width: 100%;max-width: none;margin: 0;padding: 0;}
+{{ sel }},{{ sel }} *{box-sizing: border-box;}
+{{ sel }}{width: 100%;margin: 0;padding: 0;background: var(--bg);color: var(--ink);}
+{{ sel }} h2,{{ sel }} p{margin: 0;}
+/* The frame is the 1441 x 500 Figma band and the query container every value
+   below is measured from, so 1cqw = 1% of the band width. */
+{{ sel }} .primal-story__frame{position: relative;container-type: inline-size;width: 100%;height: min(34.7cqw, 500px);min-height: 320px;overflow: hidden;
+  --media-left: 16.34cqw;--copy-left: clamp(20px, 7.498cqw, 108px);--copy-top: 9.968cqw;--copy-w: clamp(280px, 44.99cqw, 648.3px);--copy-min-h: 14.89cqw;
+  --bar-w: clamp(6px, 0.625cqw, 9px);--bar-gap: clamp(16px, 1.666cqw, 24px);
+  --fs-heading: clamp(27px, 3.053cqw, 44px);--fs-body: clamp(15px, 1.388cqw, 20px);--gap-copy: clamp(14px, 1.319cqw, 19px);--body-w: clamp(240px, 32.6cqw, 470px);}
+/* Figma: the photo starts at x=235.46 and runs to the right edge, full bleed. */
+{{ sel }} .primal-story__media{position: absolute;top: 0;right: 0;bottom: 0;left: var(--media-left);overflow: hidden;}
+{{ sel }} .primal-story__img,{{ sel }} .primal-story__placeholder svg{display: block;width: 100%;height: 100%;object-fit: cover;object-position: center;}
+{{ sel }} .primal-story__placeholder{width: 100%;height: 100%;background: #e6e2dc;}
+/* Carries the band colour across the left of the photo so the copy stays readable. */
+{{ sel }} .primal-story__fade{position: absolute;top: 0;bottom: 0;left: 0;width: 46%;background: linear-gradient(90deg, var(--bg) 0%, var(--bg) 26%, transparent 100%);pointer-events: none;}
+/* Figma: copy block 648.3 x 214.58 at x=108.05 y=143.63 with a 9px rule. */
+{{ sel }} .primal-story__copy{position: absolute;top: var(--copy-top);left: var(--copy-left);z-index: 1;display: flex;flex-direction: column;justify-content: center;width: var(--copy-w);max-width: calc(100% - var(--copy-left) * 2);min-height: var(--copy-min-h);padding-left: var(--bar-gap);border-left: var(--bar-w) solid var(--bar);}
+{{ sel }} .primal-story__heading{color: var(--ink);font-family: Montserrat, Arial, sans-serif;font-size: var(--fs-heading);font-weight: 800;line-height: 1.15;letter-spacing: -0.5px;}
+{{ sel }} .primal-story__body{max-width: var(--body-w);margin-top: var(--gap-copy);color: var(--ink);font-family: Inter, Arial, sans-serif;font-size: var(--fs-body);font-weight: 400;line-height: 1.75;}
+{{ sel }} .primal-story__body p + p{margin-top: 0.75em;}
+/* Below 900px the copy stops sitting over the photo and the band stacks. */
+@media screen and (max-width: 899px) {
+  {{ sel }} .primal-story__frame{height: auto;min-height: 0;display: flex;flex-direction: column-reverse;
+    --fs-heading: clamp(24px, 6vw, 34px);--fs-body: clamp(15px, 4vw, 17px);--gap-copy: 14px;}
+  {{ sel }} .primal-story__media{position: relative;left: 0;height: auto;aspect-ratio: 16 / 9;}
+  {{ sel }} .primal-story__fade{display: none;}
+  {{ sel }} .primal-story__copy{position: relative;top: auto;left: auto;width: auto;max-width: none;min-height: 0;margin-inline: clamp(16px, 5vw, 28px);padding-left: clamp(14px, 4vw, 20px);}
+  {{ sel }} .primal-story__frame{padding: clamp(28px, 7vw, 40px) 0 0;}
+  {{ sel }} .primal-story__copy{margin-bottom: clamp(28px, 7vw, 40px);}
+  {{ sel }} .primal-story__body{max-width: none;}
+}
+{% endstyle %}
+
+{% schema %}
+{ "name": "Primal story band", "tag": "section", "class": "section-primal-story", "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "That's Primal Win." },
+    { "type": "richtext", "id": "body", "label": "Body", "default": "<p>Built by people who wanted a product that actually works, for people who hold themselves to a higher standard.</p>" },
+    { "type": "image_picker", "id": "image", "label": "Image" },
+    { "type": "color", "id": "background_color", "label": "Background color", "default": "#FFFFFF" },
+    { "type": "color", "id": "text_color", "label": "Text color", "default": "#1F2326" },
+    { "type": "color", "id": "bar_color", "label": "Rule color", "default": "#C89A3D" }
+  ],
+  "presets": [
+    { "name": "Primal story band" }
+  ]
+}
+{% endschema %}
