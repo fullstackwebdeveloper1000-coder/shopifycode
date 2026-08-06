@@ -1,0 +1,101 @@
+{%- comment -%}
+  PRIMAL WIN — Global alignment (ONE-TIME setup)
+
+  Paste this file: snippets/pw-align-global.liquid
+
+  Then in layout/theme.liquid, inside <head> (before </head>), add:
+    {% render 'pw-align-global' %}
+
+  Tokens:
+    --pw-frame / --pw-max  = 1440px (outer section band)
+    --pw-content           = 1280px (text / cards column)
+    --pw-inner             = 1280 + gutters (pw-container max)
+
+  Usage in any section HTML:
+    <div class="pw-container">...</div>          → 1280 content + gutters
+    <div class="pw-frame">...</div>              → 1440 frame
+    <div class="pw-content">...</div>            → 1280 centered column
+
+  In section schema add:
+    "class": "pw-section"
+
+  New sections only need pw-container wrapper — no need to repeat
+  align-vars + dawn reset in every section (optional to keep for isolation).
+{%- endcomment -%}
+<style id="pw-align-global">
+  :root {
+    --pw-frame: 1440px;
+    --pw-max: 1440px;
+    --pw-content: 1280px;
+    --pw-gutter: 48px;
+    --pw-inner: calc(var(--pw-content) + 2 * var(--pw-gutter));
+  }
+
+  @media screen and (max-width: 1180px) {
+    :root {
+      --pw-gutter: 34px;
+    }
+  }
+
+  @media screen and (max-width: 860px) {
+    :root {
+      --pw-gutter: 22px;
+    }
+  }
+
+  @media screen and (max-width: 560px) {
+    :root {
+      --pw-gutter: 20px;
+    }
+  }
+
+  /* Dawn reset — only Primal Win sections with pw-section class */
+  .shopify-section.pw-section {
+    display: block !important;
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .shopify-section.pw-section > .page-width,
+  .shopify-section.pw-section .page-width {
+    width: 100% !important;
+    max-width: var(--pw-inner) !important;
+    margin-inline: auto !important;
+    padding-inline: var(--pw-gutter) !important;
+    box-sizing: border-box;
+  }
+
+  /* Shared layout utilities */
+  .pw-container,
+  .pw-container.pw-sci-car__container {
+    width: 100%;
+    max-width: var(--pw-inner);
+    margin-inline: auto;
+    padding-inline: var(--pw-gutter);
+    box-sizing: border-box;
+  }
+
+  .pw-frame {
+    width: 100%;
+    max-width: var(--pw-frame);
+    margin-inline: auto;
+    padding-inline: var(--pw-gutter);
+    box-sizing: border-box;
+  }
+
+  .pw-content {
+    width: 100%;
+    max-width: var(--pw-content);
+    margin-inline: auto;
+    box-sizing: border-box;
+  }
+
+  .pw-section-head {
+    width: 100%;
+    max-width: var(--pw-content);
+    margin-inline: auto;
+    text-align: center;
+  }
+</style>

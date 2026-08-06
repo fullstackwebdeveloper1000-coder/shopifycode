@@ -1,0 +1,1297 @@
+{% comment %}
+  Primal pre-launch — aligned to the exact 1440 hero content grid.
+  Desktop inner bounds: x=120 to x=1320; responsive gutters match hero.
+  Figma update: timer removed → LAUNCHING IN + November 2026;
+  heading added above card: Developed By Scientists. Built For Life.
+{% endcomment %}
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet">
+
+<section
+  id="PrimalPrelaunch-{{ section.id }}"
+  class="primal-launch"
+  style="
+    --background: {{ section.settings.background_color_exact }};
+    --card: {{ section.settings.card_color_exact }};
+    --gold: {{ section.settings.gold_color_exact }};
+    --dark: #1f2326;
+    --stone: #f7f5f1;
+    --slate: #737a80;
+  "
+>
+  <div class="pw-container primal-launch__container">
+
+    <div class="primal-launch__features">
+
+      <div class="primal-launch__feature">
+        <div class="primal-launch__icon">
+          {% if section.settings.icon_ingredients != blank %}
+            {{
+              section.settings.icon_ingredients
+              | image_url: width: 128
+              | image_tag:
+                class: 'primal-launch__icon-img',
+                widths: '64, 128',
+                sizes: '59px',
+                loading: 'lazy',
+                alt: ''
+            }}
+          {% else %}
+            <svg viewBox="0 0 64 64" fill="none" aria-hidden="true" focusable="false">
+              <circle cx="32" cy="32" r="30"/>
+              <path d="M19 43C22 29 32 20 46 18C44 32 35 42 19 43Z"/>
+              <path d="M20 42C27 34 34 28 43 22"/>
+              <path d="M30 32L25 28M36 27L34 22"/>
+            </svg>
+          {% endif %}
+        </div>
+        <div class="primal-launch__copy">
+          <strong>40 ACTIVE<br>INGREDIENTS</strong>
+          <p>Powerful blends for energy, focus<br> and vitality.</p>
+        </div>
+      </div>
+
+      <div class="primal-launch__feature">
+        <div class="primal-launch__icon">
+          {% if section.settings.icon_uk != blank %}
+            {{
+              section.settings.icon_uk
+              | image_url: width: 128
+              | image_tag:
+                class: 'primal-launch__icon-img',
+                widths: '64, 128',
+                sizes: '59px',
+                loading: 'lazy',
+                alt: ''
+            }}
+          {% else %}
+            <svg viewBox="0 0 64 64" fill="none" aria-hidden="true" focusable="false">
+              <circle cx="32" cy="32" r="30"/>
+              <rect x="18" y="20" width="28" height="24"/>
+              <path d="M18 20L46 44M46 20L18 44M32 20V44M18 32H46"/>
+            </svg>
+          {% endif %}
+        </div>
+        <div class="primal-launch__copy">
+          <strong>UK<br>MANUFACTURED</strong>
+          <p>Made in the UK to the highest<br> standards.</p>
+        </div>
+      </div>
+
+      <div class="primal-launch__feature">
+        <div class="primal-launch__icon">
+          {% if section.settings.icon_transparency != blank %}
+            {{
+              section.settings.icon_transparency
+              | image_url: width: 128
+              | image_tag:
+                class: 'primal-launch__icon-img',
+                widths: '64, 128',
+                sizes: '59px',
+                loading: 'lazy',
+                alt: ''
+            }}
+          {% else %}
+            <svg viewBox="0 0 64 64" fill="none" aria-hidden="true" focusable="false">
+              <circle cx="32" cy="32" r="30"/>
+              <path d="M32 15L44 20V31C44 39 39 45 32 49C25 45 20 39 20 31V20L32 15Z"/>
+              <path d="M26 32L30 36L39 27"/>
+            </svg>
+          {% endif %}
+        </div>
+        <div class="primal-launch__copy">
+          <strong>FULL LABEL<br>TRANSPARENCY</strong>
+          <p>Honest ingredients. Nothing to<br> hide.</p>
+        </div>
+      </div>
+
+    </div>
+
+    {% if section.settings.scientists_heading != blank or section.settings.scientists_heading_gold != blank %}
+      <h2 class="primal-launch__heading">
+        {%- if section.settings.scientists_heading != blank -%}
+          <span class="primal-launch__heading-dark">{{ section.settings.scientists_heading | escape }}</span>
+        {%- endif -%}
+        {%- if section.settings.scientists_heading != blank and section.settings.scientists_heading_gold != blank -%}
+          <span class="primal-launch__heading-gap" aria-hidden="true">&nbsp;</span>
+        {%- endif -%}
+        {%- if section.settings.scientists_heading_gold != blank -%}
+          <span class="primal-launch__heading-gold">{{ section.settings.scientists_heading_gold | escape }}</span>
+        {%- endif -%}
+      </h2>
+    {% endif %}
+
+    <div class="primal-launch__card">
+
+      <div class="primal-launch__offer">
+        <p class="primal-launch__eyebrow">
+          LIMITED TIME PRE-LAUNCH OFFER
+        </p>
+
+        <div class="primal-launch__discount">
+          <span class="primal-launch__number">30</span>
+          <span class="primal-launch__discount-side">
+            <span class="primal-launch__percent">%</span>
+            <span class="primal-launch__off">OFF</span>
+          </span>
+        </div>
+
+        <h3 class="primal-launch__offer-title">
+          YOUR EXCLUSIVE<br>
+          LAUNCH DISCOUNT CODE
+        </h3>
+
+        <div class="primal-launch__badge">
+          BE THE FIRST TO WIN.
+        </div>
+      </div>
+
+      <div class="primal-launch__signup">
+        <div class="primal-launch__launch-block">
+          <p class="primal-launch__launching">LAUNCHING IN</p>
+          <p class="primal-launch__month">{{ section.settings.launch_month_label | escape }}</p>
+        </div>
+
+        {% form 'customer', class: 'primal-launch__form' %}
+          <input
+            type="hidden"
+            name="contact[tags]"
+            value="newsletter,primal-win-prelaunch,30-percent-discount"
+          >
+
+          <label class="primal-launch__hidden" for="PrimalEmail-{{ section.id }}">
+            Email address
+          </label>
+
+          <input
+            id="PrimalEmail-{{ section.id }}"
+            class="primal-launch__email"
+            type="email"
+            name="contact[email]"
+            placeholder="Enter your email address"
+            autocomplete="email"
+            required
+          >
+
+          <button class="primal-launch__button" type="submit">
+            <span>CLAIM MY 30% LAUNCH DISCOUNT</span>
+            <span class="primal-launch__arrow">→</span>
+          </button>
+
+          {% if form.posted_successfully? %}
+            <p class="primal-launch__success">
+              Thank you. Your registration is confirmed.
+            </p>
+          {% endif %}
+
+          {% if form.errors %}
+            <div class="primal-launch__error">
+              {{ form.errors | default_errors }}
+            </div>
+          {% endif %}
+        {% endform %}
+
+        <div class="primal-launch__note">
+          {% if section.settings.icon_lock != blank %}
+            {{
+              section.settings.icon_lock
+              | image_url: width: 32
+              | image_tag:
+                class: 'primal-launch__icon-img primal-launch__lock-img',
+                widths: '15, 30',
+                sizes: '15px',
+                loading: 'lazy',
+                alt: ''
+            }}
+          {% else %}
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
+              <rect x="5" y="10" width="14" height="11" rx="2"/>
+              <path d="M8 10V7A4 4 0 0116 7V10"/>
+            </svg>
+          {% endif %}
+
+          <p>
+            Register now and we will email you your exclusive 30%<br>
+            discount code the moment Primal Win goes live. No spam.<br>
+            Unsubscribe any time.
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+{% style %}
+  #PrimalPrelaunch-{{ section.id }} {
+    {% render 'pw-align-vars' %}
+  }
+
+  #shopify-section-{{ section.id }} {
+    display: block !important;
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  #PrimalPrelaunch-{{ section.id }},
+  #PrimalPrelaunch-{{ section.id }} * {
+    box-sizing: border-box;
+  }
+
+  #PrimalPrelaunch-{{ section.id }} {
+    width: 100%;
+    margin: 0;
+    padding: 48px 0 55px;
+    overflow: hidden;
+    background: var(--background);
+    color: var(--dark);
+  }
+
+  #PrimalPrelaunch-{{ section.id }} p,
+  #PrimalPrelaunch-{{ section.id }} h2,
+  #PrimalPrelaunch-{{ section.id }} h3 {
+    margin: 0;
+  }
+
+  #PrimalPrelaunch-{{ section.id }} .primal-launch__hidden {
+    position: absolute !important;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+  }
+
+  /* Exact alignment with the 1440px hero canvas:
+     hero content starts at x=120 and ends at x=1320.
+     Below 1440px the gutter scales proportionally, exactly like the hero canvas. */
+  #PrimalPrelaunch-{{ section.id }} .pw-container.primal-launch__container {
+    position: relative;
+    container-type: inline-size;
+    width: min(100%, 1440px);
+    max-width: 1440px;
+    margin-inline: auto;
+    padding-inline: min(8.333333vw, 120px);
+  }
+
+  /* Feature row occupies the same full 1200px inner width as the hero content. */
+  #PrimalPrelaunch-{{ section.id }} .primal-launch__features {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    align-items: stretch;
+    width: 100%;
+    max-width: none;
+    min-height: 110px;
+    height: auto;
+    margin: 0 0 48px;
+    padding: 0;
+  }
+
+  #PrimalPrelaunch-{{ section.id }} .primal-launch__feature {
+    display: flex;
+    align-items: flex-start;
+    gap: 17px;
+    width: auto;
+    max-width: none;
+    min-width: 0;
+    min-height: 110px;
+    height: auto;
+    margin: 0;
+    padding: 18px 28px 22px;
+    border: none;
+    border-left: 1.11px solid rgba(31, 35, 38, 0.17);
+  }
+
+  #PrimalPrelaunch-{{ section.id }} .primal-launch__feature:first-child {
+    padding-left: 0;
+    border-left: none;
+  }
+
+  #PrimalPrelaunch-{{ section.id }} .primal-launch__feature:last-child {
+    padding-right: 0;
+  }
+
+  #PrimalPrelaunch-{{ section.id }} .primal-launch__icon {
+    width: 59px;
+    height: 59px;
+    flex: 0 0 59px;
+    margin: 0;
+    line-height: 0;
+  }
+
+  /* Heading (2×19.95 = 39.9) vertically centers with 59px icon — body hangs below */
+  #PrimalPrelaunch-{{ section.id }} .primal-launch__copy {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    min-width: 0;
+    padding-top: 9.55px;
+  }
+
+  /* Figma: one line at desktop — Montserrat Bold 49 / lh 100% / tracking 1.5px */
+  #PrimalPrelaunch-{{ section.id }} .primal-launch__heading {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: baseline;
+    width: 100%;
+    max-width: 1167px;
+    min-height: 60px;
+    margin: 0 auto 48px;
+    color: var(--dark);
+    font-family: Montserrat, Arial, sans-serif;
+    font-size: 49px;
+    font-weight: 700;
+    font-style: normal;
+    line-height: 1;
+    letter-spacing: 1.5px;
+    text-align: center;
+    text-transform: uppercase;
+    white-space: normal;
+    column-gap: 0.28em;
+    row-gap: 0.12em;
+  }
+
+  #PrimalPrelaunch-{{ section.id }} .primal-launch__heading-dark,
+  #PrimalPrelaunch-{{ section.id }} .primal-launch__heading-gold {
+    display: inline;
+    white-space: nowrap;
+  }
+
+  #PrimalPrelaunch-{{ section.id }} .primal-launch__heading-gap {
+    display: none;
+  }
+
+  #PrimalPrelaunch-{{ section.id }} .primal-launch__heading-dark {
+    color: var(--dark);
+  }
+
+  #PrimalPrelaunch-{{ section.id }} .primal-launch__heading-gold {
+    color: var(--gold);
+  }
+
+  @media screen and (max-width: 1240px) and (min-width: 990px) {
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__feature {
+      padding-inline: clamp(16px, 2.2vw, 28px);
+    }
+
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__feature:first-child {
+      padding-left: 0;
+    }
+
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__feature:last-child {
+      padding-right: 0;
+    }
+  }
+
+  #PrimalPrelaunch-{{ section.id }} .primal-launch__icon svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+    stroke: var(--dark);
+    stroke-width: 1.6;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  #PrimalPrelaunch-{{ section.id }} .primal-launch__icon-img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  #PrimalPrelaunch-{{ section.id }} .primal-launch__feature strong {
+    display: block;
+    color: var(--dark);
+    font-family: 'Montserrat', sans-serif !important;
+    font-weight: 700 !important;
+    font-style: normal;
+    font-size: 16.62px !important;
+    line-height: 19.95px !important;
+    letter-spacing: 0.44px !important;
+    text-transform: uppercase;
+    vertical-align: middle;
+  }
+
+  #PrimalPrelaunch-{{ section.id }} .primal-launch__feature p {
+    margin-top: 8px;
+    color: #3d4246;
+    font-family: Inter, Arial, sans-serif;
+    font-size: clamp(12px, 1.25cqw, 14px);
+    line-height: 1.5;
+  }
+
+  /*
+    Figma card: 1199 × 392, radius 30.
+    Equal 50/50 columns. Same top pad so LIMITED TIME ↔ LAUNCHING IN align.
+    Both columns left-aligned (not centered).
+  */
+  #PrimalPrelaunch-{{ section.id }} .primal-launch__card {
+    --card-pad-y: 52px;
+    --card-pad-outer: 64px;
+    --card-pad-inner: 48px;
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: 100%;
+    max-width: 1199px;
+    height: 392px;
+    margin-inline: auto;
+    overflow: hidden;
+    border: 1px solid rgba(200, 154, 61, 0.4);
+    border-radius: 30px;
+    background:
+      radial-gradient(120% 140% at 18% 20%, rgba(45, 70, 58, 0.55) 0%, transparent 55%),
+      linear-gradient(100deg, #192924 0%, #1b2726 48%, var(--card) 100%);
+  }
+
+  #PrimalPrelaunch-{{ section.id }} .primal-launch__card::after {
+    content: "";
+    position: absolute;
+    top: 52px;
+    bottom: 52px;
+    left: 50%;
+    width: 1px;
+    transform: translateX(-0.5px);
+    background: rgba(200, 154, 61, 0.45);
+  }
+
+  #PrimalPrelaunch-{{ section.id }} .primal-launch__offer {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    height: 100%;
+    min-width: 0;
+    padding:
+      var(--card-pad-y)
+      var(--card-pad-inner)
+      var(--card-pad-y)
+      var(--card-pad-outer);
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+  }
+
+  #PrimalPrelaunch-{{ section.id }} .primal-launch__eyebrow {
+    margin: 0 0 14px;
+    color: var(--gold);
+    font-family: Montserrat, Arial, sans-serif;
+    font-size: 12px;
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: 2.5px;
+    white-space: nowrap;
+  }
+
+  #PrimalPrelaunch-{{ section.id }} .primal-launch__discount {
+    display: flex;
+    height: auto;
+    min-height: 96px;
+    margin: 0 0 16px;
+    align-items: flex-start;
+  }
+
+  #PrimalPrelaunch-{{ section.id }} .primal-launch__number,
+  #PrimalPrelaunch-{{ section.id }} .primal-launch__percent,
+  #PrimalPrelaunch-{{ section.id }} .primal-launch__off {
+    display: block;
+    background: none;
+    color: var(--gold);
+    -webkit-text-fill-color: currentColor;
+    text-shadow: 0 0 34px rgba(200, 154, 61, 0.55);
+  }
+
+  #PrimalPrelaunch-{{ section.id }} .primal-launch__number {
+    font-family: Montserrat, Arial, sans-serif;
+    font-size: 104px;
+    font-weight: 900;
+    line-height: 0.82;
+    letter-spacing: -4px;
+  }
+
+  #PrimalPrelaunch-{{ section.id }} .primal-launch__discount-side {
+    display: flex;
+    margin: 4px 0 0 10px;
+    flex-direction: column;
+    font-family: Montserrat, Arial, sans-serif;
+    font-weight: 900;
+  }
+
+  #PrimalPrelaunch-{{ section.id }} .primal-launch__percent {
+    font-size: 38px;
+    line-height: 0.95;
+  }
+
+  #PrimalPrelaunch-{{ section.id }} .primal-launch__off {
+    margin-top: 2px;
+    font-size: 36px;
+    line-height: 0.95;
+    letter-spacing: -1px;
+  }
+
+  #PrimalPrelaunch-{{ section.id }} .primal-launch__offer-title {
+    margin: 0;
+    color: #ffffff;
+    font-family: Montserrat, Arial, sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 1.15;
+    letter-spacing: 0.1px;
+  }
+
+  /*
+    Figma: badge sits on the card floor (aligned with right-column note).
+    The green-highlight gap under the offer title is intentional flex space —
+    never collapse it with a fixed margin-top.
+  */
+  #PrimalPrelaunch-{{ section.id }} .primal-launch__badge {
+    display: grid;
+    width: 242px;
+    height: 48px;
+    margin-top: auto;
+    flex-shrink: 0;
+    place-items: center;
+    border: 1px solid var(--gold);
+    border-radius: 8px;
+    color: var(--gold);
+    font-family: Montserrat, Arial, sans-serif;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 1.6px;
+    text-transform: uppercase;
+  }
+
+  /* Right column: same top pad as left, left-aligned from divider */
+  #PrimalPrelaunch-{{ section.id }} .primal-launch__signup {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    height: 100%;
+    min-width: 0;
+    padding:
+      var(--card-pad-y)
+      var(--card-pad-outer)
+      var(--card-pad-y)
+      var(--card-pad-inner);
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    text-align: left;
+  }
+
+  #PrimalPrelaunch-{{ section.id }} .primal-launch__launch-block {
+    display: flex;
+    width: 100%;
+    max-width: 100%;
+    margin: 0 0 20px;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left !important;
+  }
+
+  #PrimalPrelaunch-{{ section.id }} .primal-launch__launching {
+    display: block !important;
+    width: auto !important;
+    height: 21px;
+    margin: 0 !important;
+    padding: 0;
+    color: #ffffff;
+    font-family: Montserrat, Arial, sans-serif;
+    font-size: 15px;
+    font-weight: 800;
+    font-style: normal;
+    line-height: 21px;
+    letter-spacing: 3px;
+    text-align: left !important;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  #PrimalPrelaunch-{{ section.id }} .primal-launch__month {
+    display: block !important;
+    width: auto !important;
+    max-width: 100%;
+    min-height: 0;
+    margin: 10px 0 0 !important;
+    padding: 0;
+    color: var(--gold);
+    font-family: Montserrat, Arial, sans-serif;
+    font-size: 52px;
+    font-weight: 700;
+    font-style: normal;
+    line-height: 1;
+    letter-spacing: 5px;
+    text-align: left !important;
+    text-shadow: none;
+    white-space: nowrap;
+  }
+
+  #PrimalPrelaunch-{{ section.id }} .primal-launch__form {
+    display: grid;
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    gap: 10px;
+  }
+
+  #PrimalPrelaunch-{{ section.id }} .primal-launch__email {
+    width: 100%;
+    height: 52px;
+    margin: 0;
+    padding: 0 18px;
+    border: 0;
+    border-radius: 10px;
+    outline: 0;
+    background: var(--stone);
+    color: var(--dark);
+    font-family: Inter, Arial, sans-serif;
+    font-size: 15px;
+  }
+
+  #PrimalPrelaunch-{{ section.id }} .primal-launch__email::placeholder {
+    color: #858c92;
+    opacity: 1;
+  }
+
+  #PrimalPrelaunch-{{ section.id }} .primal-launch__email:focus {
+    outline: 2px solid var(--gold);
+    outline-offset: 2px;
+  }
+
+  #PrimalPrelaunch-{{ section.id }} .primal-launch__button {
+    display: grid;
+    grid-template-columns: 1fr 50px;
+    width: 100%;
+    height: 54px;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    border: 0;
+    border-radius: 10px;
+    background: var(--gold);
+    color: #111416;
+    cursor: pointer;
+    font-family: Montserrat, Arial, sans-serif;
+    font-size: 14px;
+    font-weight: 800;
+  }
+
+  #PrimalPrelaunch-{{ section.id }} .primal-launch__button > span:first-child {
+    display: grid;
+    padding-left: 18px;
+    padding-right: 8px;
+    place-items: center;
+    text-align: center;
+  }
+
+  #PrimalPrelaunch-{{ section.id }} .primal-launch__arrow {
+    display: grid;
+    height: 34px;
+    margin: auto 0;
+    place-items: center;
+    border-left: 1px solid rgba(17, 20, 22, 0.28);
+    font-family: Inter, Arial, sans-serif;
+    font-size: 22px;
+    font-weight: 400;
+  }
+
+  #PrimalPrelaunch-{{ section.id }} .primal-launch__button:hover {
+    filter: brightness(1.07);
+  }
+
+  #PrimalPrelaunch-{{ section.id }} .primal-launch__note {
+    display: flex;
+    width: 100%;
+    max-width: 100%;
+    margin: 12px 0 0;
+    align-items: flex-start;
+    gap: 10px;
+    color: #c7cbce;
+  }
+
+  #PrimalPrelaunch-{{ section.id }} .primal-launch__note svg,
+  #PrimalPrelaunch-{{ section.id }} .primal-launch__lock-img {
+    width: 15px;
+    height: 15px;
+    margin-top: 2px;
+    flex: 0 0 15px;
+  }
+
+  #PrimalPrelaunch-{{ section.id }} .primal-launch__note svg {
+    stroke: var(--gold);
+    stroke-width: 1.5;
+  }
+
+  #PrimalPrelaunch-{{ section.id }} .primal-launch__note p {
+    font-family: Inter, Arial, sans-serif;
+    font-size: clamp(11px, 1.071cqw, 12px);
+    line-height: 1.55;
+  }
+
+  #PrimalPrelaunch-{{ section.id }} .primal-launch__success {
+    color: var(--gold);
+    font: 12px/1.4 Inter, Arial, sans-serif;
+  }
+
+  #PrimalPrelaunch-{{ section.id }} .primal-launch__error {
+    color: #ff9090;
+    font: 12px/1.4 Inter, Arial, sans-serif;
+  }
+
+  /* Mid desktop: keep 50/50 card, gently scale type */
+  @media screen and (max-width: 1100px) and (min-width: 990px) {
+    #PrimalPrelaunch-{{ section.id }} .pw-container.primal-launch__container {
+      padding-inline: clamp(40px, 5vw, 120px);
+    }
+
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__heading {
+      margin-bottom: 40px;
+      font-size: clamp(34px, 3.6vw, 49px);
+    }
+
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__card {
+      --card-pad-y: 48px;
+      --card-pad-outer: 48px;
+      --card-pad-inner: 40px;
+      height: auto;
+      min-height: 392px;
+    }
+
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__card::after {
+      top: 48px;
+      bottom: 48px;
+    }
+
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__month {
+      font-size: clamp(40px, 4.2vw, 52px);
+      letter-spacing: 4px;
+    }
+  }
+
+  /* Tablet: keep 3-col features when possible, tighten card */
+  @media screen and (max-width: 989px) and (min-width: 821px) {
+    #PrimalPrelaunch-{{ section.id }} .pw-container.primal-launch__container {
+      width: 100%;
+      max-width: none;
+      padding-inline: clamp(22px, 5vw, 52px);
+    }
+
+    #PrimalPrelaunch-{{ section.id }} {
+      padding: 36px 0 40px;
+    }
+
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__features {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      max-width: 100%;
+      min-height: 110px;
+      height: auto;
+      margin-bottom: 36px;
+    }
+
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__heading {
+      margin-bottom: 32px;
+      font-size: clamp(26px, 3.5vw, 38px);
+      letter-spacing: 1.1px;
+    }
+
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__card {
+      --card-pad-y: 40px;
+      --card-pad-outer: 36px;
+      --card-pad-inner: 28px;
+      height: auto;
+      min-height: 360px;
+    }
+
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__card::after {
+      top: 40px;
+      bottom: 40px;
+    }
+
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__feature {
+      width: auto;
+      max-width: none;
+      min-height: 110px;
+      height: auto;
+      align-items: flex-start;
+      padding: 18px 12px 22px;
+      border-left: 1.11px solid rgba(31, 35, 38, 0.17);
+    }
+
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__feature:first-child {
+      border-left: none;
+      padding-left: 4px;
+    }
+
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__copy {
+      padding-top: 9.55px;
+    }
+
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__offer,
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__signup {
+      min-height: 280px;
+      height: auto;
+    }
+
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__badge {
+      margin-top: auto;
+    }
+
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__number {
+      font-size: clamp(72px, 9vw, 96px);
+    }
+
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__offer-title {
+      font-size: clamp(18px, 2.2vw, 22px);
+    }
+
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__launch-block {
+      width: max-content;
+      max-width: 100%;
+      align-items: flex-start;
+    }
+
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__launching {
+      font-size: 14px;
+      height: auto;
+      width: auto !important;
+      letter-spacing: 2.5px;
+      text-align: left !important;
+    }
+
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__month {
+      min-height: 0;
+      margin-top: 10px !important;
+      font-size: clamp(34px, 4.4vw, 46px);
+      letter-spacing: 3.5px;
+      text-align: left !important;
+    }
+  }
+
+  /* Phone / small tablet: stacked card, balanced breathing room */
+  @media screen and (max-width: 820px) {
+    #PrimalPrelaunch-{{ section.id }} {
+      padding: 28px 0 32px;
+    }
+
+    #PrimalPrelaunch-{{ section.id }} .pw-container.primal-launch__container {
+      width: 100%;
+      max-width: none;
+      padding-inline: clamp(16px, 5vw, 28px);
+    }
+
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__features {
+      display: grid;
+      grid-template-columns: 1fr;
+      max-width: 100%;
+      width: 100%;
+      height: auto;
+      margin-bottom: 28px;
+      gap: 0;
+    }
+
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__heading {
+      width: 100%;
+      min-height: 0;
+      margin-bottom: 24px;
+      font-size: clamp(22px, 5.8vw, 30px);
+      line-height: 1.18;
+      letter-spacing: 0.9px;
+      column-gap: 0.28em;
+      row-gap: 0.2em;
+    }
+
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__heading-dark,
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__heading-gold {
+      display: inline-block;
+      white-space: nowrap;
+    }
+
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__feature,
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__feature:first-child,
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__feature:last-child {
+      width: 100%;
+      max-width: none;
+      height: auto;
+      min-height: 0;
+      align-items: flex-start;
+      padding: 14px 0;
+      border: none;
+      border-left: none;
+      border-right: 0;
+      border-bottom: 1px solid rgba(31, 35, 38, 0.16);
+      gap: 14px;
+    }
+
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__copy {
+      padding-top: 4px;
+    }
+
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__feature:last-child {
+      border-bottom: 0;
+      padding-bottom: 4px;
+    }
+
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__feature:first-child {
+      padding-top: 4px;
+      padding-left: 0;
+    }
+
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__feature strong {
+      font-family: 'Montserrat', sans-serif !important;
+      font-weight: 700 !important;
+      font-style: normal;
+      font-size: 14px !important;
+      line-height: 17px !important;
+      letter-spacing: 0.44px !important;
+      text-transform: uppercase;
+    }
+
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__feature p {
+      margin-top: 6px;
+      font-size: 13px;
+      line-height: 1.4;
+    }
+
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__feature p br {
+      display: none;
+    }
+
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__icon {
+      width: 48px;
+      height: 48px;
+      flex-basis: 48px;
+    }
+
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__card {
+      display: flex;
+      flex-direction: column;
+      grid-template-columns: none;
+      height: auto !important;
+      min-height: 0 !important;
+      max-height: none;
+      border-radius: 22px;
+      overflow: hidden;
+    }
+
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__card::after {
+      display: none !important;
+    }
+
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__offer {
+      min-height: 0 !important;
+      height: auto !important;
+      padding: 28px 22px 22px !important;
+      align-items: flex-start;
+      justify-content: flex-start;
+      text-align: left;
+      gap: 0;
+    }
+
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__signup {
+      min-height: 0 !important;
+      height: auto !important;
+      padding: 22px 22px 26px !important;
+      align-items: flex-start;
+      justify-content: flex-start;
+      border-top: 1px solid rgba(200, 154, 61, 0.32);
+    }
+
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__form,
+    #PrimalPrelaunch-{{ section.id }} form.primal-launch__form {
+      margin: 0 !important;
+      padding: 0 !important;
+      gap: 10px;
+      width: 100%;
+    }
+
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__eyebrow {
+      margin: 0 0 12px !important;
+      font-size: 11px;
+      letter-spacing: 2px;
+      white-space: normal;
+    }
+
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__discount {
+      height: auto !important;
+      min-height: 0;
+      margin: 0 0 14px !important;
+      justify-content: flex-start;
+      align-items: flex-start;
+    }
+
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__number {
+      font-size: clamp(64px, 16vw, 84px);
+      letter-spacing: -3px;
+      line-height: 0.82;
+    }
+
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__percent {
+      font-size: clamp(28px, 7vw, 34px);
+      line-height: 0.95;
+    }
+
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__off {
+      margin-top: 1px;
+      font-size: clamp(26px, 6.5vw, 32px);
+      line-height: 0.95;
+    }
+
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__discount-side {
+      margin: 2px 0 0 8px;
+    }
+
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__offer-title {
+      margin: 0 !important;
+      font-size: clamp(16px, 4.2vw, 18px);
+      line-height: 1.2;
+      text-align: left;
+    }
+
+    /* Mobile: keep a clear Figma-like gap under the title before the badge */
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__badge {
+      width: min(242px, 100%);
+      height: 44px;
+      margin-top: 28px !important;
+      margin-inline: 0;
+      margin-bottom: 0 !important;
+      font-size: 11px;
+      letter-spacing: 1.4px;
+    }
+
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__launch-block {
+      width: 100%;
+      max-width: 100%;
+      margin: 0 0 18px;
+      align-items: flex-start;
+      text-align: left !important;
+    }
+
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__launching {
+      width: auto !important;
+      height: auto;
+      margin: 0 !important;
+      font-size: 13px;
+      letter-spacing: 2.5px;
+      text-align: left !important;
+    }
+
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__month {
+      min-height: 0;
+      width: auto !important;
+      margin: 10px 0 0 !important;
+      font-size: clamp(32px, 8.5vw, 42px);
+      letter-spacing: 3px;
+      text-align: left !important;
+      white-space: nowrap;
+    }
+
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__email {
+      height: 48px;
+      font-size: 14px;
+      border-radius: 10px;
+      margin: 0 !important;
+    }
+
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__button {
+      grid-template-columns: 1fr 46px;
+      height: 50px;
+      font-size: clamp(11px, 3vw, 13px);
+      border-radius: 10px;
+      margin: 0 !important;
+    }
+
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__button > span:first-child {
+      padding-left: 14px;
+      padding-right: 6px;
+      text-align: center;
+    }
+
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__arrow {
+      height: 30px;
+      font-size: 20px;
+    }
+
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__note {
+      margin-top: 14px !important;
+      margin-bottom: 0 !important;
+      gap: 8px;
+    }
+
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__note p {
+      font-size: 11px;
+      line-height: 1.5;
+      text-align: left;
+    }
+
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__note p br {
+      display: none;
+    }
+  }
+
+  @media screen and (max-width: 480px) {
+    #PrimalPrelaunch-{{ section.id }} {
+      padding: 22px 0 26px;
+    }
+
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__features {
+      margin-bottom: 22px;
+    }
+
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__heading {
+      margin-bottom: 20px;
+      font-size: clamp(18px, 5.2vw, 22px);
+      letter-spacing: 0.6px;
+    }
+
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__offer {
+      padding: 24px 18px 20px !important;
+    }
+
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__signup {
+      padding: 20px 18px 22px !important;
+    }
+
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__number {
+      font-size: clamp(56px, 15vw, 72px);
+    }
+
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__offer-title {
+      font-size: 15px;
+    }
+
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__badge {
+      height: 42px;
+      margin-top: 22px !important;
+      font-size: 10px;
+    }
+
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__month {
+      font-size: clamp(28px, 8vw, 34px);
+      letter-spacing: 2.2px;
+    }
+
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__email,
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__button {
+      height: 46px;
+    }
+
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__button {
+      font-size: 11px;
+      grid-template-columns: 1fr 42px;
+    }
+  }
+
+  @media screen and (max-width: 360px) {
+    #PrimalPrelaunch-{{ section.id }} .pw-container.primal-launch__container {
+      padding-inline: 14px;
+    }
+
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__offer,
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__signup {
+      padding-inline: 16px !important;
+    }
+
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__number {
+      font-size: 52px;
+    }
+
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__percent {
+      font-size: 24px;
+    }
+
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__off {
+      font-size: 22px;
+    }
+
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__month {
+      font-size: 24px;
+      letter-spacing: 1.4px;
+    }
+
+    #PrimalPrelaunch-{{ section.id }} .primal-launch__button {
+      font-size: 10px;
+      grid-template-columns: 1fr 38px;
+    }
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "Primal launch aligned",
+  "tag": "section",
+  "class": "section-primal-prelaunch",
+  "settings": [
+    {
+      "type": "text",
+      "id": "scientists_heading",
+      "label": "Heading (dark)",
+      "default": "Developed By Scientists."
+    },
+    {
+      "type": "text",
+      "id": "scientists_heading_gold",
+      "label": "Heading (gold)",
+      "default": "Built For Life."
+    },
+    {
+      "type": "text",
+      "id": "launch_month_label",
+      "label": "Launch month",
+      "default": "November 2026"
+    },
+    {
+      "type": "color",
+      "id": "background_color_exact",
+      "label": "Background color",
+      "default": "#EFE5DE"
+    },
+    {
+      "type": "color",
+      "id": "card_color_exact",
+      "label": "Card color",
+      "default": "#1F2326"
+    },
+    {
+      "type": "color",
+      "id": "gold_color_exact",
+      "label": "Gold color",
+      "default": "#C89A3D"
+    },
+    {
+      "type": "header",
+      "content": "Icons (SVG or PNG)"
+    },
+    {
+      "type": "image_picker",
+      "id": "icon_ingredients",
+      "label": "Ingredients icon"
+    },
+    {
+      "type": "image_picker",
+      "id": "icon_uk",
+      "label": "UK icon"
+    },
+    {
+      "type": "image_picker",
+      "id": "icon_transparency",
+      "label": "Transparency icon"
+    },
+    {
+      "type": "image_picker",
+      "id": "icon_lock",
+      "label": "Lock icon"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Primal launch aligned"
+    }
+  ]
+}
+{% endschema %}
