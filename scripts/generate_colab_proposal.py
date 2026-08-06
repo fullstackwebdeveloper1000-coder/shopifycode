@@ -93,7 +93,7 @@ def price_line(doc, text):
 
 
 def includes_header(doc):
-    line(doc, "IS PRICE ME YE SHAMIL HOGA:", 16, True, TEAL, space=8)
+    line(doc, "WHAT IS INCLUDED IN THIS PRICE:", 16, True, TEAL, space=8)
 
 
 def bullet(doc, text):
@@ -114,7 +114,7 @@ def package(doc, title, price, for_who, items, note=None):
 
 def monthly_block(doc, name, price, items):
     line(doc, f"{name} — PKR {price} / MONTH", 16, True, BLACK, space=8)
-    line(doc, "Is price me ye shamil hai:", 14, True, TEAL, space=6)
+    line(doc, "What is included:", 14, True, TEAL, space=6)
     for item in items:
         bullet(doc, item)
     line(doc, "—" * 40, 10, False, BLACK, space=14)
@@ -162,8 +162,8 @@ def build():
     section_title(doc, "Company Profile")
     line(
         doc,
-        f"{COMPANY} website, WordPress, e-commerce, branding, social media, SEO, "
-        "Google Ads, Meta Ads aur business growth ki services deta hai.",
+        f"{COMPANY} delivers website design, WordPress development, e-commerce, branding, "
+        "social media management, SEO, Google Ads, Meta Ads, and business growth solutions.",
         14,
         False,
         BLACK,
@@ -171,21 +171,38 @@ def build():
     )
     line(
         doc,
-        "Har package ki PRICE neeche bold hai — aur usi ke neeche likha hai is price me kya shamil hoga.",
+        "Each section shows the package price in bold, followed by a clear list of everything "
+        "included at that price.",
         14,
         True,
         BLACK,
         space=12,
     )
 
+    section_title(doc, "Why Choose CoLab Space Point")
+    for point in [
+        "Experienced multidisciplinary team",
+        "Professional support and clear communication",
+        "Business-focused, results-driven solutions",
+        "Modern technology stack",
+        "Creative design and performance marketing",
+        "Transparent pricing and long-term partnership",
+    ]:
+        bullet(doc, point)
+
     section_title(doc, "Website Designing & Development")
-    line(doc, "WordPress hamari main platform hai. Custom development bhi available hai.", 14, space=10)
+    line(
+        doc,
+        "WordPress is our primary platform. Fully custom development is also available on request.",
+        14,
+        space=10,
+    )
 
     package(
         doc,
         "BASIC WEBSITE",
         "60,000",
-        "Small business aur startups",
+        "Small businesses and startups",
         [
             "Professional business website",
             "Up to 5 pages",
@@ -203,7 +220,7 @@ def build():
             "Training",
             "30 days support",
         ],
-        "IMPORTANT: Is package me E-Commerce NAHI hai.",
+        "IMPORTANT: E-commerce is NOT included in this package.",
     )
 
     package(
@@ -250,7 +267,7 @@ def build():
 
     doc.add_page_break()
     section_title(doc, "Social Media Management")
-    line(doc, "Monthly packages — price aur included services", 14, True, BLACK, space=12)
+    line(doc, "Monthly packages — pricing and included services", 14, True, BLACK, space=12)
 
     monthly_block(
         doc,
@@ -287,7 +304,7 @@ def build():
 
     doc.add_page_break()
     section_title(doc, "Digital Marketing")
-    line(doc, "Monthly packages — price aur included services", 14, True, BLACK, space=12)
+    line(doc, "Monthly packages — pricing and included services", 14, True, BLACK, space=12)
 
     monthly_block(
         doc,
@@ -325,17 +342,17 @@ def build():
     doc.add_page_break()
     section_title(doc, "Add-On Services")
     addons = [
-        ("Logo Design", "PKR 15,000 se"),
-        ("Brand Identity", "PKR 45,000 se"),
-        ("Landing Page", "PKR 35,000 se"),
-        ("Website Maintenance", "PKR 8,000 / month"),
-        ("Content Writing", "PKR 3,500 / page"),
-        ("Graphic Design", "PKR 2,500"),
-        ("Video Editing", "PKR 5,000 / minute"),
-        ("SEO Audit", "PKR 25,000"),
-        ("Product Upload", "PKR 500 / product"),
-        ("Business Email", "PKR 5,000"),
-        ("Domain & Hosting", "Cost + PKR 3,000"),
+        ("Logo Design", "From PKR 15,000"),
+        ("Brand Identity", "From PKR 45,000"),
+        ("Landing Page", "From PKR 35,000"),
+        ("Website Maintenance", "From PKR 8,000 / month"),
+        ("Content Writing", "From PKR 3,500 / page"),
+        ("Graphic Design", "From PKR 2,500"),
+        ("Video Editing", "From PKR 5,000 / minute"),
+        ("SEO Audit", "From PKR 25,000"),
+        ("Product Upload", "From PKR 500 / product"),
+        ("Business Email", "From PKR 5,000"),
+        ("Domain & Hosting", "At cost + PKR 3,000 setup"),
     ]
     for s, p in addons:
         line(doc, f"{s} .............. {p}", 14, False, BLACK, space=6)
