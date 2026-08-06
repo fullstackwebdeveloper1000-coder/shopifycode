@@ -31,13 +31,15 @@
       <span class="primal-story__fade" aria-hidden="true"></span>
     </div>
 
-    <div class="primal-story__copy">
-      {% if section.settings.heading != blank %}
-        <h2 class="primal-story__heading">{{ section.settings.heading | escape }}</h2>
-      {% endif %}
-      {% if section.settings.body != blank %}
-        <div class="primal-story__body">{{ section.settings.body }}</div>
-      {% endif %}
+    <div class="pw-container primal-story__container">
+      <div class="primal-story__copy">
+        {% if section.settings.heading != blank %}
+          <h2 class="primal-story__heading">{{ section.settings.heading | escape }}</h2>
+        {% endif %}
+        {% if section.settings.body != blank %}
+          <div class="primal-story__body">{{ section.settings.body }}</div>
+        {% endif %}
+      </div>
     </div>
 
   </div>
@@ -46,37 +48,47 @@
 {%- assign sel = '#PrimalStory-' | append: section.id -%}
 
 {% style %}
+{{ sel }} { {% render 'pw-align-vars' %} }
 #shopify-section-{{ section.id }}{display: block;width: 100%;max-width: none;margin: 0;padding: 0;}
 {{ sel }},{{ sel }} *{box-sizing: border-box;}
 {{ sel }}{width: 100%;margin: 0;padding: 0;background: var(--bg);color: var(--ink);}
 {{ sel }} h2,{{ sel }} p{margin: 0;}
-/* The frame is the 1441 x 500 Figma band and the query container every value
-   below is measured from, so 1cqw = 1% of the band width. */
-{{ sel }} .primal-story__frame{position: relative;container-type: inline-size;width: 100%;height: min(34.7cqw, 500px);min-height: 320px;overflow: hidden;
-  --media-left: 16.34cqw;--copy-left: clamp(20px, 7.498cqw, 108px);--copy-top: 9.968cqw;--copy-w: clamp(280px, 44.99cqw, 648.3px);--copy-min-h: 14.89cqw;
+/* The frame is the 1441 x 500 band from the design and the query container
+   every value below is measured from, so 1cqw = 1% of the band width. */
+{{ sel }} .primal-story__frame{position: relative;container-type: inline-size;width: 100%;height: min(34.7cqw, 500px);min-height: 330px;overflow: hidden;
+  --media-left: 16.34cqw;--copy-w: min(54%, 648.3px);--copy-min-h: 14.89cqw;--body-w: min(72%, 470px);
   --bar-w: clamp(6px, 0.625cqw, 9px);--bar-gap: clamp(16px, 1.666cqw, 24px);
-  --fs-heading: clamp(27px, 3.053cqw, 44px);--fs-body: clamp(15px, 1.388cqw, 20px);--gap-copy: clamp(14px, 1.319cqw, 19px);--body-w: clamp(240px, 32.6cqw, 470px);}
-/* Figma: the photo starts at x=235.46 and runs to the right edge, full bleed. */
+  --fs-heading: clamp(27px, 3.053cqw, 44px);--fs-body: clamp(15px, 1.388cqw, 20px);--gap-copy: clamp(14px, 1.319cqw, 19px);}
+/* The photo starts at x=235.46 of the 1441 band and bleeds to the right edge. */
 {{ sel }} .primal-story__media{position: absolute;top: 0;right: 0;bottom: 0;left: var(--media-left);overflow: hidden;}
 {{ sel }} .primal-story__img,{{ sel }} .primal-story__placeholder svg{display: block;width: 100%;height: 100%;object-fit: cover;object-position: center;}
 {{ sel }} .primal-story__placeholder{width: 100%;height: 100%;background: #e6e2dc;}
 /* Carries the band colour across the left of the photo so the copy stays readable. */
-{{ sel }} .primal-story__fade{position: absolute;top: 0;bottom: 0;left: 0;width: 46%;background: linear-gradient(90deg, var(--bg) 0%, var(--bg) 26%, transparent 100%);pointer-events: none;}
-/* Figma: copy block 648.3 x 214.58 at x=108.05 y=143.63 with a 9px rule. */
-{{ sel }} .primal-story__copy{position: absolute;top: var(--copy-top);left: var(--copy-left);z-index: 1;display: flex;flex-direction: column;justify-content: center;width: var(--copy-w);max-width: calc(100% - var(--copy-left) * 2);min-height: var(--copy-min-h);padding-left: var(--bar-gap);border-left: var(--bar-w) solid var(--bar);}
+{{ sel }} .primal-story__fade{position: absolute;top: 0;bottom: 0;left: 0;width: 70%;background: linear-gradient(90deg, var(--bg) 0%, var(--bg) 50%, transparent 100%);pointer-events: none;}
+/* Same grid as the header, footer and the pre-launch band, so the rule lines up
+   with everything else on the page instead of the raw 108.05 from the frame. */
+{{ sel }} .pw-container.primal-story__container{position: absolute;top: 0;right: 0;bottom: 0;left: 0;z-index: 1;display: flex;align-items: center;width: min(100%, 1440px);max-width: 1440px;margin-inline: auto;padding-inline: min(8.333333vw, 120px);}
+/* The design centres the 214.58 tall copy block on the band. */
+{{ sel }} .primal-story__copy{display: flex;flex-direction: column;justify-content: center;width: var(--copy-w);min-height: var(--copy-min-h);padding-left: var(--bar-gap);border-left: var(--bar-w) solid var(--bar);}
 {{ sel }} .primal-story__heading{color: var(--ink);font-family: Montserrat, Arial, sans-serif;font-size: var(--fs-heading);font-weight: 800;line-height: 1.15;letter-spacing: -0.5px;}
 {{ sel }} .primal-story__body{max-width: var(--body-w);margin-top: var(--gap-copy);color: var(--ink);font-family: Inter, Arial, sans-serif;font-size: var(--fs-body);font-weight: 400;line-height: 1.75;}
 {{ sel }} .primal-story__body p + p{margin-top: 0.75em;}
-/* Below 900px the copy stops sitting over the photo and the band stacks. */
+/* Laptops and iPad landscape: same gutter the other sections drop to. */
+@media screen and (max-width: 1239px) {
+  {{ sel }} .pw-container.primal-story__container{width: 100%;max-width: none;padding-inline: clamp(24px, 5vw, 52px);}
+  {{ sel }} .primal-story__frame{--copy-w: min(58%, 648.3px);--body-w: min(72%, 470px);}
+}
+/* iPad portrait and below: the copy stops overlapping and the band stacks. */
 @media screen and (max-width: 899px) {
-  {{ sel }} .primal-story__frame{height: auto;min-height: 0;display: flex;flex-direction: column-reverse;
-    --fs-heading: clamp(24px, 6vw, 34px);--fs-body: clamp(15px, 4vw, 17px);--gap-copy: 14px;}
+  {{ sel }} .primal-story__frame{display: flex;flex-direction: column-reverse;height: auto;min-height: 0;
+    --fs-heading: clamp(24px, 4.6vw, 36px);--fs-body: clamp(15px, 2.1vw, 18px);--gap-copy: clamp(12px, 1.6vw, 16px);--bar-w: 6px;--bar-gap: clamp(14px, 2.4vw, 20px);--copy-w: 100%;--copy-min-h: 0;--body-w: min(100%, 620px);}
   {{ sel }} .primal-story__media{position: relative;left: 0;height: auto;aspect-ratio: 16 / 9;}
   {{ sel }} .primal-story__fade{display: none;}
-  {{ sel }} .primal-story__copy{position: relative;top: auto;left: auto;width: auto;max-width: none;min-height: 0;margin-inline: clamp(16px, 5vw, 28px);padding-left: clamp(14px, 4vw, 20px);}
-  {{ sel }} .primal-story__frame{padding: clamp(28px, 7vw, 40px) 0 0;}
-  {{ sel }} .primal-story__copy{margin-bottom: clamp(28px, 7vw, 40px);}
-  {{ sel }} .primal-story__body{max-width: none;}
+  {{ sel }} .pw-container.primal-story__container{position: relative;display: block;padding-block: clamp(28px, 5.4vw, 44px);padding-inline: clamp(16px, 5vw, 28px);}
+}
+/* Tall phone photos read better than a 16:9 letterbox. */
+@media screen and (max-width: 599px) {
+  {{ sel }} .primal-story__media{aspect-ratio: 4 / 3;}
 }
 {% endstyle %}
 
