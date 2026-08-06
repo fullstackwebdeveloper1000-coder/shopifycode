@@ -336,7 +336,7 @@
   /* Figma: one line at desktop — Montserrat Bold 49 / lh 100% / tracking 1.5px */
   #PrimalPrelaunch-{{ section.id }} .primal-launch__heading {
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     justify-content: center;
     align-items: baseline;
     width: 100%;
@@ -352,7 +352,7 @@
     letter-spacing: 1.5px;
     text-align: center;
     text-transform: uppercase;
-    white-space: normal;
+    white-space: nowrap;
     column-gap: 0.28em;
     row-gap: 0.12em;
   }
@@ -752,7 +752,9 @@
 
     #PrimalPrelaunch-{{ section.id }} .primal-launch__heading {
       margin-bottom: 40px;
-      font-size: clamp(34px, 3.6vw, 49px);
+      font-size: clamp(32px, 3.4vw, 49px);
+      flex-wrap: nowrap;
+      white-space: nowrap;
     }
 
     #PrimalPrelaunch-{{ section.id }} .primal-launch__card {
@@ -775,7 +777,7 @@
   }
 
   /* Tablet: keep 3-col features when possible, tighten card */
-  @media screen and (max-width: 989px) and (min-width: 821px) {
+  @media screen and (max-width: 989px) and (min-width: 901px) {
     #PrimalPrelaunch-{{ section.id }} .pw-container.primal-launch__container {
       width: 100%;
       max-width: none;
@@ -796,8 +798,10 @@
 
     #PrimalPrelaunch-{{ section.id }} .primal-launch__heading {
       margin-bottom: 32px;
-      font-size: clamp(26px, 3.5vw, 38px);
+      font-size: clamp(24px, 3.2vw, 36px);
       letter-spacing: 1.1px;
+      flex-wrap: nowrap;
+      white-space: nowrap;
     }
 
     #PrimalPrelaunch-{{ section.id }} .primal-launch__card {
@@ -874,7 +878,7 @@
   }
 
   /* Phone / small tablet: stacked card, balanced breathing room */
-  @media screen and (max-width: 820px) {
+  @media screen and (max-width: 900px) {
     #PrimalPrelaunch-{{ section.id }} {
       padding: 28px 0 32px;
     }
@@ -902,6 +906,8 @@
       font-size: clamp(22px, 5.8vw, 30px);
       line-height: 1.18;
       letter-spacing: 0.9px;
+      flex-wrap: wrap;
+      white-space: normal;
       column-gap: 0.28em;
       row-gap: 0.2em;
     }
