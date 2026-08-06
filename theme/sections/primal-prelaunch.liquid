@@ -180,7 +180,7 @@
 {%- assign sel = '#PrimalPrelaunch-' | append: section.id -%}
 
 {% style %}
-{{ sel }}{{% render 'pw-align-vars' %}}
+{{ sel }} { {% render 'pw-align-vars' %} }
 #shopify-section-{{ section.id }}{display: block;width: 100%;max-width: none;margin: 0;padding: 0;}
 {{ sel }},{{ sel }} *{box-sizing: border-box;}
 {{ sel }}{width: 100%;margin: 0;padding: clamp(28px, 3.34vw, 48px) 0 clamp(32px, 3.82vw, 55px);overflow: hidden;background: var(--background);color: var(--dark);}
