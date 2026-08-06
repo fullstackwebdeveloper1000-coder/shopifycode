@@ -14,7 +14,10 @@ Editable demo inspired by Norwegian taxi sites (Norgestaxi-style flow: bestill, 
 
 Edit colours/fonts in `styles.css`.
 
-## Preview
+## PDF (all 8 designs)
+Download / open: [`HENT-Oslo-Taxi-Designs.pdf`](./HENT-Oslo-Taxi-Designs.pdf)
+
+## Preview in browser
 ```bash
 cd oslo-taxi && python3 -m http.server 8080
 ```
