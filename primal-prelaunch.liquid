@@ -223,8 +223,10 @@
   </div>
 </section>
 
+{%- assign sel = '#PrimalPrelaunch-' | append: section.id -%}
+
 {% style %}
-  #PrimalPrelaunch-{{ section.id }} {
+  {{ sel }} {
     {% render 'pw-align-vars' %}
   }
 
@@ -236,12 +238,12 @@
     padding: 0;
   }
 
-  #PrimalPrelaunch-{{ section.id }},
-  #PrimalPrelaunch-{{ section.id }} * {
+  {{ sel }},
+  {{ sel }} * {
     box-sizing: border-box;
   }
 
-  #PrimalPrelaunch-{{ section.id }} {
+  {{ sel }} {
     width: 100%;
     margin: 0;
     padding: clamp(28px, 3.34vw, 48px) 0 clamp(32px, 3.82vw, 55px);
@@ -250,13 +252,13 @@
     color: var(--dark);
   }
 
-  #PrimalPrelaunch-{{ section.id }} p,
-  #PrimalPrelaunch-{{ section.id }} h2,
-  #PrimalPrelaunch-{{ section.id }} h3 {
+  {{ sel }} p,
+  {{ sel }} h2,
+  {{ sel }} h3 {
     margin: 0;
   }
 
-  #PrimalPrelaunch-{{ section.id }} .primal-launch__hidden {
+  {{ sel }} .primal-launch__hidden {
     position: absolute !important;
     width: 1px;
     height: 1px;
@@ -270,7 +272,7 @@
      and ends at x=1320. Below 1440px the gutter scales proportionally, exactly
      like the hero canvas. The container is also the query container that every
      value below is measured from: 1cqw = 1% of the 1200px inner width. */
-  #PrimalPrelaunch-{{ section.id }} .pw-container.primal-launch__container {
+  {{ sel }} .pw-container.primal-launch__container {
     position: relative;
     container-type: inline-size;
     width: min(100%, 1440px);
@@ -286,112 +288,63 @@
     The floors are deliberately low: each one is the value the design reaches at
     roughly an 890px viewport, so nothing is clamped while the two column card
     is still wide, and the phone layout below takes over before they bite.
-    Each value is declared twice: the vw line is the fallback for engines
-    without container query units (it resolves to the same number below 1440px),
-    the cqw line is what modern browsers use.
   */
-  #PrimalPrelaunch-{{ section.id }} .primal-launch__features,
-  #PrimalPrelaunch-{{ section.id }} .primal-launch__heading,
-  #PrimalPrelaunch-{{ section.id }} .primal-launch__card {
-    --pad-y: clamp(34px, 3.612vw, 52px);
+  {{ sel }} .primal-launch__features,
+  {{ sel }} .primal-launch__heading,
+  {{ sel }} .primal-launch__card {
     --pad-y: clamp(34px, 4.334cqw, 52px);
-    --pad-outer: clamp(42px, 4.445vw, 64px);
     --pad-outer: clamp(42px, 5.334cqw, 64px);
-    --pad-inner: clamp(32px, 3.333vw, 48px);
     --pad-inner: clamp(32px, 4cqw, 48px);
-    --card-h: min(27.25vw, 392px);
     --card-h: min(32.7cqw, 392px);
-    --radius: clamp(20px, 2.084vw, 30px);
     --radius: clamp(20px, 2.5cqw, 30px);
 
-    --gap-xs: clamp(9px, 0.972vw, 14px);
     --gap-xs: clamp(9px, 1.167cqw, 14px);
-    --gap-sm: clamp(11px, 1.112vw, 16px);
     --gap-sm: clamp(11px, 1.334cqw, 16px);
-    --gap-md: clamp(15px, 1.528vw, 22px);
     --gap-md: clamp(15px, 1.834cqw, 22px);
-    --gap-lg: clamp(19px, 1.945vw, 28px);
     --gap-lg: clamp(19px, 2.334cqw, 28px);
-    --gap-discount: clamp(36px, 3.75vw, 54px);
     --gap-discount: clamp(36px, 4.5cqw, 54px);
-    --gap-launch: clamp(16px, 1.667vw, 24px);
     --gap-launch: clamp(16px, 2cqw, 24px);
-    --gap-features: clamp(32px, 3.333vw, 48px);
     --gap-features: clamp(32px, 4cqw, 48px);
-    --gap-heading: clamp(27px, 2.784vw, 40px);
     --gap-heading: clamp(27px, 3.34cqw, 40px);
 
-    --fs-heading: clamp(31px, 3.264vw, 47px);
     --fs-heading: clamp(31px, 3.917cqw, 47px);
-    --ls-heading: clamp(1px, 0.104vw, 1.5px);
     --ls-heading: clamp(1px, 0.125cqw, 1.5px);
-    --fs-feature-head: clamp(11px, 1.154vw, 16.62px);
     --fs-feature-head: clamp(11px, 1.385cqw, 16.62px);
-    --fs-feature-body: clamp(10px, 0.975vw, 14px);
     --fs-feature-body: clamp(10px, 1.17cqw, 14px);
-    --size-icon: clamp(39px, 4.1vw, 59px);
     --size-icon: clamp(39px, 4.92cqw, 59px);
-    --gap-feature: clamp(11px, 1.183vw, 17px);
     --gap-feature: clamp(11px, 1.42cqw, 17px);
-    --pad-feature: clamp(19px, 1.945vw, 28px);
     --pad-feature: clamp(19px, 2.334cqw, 28px);
-    --pad-feature-y: clamp(12px, 1.25vw, 18px);
     --pad-feature-y: clamp(12px, 1.5cqw, 18px);
-    --pad-copy: clamp(6px, 0.667vw, 9.55px);
     --pad-copy: clamp(6px, 0.8cqw, 9.55px);
 
-    --fs-small: clamp(9px, 0.833vw, 12px);
     --fs-small: clamp(9px, 1cqw, 12px);
-    --ls-eyebrow: clamp(1.7px, 0.174vw, 2.5px);
     --ls-eyebrow: clamp(1.7px, 0.209cqw, 2.5px);
-    --fs-number: clamp(69px, 7.222vw, 104px);
     --fs-number: clamp(69px, 8.667cqw, 104px);
-    --fs-percent: clamp(25px, 2.639vw, 38px);
     --fs-percent: clamp(25px, 3.167cqw, 38px);
-    --fs-off: clamp(24px, 2.5vw, 36px);
     --fs-off: clamp(24px, 3cqw, 36px);
-    --gap-discount-side: clamp(7px, 0.695vw, 10px);
     --gap-discount-side: clamp(7px, 0.834cqw, 10px);
-    --fs-title: clamp(14.5px, 1.528vw, 22px);
     --fs-title: clamp(14.5px, 1.834cqw, 22px);
-    --w-badge: clamp(161px, 16.806vw, 242px);
     --w-badge: clamp(161px, 20.167cqw, 242px);
-    --h-badge: clamp(32px, 3.333vw, 48px);
     --h-badge: clamp(32px, 4cqw, 48px);
-    --ls-badge: clamp(1.1px, 0.112vw, 1.6px);
     --ls-badge: clamp(1.1px, 0.134cqw, 1.6px);
-    --fs-launching: clamp(10px, 1.042vw, 15px);
     --fs-launching: clamp(10px, 1.25cqw, 15px);
-    --ls-launching: clamp(2px, 0.209vw, 3px);
     --ls-launching: clamp(2px, 0.25cqw, 3px);
-    --fs-month: clamp(34px, 3.612vw, 52px);
     --fs-month: clamp(34px, 4.334cqw, 52px);
-    --ls-month: clamp(3.3px, 0.348vw, 5px);
     --ls-month: clamp(3.3px, 0.417cqw, 5px);
-    --h-email: clamp(35px, 3.612vw, 52px);
     --h-email: clamp(35px, 4.334cqw, 52px);
-    --fs-email: clamp(10px, 1.042vw, 15px);
     --fs-email: clamp(10px, 1.25cqw, 15px);
-    --pad-email: clamp(12px, 1.25vw, 18px);
     --pad-email: clamp(12px, 1.5cqw, 18px);
-    --h-button: clamp(36px, 3.75vw, 54px);
     --h-button: clamp(36px, 4.5cqw, 54px);
-    --fs-button: clamp(9.3px, 0.972vw, 14px);
     --fs-button: clamp(9.3px, 1.167cqw, 14px);
-    --w-arrow: clamp(33px, 3.473vw, 50px);
     --w-arrow: clamp(33px, 4.167cqw, 50px);
-    --h-arrow: clamp(23px, 2.362vw, 34px);
     --h-arrow: clamp(23px, 2.834cqw, 34px);
-    --fs-arrow: clamp(15px, 1.528vw, 22px);
     --fs-arrow: clamp(15px, 1.834cqw, 22px);
-    --size-lock: clamp(10px, 1.042vw, 15px);
     --size-lock: clamp(10px, 1.25cqw, 15px);
-    --gap-lock: clamp(7px, 0.695vw, 10px);
     --gap-lock: clamp(7px, 0.834cqw, 10px);
   }
 
   /* Feature row occupies the same full 1200px inner width as the hero content. */
-  #PrimalPrelaunch-{{ section.id }} .primal-launch__features {
+  {{ sel }} .primal-launch__features {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     align-items: stretch;
@@ -400,7 +353,7 @@
     padding: 0;
   }
 
-  #PrimalPrelaunch-{{ section.id }} .primal-launch__feature {
+  {{ sel }} .primal-launch__feature {
     display: flex;
     align-items: flex-start;
     gap: var(--gap-feature);
@@ -410,16 +363,16 @@
     border-left: 1.11px solid rgba(31, 35, 38, 0.17);
   }
 
-  #PrimalPrelaunch-{{ section.id }} .primal-launch__feature:first-child {
+  {{ sel }} .primal-launch__feature:first-child {
     padding-left: 0;
     border-left: none;
   }
 
-  #PrimalPrelaunch-{{ section.id }} .primal-launch__feature:last-child {
+  {{ sel }} .primal-launch__feature:last-child {
     padding-right: 0;
   }
 
-  #PrimalPrelaunch-{{ section.id }} .primal-launch__icon {
+  {{ sel }} .primal-launch__icon {
     width: var(--size-icon);
     height: var(--size-icon);
     flex: 0 0 auto;
@@ -427,7 +380,7 @@
     line-height: 0;
   }
 
-  #PrimalPrelaunch-{{ section.id }} .primal-launch__icon svg {
+  {{ sel }} .primal-launch__icon svg {
     display: block;
     width: 100%;
     height: 100%;
@@ -437,7 +390,7 @@
     stroke-linejoin: round;
   }
 
-  #PrimalPrelaunch-{{ section.id }} .primal-launch__icon-img {
+  {{ sel }} .primal-launch__icon-img {
     display: block;
     width: 100%;
     height: 100%;
@@ -445,14 +398,14 @@
   }
 
   /* Two heading lines (2 x 19.95 = 39.9) centre against the 59px icon. */
-  #PrimalPrelaunch-{{ section.id }} .primal-launch__copy {
+  {{ sel }} .primal-launch__copy {
     display: flex;
     flex-direction: column;
     min-width: 0;
     padding-top: var(--pad-copy);
   }
 
-  #PrimalPrelaunch-{{ section.id }} .primal-launch__feature strong {
+  {{ sel }} .primal-launch__feature strong {
     display: block;
     color: var(--dark);
     font-family: 'Montserrat', Arial, sans-serif !important;
@@ -464,7 +417,7 @@
     text-transform: uppercase;
   }
 
-  #PrimalPrelaunch-{{ section.id }} .primal-launch__feature p {
+  {{ sel }} .primal-launch__feature p {
     margin-top: 8px;
     color: #3d4246;
     font-family: Inter, Arial, sans-serif;
@@ -475,7 +428,7 @@
   /* Figma: one 1167px line at desktop, Montserrat Bold, tracking 1.5px.
      Flex + gap keeps the space between the two phrases even if the theme
      minifies the whitespace between the spans, and gives a clean wrap point. */
-  #PrimalPrelaunch-{{ section.id }} .primal-launch__heading {
+  {{ sel }} .primal-launch__heading {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -494,21 +447,21 @@
     text-transform: uppercase;
   }
 
-  #PrimalPrelaunch-{{ section.id }} .primal-launch__heading-dark,
-  #PrimalPrelaunch-{{ section.id }} .primal-launch__heading-gold {
+  {{ sel }} .primal-launch__heading-dark,
+  {{ sel }} .primal-launch__heading-gold {
     white-space: nowrap;
   }
 
-  #PrimalPrelaunch-{{ section.id }} .primal-launch__heading-dark {
+  {{ sel }} .primal-launch__heading-dark {
     color: var(--dark);
   }
 
-  #PrimalPrelaunch-{{ section.id }} .primal-launch__heading-gold {
+  {{ sel }} .primal-launch__heading-gold {
     color: var(--gold);
   }
 
   /* Figma card: 1199 x 392, radius 30, equal 50/50 columns. */
-  #PrimalPrelaunch-{{ section.id }} .primal-launch__card {
+  {{ sel }} .primal-launch__card {
     position: relative;
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -524,7 +477,7 @@
       linear-gradient(100deg, #192924 0%, #1b2726 48%, var(--card) 100%);
   }
 
-  #PrimalPrelaunch-{{ section.id }} .primal-launch__card::after {
+  {{ sel }} .primal-launch__card::after {
     content: "";
     position: absolute;
     top: var(--pad-y);
@@ -536,8 +489,8 @@
   }
 
   /* Same top pad on both columns, so LIMITED TIME and LAUNCHING IN share a baseline. */
-  #PrimalPrelaunch-{{ section.id }} .primal-launch__offer,
-  #PrimalPrelaunch-{{ section.id }} .primal-launch__signup {
+  {{ sel }} .primal-launch__offer,
+  {{ sel }} .primal-launch__signup {
     position: relative;
     z-index: 1;
     display: flex;
@@ -548,15 +501,15 @@
     text-align: left;
   }
 
-  #PrimalPrelaunch-{{ section.id }} .primal-launch__offer {
+  {{ sel }} .primal-launch__offer {
     padding: var(--pad-y) var(--pad-inner) var(--pad-y) var(--pad-outer);
   }
 
-  #PrimalPrelaunch-{{ section.id }} .primal-launch__signup {
+  {{ sel }} .primal-launch__signup {
     padding: var(--pad-y) var(--pad-outer) var(--pad-y) var(--pad-inner);
   }
 
-  #PrimalPrelaunch-{{ section.id }} .primal-launch__eyebrow {
+  {{ sel }} .primal-launch__eyebrow {
     margin: 0 0 var(--gap-xs);
     color: var(--gold);
     font-family: Montserrat, Arial, sans-serif;
@@ -566,15 +519,15 @@
     letter-spacing: var(--ls-eyebrow);
   }
 
-  #PrimalPrelaunch-{{ section.id }} .primal-launch__discount {
+  {{ sel }} .primal-launch__discount {
     display: flex;
     align-items: flex-start;
     margin: 0 0 var(--gap-discount);
   }
 
-  #PrimalPrelaunch-{{ section.id }} .primal-launch__number,
-  #PrimalPrelaunch-{{ section.id }} .primal-launch__percent,
-  #PrimalPrelaunch-{{ section.id }} .primal-launch__off {
+  {{ sel }} .primal-launch__number,
+  {{ sel }} .primal-launch__percent,
+  {{ sel }} .primal-launch__off {
     display: block;
     background: none;
     color: var(--gold);
@@ -582,7 +535,7 @@
     text-shadow: 0 0 34px rgba(200, 154, 61, 0.55);
   }
 
-  #PrimalPrelaunch-{{ section.id }} .primal-launch__number {
+  {{ sel }} .primal-launch__number {
     font-family: Montserrat, Arial, sans-serif;
     font-size: var(--fs-number);
     font-weight: 900;
@@ -590,7 +543,7 @@
     letter-spacing: -0.038em;
   }
 
-  #PrimalPrelaunch-{{ section.id }} .primal-launch__discount-side {
+  {{ sel }} .primal-launch__discount-side {
     display: flex;
     flex-direction: column;
     margin: 0.04em 0 0 var(--gap-discount-side);
@@ -598,12 +551,12 @@
     font-weight: 900;
   }
 
-  #PrimalPrelaunch-{{ section.id }} .primal-launch__percent {
+  {{ sel }} .primal-launch__percent {
     font-size: var(--fs-percent);
     line-height: 0.95;
   }
 
-  #PrimalPrelaunch-{{ section.id }} .primal-launch__off {
+  {{ sel }} .primal-launch__off {
     margin-top: 2px;
     font-size: var(--fs-off);
     line-height: 0.95;
@@ -615,7 +568,7 @@
      taller (floored control heights, a note that wraps to three lines) the spare
      height is shared between the gap under 30% OFF and the gap under the badge,
      instead of opening one hole between the title and the badge. */
-  #PrimalPrelaunch-{{ section.id }} .primal-launch__offer-title {
+  {{ sel }} .primal-launch__offer-title {
     margin: auto 0 var(--gap-md);
     color: #ffffff;
     font-family: Montserrat, Arial, sans-serif;
@@ -625,7 +578,7 @@
     letter-spacing: 0.1px;
   }
 
-  #PrimalPrelaunch-{{ section.id }} .primal-launch__badge {
+  {{ sel }} .primal-launch__badge {
     display: grid;
     width: var(--w-badge);
     height: var(--h-badge);
@@ -640,12 +593,12 @@
     letter-spacing: var(--ls-badge);
   }
 
-  #PrimalPrelaunch-{{ section.id }} .primal-launch__launch-block {
+  {{ sel }} .primal-launch__launch-block {
     width: 100%;
     margin: 0 0 var(--gap-launch);
   }
 
-  #PrimalPrelaunch-{{ section.id }} .primal-launch__launching {
+  {{ sel }} .primal-launch__launching {
     color: #ffffff;
     font-family: Montserrat, Arial, sans-serif;
     font-size: var(--fs-launching);
@@ -659,7 +612,7 @@
   /* The negative right margin cancels the tracking that trails the last glyph,
      which is what keeps a 13-character month such as November 2026 on one
      line at the Figma size. */
-  #PrimalPrelaunch-{{ section.id }} .primal-launch__month {
+  {{ sel }} .primal-launch__month {
     margin: clamp(4px, 0.5cqw, 6px) calc(var(--ls-month) * -1) 0 0;
     color: var(--gold);
     font-family: Montserrat, Arial, sans-serif;
@@ -671,14 +624,14 @@
     white-space: nowrap;
   }
 
-  #PrimalPrelaunch-{{ section.id }} .primal-launch__form {
+  {{ sel }} .primal-launch__form {
     display: grid;
     width: 100%;
     margin: 0;
     gap: var(--gap-sm);
   }
 
-  #PrimalPrelaunch-{{ section.id }} .primal-launch__email {
+  {{ sel }} .primal-launch__email {
     width: 100%;
     height: var(--h-email);
     margin: 0;
@@ -692,17 +645,17 @@
     font-size: var(--fs-email);
   }
 
-  #PrimalPrelaunch-{{ section.id }} .primal-launch__email::placeholder {
+  {{ sel }} .primal-launch__email::placeholder {
     color: #858c92;
     opacity: 1;
   }
 
-  #PrimalPrelaunch-{{ section.id }} .primal-launch__email:focus {
+  {{ sel }} .primal-launch__email:focus {
     outline: 2px solid var(--gold);
     outline-offset: 2px;
   }
 
-  #PrimalPrelaunch-{{ section.id }} .primal-launch__button {
+  {{ sel }} .primal-launch__button {
     display: grid;
     grid-template-columns: 1fr var(--w-arrow);
     width: 100%;
@@ -721,14 +674,14 @@
     letter-spacing: 0.2px;
   }
 
-  #PrimalPrelaunch-{{ section.id }} .primal-launch__button > span:first-child {
+  {{ sel }} .primal-launch__button > span:first-child {
     display: grid;
     padding-inline: var(--pad-email) 8px;
     place-items: center;
     text-align: center;
   }
 
-  #PrimalPrelaunch-{{ section.id }} .primal-launch__arrow {
+  {{ sel }} .primal-launch__arrow {
     display: grid;
     height: var(--h-arrow);
     margin: auto 0;
@@ -739,11 +692,11 @@
     font-weight: 400;
   }
 
-  #PrimalPrelaunch-{{ section.id }} .primal-launch__button:hover {
+  {{ sel }} .primal-launch__button:hover {
     filter: brightness(1.07);
   }
 
-  #PrimalPrelaunch-{{ section.id }} .primal-launch__note {
+  {{ sel }} .primal-launch__note {
     display: flex;
     width: 100%;
     margin: var(--gap-md) 0 0;
@@ -752,38 +705,38 @@
     color: #c7cbce;
   }
 
-  #PrimalPrelaunch-{{ section.id }} .primal-launch__note svg,
-  #PrimalPrelaunch-{{ section.id }} .primal-launch__lock-img {
+  {{ sel }} .primal-launch__note svg,
+  {{ sel }} .primal-launch__lock-img {
     width: var(--size-lock);
     height: var(--size-lock);
     margin-top: 2px;
     flex: 0 0 var(--size-lock);
   }
 
-  #PrimalPrelaunch-{{ section.id }} .primal-launch__note svg {
+  {{ sel }} .primal-launch__note svg {
     stroke: var(--gold);
     stroke-width: 1.5;
   }
 
-  #PrimalPrelaunch-{{ section.id }} .primal-launch__note p {
+  {{ sel }} .primal-launch__note p {
     font-family: Inter, Arial, sans-serif;
     font-size: var(--fs-small);
     line-height: 1.55;
   }
 
-  #PrimalPrelaunch-{{ section.id }} .primal-launch__success {
+  {{ sel }} .primal-launch__success {
     color: var(--gold);
     font: 12px/1.4 Inter, Arial, sans-serif;
   }
 
-  #PrimalPrelaunch-{{ section.id }} .primal-launch__error {
+  {{ sel }} .primal-launch__error {
     color: #ff9090;
     font: 12px/1.4 Inter, Arial, sans-serif;
   }
 
   /* Tablet: the card keeps its two columns, only the page gutter changes. */
   @media screen and (max-width: 1239px) {
-    #PrimalPrelaunch-{{ section.id }} .pw-container.primal-launch__container {
+    {{ sel }} .pw-container.primal-launch__container {
       width: 100%;
       max-width: none;
       padding-inline: clamp(24px, 5vw, 52px);
@@ -791,7 +744,7 @@
   }
 
   @media screen and (max-width: 989px) {
-    #PrimalPrelaunch-{{ section.id }} .primal-launch__br {
+    {{ sel }} .primal-launch__br {
       display: none;
     }
   }
@@ -800,9 +753,9 @@
      900px. Below that the design would have to distort to stay in two columns,
      so it becomes a single left aligned column instead. */
   @media screen and (max-width: 899px) {
-    #PrimalPrelaunch-{{ section.id }} .primal-launch__features,
-    #PrimalPrelaunch-{{ section.id }} .primal-launch__heading,
-    #PrimalPrelaunch-{{ section.id }} .primal-launch__card {
+    {{ sel }} .primal-launch__features,
+    {{ sel }} .primal-launch__heading,
+    {{ sel }} .primal-launch__card {
       --pad-y: clamp(22px, 5.6vw, 30px);
       --pad-outer: clamp(18px, 5.4vw, 26px);
       --pad-inner: var(--pad-outer);
@@ -854,78 +807,78 @@
       --gap-lock: 8px;
     }
 
-    #PrimalPrelaunch-{{ section.id }} {
+    {{ sel }} {
       padding: 24px 0 28px;
     }
 
-    #PrimalPrelaunch-{{ section.id }} .pw-container.primal-launch__container {
+    {{ sel }} .pw-container.primal-launch__container {
       padding-inline: clamp(16px, 5vw, 28px);
     }
 
-    #PrimalPrelaunch-{{ section.id }} .primal-launch__features {
+    {{ sel }} .primal-launch__features {
       grid-template-columns: 1fr;
     }
 
-    #PrimalPrelaunch-{{ section.id }} .primal-launch__feature,
-    #PrimalPrelaunch-{{ section.id }} .primal-launch__feature:first-child,
-    #PrimalPrelaunch-{{ section.id }} .primal-launch__feature:last-child {
+    {{ sel }} .primal-launch__feature,
+    {{ sel }} .primal-launch__feature:first-child,
+    {{ sel }} .primal-launch__feature:last-child {
       padding: var(--pad-feature-y) 0;
       border: none;
       border-bottom: 1px solid rgba(31, 35, 38, 0.16);
     }
 
-    #PrimalPrelaunch-{{ section.id }} .primal-launch__feature:first-child {
+    {{ sel }} .primal-launch__feature:first-child {
       padding-top: 0;
     }
 
-    #PrimalPrelaunch-{{ section.id }} .primal-launch__feature:last-child {
+    {{ sel }} .primal-launch__feature:last-child {
       padding-bottom: 0;
       border-bottom: 0;
     }
 
-    #PrimalPrelaunch-{{ section.id }} .primal-launch__feature p {
+    {{ sel }} .primal-launch__feature p {
       margin-top: 4px;
       line-height: 1.45;
     }
 
-    #PrimalPrelaunch-{{ section.id }} .primal-launch__card {
+    {{ sel }} .primal-launch__card {
       display: flex;
       flex-direction: column;
     }
 
     /* The vertical rule becomes the seam between the two stacked halves. */
-    #PrimalPrelaunch-{{ section.id }} .primal-launch__card::after {
+    {{ sel }} .primal-launch__card::after {
       display: none;
     }
 
-    #PrimalPrelaunch-{{ section.id }} .primal-launch__offer {
+    {{ sel }} .primal-launch__offer {
       padding: var(--pad-y) var(--pad-outer) var(--gap-lg);
     }
 
-    #PrimalPrelaunch-{{ section.id }} .primal-launch__signup {
+    {{ sel }} .primal-launch__signup {
       padding: var(--gap-lg) var(--pad-outer) var(--pad-y);
       border-top: 1px solid rgba(200, 154, 61, 0.3);
     }
 
-    #PrimalPrelaunch-{{ section.id }} .primal-launch__offer-title {
+    {{ sel }} .primal-launch__offer-title {
       margin-top: 0;
     }
 
-    #PrimalPrelaunch-{{ section.id }} .primal-launch__badge {
+    {{ sel }} .primal-launch__badge {
       margin-bottom: 0;
     }
   }
 
   @media screen and (max-width: 380px) {
-    #PrimalPrelaunch-{{ section.id }} .primal-launch__card {
+    {{ sel }} .primal-launch__card {
       --ls-month: 1px;
       --fs-button: 9.5px;
       --w-arrow: 36px;
     }
 
     /* Last resort for a longer custom heading on the narrowest phones. */
-    #PrimalPrelaunch-{{ section.id }} .primal-launch__heading-dark,
-    #PrimalPrelaunch-{{ section.id }} .primal-launch__heading-gold {
+    {{ sel }} .primal-launch__heading-dark,
+    {{ sel }} .primal-launch__heading-gold {
       white-space: normal;
     }
   }
