@@ -1,13 +1,3 @@
-{% comment %}
-  Primal pre-launch — aligned to the exact 1440 hero content grid.
-  Desktop inner bounds: x=120 to x=1320; responsive gutters match hero.
-  Figma card: 1199 x 392, radius 30, 52px top/bottom pad, 64px outer / 48px inner gutters.
-  Left column: eyebrow -> 30% OFF -> title -> badge pinned to the bottom pad.
-  Right column: LAUNCHING IN + month -> form -> assurance note ending on the bottom pad.
-  Everything inside the card scales from the container width (cqw) so the
-  desktop proportions hold all the way down to the mobile stack.
-{% endcomment %}
-
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet">
@@ -31,16 +21,7 @@
       <div class="primal-launch__feature">
         <div class="primal-launch__icon">
           {% if section.settings.icon_ingredients != blank %}
-            {{
-              section.settings.icon_ingredients
-              | image_url: width: 128
-              | image_tag:
-                class: 'primal-launch__icon-img',
-                widths: '64, 128',
-                sizes: '59px',
-                loading: 'lazy',
-                alt: ''
-            }}
+            {{ section.settings.icon_ingredients | image_url: width: 128 | image_tag: class: 'primal-launch__icon-img', widths: '64, 128', sizes: '59px', loading: 'lazy', alt: '' }}
           {% else %}
             <svg viewBox="0 0 64 64" fill="none" aria-hidden="true" focusable="false">
               <circle cx="32" cy="32" r="30"/>
@@ -59,16 +40,7 @@
       <div class="primal-launch__feature">
         <div class="primal-launch__icon">
           {% if section.settings.icon_uk != blank %}
-            {{
-              section.settings.icon_uk
-              | image_url: width: 128
-              | image_tag:
-                class: 'primal-launch__icon-img',
-                widths: '64, 128',
-                sizes: '59px',
-                loading: 'lazy',
-                alt: ''
-            }}
+            {{ section.settings.icon_uk | image_url: width: 128 | image_tag: class: 'primal-launch__icon-img', widths: '64, 128', sizes: '59px', loading: 'lazy', alt: '' }}
           {% else %}
             <svg viewBox="0 0 64 64" fill="none" aria-hidden="true" focusable="false">
               <circle cx="32" cy="32" r="30"/>
@@ -86,16 +58,7 @@
       <div class="primal-launch__feature">
         <div class="primal-launch__icon">
           {% if section.settings.icon_transparency != blank %}
-            {{
-              section.settings.icon_transparency
-              | image_url: width: 128
-              | image_tag:
-                class: 'primal-launch__icon-img',
-                widths: '64, 128',
-                sizes: '59px',
-                loading: 'lazy',
-                alt: ''
-            }}
+            {{ section.settings.icon_transparency | image_url: width: 128 | image_tag: class: 'primal-launch__icon-img', widths: '64, 128', sizes: '59px', loading: 'lazy', alt: '' }}
           {% else %}
             <svg viewBox="0 0 64 64" fill="none" aria-hidden="true" focusable="false">
               <circle cx="32" cy="32" r="30"/>
@@ -195,16 +158,7 @@
 
         <div class="primal-launch__note">
           {% if section.settings.icon_lock != blank %}
-            {{
-              section.settings.icon_lock
-              | image_url: width: 32
-              | image_tag:
-                class: 'primal-launch__icon-img primal-launch__lock-img',
-                widths: '15, 30',
-                sizes: '15px',
-                loading: 'lazy',
-                alt: ''
-            }}
+            {{ section.settings.icon_lock | image_url: width: 32 | image_tag: class: 'primal-launch__icon-img primal-launch__lock-img', widths: '15, 30', sizes: '15px', loading: 'lazy', alt: '' }}
           {% else %}
             <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
               <rect x="5" y="10" width="14" height="11" rx="2"/>
@@ -226,735 +180,108 @@
 {%- assign sel = '#PrimalPrelaunch-' | append: section.id -%}
 
 {% style %}
-  {{ sel }} {
-    {% render 'pw-align-vars' %}
-  }
-
-  #shopify-section-{{ section.id }} {
-    display: block;
-    width: 100%;
-    max-width: none;
-    margin: 0;
-    padding: 0;
-  }
-
-  {{ sel }},
-  {{ sel }} * {
-    box-sizing: border-box;
-  }
-
-  {{ sel }} {
-    width: 100%;
-    margin: 0;
-    padding: clamp(28px, 3.34vw, 48px) 0 clamp(32px, 3.82vw, 55px);
-    overflow: hidden;
-    background: var(--background);
-    color: var(--dark);
-  }
-
-  {{ sel }} p,
-  {{ sel }} h2,
-  {{ sel }} h3 {
-    margin: 0;
-  }
-
-  {{ sel }} .primal-launch__hidden {
-    position: absolute !important;
-    width: 1px;
-    height: 1px;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-  }
-
-  /* Exact alignment with the 1440px hero canvas: hero content starts at x=120
-     and ends at x=1320. Below 1440px the gutter scales proportionally, exactly
-     like the hero canvas. The container is also the query container that every
-     value below is measured from: 1cqw = 1% of the 1200px inner width. */
-  {{ sel }} .pw-container.primal-launch__container {
-    position: relative;
-    container-type: inline-size;
-    width: min(100%, 1440px);
-    max-width: 1440px;
-    margin-inline: auto;
-    padding-inline: min(8.333333vw, 120px);
-  }
-
-  /*
-    Every Figma measurement lives here once, expressed as a share of the 1200px
-    inner grid, so the card stays a scaled copy of the 1199 x 392 frame at every
-    desktop and tablet width instead of drifting out of proportion.
-    The floors are deliberately low: each one is the value the design reaches at
-    roughly an 890px viewport, so nothing is clamped while the two column card
-    is still wide, and the phone layout below takes over before they bite.
-  */
-  {{ sel }} .primal-launch__features,
-  {{ sel }} .primal-launch__heading,
-  {{ sel }} .primal-launch__card {
-    --pad-y: clamp(34px, 4.334cqw, 52px);
-    --pad-outer: clamp(42px, 5.334cqw, 64px);
-    --pad-inner: clamp(32px, 4cqw, 48px);
-    --card-h: min(32.7cqw, 392px);
-    --radius: clamp(20px, 2.5cqw, 30px);
-
-    --gap-xs: clamp(9px, 1.167cqw, 14px);
-    --gap-sm: clamp(11px, 1.334cqw, 16px);
-    --gap-md: clamp(15px, 1.834cqw, 22px);
-    --gap-lg: clamp(19px, 2.334cqw, 28px);
-    --gap-discount: clamp(36px, 4.5cqw, 54px);
-    --gap-launch: clamp(16px, 2cqw, 24px);
-    --gap-features: clamp(32px, 4cqw, 48px);
-    --gap-heading: clamp(27px, 3.34cqw, 40px);
-
-    --fs-heading: clamp(31px, 3.917cqw, 47px);
-    --ls-heading: clamp(1px, 0.125cqw, 1.5px);
-    --fs-feature-head: clamp(11px, 1.385cqw, 16.62px);
-    --fs-feature-body: clamp(10px, 1.17cqw, 14px);
-    --size-icon: clamp(39px, 4.92cqw, 59px);
-    --gap-feature: clamp(11px, 1.42cqw, 17px);
-    --pad-feature: clamp(19px, 2.334cqw, 28px);
-    --pad-feature-y: clamp(12px, 1.5cqw, 18px);
-    --pad-copy: clamp(6px, 0.8cqw, 9.55px);
-
-    --fs-small: clamp(9px, 1cqw, 12px);
-    --ls-eyebrow: clamp(1.7px, 0.209cqw, 2.5px);
-    --fs-number: clamp(69px, 8.667cqw, 104px);
-    --fs-percent: clamp(25px, 3.167cqw, 38px);
-    --fs-off: clamp(24px, 3cqw, 36px);
-    --gap-discount-side: clamp(7px, 0.834cqw, 10px);
-    --fs-title: clamp(14.5px, 1.834cqw, 22px);
-    --w-badge: clamp(161px, 20.167cqw, 242px);
-    --h-badge: clamp(32px, 4cqw, 48px);
-    --ls-badge: clamp(1.1px, 0.134cqw, 1.6px);
-    --fs-launching: clamp(10px, 1.25cqw, 15px);
-    --ls-launching: clamp(2px, 0.25cqw, 3px);
-    --fs-month: clamp(34px, 4.334cqw, 52px);
-    --ls-month: clamp(3.3px, 0.417cqw, 5px);
-    --h-email: clamp(35px, 4.334cqw, 52px);
-    --fs-email: clamp(10px, 1.25cqw, 15px);
-    --pad-email: clamp(12px, 1.5cqw, 18px);
-    --h-button: clamp(36px, 4.5cqw, 54px);
-    --fs-button: clamp(9.3px, 1.167cqw, 14px);
-    --w-arrow: clamp(33px, 4.167cqw, 50px);
-    --h-arrow: clamp(23px, 2.834cqw, 34px);
-    --fs-arrow: clamp(15px, 1.834cqw, 22px);
-    --size-lock: clamp(10px, 1.25cqw, 15px);
-    --gap-lock: clamp(7px, 0.834cqw, 10px);
-  }
-
-  /* Feature row occupies the same full 1200px inner width as the hero content. */
-  {{ sel }} .primal-launch__features {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    align-items: stretch;
-    width: 100%;
-    margin: 0 0 var(--gap-features);
-    padding: 0;
-  }
-
-  {{ sel }} .primal-launch__feature {
-    display: flex;
-    align-items: flex-start;
-    gap: var(--gap-feature);
-    min-width: 0;
-    margin: 0;
-    padding: var(--pad-feature-y) var(--pad-feature) calc(var(--pad-feature-y) * 1.222);
-    border-left: 1.11px solid rgba(31, 35, 38, 0.17);
-  }
-
-  {{ sel }} .primal-launch__feature:first-child {
-    padding-left: 0;
-    border-left: none;
-  }
-
-  {{ sel }} .primal-launch__feature:last-child {
-    padding-right: 0;
-  }
-
-  {{ sel }} .primal-launch__icon {
-    width: var(--size-icon);
-    height: var(--size-icon);
-    flex: 0 0 auto;
-    margin: 0;
-    line-height: 0;
-  }
-
-  {{ sel }} .primal-launch__icon svg {
-    display: block;
-    width: 100%;
-    height: 100%;
-    stroke: var(--dark);
-    stroke-width: 1.6;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-  }
-
-  {{ sel }} .primal-launch__icon-img {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-  }
-
-  /* Two heading lines (2 x 19.95 = 39.9) centre against the 59px icon. */
-  {{ sel }} .primal-launch__copy {
-    display: flex;
-    flex-direction: column;
-    min-width: 0;
-    padding-top: var(--pad-copy);
-  }
-
-  {{ sel }} .primal-launch__feature strong {
-    display: block;
-    color: var(--dark);
-    font-family: 'Montserrat', Arial, sans-serif !important;
-    font-weight: 700 !important;
-    font-style: normal;
-    font-size: var(--fs-feature-head) !important;
-    line-height: 1.2 !important;
-    letter-spacing: 0.44px !important;
-    text-transform: uppercase;
-  }
-
-  {{ sel }} .primal-launch__feature p {
-    margin-top: 8px;
-    color: #3d4246;
-    font-family: Inter, Arial, sans-serif;
-    font-size: var(--fs-feature-body);
-    line-height: 1.5;
-  }
-
-  /* Figma: one 1167px line at desktop, Montserrat Bold, tracking 1.5px.
-     Flex + gap keeps the space between the two phrases even if the theme
-     minifies the whitespace between the spans, and gives a clean wrap point. */
-  {{ sel }} .primal-launch__heading {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    column-gap: 0.3em;
-    row-gap: 0.1em;
-    width: 100%;
-    margin: 0 auto var(--gap-heading);
-    color: var(--dark);
-    font-family: Montserrat, Arial, sans-serif;
-    font-size: var(--fs-heading);
-    font-weight: 700;
-    font-style: normal;
-    line-height: 1.1;
-    letter-spacing: var(--ls-heading);
-    text-align: center;
-    text-transform: uppercase;
-  }
-
-  {{ sel }} .primal-launch__heading-dark,
-  {{ sel }} .primal-launch__heading-gold {
-    white-space: nowrap;
-  }
-
-  {{ sel }} .primal-launch__heading-dark {
-    color: var(--dark);
-  }
-
-  {{ sel }} .primal-launch__heading-gold {
-    color: var(--gold);
-  }
-
-  /* Figma card: 1199 x 392, radius 30, equal 50/50 columns. */
-  {{ sel }} .primal-launch__card {
-    position: relative;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    width: 100%;
-    max-width: 1199px;
-    min-height: var(--card-h);
-    margin-inline: auto;
-    overflow: hidden;
-    border: 1px solid rgba(200, 154, 61, 0.4);
-    border-radius: var(--radius);
-    background:
-      radial-gradient(120% 140% at 18% 20%, rgba(45, 70, 58, 0.55) 0%, transparent 55%),
-      linear-gradient(100deg, #192924 0%, #1b2726 48%, var(--card) 100%);
-  }
-
-  {{ sel }} .primal-launch__card::after {
-    content: "";
-    position: absolute;
-    top: var(--pad-y);
-    bottom: var(--pad-y);
-    left: 50%;
-    width: 1px;
-    transform: translateX(-0.5px);
-    background: rgba(200, 154, 61, 0.45);
-  }
-
-  /* Same top pad on both columns, so LIMITED TIME and LAUNCHING IN share a baseline. */
-  {{ sel }} .primal-launch__offer,
-  {{ sel }} .primal-launch__signup {
-    position: relative;
-    z-index: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: flex-start;
-    min-width: 0;
-    text-align: left;
-  }
-
-  {{ sel }} .primal-launch__offer {
-    padding: var(--pad-y) var(--pad-inner) var(--pad-y) var(--pad-outer);
-  }
-
-  {{ sel }} .primal-launch__signup {
-    padding: var(--pad-y) var(--pad-outer) var(--pad-y) var(--pad-inner);
-  }
-
-  {{ sel }} .primal-launch__eyebrow {
-    margin: 0 0 var(--gap-xs);
-    color: var(--gold);
-    font-family: Montserrat, Arial, sans-serif;
-    font-size: var(--fs-small);
-    font-weight: 800;
-    line-height: 1;
-    letter-spacing: var(--ls-eyebrow);
-  }
-
-  {{ sel }} .primal-launch__discount {
-    display: flex;
-    align-items: flex-start;
-    margin: 0 0 var(--gap-discount);
-  }
-
-  {{ sel }} .primal-launch__number,
-  {{ sel }} .primal-launch__percent,
-  {{ sel }} .primal-launch__off {
-    display: block;
-    background: none;
-    color: var(--gold);
-    -webkit-text-fill-color: currentColor;
-    text-shadow: 0 0 34px rgba(200, 154, 61, 0.55);
-  }
-
-  {{ sel }} .primal-launch__number {
-    font-family: Montserrat, Arial, sans-serif;
-    font-size: var(--fs-number);
-    font-weight: 900;
-    line-height: 0.82;
-    letter-spacing: -0.038em;
-  }
-
-  {{ sel }} .primal-launch__discount-side {
-    display: flex;
-    flex-direction: column;
-    margin: 0.04em 0 0 var(--gap-discount-side);
-    font-family: Montserrat, Arial, sans-serif;
-    font-weight: 900;
-  }
-
-  {{ sel }} .primal-launch__percent {
-    font-size: var(--fs-percent);
-    line-height: 0.95;
-  }
-
-  {{ sel }} .primal-launch__off {
-    margin-top: 2px;
-    font-size: var(--fs-off);
-    line-height: 0.95;
-    letter-spacing: -0.028em;
-  }
-
-  /* At desktop both columns are the same height, so these auto margins are 0 and
-     the stack sits exactly on the Figma grid. Whenever the signup column runs
-     taller (floored control heights, a note that wraps to three lines) the spare
-     height is shared between the gap under 30% OFF and the gap under the badge,
-     instead of opening one hole between the title and the badge. */
-  {{ sel }} .primal-launch__offer-title {
-    margin: auto 0 var(--gap-md);
-    color: #ffffff;
-    font-family: Montserrat, Arial, sans-serif;
-    font-size: var(--fs-title);
-    font-weight: 700;
-    line-height: 1.15;
-    letter-spacing: 0.1px;
-  }
-
-  {{ sel }} .primal-launch__badge {
-    display: grid;
-    width: var(--w-badge);
-    height: var(--h-badge);
-    margin-bottom: auto;
-    place-items: center;
-    border: 1px solid var(--gold);
-    border-radius: 8px;
-    color: var(--gold);
-    font-family: Montserrat, Arial, sans-serif;
-    font-size: var(--fs-small);
-    font-weight: 800;
-    letter-spacing: var(--ls-badge);
-  }
-
-  {{ sel }} .primal-launch__launch-block {
-    width: 100%;
-    margin: 0 0 var(--gap-launch);
-  }
-
-  {{ sel }} .primal-launch__launching {
-    color: #ffffff;
-    font-family: Montserrat, Arial, sans-serif;
-    font-size: var(--fs-launching);
-    font-weight: 800;
-    font-style: normal;
-    line-height: 1.4;
-    letter-spacing: var(--ls-launching);
-    text-transform: uppercase;
-  }
-
-  /* The negative right margin cancels the tracking that trails the last glyph,
-     which is what keeps a 13-character month such as November 2026 on one
-     line at the Figma size. */
-  {{ sel }} .primal-launch__month {
-    margin: clamp(4px, 0.5cqw, 6px) calc(var(--ls-month) * -1) 0 0;
-    color: var(--gold);
-    font-family: Montserrat, Arial, sans-serif;
-    font-size: var(--fs-month);
-    font-weight: 700;
-    font-style: normal;
-    line-height: 1;
-    letter-spacing: var(--ls-month);
-    white-space: nowrap;
-  }
-
-  {{ sel }} .primal-launch__form {
-    display: grid;
-    width: 100%;
-    margin: 0;
-    gap: var(--gap-sm);
-  }
-
-  {{ sel }} .primal-launch__email {
-    width: 100%;
-    height: var(--h-email);
-    margin: 0;
-    padding: 0 var(--pad-email);
-    border: 0;
-    border-radius: 10px;
-    outline: 0;
-    background: var(--stone);
-    color: var(--dark);
-    font-family: Inter, Arial, sans-serif;
-    font-size: var(--fs-email);
-  }
-
-  {{ sel }} .primal-launch__email::placeholder {
-    color: #858c92;
-    opacity: 1;
-  }
-
-  {{ sel }} .primal-launch__email:focus {
-    outline: 2px solid var(--gold);
-    outline-offset: 2px;
-  }
-
-  {{ sel }} .primal-launch__button {
-    display: grid;
-    grid-template-columns: 1fr var(--w-arrow);
-    width: 100%;
-    height: var(--h-button);
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    border: 0;
-    border-radius: 10px;
-    background: var(--gold);
-    color: #111416;
-    cursor: pointer;
-    font-family: Montserrat, Arial, sans-serif;
-    font-size: var(--fs-button);
-    font-weight: 800;
-    letter-spacing: 0.2px;
-  }
-
-  {{ sel }} .primal-launch__button > span:first-child {
-    display: grid;
-    padding-inline: var(--pad-email) 8px;
-    place-items: center;
-    text-align: center;
-  }
-
-  {{ sel }} .primal-launch__arrow {
-    display: grid;
-    height: var(--h-arrow);
-    margin: auto 0;
-    place-items: center;
-    border-left: 1px solid rgba(17, 20, 22, 0.28);
-    font-family: Inter, Arial, sans-serif;
-    font-size: var(--fs-arrow);
-    font-weight: 400;
-  }
-
-  {{ sel }} .primal-launch__button:hover {
-    filter: brightness(1.07);
-  }
-
-  {{ sel }} .primal-launch__note {
-    display: flex;
-    width: 100%;
-    margin: var(--gap-md) 0 0;
-    align-items: flex-start;
-    gap: var(--gap-lock);
-    color: #c7cbce;
-  }
-
-  {{ sel }} .primal-launch__note svg,
-  {{ sel }} .primal-launch__lock-img {
-    width: var(--size-lock);
-    height: var(--size-lock);
-    margin-top: 2px;
-    flex: 0 0 var(--size-lock);
-  }
-
-  {{ sel }} .primal-launch__note svg {
-    stroke: var(--gold);
-    stroke-width: 1.5;
-  }
-
-  {{ sel }} .primal-launch__note p {
-    font-family: Inter, Arial, sans-serif;
-    font-size: var(--fs-small);
-    line-height: 1.55;
-  }
-
-  {{ sel }} .primal-launch__success {
-    color: var(--gold);
-    font: 12px/1.4 Inter, Arial, sans-serif;
-  }
-
-  {{ sel }} .primal-launch__error {
-    color: #ff9090;
-    font: 12px/1.4 Inter, Arial, sans-serif;
-  }
-
-  /* Tablet: the card keeps its two columns, only the page gutter changes. */
-  @media screen and (max-width: 1239px) {
-    {{ sel }} .pw-container.primal-launch__container {
-      width: 100%;
-      max-width: none;
-      padding-inline: clamp(24px, 5vw, 52px);
-    }
-  }
-
-  @media screen and (max-width: 989px) {
-    {{ sel }} .primal-launch__br {
-      display: none;
-    }
-  }
-
-  /* The two-column card stays an exact scaled copy of the Figma frame down to
-     900px. Below that the design would have to distort to stay in two columns,
-     so it becomes a single left aligned column instead. */
-  @media screen and (max-width: 899px) {
-    {{ sel }} .primal-launch__features,
-    {{ sel }} .primal-launch__heading,
-    {{ sel }} .primal-launch__card {
-      --pad-y: clamp(22px, 5.6vw, 30px);
-      --pad-outer: clamp(18px, 5.4vw, 26px);
-      --pad-inner: var(--pad-outer);
-      --card-h: 0px;
-      --radius: 20px;
-
-      --gap-xs: 10px;
-      --gap-sm: 10px;
-      --gap-md: 16px;
-      --gap-lg: 20px;
-      --gap-discount: var(--gap-md);
-      --gap-launch: var(--gap-md);
-      --gap-features: 24px;
-      --gap-heading: 22px;
-
-      --fs-heading: clamp(17px, 5.4vw, 30px);
-      --ls-heading: 0.6px;
-      --fs-feature-head: 14px;
-      --fs-feature-body: 12.5px;
-      --size-icon: 42px;
-      --gap-feature: 14px;
-      --pad-feature: 0px;
-      --pad-feature-y: 14px;
-      --pad-copy: 3px;
-
-      --fs-small: 11px;
-      --ls-eyebrow: 1.6px;
-      --fs-number: clamp(56px, 16vw, 76px);
-      --fs-percent: clamp(24px, 6.4vw, 30px);
-      --fs-off: clamp(22px, 6vw, 28px);
-      --gap-discount-side: 6px;
-      --fs-title: clamp(15px, 4.4vw, 18px);
-      --w-badge: min(100%, 242px);
-      --h-badge: 44px;
-      --ls-badge: 1.2px;
-      --fs-launching: 12.5px;
-      --ls-launching: 2px;
-      --fs-month: clamp(28px, 8.4vw, 38px);
-      --ls-month: 2px;
-      --h-email: 46px;
-      --fs-email: 14px;
-      --pad-email: 14px;
-      --h-button: 48px;
-      --fs-button: clamp(10px, 3vw, 12px);
-      --w-arrow: 42px;
-      --h-arrow: 30px;
-      --fs-arrow: 18px;
-      --size-lock: 14px;
-      --gap-lock: 8px;
-    }
-
-    {{ sel }} {
-      padding: 24px 0 28px;
-    }
-
-    {{ sel }} .pw-container.primal-launch__container {
-      padding-inline: clamp(16px, 5vw, 28px);
-    }
-
-    {{ sel }} .primal-launch__features {
-      grid-template-columns: 1fr;
-    }
-
-    {{ sel }} .primal-launch__feature,
-    {{ sel }} .primal-launch__feature:first-child,
-    {{ sel }} .primal-launch__feature:last-child {
-      padding: var(--pad-feature-y) 0;
-      border: none;
-      border-bottom: 1px solid rgba(31, 35, 38, 0.16);
-    }
-
-    {{ sel }} .primal-launch__feature:first-child {
-      padding-top: 0;
-    }
-
-    {{ sel }} .primal-launch__feature:last-child {
-      padding-bottom: 0;
-      border-bottom: 0;
-    }
-
-    {{ sel }} .primal-launch__feature p {
-      margin-top: 4px;
-      line-height: 1.45;
-    }
-
-    {{ sel }} .primal-launch__card {
-      display: flex;
-      flex-direction: column;
-    }
-
-    /* The vertical rule becomes the seam between the two stacked halves. */
-    {{ sel }} .primal-launch__card::after {
-      display: none;
-    }
-
-    {{ sel }} .primal-launch__offer {
-      padding: var(--pad-y) var(--pad-outer) var(--gap-lg);
-    }
-
-    {{ sel }} .primal-launch__signup {
-      padding: var(--gap-lg) var(--pad-outer) var(--pad-y);
-      border-top: 1px solid rgba(200, 154, 61, 0.3);
-    }
-
-    {{ sel }} .primal-launch__offer-title {
-      margin-top: 0;
-    }
-
-    {{ sel }} .primal-launch__badge {
-      margin-bottom: 0;
-    }
-  }
-
-  @media screen and (max-width: 380px) {
-    {{ sel }} .primal-launch__card {
-      --ls-month: 1px;
-      --fs-button: 9.5px;
-      --w-arrow: 36px;
-    }
-
-    /* Last resort for a longer custom heading on the narrowest phones. */
-    {{ sel }} .primal-launch__heading-dark,
-    {{ sel }} .primal-launch__heading-gold {
-      white-space: normal;
-    }
-  }
+{{ sel }}{{% render 'pw-align-vars' %}}
+#shopify-section-{{ section.id }}{display: block;width: 100%;max-width: none;margin: 0;padding: 0;}
+{{ sel }},{{ sel }} *{box-sizing: border-box;}
+{{ sel }}{width: 100%;margin: 0;padding: clamp(28px, 3.34vw, 48px) 0 clamp(32px, 3.82vw, 55px);overflow: hidden;background: var(--background);color: var(--dark);}
+{{ sel }} p,{{ sel }} h2,{{ sel }} h3{margin: 0;}
+{{ sel }} .primal-launch__hidden{position: absolute !important;width: 1px;height: 1px;margin: -1px;overflow: hidden;clip: rect(0, 0, 0, 0);white-space: nowrap;}
+/* Hero grid: content runs x=120 to x=1320 at 1440. This is also the query container, so 1cqw = 1% of the 1200px inner width. */
+{{ sel }} .pw-container.primal-launch__container{position: relative;container-type: inline-size;width: min(100%, 1440px);max-width: 1440px;margin-inline: auto;padding-inline: min(8.333333vw, 120px);}
+/* Every Figma value as a share of the 1200px grid, so the card stays a scaled copy of the 1199x392 frame. Floors are the values the design reaches at ~890px, so nothing clamps while the two column card is still wide. */
+{{ sel }} .primal-launch__features,{{ sel }} .primal-launch__heading,{{ sel }} .primal-launch__card{--pad-y: clamp(34px, 4.334cqw, 52px);--pad-outer: clamp(42px, 5.334cqw, 64px);--pad-inner: clamp(32px, 4cqw, 48px);--card-h: min(32.7cqw, 392px);--radius: clamp(20px, 2.5cqw, 30px);--gap-xs: clamp(9px, 1.167cqw, 14px);--gap-sm: clamp(11px, 1.334cqw, 16px);--gap-md: clamp(15px, 1.834cqw, 22px);--gap-lg: clamp(19px, 2.334cqw, 28px);--gap-discount: clamp(36px, 4.5cqw, 54px);--gap-launch: clamp(16px, 2cqw, 24px);--gap-features: clamp(32px, 4cqw, 48px);--gap-heading: clamp(27px, 3.34cqw, 40px);--fs-heading: clamp(31px, 3.917cqw, 47px);--ls-heading: clamp(1px, 0.125cqw, 1.5px);--fs-feature-head: clamp(11px, 1.385cqw, 16.62px);--fs-feature-body: clamp(10px, 1.17cqw, 14px);--size-icon: clamp(39px, 4.92cqw, 59px);--gap-feature: clamp(11px, 1.42cqw, 17px);--pad-feature: clamp(19px, 2.334cqw, 28px);--pad-feature-y: clamp(12px, 1.5cqw, 18px);--pad-copy: clamp(6px, 0.8cqw, 9.55px);--fs-small: clamp(9px, 1cqw, 12px);--ls-eyebrow: clamp(1.7px, 0.209cqw, 2.5px);--fs-number: clamp(69px, 8.667cqw, 104px);--fs-percent: clamp(25px, 3.167cqw, 38px);--fs-off: clamp(24px, 3cqw, 36px);--gap-discount-side: clamp(7px, 0.834cqw, 10px);--fs-title: clamp(14.5px, 1.834cqw, 22px);--w-badge: clamp(161px, 20.167cqw, 242px);--h-badge: clamp(32px, 4cqw, 48px);--ls-badge: clamp(1.1px, 0.134cqw, 1.6px);--fs-launching: clamp(10px, 1.25cqw, 15px);--ls-launching: clamp(2px, 0.25cqw, 3px);--fs-month: clamp(34px, 4.334cqw, 52px);--ls-month: clamp(3.3px, 0.417cqw, 5px);--h-email: clamp(35px, 4.334cqw, 52px);--fs-email: clamp(10px, 1.25cqw, 15px);--pad-email: clamp(12px, 1.5cqw, 18px);--h-button: clamp(36px, 4.5cqw, 54px);--fs-button: clamp(9.3px, 1.167cqw, 14px);--w-arrow: clamp(33px, 4.167cqw, 50px);--h-arrow: clamp(23px, 2.834cqw, 34px);--fs-arrow: clamp(15px, 1.834cqw, 22px);--size-lock: clamp(10px, 1.25cqw, 15px);--gap-lock: clamp(7px, 0.834cqw, 10px);}
+{{ sel }} .primal-launch__features{display: grid;grid-template-columns: repeat(3, minmax(0, 1fr));align-items: stretch;width: 100%;margin: 0 0 var(--gap-features);padding: 0;}
+{{ sel }} .primal-launch__feature{display: flex;align-items: flex-start;gap: var(--gap-feature);min-width: 0;margin: 0;padding: var(--pad-feature-y) var(--pad-feature) calc(var(--pad-feature-y) * 1.222);border-left: 1.11px solid rgba(31, 35, 38, 0.17);}
+{{ sel }} .primal-launch__feature:first-child{padding-left: 0;border-left: none;}
+{{ sel }} .primal-launch__feature:last-child{padding-right: 0;}
+{{ sel }} .primal-launch__icon{width: var(--size-icon);height: var(--size-icon);flex: 0 0 auto;margin: 0;line-height: 0;}
+{{ sel }} .primal-launch__icon svg{display: block;width: 100%;height: 100%;stroke: var(--dark);stroke-width: 1.6;stroke-linecap: round;stroke-linejoin: round;}
+{{ sel }} .primal-launch__icon-img{display: block;width: 100%;height: 100%;object-fit: contain;}
+{{ sel }} .primal-launch__copy{display: flex;flex-direction: column;min-width: 0;padding-top: var(--pad-copy);}
+{{ sel }} .primal-launch__feature strong{display: block;color: var(--dark);font-family: 'Montserrat', Arial, sans-serif !important;font-weight: 700 !important;font-style: normal;font-size: var(--fs-feature-head) !important;line-height: 1.2 !important;letter-spacing: 0.44px !important;text-transform: uppercase;}
+{{ sel }} .primal-launch__feature p{margin-top: 8px;color: #3d4246;font-family: Inter, Arial, sans-serif;font-size: var(--fs-feature-body);line-height: 1.5;}
+/* Flex + column-gap keeps the space between the two phrases even if the theme minifies whitespace between the spans. Sized to the 1167px Figma line. */
+{{ sel }} .primal-launch__heading{display: flex;flex-wrap: wrap;justify-content: center;column-gap: 0.3em;row-gap: 0.1em;width: 100%;margin: 0 auto var(--gap-heading);color: var(--dark);font-family: Montserrat, Arial, sans-serif;font-size: var(--fs-heading);font-weight: 700;font-style: normal;line-height: 1.1;letter-spacing: var(--ls-heading);text-align: center;text-transform: uppercase;}
+{{ sel }} .primal-launch__heading-dark,{{ sel }} .primal-launch__heading-gold{white-space: nowrap;}
+{{ sel }} .primal-launch__heading-dark{color: var(--dark);}
+{{ sel }} .primal-launch__heading-gold{color: var(--gold);}
+{{ sel }} .primal-launch__card{position: relative;display: grid;grid-template-columns: 1fr 1fr;width: 100%;max-width: 1199px;min-height: var(--card-h);margin-inline: auto;overflow: hidden;border: 1px solid rgba(200, 154, 61, 0.4);border-radius: var(--radius);background: radial-gradient(120% 140% at 18% 20%, rgba(45, 70, 58, 0.55) 0%, transparent 55%), linear-gradient(100deg, #192924 0%, #1b2726 48%, var(--card) 100%);}
+{{ sel }} .primal-launch__card::after{content: "";position: absolute;top: var(--pad-y);bottom: var(--pad-y);left: 50%;width: 1px;transform: translateX(-0.5px);background: rgba(200, 154, 61, 0.45);}
+{{ sel }} .primal-launch__offer,{{ sel }} .primal-launch__signup{position: relative;z-index: 1;display: flex;flex-direction: column;align-items: flex-start;justify-content: flex-start;min-width: 0;text-align: left;}
+{{ sel }} .primal-launch__offer{padding: var(--pad-y) var(--pad-inner) var(--pad-y) var(--pad-outer);}
+{{ sel }} .primal-launch__signup{padding: var(--pad-y) var(--pad-outer) var(--pad-y) var(--pad-inner);}
+{{ sel }} .primal-launch__eyebrow{margin: 0 0 var(--gap-xs);color: var(--gold);font-family: Montserrat, Arial, sans-serif;font-size: var(--fs-small);font-weight: 800;line-height: 1;letter-spacing: var(--ls-eyebrow);}
+{{ sel }} .primal-launch__discount{display: flex;align-items: flex-start;margin: 0 0 var(--gap-discount);}
+{{ sel }} .primal-launch__number,{{ sel }} .primal-launch__percent,{{ sel }} .primal-launch__off{display: block;background: none;color: var(--gold);-webkit-text-fill-color: currentColor;text-shadow: 0 0 34px rgba(200, 154, 61, 0.55);}
+{{ sel }} .primal-launch__number{font-family: Montserrat, Arial, sans-serif;font-size: var(--fs-number);font-weight: 900;line-height: 0.82;letter-spacing: -0.038em;}
+{{ sel }} .primal-launch__discount-side{display: flex;flex-direction: column;margin: 0.04em 0 0 var(--gap-discount-side);font-family: Montserrat, Arial, sans-serif;font-weight: 900;}
+{{ sel }} .primal-launch__percent{font-size: var(--fs-percent);line-height: 0.95;}
+{{ sel }} .primal-launch__off{margin-top: 2px;font-size: var(--fs-off);line-height: 0.95;letter-spacing: -0.028em;}
+/* Both auto margins are 0 at desktop. If the signup column ever runs taller, the spare height is split between the gap under 30% OFF and the gap under the badge rather than opening one hole under the title. */
+{{ sel }} .primal-launch__offer-title{margin: auto 0 var(--gap-md);color: #ffffff;font-family: Montserrat, Arial, sans-serif;font-size: var(--fs-title);font-weight: 700;line-height: 1.15;letter-spacing: 0.1px;}
+{{ sel }} .primal-launch__badge{display: grid;width: var(--w-badge);height: var(--h-badge);margin-bottom: auto;place-items: center;border: 1px solid var(--gold);border-radius: 8px;color: var(--gold);font-family: Montserrat, Arial, sans-serif;font-size: var(--fs-small);font-weight: 800;letter-spacing: var(--ls-badge);}
+{{ sel }} .primal-launch__launch-block{width: 100%;margin: 0 0 var(--gap-launch);}
+{{ sel }} .primal-launch__launching{color: #ffffff;font-family: Montserrat, Arial, sans-serif;font-size: var(--fs-launching);font-weight: 800;font-style: normal;line-height: 1.4;letter-spacing: var(--ls-launching);text-transform: uppercase;}
+/* Negative right margin cancels the tracking trailing the last glyph, which keeps November 2026 on one line at the Figma size. */
+{{ sel }} .primal-launch__month{margin: clamp(4px, 0.5cqw, 6px) calc(var(--ls-month) * -1) 0 0;color: var(--gold);font-family: Montserrat, Arial, sans-serif;font-size: var(--fs-month);font-weight: 700;font-style: normal;line-height: 1;letter-spacing: var(--ls-month);white-space: nowrap;}
+{{ sel }} .primal-launch__form{display: grid;width: 100%;margin: 0;gap: var(--gap-sm);}
+{{ sel }} .primal-launch__email{width: 100%;height: var(--h-email);margin: 0;padding: 0 var(--pad-email);border: 0;border-radius: 10px;outline: 0;background: var(--stone);color: var(--dark);font-family: Inter, Arial, sans-serif;font-size: var(--fs-email);}
+{{ sel }} .primal-launch__email::placeholder{color: #858c92;opacity: 1;}
+{{ sel }} .primal-launch__email:focus{outline: 2px solid var(--gold);outline-offset: 2px;}
+{{ sel }} .primal-launch__button{display: grid;grid-template-columns: 1fr var(--w-arrow);width: 100%;height: var(--h-button);margin: 0;padding: 0;overflow: hidden;border: 0;border-radius: 10px;background: var(--gold);color: #111416;cursor: pointer;font-family: Montserrat, Arial, sans-serif;font-size: var(--fs-button);font-weight: 800;letter-spacing: 0.2px;}
+{{ sel }} .primal-launch__button > span:first-child{display: grid;padding-inline: var(--pad-email) 8px;place-items: center;text-align: center;}
+{{ sel }} .primal-launch__arrow{display: grid;height: var(--h-arrow);margin: auto 0;place-items: center;border-left: 1px solid rgba(17, 20, 22, 0.28);font-family: Inter, Arial, sans-serif;font-size: var(--fs-arrow);font-weight: 400;}
+{{ sel }} .primal-launch__button:hover{filter: brightness(1.07);}
+{{ sel }} .primal-launch__note{display: flex;width: 100%;margin: var(--gap-md) 0 0;align-items: flex-start;gap: var(--gap-lock);color: #c7cbce;}
+{{ sel }} .primal-launch__note svg,{{ sel }} .primal-launch__lock-img{width: var(--size-lock);height: var(--size-lock);margin-top: 2px;flex: 0 0 var(--size-lock);}
+{{ sel }} .primal-launch__note svg{stroke: var(--gold);stroke-width: 1.5;}
+{{ sel }} .primal-launch__note p{font-family: Inter, Arial, sans-serif;font-size: var(--fs-small);line-height: 1.55;}
+{{ sel }} .primal-launch__success{color: var(--gold);font: 12px/1.4 Inter, Arial, sans-serif;}
+{{ sel }} .primal-launch__error{color: #ff9090;font: 12px/1.4 Inter, Arial, sans-serif;}
+@media screen and (max-width: 1239px) {
+  {{ sel }} .pw-container.primal-launch__container{width: 100%;max-width: none;padding-inline: clamp(24px, 5vw, 52px);}
+}
+@media screen and (max-width: 989px) {
+  {{ sel }} .primal-launch__br{display: none;}
+}
+/* Two columns hold their Figma proportions down to 900px. Below that the design would have to distort, so it stacks into one left aligned column. */
+@media screen and (max-width: 899px) {
+  {{ sel }} .primal-launch__features,{{ sel }} .primal-launch__heading,{{ sel }} .primal-launch__card{--pad-y: clamp(22px, 5.6vw, 30px);--pad-outer: clamp(18px, 5.4vw, 26px);--pad-inner: var(--pad-outer);--card-h: 0px;--radius: 20px;--gap-xs: 10px;--gap-sm: 10px;--gap-md: 16px;--gap-lg: 20px;--gap-discount: var(--gap-md);--gap-launch: var(--gap-md);--gap-features: 24px;--gap-heading: 22px;--fs-heading: clamp(17px, 5.4vw, 30px);--ls-heading: 0.6px;--fs-feature-head: 14px;--fs-feature-body: 12.5px;--size-icon: 42px;--gap-feature: 14px;--pad-feature: 0px;--pad-feature-y: 14px;--pad-copy: 3px;--fs-small: 11px;--ls-eyebrow: 1.6px;--fs-number: clamp(56px, 16vw, 76px);--fs-percent: clamp(24px, 6.4vw, 30px);--fs-off: clamp(22px, 6vw, 28px);--gap-discount-side: 6px;--fs-title: clamp(15px, 4.4vw, 18px);--w-badge: min(100%, 242px);--h-badge: 44px;--ls-badge: 1.2px;--fs-launching: 12.5px;--ls-launching: 2px;--fs-month: clamp(28px, 8.4vw, 38px);--ls-month: 2px;--h-email: 46px;--fs-email: 14px;--pad-email: 14px;--h-button: 48px;--fs-button: clamp(10px, 3vw, 12px);--w-arrow: 42px;--h-arrow: 30px;--fs-arrow: 18px;--size-lock: 14px;--gap-lock: 8px;}
+  {{ sel }}{padding: 24px 0 28px;}
+  {{ sel }} .pw-container.primal-launch__container{padding-inline: clamp(16px, 5vw, 28px);}
+  {{ sel }} .primal-launch__features{grid-template-columns: 1fr;}
+  {{ sel }} .primal-launch__feature,{{ sel }} .primal-launch__feature:first-child,{{ sel }} .primal-launch__feature:last-child{padding: var(--pad-feature-y) 0;border: none;border-bottom: 1px solid rgba(31, 35, 38, 0.16);}
+  {{ sel }} .primal-launch__feature:first-child{padding-top: 0;}
+  {{ sel }} .primal-launch__feature:last-child{padding-bottom: 0;border-bottom: 0;}
+  {{ sel }} .primal-launch__feature p{margin-top: 4px;line-height: 1.45;}
+  {{ sel }} .primal-launch__card{display: flex;flex-direction: column;}
+  {{ sel }} .primal-launch__card::after{display: none;}
+  {{ sel }} .primal-launch__offer{padding: var(--pad-y) var(--pad-outer) var(--gap-lg);}
+  {{ sel }} .primal-launch__signup{padding: var(--gap-lg) var(--pad-outer) var(--pad-y);border-top: 1px solid rgba(200, 154, 61, 0.3);}
+  {{ sel }} .primal-launch__offer-title{margin-top: 0;}
+  {{ sel }} .primal-launch__badge{margin-bottom: 0;}
+}
+@media screen and (max-width: 380px) {
+  {{ sel }} .primal-launch__card{--ls-month: 1px;--fs-button: 9.5px;--w-arrow: 36px;}
+  {{ sel }} .primal-launch__heading-dark,{{ sel }} .primal-launch__heading-gold{white-space: normal;}
+}
 {% endstyle %}
 
 {% schema %}
-{
-  "name": "Primal launch aligned",
-  "tag": "section",
-  "class": "section-primal-prelaunch",
-  "settings": [
-    {
-      "type": "text",
-      "id": "scientists_heading",
-      "label": "Heading (dark)",
-      "default": "Developed By Scientists."
-    },
-    {
-      "type": "text",
-      "id": "scientists_heading_gold",
-      "label": "Heading (gold)",
-      "default": "Built For Life."
-    },
-    {
-      "type": "text",
-      "id": "launch_month_label",
-      "label": "Launch month",
-      "default": "November 2026"
-    },
-    {
-      "type": "color",
-      "id": "background_color_exact",
-      "label": "Background color",
-      "default": "#EFE5DE"
-    },
-    {
-      "type": "color",
-      "id": "card_color_exact",
-      "label": "Card color",
-      "default": "#1F2326"
-    },
-    {
-      "type": "color",
-      "id": "gold_color_exact",
-      "label": "Gold color",
-      "default": "#C89A3D"
-    },
-    {
-      "type": "header",
-      "content": "Icons (SVG or PNG)"
-    },
-    {
-      "type": "image_picker",
-      "id": "icon_ingredients",
-      "label": "Ingredients icon"
-    },
-    {
-      "type": "image_picker",
-      "id": "icon_uk",
-      "label": "UK icon"
-    },
-    {
-      "type": "image_picker",
-      "id": "icon_transparency",
-      "label": "Transparency icon"
-    },
-    {
-      "type": "image_picker",
-      "id": "icon_lock",
-      "label": "Lock icon"
-    }
+{ "name": "Primal launch aligned", "tag": "section", "class": "section-primal-prelaunch", "settings": [ { "type": "text", "id": "scientists_heading", "label": "Heading (dark)", "default": "Developed By Scientists." },
+    { "type": "text", "id": "scientists_heading_gold", "label": "Heading (gold)", "default": "Built For Life." },
+    { "type": "text", "id": "launch_month_label", "label": "Launch month", "default": "November 2026" },
+    { "type": "color", "id": "background_color_exact", "label": "Background color", "default": "#EFE5DE" },
+    { "type": "color", "id": "card_color_exact", "label": "Card color", "default": "#1F2326" },
+    { "type": "color", "id": "gold_color_exact", "label": "Gold color", "default": "#C89A3D" },
+    { "type": "header", "content": "Icons (SVG or PNG)" },
+    { "type": "image_picker", "id": "icon_ingredients", "label": "Ingredients icon" },
+    { "type": "image_picker", "id": "icon_uk", "label": "UK icon" },
+    { "type": "image_picker", "id": "icon_transparency", "label": "Transparency icon" },
+    { "type": "image_picker", "id": "icon_lock", "label": "Lock icon" }
   ],
   "presets": [
-    {
-      "name": "Primal launch aligned"
-    }
+    { "name": "Primal launch aligned" }
   ]
 }
 {% endschema %}
