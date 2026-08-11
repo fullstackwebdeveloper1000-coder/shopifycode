@@ -16,6 +16,7 @@ from reportlab.lib.units import cm
 from reportlab.lib.colors import HexColor, white, black
 from reportlab.lib.styles import ParagraphStyle
 from reportlab.lib.enums import TA_CENTER, TA_LEFT, TA_RIGHT
+from reportlab.lib.utils import ImageReader
 from reportlab.platypus import (
     SimpleDocTemplate, Paragraph, Spacer, Image as RLImage,
     PageBreak, Table, TableStyle, ListFlowable, ListItem,
@@ -30,6 +31,7 @@ OUT_DOCX_ALT = "/workspace/CoLab_Space_Point_Digital_Agency_Proposal.docx"
 # PDF layout constants (A4 with 2cm margins → 17cm content)
 PDF_M = 2 * cm
 PDF_W = A4[0] - 4 * cm  # 17cm
+COVER_BAND_H = 5.4 * cm
 
 BLACK = RGBColor(0, 0, 0)
 TEAL = RGBColor(0x06, 0xAC, 0xBA)
@@ -214,7 +216,26 @@ def fetch_icon(key: str) -> Path | None:
 
 
 def fetch_all_icons() -> dict:
-    return {k: fetch_icon(k) for k in ICONS}
+    icons = {k: fetch_icon(k) for k in ICONS}
+    logo = icons.get("logo")
+    if logo and logo.exists():
+        icons["logo_cover"] = prepare_cover_logo(logo)
+    return icons
+
+
+def prepare_cover_logo(logo_path: Path) -> Path:
+    """Logo on navy — Web-Logo-II is light grey and fades on white backgrounds."""
+    from PIL import Image
+
+    dest = ASSETS / "logo_cover.png"
+    if dest.exists() and dest.stat().st_mtime >= logo_path.stat().st_mtime:
+        return dest
+    im = Image.open(logo_path).convert("RGBA")
+    pad_x, pad_y = 56, 36
+    canvas = Image.new("RGBA", (im.size[0] + pad_x * 2, im.size[1] + pad_y * 2), (4, 36, 60, 255))
+    canvas.paste(im, (pad_x, pad_y), im)
+    canvas.save(dest, "PNG")
+    return dest
 
 
 def force_white_page(doc):
@@ -383,12 +404,19 @@ def build_docx(icons: dict):
     normal.font.size = Pt(12)
     normal.font.color.rgb = BLACK
 
-    # Cover — logo only, no big banner
-    if icons.get("logo") and icons["logo"].exists():
-        p = doc.add_paragraph()
+    # Cover — logo on navy band (visible on dark, not washed out on white)
+    logo_cover = icons.get("logo_cover") or icons.get("logo")
+    if logo_cover and logo_cover.exists():
+        bar = doc.add_table(rows=1, cols=1)
+        c = bar.rows[0].cells[0]
+        shade_cell(c, "04243C")
+        p = c.paragraphs[0]
         p.alignment = WD_ALIGN_PARAGRAPH.CENTER
-        p.add_run().add_picture(str(icons["logo"]), width=Inches(1.4))
-    line(doc, "CoLab Point", 14, True, TEAL, center=True, space=4)
+        p.add_run().add_picture(str(logo_cover), width=Inches(5.8))
+        p2 = c.add_paragraph()
+        p2.alignment = WD_ALIGN_PARAGRAPH.CENTER
+        write_run(p2, "CoLab Point  |  Digital Agency  |  Gujrat, Pakistan", 10, False, TEAL)
+    line(doc, "", space=8)
     line(doc, COMPANY, 26, True, BLACK, center=True, space=6)
     line(doc, "Digital Agency Proposal", 16, True, BLACK, center=True, space=10)
     line(doc, "Website Designing & Development  |  Digital Marketing", 12, False, BLACK, center=True)
@@ -478,6 +506,17 @@ def _pdf_icon(path, size_cm=0.75):
     return Spacer(size_cm * cm, size_cm * cm)
 
 
+def _pdf_logo(path, width_cm=12.0):
+    """Wide logo — use width-based sizing, not square box."""
+    if not path or not Path(path).exists():
+        return Spacer(width_cm * cm, 1.5 * cm)
+    from PIL import Image
+
+    w, h = Image.open(path).size
+    height_cm = width_cm * h / w if w else 2.0
+    return RLImage(str(path), width=width_cm * cm, height=height_cm * cm)
+
+
 def _pdf_hr(story, color="#06ACBA"):
     t = Table([[""]], colWidths=[PDF_W], rowHeights=[2])
     t.setStyle(TableStyle([
@@ -508,15 +547,33 @@ def _pdf_heading(story, title, subtitle="", icon_path=None, styles=None):
 
 
 def _pdf_cover_page(canvas, doc):
-    """Premium cover — navy top band, no stock photos."""
+    """Full-bleed navy band with large logo — logo PNG is light grey and needs dark bg."""
     canvas.saveState()
-    canvas.setFillColor(HexColor("#04243C"))
-    canvas.rect(0, A4[1] - 2.4 * cm, A4[0], 2.4 * cm, fill=1, stroke=0)
-    canvas.setFillColor(HexColor("#06ACBA"))
-    canvas.rect(0, A4[1] - 2.4 * cm, A4[0], 0.12 * cm, fill=1, stroke=0)
-    canvas.setFont("Helvetica-Bold", 11)
-    canvas.setFillColor(HexColor("#FFFFFF"))
-    canvas.drawCentredString(A4[0] / 2, A4[1] - 1.55 * cm, "CoLab Point  |  Digital Agency  |  Gujrat, Pakistan")
+    navy = HexColor("#04243C")
+    teal = HexColor("#06ACBA")
+    band_h = COVER_BAND_H
+
+    canvas.setFillColor(navy)
+    canvas.rect(0, A4[1] - band_h, A4[0], band_h, fill=1, stroke=0)
+    canvas.setFillColor(teal)
+    canvas.rect(0, A4[1] - band_h, A4[0], 0.12 * cm, fill=1, stroke=0)
+
+    logo_path = getattr(doc, "logo_cover_path", None)
+    if logo_path and Path(logo_path).exists():
+        img = ImageReader(str(logo_path))
+        iw, ih = img.getSize()
+        target_w = min(A4[0] - 2.4 * cm, 13.5 * cm)
+        target_h = target_w * ih / iw
+        x = (A4[0] - target_w) / 2
+        y = A4[1] - band_h + (band_h - target_h) / 2 + 0.35 * cm
+        canvas.drawImage(img, x, y, width=target_w, height=target_h, mask="auto")
+
+    canvas.setFont("Helvetica", 9)
+    canvas.setFillColor(teal)
+    canvas.drawCentredString(
+        A4[0] / 2, A4[1] - band_h + 0.6 * cm,
+        "CoLab Point  |  Digital Agency  |  Gujrat, Pakistan",
+    )
     canvas.restoreState()
 
 
@@ -597,15 +654,10 @@ def _pdf_package_block(story, pkg, styles, icons):
 def build_pdf(icons: dict):
     styles = _pdf_styles()
     story = []
-    logo = icons.get("logo")
+    logo_cover = icons.get("logo_cover") or icons.get("logo")
 
-    # ── Cover: white, logo, navy text (NO banner photo, NO dark text box) ──
-    story.append(Spacer(1, 1.2 * cm))  # space for canvas top band
-    if logo and logo.exists():
-        lt = Table([[_pdf_icon(logo, 4.0)]], colWidths=[PDF_W])
-        lt.setStyle(TableStyle([("ALIGN", (0, 0), (-1, -1), "CENTER")]))
-        story.append(lt)
-        story.append(Spacer(1, 0.8 * cm))
+    # ── Cover: large logo drawn on full-bleed navy band (see _pdf_cover_page) ──
+    story.append(Spacer(1, COVER_BAND_H - 2.6 * cm + 0.35 * cm))
 
     story.append(Paragraph(COMPANY, ParagraphStyle(
         "ct", fontName="Helvetica-Bold", fontSize=30, textColor=HexColor("#04243C"),
@@ -644,7 +696,7 @@ def build_pdf(icons: dict):
     story.append(PageBreak())
 
     # ── Company Profile ──
-    _pdf_heading(story, "Company Profile", "CoLab Space Point - Gujrat, Pakistan", logo, styles)
+    _pdf_heading(story, "Company Profile", "CoLab Space Point - Gujrat, Pakistan", icons.get("logo"), styles)
     story.append(Paragraph("<b>About Us</b>", styles["bold"]))
     story.append(Paragraph(ascii_safe(COMPANY_ABOUT), styles["body"]))
     story.append(Paragraph(ascii_safe(COMPANY_MISSION), styles["body"]))
@@ -725,6 +777,7 @@ def build_pdf(icons: dict):
         topMargin=2.6 * cm, bottomMargin=2.0 * cm,
         title=f"{COMPANY} Proposal", author=COMPANY,
     )
+    doc.logo_cover_path = str(logo_cover) if logo_cover else None
     doc.build(story, onFirstPage=_pdf_footer, onLaterPages=_pdf_footer)
 
     # Copy to legacy names so all links work
