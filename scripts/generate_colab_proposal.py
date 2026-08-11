@@ -1,8 +1,11 @@
 #!/usr/bin/env python3
-"""CoLab Point proposal — WHITE page, BLACK large text (readable everywhere)."""
+"""CoLab Point proposal — white background, images, clear pricing."""
 
 import io
+import os
 import urllib.request
+from pathlib import Path
+
 from docx import Document
 from docx.shared import Pt, RGBColor, Cm, Inches
 from docx.enum.text import WD_ALIGN_PARAGRAPH
@@ -15,7 +18,7 @@ NAVY = RGBColor(0x04, 0x24, 0x3C)
 FONT = "Arial"
 
 OUT = "/workspace/CoLab_Space_Point_Digital_Agency_Proposal.docx"
-LOGO_URL = "https://colabpoint.com/wp-content/uploads/2024/05/Web-Logo-II-150x145.png"
+ASSETS = Path("/workspace/assets/proposal")
 
 COMPANY = "CoLab Space Point"
 WEB = "www.colabpoint.com"
@@ -23,20 +26,38 @@ PHONE = "+92 349 7684322  |  +92 478 986460"
 EMAIL = "colabpoint@gmail.com  |  hello@colabpoint.com"
 ADDRESS = "2nd Floor Anwar Center, Madina Road Near Gymkhana, Gujrat, Pakistan"
 
+# Brand + professional digital agency imagery
+IMAGES = {
+    "logo": "https://colabpoint.com/wp-content/uploads/2024/05/Web-Logo-II.png",
+    "cover_banner": "https://colabpoint.com/wp-content/uploads/2024/06/popup-bg-1-1024x374-1.jpg",
+    "office": "https://images.unsplash.com/photo-1497366216548-37526070297c?w=1200&q=80",
+    "web_design": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&q=80",
+    "ecommerce": "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=1200&q=80",
+    "premium_web": "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=1200&q=80",
+    "digital_marketing": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&q=80",
+    "contact": "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1200&q=80",
+}
+
+
+def fetch_image(key: str) -> bytes | None:
+    ASSETS.mkdir(parents=True, exist_ok=True)
+    ext = ".jpg" if "jpg" in IMAGES[key] else ".png"
+    cache = ASSETS / f"{key}{ext}"
+    if cache.exists():
+        return cache.read_bytes()
+    try:
+        req = urllib.request.Request(IMAGES[key], headers={"User-Agent": "Mozilla/5.0"})
+        data = urllib.request.urlopen(req, timeout=20).read()
+        cache.write_bytes(data)
+        return data
+    except Exception:
+        return None
+
 
 def force_white_page(doc):
-    """Page background always white (fixes dark preview)."""
     bg = OxmlElement("w:background")
     bg.set(qn("w:color"), "FFFFFF")
     doc.element.insert(0, bg)
-    for sec in doc.sections:
-        sectPr = sec._sectPr
-        pg = sectPr.find(qn("w:pgSz"))
-        if pg is not None:
-            pass
-        # Remove any page color fill
-        for el in sectPr.findall(qn("w:pgMar")):
-            pass
 
 
 def write_run(paragraph, text, size=14, bold=False, color=BLACK):
@@ -60,6 +81,17 @@ def write_run(paragraph, text, size=14, bold=False, color=BLACK):
     return run
 
 
+def add_image(doc, key: str, width_in=5.5, space_after=10):
+    data = fetch_image(key)
+    if not data:
+        return
+    p = doc.add_paragraph()
+    p.alignment = WD_ALIGN_PARAGRAPH.CENTER
+    p.paragraph_format.space_before = Pt(6)
+    p.paragraph_format.space_after = Pt(space_after)
+    p.add_run().add_picture(io.BytesIO(data), width=Inches(width_in))
+
+
 def line(doc, text="", size=14, bold=False, color=BLACK, center=False, space=10):
     p = doc.add_paragraph()
     p.paragraph_format.space_after = Pt(space)
@@ -72,7 +104,6 @@ def line(doc, text="", size=14, bold=False, color=BLACK, center=False, space=10)
 
 
 def section_title(doc, text):
-    """Big black heading on white — no dark boxes."""
     p = doc.add_paragraph()
     p.paragraph_format.space_before = Pt(16)
     p.paragraph_format.space_after = Pt(8)
@@ -89,7 +120,7 @@ def section_title(doc, text):
 
 
 def price_line(doc, text):
-    p = line(doc, text, 18, True, NAVY, space=6)
+    line(doc, text, 18, True, NAVY, space=6)
 
 
 def includes_header(doc):
@@ -97,12 +128,14 @@ def includes_header(doc):
 
 
 def bullet(doc, text):
-    p = line(doc, f"  •  {text}", 14, False, BLACK, space=4)
+    line(doc, f"  •  {text}", 14, False, BLACK, space=4)
 
 
-def package(doc, title, price, for_who, items, note=None):
+def package(doc, title, price, for_who, items, image_key=None, note=None):
     doc.add_page_break()
     section_title(doc, title)
+    if image_key:
+        add_image(doc, image_key, width_in=5.0, space_after=8)
     price_line(doc, f"Package Price: PKR {price}")
     line(doc, f"Best for: {for_who}", 14, False, BLACK, space=12)
     includes_header(doc)
@@ -130,51 +163,41 @@ def build():
     normal.font.color.rgb = BLACK
 
     sec = doc.sections[0]
-    sec.top_margin = Cm(2.5)
-    sec.bottom_margin = Cm(2.5)
-    sec.left_margin = Cm(2.5)
-    sec.right_margin = Cm(2.5)
+    sec.top_margin = Cm(2)
+    sec.bottom_margin = Cm(2)
+    sec.left_margin = Cm(2)
+    sec.right_margin = Cm(2)
 
-    # Cover
-    try:
-        data = urllib.request.urlopen(LOGO_URL, timeout=15).read()
-        lp = doc.add_paragraph()
-        lp.alignment = WD_ALIGN_PARAGRAPH.CENTER
-        lp.add_run().add_picture(io.BytesIO(data), width=Inches(1.6))
-    except Exception:
-        pass
+    # ── Cover ──
+    add_image(doc, "cover_banner", width_in=6.2, space_after=12)
+    add_image(doc, "logo", width_in=1.8, space_after=10)
+    line(doc, "CoLab Point", 16, True, TEAL, center=True, space=6)
+    line(doc, COMPANY, 30, True, BLACK, center=True, space=8)
+    line(doc, "Digital Agency Proposal", 20, True, BLACK, center=True, space=14)
+    for s in ["Website Designing & Development", "Digital Marketing"]:
+        line(doc, s, 15, False, BLACK, center=True, space=5)
+    line(doc, WEB, 15, True, NAVY, center=True, space=10)
+    line(doc, ADDRESS, 13, False, BLACK, center=True, space=4)
+    line(doc, PHONE, 13, False, BLACK, center=True, space=4)
+    line(doc, EMAIL, 13, False, BLACK, center=True, space=4)
 
-    line(doc, "CoLab Point", 16, True, TEAL, center=True, space=8)
-    line(doc, COMPANY, 32, True, BLACK, center=True, space=8)
-    line(doc, "Digital Agency Proposal", 20, True, BLACK, center=True, space=16)
-    for s in [
-        "Website Designing & Development",
-        "Digital Marketing",
-    ]:
-        line(doc, s, 15, False, BLACK, center=True, space=6)
-    line(doc, WEB, 15, True, NAVY, center=True, space=12)
-    line(doc, ADDRESS, 14, False, BLACK, center=True, space=4)
-    line(doc, PHONE, 14, False, BLACK, center=True, space=4)
-    line(doc, EMAIL, 14, False, BLACK, center=True, space=4)
-
+    # ── Company Profile ──
     doc.add_page_break()
     section_title(doc, "Company Profile")
+    add_image(doc, "office", width_in=5.5, space_after=10)
     line(
         doc,
-        f"{COMPANY} delivers website design, WordPress development, e-commerce, branding, "
-        "SEO, Google Ads, Meta Ads, and business growth solutions.",
+        f"{COMPANY} is the digital services arm of CoLab Point — a trusted innovation hub in "
+        "Gujrat since 2021. We deliver website design, WordPress development, e-commerce, "
+        "branding, SEO, Google Ads, Meta Ads, and business growth solutions.",
         14,
-        False,
-        BLACK,
         space=10,
     )
     line(
         doc,
-        "Each section shows the package price in bold, followed by a clear list of everything "
-        "included at that price.",
+        "Each package price is shown in bold, followed by a complete list of what is included.",
         14,
         True,
-        BLACK,
         space=12,
     )
 
@@ -189,7 +212,10 @@ def build():
     ]:
         bullet(doc, point)
 
+    # ── Websites ──
+    doc.add_page_break()
     section_title(doc, "Website Designing & Development")
+    add_image(doc, "web_design", width_in=5.5, space_after=10)
     line(
         doc,
         "WordPress is our primary platform. Fully custom development is also available on request.",
@@ -215,7 +241,8 @@ def build():
             "SSL configuration",
             "30 days support",
         ],
-        "IMPORTANT: SEO and e-commerce are NOT included in this package.",
+        image_key="web_design",
+        note="IMPORTANT: SEO and e-commerce are NOT included in this package.",
     )
 
     package(
@@ -237,6 +264,7 @@ def build():
             "Speed optimization",
             "60 days support",
         ],
+        image_key="ecommerce",
     )
 
     package(
@@ -257,10 +285,13 @@ def build():
             "Admin training",
             "90 days priority support",
         ],
+        image_key="premium_web",
     )
 
+    # ── Digital Marketing ──
     doc.add_page_break()
     section_title(doc, "Digital Marketing")
+    add_image(doc, "digital_marketing", width_in=5.5, space_after=10)
     line(doc, "Monthly packages — pricing and included services", 14, True, BLACK, space=12)
 
     monthly_block(
@@ -296,8 +327,10 @@ def build():
         ],
     )
 
+    # ── Contact ──
     doc.add_page_break()
     section_title(doc, "Contact")
+    add_image(doc, "contact", width_in=4.5, space_after=10)
     line(doc, f"Company: {COMPANY}", 14, space=6)
     line(doc, f"Website: {WEB}", 14, space=6)
     line(doc, f"Phone: {PHONE}", 14, space=6)
