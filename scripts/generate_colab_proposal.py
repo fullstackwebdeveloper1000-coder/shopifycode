@@ -440,371 +440,212 @@ def build_docx(icons: dict):
     print(f"Word: {OUT_DOCX} ({Path(OUT_DOCX).stat().st_size // 1024} KB)")
 
 
-# ─── PDF (aligned layout, icons, banner) ───────────────────────────────────
+# ─── PDF — clean corporate layout (no broken table cells) ─────────────────
 
 def _pdf_styles():
     def S(name, **kw):
-        defaults = dict(fontName="Helvetica", fontSize=11, textColor=black, leading=15)
-        defaults.update(kw)
-        return ParagraphStyle(name, **defaults)
+        base = dict(fontName="Helvetica", fontSize=11, textColor=black, leading=16)
+        base.update(kw)
+        return ParagraphStyle(name, **base)
 
     return {
-        "cover_brand": S("cover_brand", fontSize=12, textColor=HexColor("#06ACBA"), alignment=TA_CENTER),
-        "cover_title": S("cover_title", fontName="Helvetica-Bold", fontSize=26, alignment=TA_CENTER, spaceAfter=6, leading=30),
-        "cover_sub": S("cover_sub", fontName="Helvetica-Bold", fontSize=15, alignment=TA_CENTER, spaceAfter=10),
-        "cover_body": S("cover_body", fontSize=11, alignment=TA_CENTER, leading=17),
-        "section": S("section", fontName="Helvetica-Bold", fontSize=15, textColor=HexColor("#04243C"), spaceAfter=2),
-        "subtitle": S("subtitle", fontSize=10, textColor=HexColor("#06ACBA"), spaceAfter=6),
-        "body": S("body", spaceAfter=4),
+        "h1": S("h1", fontName="Helvetica-Bold", fontSize=20, textColor=HexColor("#04243C"), spaceAfter=10, spaceBefore=4),
+        "h2": S("h2", fontName="Helvetica-Bold", fontSize=15, textColor=HexColor("#04243C"), spaceAfter=6, spaceBefore=8),
+        "h3": S("h3", fontName="Helvetica-Bold", fontSize=13, textColor=HexColor("#06ACBA"), spaceAfter=4),
+        "cover_co": S("cover_co", fontSize=12, textColor=HexColor("#06ACBA"), alignment=TA_CENTER),
+        "cover_title": S("cover_title", fontName="Helvetica-Bold", fontSize=28, alignment=TA_CENTER, spaceAfter=8, leading=32),
+        "cover_sub": S("cover_sub", fontName="Helvetica-Bold", fontSize=15, alignment=TA_CENTER, spaceAfter=14),
+        "cover_info": S("cover_info", fontSize=11, alignment=TA_CENTER, leading=18),
+        "body": S("body", spaceAfter=6),
         "bold": S("bold", fontName="Helvetica-Bold", spaceAfter=4),
-        "teal": S("teal", fontName="Helvetica-Bold", textColor=HexColor("#06ACBA"), spaceBefore=4, spaceAfter=4),
-        "note": S("note", fontName="Helvetica-Bold", fontSize=10, textColor=HexColor("#04243C"), spaceAfter=6),
-        "price": S("price", fontName="Helvetica-Bold", fontSize=16, textColor=HexColor("#04243C"), alignment=TA_CENTER),
-        "pkg_name": S("pkg_name", fontName="Helvetica-Bold", fontSize=13, textColor=white),
-        "center": S("center", alignment=TA_CENTER),
-        "bullet": S("bullet", leftIndent=14, bulletIndent=6, leading=14, spaceAfter=2),
-        "stat_label": S("stat_label", fontName="Helvetica-Bold", fontSize=9, textColor=white, alignment=TA_CENTER),
-        "stat_val": S("stat_val", fontSize=9, alignment=TA_CENTER, leading=12),
+        "price_big": S("price_big", fontName="Helvetica-Bold", fontSize=22, textColor=HexColor("#04243C"), spaceAfter=8),
+        "muted": S("muted", fontSize=10, textColor=HexColor("#555555"), spaceAfter=4),
+        "bullet": S("bullet", leftIndent=16, bulletIndent=8, leading=15, spaceAfter=3),
     }
-
-
-def _tbl_style_box(bg=None, border=HexColor("#06ACBA"), grid=False):
-    cmd = [
-        ("BOX", (0, 0), (-1, -1), 0.6, border),
-        ("TOPPADDING", (0, 0), (-1, -1), 8),
-        ("BOTTOMPADDING", (0, 0), (-1, -1), 8),
-        ("LEFTPADDING", (0, 0), (-1, -1), 10),
-        ("RIGHTPADDING", (0, 0), (-1, -1), 10),
-        ("VALIGN", (0, 0), (-1, -1), "TOP"),
-    ]
-    if bg:
-        cmd.append(("BACKGROUND", (0, 0), (-1, -1), bg))
-    if grid:
-        cmd.append(("INNERGRID", (0, 0), (-1, -1), 0.25, HexColor("#D0E8EB")))
-    return TableStyle(cmd)
-
-
-def _pdf_img(path, w_cm, h_cm=None):
-    if path and Path(path).exists():
-        if h_cm:
-            return RLImage(str(path), width=w_cm * cm, height=h_cm * cm, kind="proportional")
-        return RLImage(str(path), width=w_cm * cm, height=w_cm * cm, kind="proportional")
-    return Spacer(w_cm * cm, (h_cm or w_cm) * cm)
-
-
-def _pdf_icon_cell(path, size=1.0):
-    return _pdf_img(path, size, size)
 
 
 def _pdf_bullets(items, styles):
     return ListFlowable(
         [ListItem(Paragraph(ascii_safe(i), styles["bullet"])) for i in items],
-        bulletType="bullet", start="•", leftIndent=10,
+        bulletType="bullet", start="•", leftIndent=12,
     )
 
 
-def _pdf_section_bar(title, subtitle="", icon_path=None, styles=None):
-    """Navy section bar with optional icon — full content width."""
+def _pdf_icon(path, size_cm=0.75):
+    if path and Path(path).exists():
+        return RLImage(str(path), width=size_cm * cm, height=size_cm * cm, kind="proportional")
+    return Spacer(size_cm * cm, size_cm * cm)
+
+
+def _pdf_hr(story, color="#06ACBA"):
+    t = Table([[""]], colWidths=[PDF_W], rowHeights=[2])
+    t.setStyle(TableStyle([
+        ("BACKGROUND", (0, 0), (-1, -1), HexColor(color)),
+        ("TOPPADDING", (0, 0), (-1, -1), 0),
+        ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
+    ]))
+    story.append(t)
+    story.append(Spacer(1, 0.2 * cm))
+
+
+def _pdf_heading(story, title, subtitle="", icon_path=None, styles=None):
     styles = styles or _pdf_styles()
-    icon_w = 1.3 * cm
-    text_w = PDF_W - icon_w
-    icon = _pdf_icon_cell(icon_path, 1.0) if icon_path else Spacer(1 * cm, 1 * cm)
-    lines = [Paragraph(ascii_safe(title), styles["section"])]
-    if subtitle:
-        lines.append(Paragraph(ascii_safe(subtitle), styles["subtitle"]))
-    inner = Table([[lines]], colWidths=[text_w])
-    inner.setStyle(TableStyle([("LEFTPADDING", (0, 0), (-1, -1), 0), ("TOPPADDING", (0, 0), (-1, -1), 0)]))
-    row = Table([[icon, inner]], colWidths=[icon_w, text_w])
-    row.setStyle(TableStyle([
-        ("BACKGROUND", (0, 0), (-1, -1), HexColor("#E8F7F9")),
-        ("BOX", (0, 0), (-1, -1), 0.6, HexColor("#06ACBA")),
-        ("VALIGN", (0, 0), (-1, -1), "MIDDLE"),
-        ("LEFTPADDING", (0, 0), (0, 0), 6),
-        ("TOPPADDING", (0, 0), (-1, -1), 8),
-        ("BOTTOMPADDING", (0, 0), (-1, -1), 8),
-    ]))
-    return row
-
-
-def _pdf_page_decor(canvas, doc):
-    canvas.saveState()
-    # Top accent
-    canvas.setFillColor(HexColor("#04243C"))
-    canvas.rect(PDF_M, A4[1] - 1.1 * cm, PDF_W, 0.45 * cm, fill=1, stroke=0)
-    canvas.setFillColor(HexColor("#06ACBA"))
-    canvas.rect(PDF_M, A4[1] - 1.1 * cm, PDF_W, 0.08 * cm, fill=1, stroke=0)
-    if doc.page > 1:
-        canvas.setFont("Helvetica-Bold", 8)
-        canvas.setFillColor(HexColor("#04243C"))
-        canvas.drawString(PDF_M, A4[1] - 0.85 * cm, ascii_safe(COMPANY))
-        canvas.setFont("Helvetica", 8)
-        canvas.setFillColor(HexColor("#06ACBA"))
-        canvas.drawRightString(A4[0] - PDF_M, A4[1] - 0.85 * cm, WEB)
-    # Footer
-    canvas.setStrokeColor(HexColor("#06ACBA"))
-    canvas.setLineWidth(0.4)
-    canvas.line(PDF_M, 1.55 * cm, A4[0] - PDF_M, 1.55 * cm)
-    canvas.setFont("Helvetica", 8)
-    canvas.setFillColor(HexColor("#888888"))
-    canvas.drawString(PDF_M, 1.05 * cm, f"{COMPANY}  |  {WEB}")
-    canvas.drawRightString(A4[0] - PDF_M, 1.05 * cm, f"Page {doc.page}")
-    canvas.restoreState()
-
-
-def _pdf_cover(story, icons, styles):
-    banner = icons.get("banner")
-    if banner and banner.exists():
-        story.append(_pdf_img(banner, 17, 4.5))
-        story.append(Spacer(1, 0.25 * cm))
-
-    logo_row = Table(
-        [[_pdf_img(icons.get("logo"), 3.5)]],
-        colWidths=[PDF_W],
-        rowHeights=[3.8 * cm],
-    )
-    logo_row.setStyle(TableStyle([("ALIGN", (0, 0), (-1, -1), "CENTER"), ("VALIGN", (0, 0), (-1, -1), "MIDDLE")]))
-    story.append(logo_row)
-
-    title_box = Table(
-        [[Paragraph("CoLab Point", styles["cover_brand"])],
-         [Paragraph(COMPANY, styles["cover_title"])],
-         [Paragraph("Digital Agency Proposal", styles["cover_sub"])],
-         [Paragraph("Website Designing &amp; Development  |  Digital Marketing", styles["cover_body"])]],
-        colWidths=[PDF_W],
-    )
-    title_box.setStyle(_tbl_style_box(HexColor("#04243C"), HexColor("#06ACBA")))
-    for i in range(4):
-        title_box.setStyle(TableStyle([("TEXTCOLOR", (0, i), (-1, i), white if i > 0 else HexColor("#06ACBA"))]))
-    story.append(title_box)
-    story.append(Spacer(1, 0.35 * cm))
-
-    contact_box = Table(
-        [[Paragraph(WEB, styles["cover_body"])],
-         [Paragraph(PHONE, styles["cover_body"])],
-         [Paragraph(EMAIL, styles["cover_body"])],
-         [Paragraph(ascii_safe(ADDRESS), styles["cover_body"])]],
-        colWidths=[PDF_W],
-    )
-    contact_box.setStyle(_tbl_style_box(HexColor("#F4FBFC")))
-    story.append(contact_box)
-
-
-def _pdf_company_profile(story, icons, styles):
-    # Page title
-    hdr = Table(
-        [[Paragraph("COMPANY PROFILE", ParagraphStyle(
-            "cph", fontName="Helvetica-Bold", fontSize=18, textColor=white, alignment=TA_CENTER,
-        ))],
-         [Paragraph("CoLab Space Point  |  Digital Agency  |  Gujrat, Pakistan", ParagraphStyle(
-            "cps", fontSize=10, textColor=HexColor("#B8E8EE"), alignment=TA_CENTER,
-        ))]],
-        colWidths=[PDF_W],
-    )
-    hdr.setStyle(_tbl_style_box(HexColor("#04243C")))
-    story.append(hdr)
-    story.append(Spacer(1, 0.3 * cm))
-
-    # About + logo
-    about_lines = [
-        Paragraph("<b>About Us</b>", styles["bold"]),
-        Paragraph(ascii_safe(COMPANY_ABOUT), styles["body"]),
-        Paragraph(ascii_safe(COMPANY_MISSION), styles["body"]),
-    ]
-    about_tbl = Table(
-        [[_pdf_icon_cell(icons.get("logo"), 1.6), about_lines]],
-        colWidths=[2.0 * cm, PDF_W - 2.0 * cm],
-    )
-    about_tbl.setStyle(_tbl_style_box(HexColor("#E8F7F9")))
-    story.append(about_tbl)
-    story.append(Spacer(1, 0.3 * cm))
-
-    # Stats 4-col aligned
-    col_w = PDF_W / 4
-    stat_tbl = Table(
-        [
-            [Paragraph(f"<b>{ascii_safe(l)}</b>", styles["stat_label"]) for l, _ in COMPANY_STATS],
-            [Paragraph(ascii_safe(v), styles["stat_val"]) for _, v in COMPANY_STATS],
-        ],
-        colWidths=[col_w] * 4,
-    )
-    stat_tbl.setStyle(TableStyle([
-        ("BACKGROUND", (0, 0), (-1, 0), HexColor("#06ACBA")),
-        ("BACKGROUND", (0, 1), (-1, 1), HexColor("#F4FBFC")),
-        ("BOX", (0, 0), (-1, -1), 0.6, HexColor("#06ACBA")),
-        ("INNERGRID", (0, 0), (-1, -1), 0.25, HexColor("#06ACBA")),
-        ("ALIGN", (0, 0), (-1, -1), "CENTER"),
-        ("VALIGN", (0, 0), (-1, -1), "MIDDLE"),
-        ("TOPPADDING", (0, 0), (-1, -1), 8),
-        ("BOTTOMPADDING", (0, 0), (-1, -1), 8),
-    ]))
-    story.append(stat_tbl)
-    story.append(Spacer(1, 0.3 * cm))
-
-    # Services grid with company icon header
-    story.append(_pdf_section_bar("Our Core Services", icon_path=icons.get("company")))
-    story.append(Spacer(1, 0.15 * cm))
-    half = (len(COMPANY_SERVICES) + 1) // 2
-    col_half = PDF_W / 2
-    svc_rows = []
-    for i in range(half):
-        l = COMPANY_SERVICES[i] if i < len(COMPANY_SERVICES) else ""
-        r = COMPANY_SERVICES[i + half] if i + half < len(COMPANY_SERVICES) else ""
-        svc_rows.append([
-            Paragraph(ascii_safe(f"✓  {l}") if l else "", styles["body"]),
-            Paragraph(ascii_safe(f"✓  {r}") if r else "", styles["body"]),
-        ])
-    svc_tbl = Table(svc_rows, colWidths=[col_half, col_half])
-    svc_tbl.setStyle(_tbl_style_box(grid=True))
-    story.append(svc_tbl)
-    story.append(Spacer(1, 0.25 * cm))
-
-    # Why choose
-    why_lines = [Paragraph("<b>Why Choose CoLab Space Point</b>", styles["bold"])]
-    why_lines += [Paragraph(ascii_safe(f"•  {w}"), styles["body"]) for w in WHY_CHOOSE]
-    why_tbl = Table([[why_lines]], colWidths=[PDF_W])
-    why_tbl.setStyle(_tbl_style_box(HexColor("#E8F7F9")))
-    story.append(why_tbl)
-
-
-def _pdf_package_page(story, pkg, icons, styles):
-    icon_path = icons.get(pkg["icon"])
-    # Package header card
-    hdr = Table(
-        [[
-            _pdf_icon_cell(icon_path, 1.2),
-            [
-                Paragraph(ascii_safe(pkg["title"]), styles["pkg_name"]),
-                Paragraph(f"PKR {pkg['price']}", ParagraphStyle(
-                    "pr", fontName="Helvetica-Bold", fontSize=14, textColor=HexColor("#06ACBA"),
-                )),
-            ],
-        ]],
-        colWidths=[1.5 * cm, PDF_W - 1.5 * cm],
-    )
-    hdr.setStyle(TableStyle([
-        ("BACKGROUND", (0, 0), (-1, -1), HexColor("#04243C")),
-        ("TEXTCOLOR", (0, 0), (-1, -1), white),
-        ("BOX", (0, 0), (-1, -1), 0.6, HexColor("#06ACBA")),
-        ("VALIGN", (0, 0), (-1, -1), "MIDDLE"),
-        ("TOPPADDING", (0, 0), (-1, -1), 10),
-        ("BOTTOMPADDING", (0, 0), (-1, -1), 10),
-        ("LEFTPADDING", (0, 0), (0, 0), 8),
-        ("LEFTPADDING", (1, 0), (1, 0), 4),
-    ]))
-    story.append(hdr)
-    story.append(Spacer(1, 0.2 * cm))
-
-    body_tbl = Table(
-        [[
-            Paragraph(f"<b>Best for:</b> {ascii_safe(pkg['audience'])}", styles["body"]),
-        ]],
-        colWidths=[PDF_W],
-    )
-    body_tbl.setStyle(_tbl_style_box(HexColor("#F4FBFC")))
-    story.append(body_tbl)
-    story.append(Spacer(1, 0.15 * cm))
-
-    incl = Table(
-        [[
-            Paragraph("WHAT IS INCLUDED IN THIS PRICE:", styles["teal"]),
-            _pdf_bullets(pkg["items"], styles),
-        ]],
-        colWidths=[PDF_W],
-    )
-    incl.setStyle(_tbl_style_box(grid=True))
-    story.append(incl)
-    if pkg.get("note"):
-        story.append(Spacer(1, 0.15 * cm))
-        note = Table([[Paragraph(ascii_safe(pkg["note"]), styles["note"])]], colWidths=[PDF_W])
-        note.setStyle(_tbl_style_box(HexColor("#FFF8E1"), HexColor("#F0AD4E")))
-        story.append(note)
-
-
-def _pdf_marketing_page(story, icons, styles):
-    story.append(_pdf_section_bar("Digital Marketing", "Monthly packages", icons.get("marketing")))
-    story.append(Spacer(1, 0.2 * cm))
-
-    for name, price, items in MARKETING_PACKAGES:
-        card = Table(
-            [[
-                _pdf_icon_cell(icons.get("marketing"), 0.9),
-                [
-                    Paragraph(ascii_safe(f"{name} - PKR {price} / month"), styles["bold"]),
-                    Paragraph("What is included:", styles["teal"]),
-                    _pdf_bullets(items, styles),
-                ],
-            ]],
-            colWidths=[1.3 * cm, PDF_W - 1.3 * cm],
+    title_p = Paragraph(ascii_safe(title), styles["h1"])
+    if icon_path and Path(icon_path).exists():
+        sub = Paragraph(ascii_safe(subtitle), styles["muted"]) if subtitle else Spacer(1, 2)
+        row = Table(
+            [[_pdf_icon(icon_path, 0.85), Table([[title_p], [sub]], colWidths=[PDF_W - 1.4 * cm])]],
+            colWidths=[1.2 * cm, PDF_W - 1.2 * cm],
         )
-        card.setStyle(_tbl_style_box(HexColor("#FAFEFF")))
-        story.append(card)
-        story.append(Spacer(1, 0.2 * cm))
+        row.setStyle(TableStyle([("VALIGN", (0, 0), (-1, -1), "TOP"), ("LEFTPADDING", (0, 0), (-1, -1), 0)]))
+        story.append(row)
+    else:
+        story.append(title_p)
+        if subtitle:
+            story.append(Paragraph(ascii_safe(subtitle), styles["muted"]))
+    _pdf_hr(story)
 
 
-def _pdf_contact_page(story, icons, styles):
-    story.append(_pdf_section_bar("Contact", "Get in touch", icons.get("contact")))
-    story.append(Spacer(1, 0.25 * cm))
-    rows = [
-        ("Company", COMPANY),
-        ("Website", WEB),
-        ("Phone", PHONE),
-        ("Email", EMAIL),
-        ("Address", ADDRESS),
-    ]
-    contact_data = []
-    for label, val in rows:
-        contact_data.append([
-            Paragraph(f"<b>{label}</b>", styles["bold"]),
-            Paragraph(ascii_safe(val), styles["body"]),
-        ])
-    ct = Table(contact_data, colWidths=[3.5 * cm, PDF_W - 3.5 * cm])
-    ct.setStyle(TableStyle([
-        ("BACKGROUND", (0, 0), (0, -1), HexColor("#E8F7F9")),
-        ("BOX", (0, 0), (-1, -1), 0.6, HexColor("#06ACBA")),
-        ("INNERGRID", (0, 0), (-1, -1), 0.25, HexColor("#D0E8EB")),
-        ("VALIGN", (0, 0), (-1, -1), "MIDDLE"),
-        ("TOPPADDING", (0, 0), (-1, -1), 8),
-        ("BOTTOMPADDING", (0, 0), (-1, -1), 8),
-        ("LEFTPADDING", (0, 0), (-1, -1), 10),
-    ]))
-    story.append(ct)
+def _pdf_footer(canvas, doc):
+    canvas.saveState()
+    if doc.page > 1:
+        canvas.setStrokeColor(HexColor("#06ACBA"))
+        canvas.setLineWidth(1)
+        canvas.line(PDF_M, A4[1] - 1.6 * cm, A4[0] - PDF_M, A4[1] - 1.6 * cm)
+        canvas.setFont("Helvetica-Bold", 9)
+        canvas.setFillColor(HexColor("#04243C"))
+        canvas.drawString(PDF_M, A4[1] - 1.35 * cm, ascii_safe(COMPANY))
+    canvas.setStrokeColor(HexColor("#06ACBA"))
+    canvas.setLineWidth(0.5)
+    canvas.line(PDF_M, 1.6 * cm, A4[0] - PDF_M, 1.6 * cm)
+    canvas.setFont("Helvetica", 8)
+    canvas.setFillColor(HexColor("#777777"))
+    canvas.drawString(PDF_M, 1.1 * cm, f"{WEB}  |  {PHONE.split('|')[0].strip()}")
+    canvas.drawRightString(A4[0] - PDF_M, 1.1 * cm, f"Page {doc.page}")
+    canvas.restoreState()
 
 
 def build_pdf(icons: dict):
     styles = _pdf_styles()
     story = []
+    logo = icons.get("logo")
 
-    _pdf_cover(story, icons, styles)
+    # ── Cover (clean, white, centered) ──
+    story.append(Spacer(1, 2.5 * cm))
+    if logo and logo.exists():
+        lt = Table([[_pdf_icon(logo, 3.2)]], colWidths=[PDF_W])
+        lt.setStyle(TableStyle([("ALIGN", (0, 0), (-1, -1), "CENTER")]))
+        story.append(lt)
+        story.append(Spacer(1, 0.6 * cm))
+    story += [
+        Paragraph("CoLab Point", styles["cover_co"]),
+        Paragraph(COMPANY, styles["cover_title"]),
+        Paragraph("Digital Agency Proposal", styles["cover_sub"]),
+    ]
+    _pdf_hr(story)
+    story += [
+        Paragraph("Website Designing &amp; Development", styles["cover_info"]),
+        Paragraph("Digital Marketing", styles["cover_info"]),
+        Spacer(1, 0.5 * cm),
+        Paragraph(WEB, styles["cover_info"]),
+        Paragraph(PHONE, styles["cover_info"]),
+        Paragraph(EMAIL, styles["cover_info"]),
+        Paragraph(ascii_safe(ADDRESS), styles["cover_info"]),
+    ]
     story.append(PageBreak())
 
-    _pdf_company_profile(story, icons, styles)
-    story.append(PageBreak())
+    # ── Company Profile ──
+    _pdf_heading(story, "Company Profile", "CoLab Space Point — Gujrat, Pakistan", logo, styles)
+    story.append(Paragraph("<b>About Us</b>", styles["bold"]))
+    story.append(Paragraph(ascii_safe(COMPANY_ABOUT), styles["body"]))
+    story.append(Paragraph(ascii_safe(COMPANY_MISSION), styles["body"]))
+    story.append(Spacer(1, 0.25 * cm))
 
-    story.append(_pdf_section_bar("Website Designing & Development", "WordPress primary platform", icons.get("website")))
+    col_w = PDF_W / 4
+    stats = Table(
+        [[Paragraph(f"<b>{ascii_safe(a)}</b>", ParagraphStyle("sl", fontName="Helvetica-Bold", fontSize=9, textColor=white, alignment=TA_CENTER)) for a, _ in COMPANY_STATS],
+         [Paragraph(ascii_safe(b), ParagraphStyle("sv", fontSize=9, alignment=TA_CENTER, leading=13)) for _, b in COMPANY_STATS]],
+        colWidths=[col_w] * 4,
+    )
+    stats.setStyle(TableStyle([
+        ("BACKGROUND", (0, 0), (-1, 0), HexColor("#06ACBA")),
+        ("BACKGROUND", (0, 1), (-1, 1), HexColor("#F7FBFC")),
+        ("BOX", (0, 0), (-1, -1), 0.5, HexColor("#06ACBA")),
+        ("INNERGRID", (0, 0), (-1, -1), 0.25, HexColor("#06ACBA")),
+        ("TOPPADDING", (0, 0), (-1, -1), 8),
+        ("BOTTOMPADDING", (0, 0), (-1, -1), 8),
+    ]))
+    story.append(stats)
+    story.append(Spacer(1, 0.35 * cm))
+
+    story.append(Paragraph("Our Core Services", styles["h2"]))
+    half = (len(COMPANY_SERVICES) + 1) // 2
+    svc_rows = []
+    for i in range(half):
+        l = f"• {COMPANY_SERVICES[i]}" if i < len(COMPANY_SERVICES) else ""
+        r = f"• {COMPANY_SERVICES[i + half]}" if i + half < len(COMPANY_SERVICES) else ""
+        svc_rows.append([Paragraph(ascii_safe(l), styles["body"]), Paragraph(ascii_safe(r), styles["body"])])
+    svc = Table(svc_rows, colWidths=[PDF_W / 2, PDF_W / 2])
+    svc.setStyle(TableStyle([
+        ("VALIGN", (0, 0), (-1, -1), "TOP"),
+        ("TOPPADDING", (0, 0), (-1, -1), 4),
+        ("BOTTOMPADDING", (0, 0), (-1, -1), 4),
+        ("LEFTPADDING", (0, 0), (-1, -1), 6),
+    ]))
+    story.append(svc)
+    story.append(Spacer(1, 0.3 * cm))
+
+    story.append(Paragraph("Why Choose CoLab Space Point", styles["h2"]))
+    story.append(_pdf_bullets(WHY_CHOOSE, styles))
     story.append(Spacer(1, 0.2 * cm))
+    story.append(Paragraph(
+        "WordPress is our primary development platform. Custom solutions are available on request.",
+        styles["muted"],
+    ))
+    story.append(PageBreak())
 
+    # ── Website packages ──
     for i, pkg in enumerate(WEBSITE_PACKAGES):
         if i > 0:
             story.append(PageBreak())
-        _pdf_package_page(story, pkg, icons, styles)
+        if i == 0:
+            _pdf_heading(story, "Website Designing & Development", "WordPress primary platform", icons.get("website"), styles)
+        else:
+            story.append(Spacer(1, 0.1 * cm))
+        story.append(Paragraph(ascii_safe(f"{pkg['title']}"), styles["h2"]))
+        story.append(Paragraph(f"PKR {pkg['price']}", styles["price_big"]))
+        story.append(Paragraph(f"<b>Best for:</b> {ascii_safe(pkg['audience'])}", styles["body"]))
+        story.append(Spacer(1, 0.15 * cm))
+        story.append(Paragraph("What is included in this price:", styles["h3"]))
+        story.append(_pdf_bullets(pkg["items"], styles))
+        if pkg.get("note"):
+            story.append(Spacer(1, 0.1 * cm))
+            story.append(Paragraph(ascii_safe(pkg["note"]), styles["bold"]))
 
     story.append(PageBreak())
-    _pdf_marketing_page(story, icons, styles)
+
+    # ── Digital Marketing ──
+    _pdf_heading(story, "Digital Marketing", "Monthly packages", icons.get("marketing"), styles)
+    for name, price, items in MARKETING_PACKAGES:
+        story.append(Paragraph(ascii_safe(f"{name} - PKR {price} / month"), styles["h2"]))
+        story.append(Paragraph("What is included:", styles["h3"]))
+        story.append(_pdf_bullets(items, styles))
+        story.append(Spacer(1, 0.25 * cm))
 
     story.append(PageBreak())
-    _pdf_contact_page(story, icons, styles)
+
+    # ── Contact ──
+    _pdf_heading(story, "Contact", "Get in touch with our team", icons.get("contact"), styles)
+    for label, val in [("Company", COMPANY), ("Website", WEB), ("Phone", PHONE), ("Email", EMAIL), ("Address", ADDRESS)]:
+        story.append(Paragraph(f"<b>{label}:</b> {ascii_safe(val)}", styles["body"]))
 
     doc = SimpleDocTemplate(
-        OUT_PDF,
-        pagesize=A4,
-        leftMargin=PDF_M,
-        rightMargin=PDF_M,
-        topMargin=2.3 * cm,
-        bottomMargin=2.0 * cm,
-        title=f"{COMPANY} Proposal",
-        author=COMPANY,
+        OUT_PDF, pagesize=A4,
+        leftMargin=PDF_M, rightMargin=PDF_M,
+        topMargin=2.0 * cm, bottomMargin=2.0 * cm,
+        title=f"{COMPANY} Proposal", author=COMPANY,
     )
-    doc.build(story, onFirstPage=_pdf_page_decor, onLaterPages=_pdf_page_decor)
+    doc.build(story, onFirstPage=_pdf_footer, onLaterPages=_pdf_footer)
     print(f"PDF: {OUT_PDF} ({Path(OUT_PDF).stat().st_size // 1024} KB)")
 
 
