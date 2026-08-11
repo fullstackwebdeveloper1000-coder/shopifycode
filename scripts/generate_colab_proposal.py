@@ -55,11 +55,9 @@ WEBSITE_PACKAGES = [
             "Up to 5 pages",
             "Responsive mobile design",
             "WordPress CMS",
-            "Custom UI",
             "Contact form",
             "WhatsApp integration",
             "Social media profile links",
-            "Google Analytics setup",
             "SSL configuration",
             "30 days support",
         ],
@@ -80,7 +78,7 @@ WEBSITE_PACKAGES = [
             "Payment gateway integration",
             "Google Search Console setup",
             "Facebook Pixel",
-            "Advanced SEO",
+            "Basic SEO",
             "Speed optimization",
             "60 days support",
         ],
@@ -93,7 +91,7 @@ WEBSITE_PACKAGES = [
         "audience": "Established businesses and enterprises",
         "items": [
             "Everything in Standard Website, plus:",
-            "Unlimited pages (agreed scope)",
+            "Up to 15 pages",
             "Fully custom design",
             "Advanced WooCommerce setup",
             "Unlimited product catalog setup",
@@ -110,7 +108,7 @@ WEBSITE_PACKAGES = [
 
 COMPANY = "CoLab Space Point"
 WEB = "www.colabpoint.com"
-PHONE = "+92 349 7684322  |  +92 478 986460"
+PHONE = "+92 349 7684322  |  +92 347 8986460"
 EMAIL = "colabpoint@gmail.com  |  hello@colabpoint.com"
 ADDRESS = "2nd Floor Anwar Center, Madina Road Near Gymkhana, Gujrat, Pakistan"
 
