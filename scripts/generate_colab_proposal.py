@@ -101,6 +101,51 @@ WEBSITE_PACKAGES = [
     },
 ]
 
+COMPANY = "CoLab Space Point"
+WEB = "www.colabpoint.com"
+PHONE = "+92 349 7684322  |  +92 478 986460"
+EMAIL = "colabpoint@gmail.com  |  hello@colabpoint.com"
+ADDRESS = "2nd Floor Anwar Center, Madina Road Near Gymkhana, Gujrat, Pakistan"
+
+COMPANY_STATS = [
+    ("Est. 2021", "CoLab Point ecosystem"),
+    ("Location", "Gujrat, Pakistan"),
+    ("Platform", "WordPress & WooCommerce"),
+    ("Focus", "Websites + Digital Marketing"),
+]
+
+COMPANY_SERVICES = [
+    "Website Designing & Development",
+    "WordPress Development",
+    "E-commerce Solutions",
+    "Branding & Visual Identity",
+    "Digital Marketing",
+    "SEO (Search Engine Optimization)",
+    "Google Ads",
+    "Meta Ads (Facebook & Instagram)",
+    "Business Growth Strategy",
+]
+
+WHY_CHOOSE = [
+    "Experienced multidisciplinary team",
+    "Professional support and clear communication",
+    "Business-focused, results-driven solutions",
+    "Modern technology stack",
+    "Creative design and performance marketing",
+    "Transparent pricing and long-term partnership",
+]
+
+COMPANY_ABOUT = (
+    f"{COMPANY} is the digital services division of CoLab Point — a trusted innovation and "
+    "coworking hub in Gujrat since 2021. We help businesses establish a strong online presence, "
+    "sell through e-commerce, and acquire customers through data-driven marketing."
+)
+
+COMPANY_MISSION = (
+    "Our mission is to deliver premium digital experiences that convert visitors into customers — "
+    "with transparent pricing, professional delivery, and ongoing support after every launch."
+)
+
 MARKETING_PACKAGES = [
     ("BASIC", "15,000", ["Meta Ads", "Audience targeting", "Campaign optimization", "Monthly reporting"]),
     (
@@ -128,12 +173,6 @@ MARKETING_PACKAGES = [
         ],
     ),
 ]
-
-COMPANY = "CoLab Space Point"
-WEB = "www.colabpoint.com"
-PHONE = "+92 349 7684322  |  +92 478 986460"
-EMAIL = "colabpoint@gmail.com  |  hello@colabpoint.com"
-ADDRESS = "2nd Floor Anwar Center, Madina Road Near Gymkhana, Gujrat, Pakistan"
 
 LOGO_URL = "https://colabpoint.com/wp-content/uploads/2024/05/Web-Logo-II.png"
 
@@ -192,6 +231,102 @@ def line(doc, text="", size=12, bold=False, color=BLACK, center=False, space=6):
         p.alignment = WD_ALIGN_PARAGRAPH.CENTER
     if text:
         write_run(p, text, size, bold, color)
+
+
+def shade_cell(cell, hex_color: str):
+    shd = OxmlElement("w:shd")
+    shd.set(qn("w:val"), "clear")
+    shd.set(qn("w:fill"), hex_color)
+    cell._tc.get_or_add_tcPr().append(shd)
+
+
+def add_profile_header_docx(doc, icons):
+    """Styled company profile page header."""
+    bar = doc.add_table(rows=1, cols=1)
+    c = bar.rows[0].cells[0]
+    shade_cell(c, "04243C")
+    p = c.paragraphs[0]
+    p.alignment = WD_ALIGN_PARAGRAPH.CENTER
+    write_run(p, "COMPANY PROFILE", 20, True, RGBColor(0xFF, 0xFF, 0xFF))
+    p2 = c.add_paragraph()
+    p2.alignment = WD_ALIGN_PARAGRAPH.CENTER
+    write_run(p2, "CoLab Space Point  |  Digital Agency  |  Gujrat", 11, False, TEAL)
+    doc.add_paragraph()
+
+    intro = doc.add_table(rows=1, cols=2)
+    intro.columns[0].width = Cm(2.2)
+    intro.columns[1].width = Cm(14)
+    lc, rc = intro.rows[0].cells[0], intro.rows[0].cells[1]
+    shade_cell(rc, "E8F7F9")
+    if icons.get("logo") and icons["logo"].exists():
+        lc.paragraphs[0].alignment = WD_ALIGN_PARAGRAPH.CENTER
+        lc.paragraphs[0].add_run().add_picture(str(icons["logo"]), width=Inches(0.9))
+    rp = rc.paragraphs[0]
+    write_run(rp, "About Us", 14, True, NAVY)
+    rp2 = rc.add_paragraph()
+    write_run(rp2, COMPANY_ABOUT, 11, False, BLACK)
+    rp3 = rc.add_paragraph()
+    write_run(rp3, COMPANY_MISSION, 11, False, BLACK)
+    doc.add_paragraph()
+
+
+def add_stats_row_docx(doc):
+    t = doc.add_table(rows=2, cols=4)
+    t.alignment = WD_TABLE_ALIGNMENT.CENTER
+    for i, (label, val) in enumerate(COMPANY_STATS):
+        shade_cell(t.rows[0].cells[i], "06ACBA")
+        shade_cell(t.rows[1].cells[i], "F4FBFC")
+        t.rows[0].cells[i].text = ""
+        t.rows[1].cells[i].text = ""
+        p0 = t.rows[0].cells[i].paragraphs[0]
+        p0.alignment = WD_ALIGN_PARAGRAPH.CENTER
+        write_run(p0, label, 11, True, RGBColor(0xFF, 0xFF, 0xFF))
+        p1 = t.rows[1].cells[i].paragraphs[0]
+        p1.alignment = WD_ALIGN_PARAGRAPH.CENTER
+        write_run(p1, val, 10, False, BLACK)
+    doc.add_paragraph()
+
+
+def add_services_grid_docx(doc, icons):
+    line(doc, "Our Core Services", 14, True, NAVY, space=8)
+    half = (len(COMPANY_SERVICES) + 1) // 2
+    t = doc.add_table(rows=half, cols=2)
+    for i in range(half):
+        for j in range(2):
+            idx = i + j * half
+            cell = t.rows[i].cells[j]
+            shade_cell(cell, "FFFFFF")
+            cell.text = ""
+            if idx < len(COMPANY_SERVICES):
+                write_run(cell.paragraphs[0], f"  ✓  {COMPANY_SERVICES[idx]}", 11, False, BLACK)
+    doc.add_paragraph()
+
+
+def add_why_choose_docx(doc):
+    box = doc.add_table(rows=1, cols=1)
+    c = box.rows[0].cells[0]
+    shade_cell(c, "E8F7F9")
+    p = c.paragraphs[0]
+    write_run(p, "Why Choose CoLab Space Point", 13, True, NAVY)
+    for w in WHY_CHOOSE:
+        bp = c.add_paragraph()
+        write_run(bp, f"  •  {w}", 11, False, BLACK)
+    doc.add_paragraph()
+
+
+def add_company_profile_docx(doc, icons):
+    add_profile_header_docx(doc, icons)
+    add_stats_row_docx(doc)
+    add_services_grid_docx(doc, icons)
+    add_why_choose_docx(doc)
+    line(
+        doc,
+        "WordPress is our primary development platform. Fully custom solutions are available on request.",
+        11,
+        False,
+        BLACK,
+        space=8,
+    )
 
 
 def section_with_icon(doc, title: str, icon_path: Path | None, subtitle=""):
@@ -255,25 +390,7 @@ def build_docx(icons: dict):
     line(doc, ADDRESS, 11, False, BLACK, center=True, space=3)
 
     doc.add_page_break()
-    section_with_icon(
-        doc,
-        "Company Profile",
-        icons.get("company"),
-        "Digital services from CoLab Point, Gujrat",
-    )
-    line(
-        doc,
-        f"{COMPANY} is the digital services arm of CoLab Point, Gujrat. We build websites, "
-        "e-commerce stores, and run performance marketing campaigns.",
-        12,
-        space=8,
-    )
-    line(
-        doc,
-        "WordPress is our primary development platform. Custom solutions are available on request.",
-        12,
-        space=10,
-    )
+    add_company_profile_docx(doc, icons)
 
     section_with_icon(doc, "Website Designing & Development", icons.get("website"))
 
@@ -314,6 +431,109 @@ def build_docx(icons: dict):
     doc.save(OUT_DOCX)
     doc.save(OUT_DOCX_ALT)
     print(f"Word: {OUT_DOCX} ({Path(OUT_DOCX).stat().st_size // 1024} KB)")
+
+
+def _pdf_company_profile(story, icons, styles):
+    # Header bar
+    hdr = Table(
+        [[Paragraph("COMPANY PROFILE", ParagraphStyle(
+            "ph", fontName="Helvetica-Bold", fontSize=18, textColor=white, alignment=TA_CENTER,
+        ))],
+         [Paragraph("CoLab Space Point  |  Digital Agency  |  Gujrat", ParagraphStyle(
+            "ps", fontName="Helvetica", fontSize=10, textColor=HexColor("#B8E8EE"), alignment=TA_CENTER,
+        ))]],
+        colWidths=[17 * cm],
+    )
+    hdr.setStyle(TableStyle([
+        ("BACKGROUND", (0, 0), (-1, -1), HexColor("#04243C")),
+        ("TOPPADDING", (0, 0), (-1, -1), 10),
+        ("BOTTOMPADDING", (0, 0), (-1, -1), 10),
+        ("BOX", (0, 0), (-1, -1), 0.5, HexColor("#06ACBA")),
+    ]))
+    story.append(hdr)
+    story.append(Spacer(1, 0.35 * cm))
+
+    # About box with logo
+    logo_cell = Spacer(1.8 * cm, 1.8 * cm)
+    if icons.get("logo") and icons["logo"].exists():
+        logo_cell = RLImage(str(icons["logo"]), width=1.8 * cm, height=1.8 * cm, kind="proportional")
+    about_text = [
+        Paragraph("<b>About Us</b>", styles["bold"]),
+        Paragraph(ascii_safe(COMPANY_ABOUT), styles["body"]),
+        Paragraph(ascii_safe(COMPANY_MISSION), styles["body"]),
+    ]
+    about_inner = Table([[about_text]], colWidths=[13.5 * cm])
+    about_inner.setStyle(TableStyle([
+        ("BACKGROUND", (0, 0), (-1, -1), HexColor("#E8F7F9")),
+        ("BOX", (0, 0), (-1, -1), 0.5, HexColor("#06ACBA")),
+        ("TOPPADDING", (0, 0), (-1, -1), 10),
+        ("BOTTOMPADDING", (0, 0), (-1, -1), 10),
+        ("LEFTPADDING", (0, 0), (-1, -1), 10),
+        ("RIGHTPADDING", (0, 0), (-1, -1), 10),
+    ]))
+    about_row = Table([[logo_cell, about_inner]], colWidths=[2.2 * cm, 14 * cm])
+    about_row.setStyle(TableStyle([("VALIGN", (0, 0), (-1, -1), "TOP")]))
+    story.append(about_row)
+    story.append(Spacer(1, 0.35 * cm))
+
+    # Stats row
+    stat_hdr = [Paragraph(f"<b>{ascii_safe(l)}</b>", ParagraphStyle(
+        "sh", fontName="Helvetica-Bold", fontSize=9, textColor=white, alignment=TA_CENTER,
+    )) for l, _ in COMPANY_STATS]
+    stat_val = [Paragraph(ascii_safe(v), ParagraphStyle(
+        "sv", fontName="Helvetica", fontSize=9, textColor=black, alignment=TA_CENTER,
+    )) for _, v in COMPANY_STATS]
+    stats = Table([stat_hdr, stat_val], colWidths=[4.25 * cm] * 4)
+    stats.setStyle(TableStyle([
+        ("BACKGROUND", (0, 0), (-1, 0), HexColor("#06ACBA")),
+        ("BACKGROUND", (0, 1), (-1, 1), HexColor("#F4FBFC")),
+        ("BOX", (0, 0), (-1, -1), 0.5, HexColor("#06ACBA")),
+        ("INNERGRID", (0, 0), (-1, -1), 0.25, HexColor("#06ACBA")),
+        ("TOPPADDING", (0, 0), (-1, -1), 8),
+        ("BOTTOMPADDING", (0, 0), (-1, -1), 8),
+    ]))
+    story.append(stats)
+    story.append(Spacer(1, 0.35 * cm))
+
+    # Services
+    story.append(Paragraph("Our Core Services", styles["bold"]))
+    half = (len(COMPANY_SERVICES) + 1) // 2
+    rows = []
+    for i in range(half):
+        left = COMPANY_SERVICES[i] if i < len(COMPANY_SERVICES) else ""
+        right = COMPANY_SERVICES[i + half] if i + half < len(COMPANY_SERVICES) else ""
+        rows.append([
+            Paragraph(ascii_safe(f"✓  {left}") if left else "", styles["body"]),
+            Paragraph(ascii_safe(f"✓  {right}") if right else "", styles["body"]),
+        ])
+    svc = Table(rows, colWidths=[8.5 * cm, 8.5 * cm])
+    svc.setStyle(TableStyle([
+        ("BOX", (0, 0), (-1, -1), 0.5, HexColor("#CCCCCC")),
+        ("INNERGRID", (0, 0), (-1, -1), 0.25, HexColor("#EEEEEE")),
+        ("TOPPADDING", (0, 0), (-1, -1), 6),
+        ("BOTTOMPADDING", (0, 0), (-1, -1), 6),
+        ("LEFTPADDING", (0, 0), (-1, -1), 8),
+    ]))
+    story.append(svc)
+    story.append(Spacer(1, 0.3 * cm))
+
+    # Why choose box
+    why_content = [Paragraph("<b>Why Choose CoLab Space Point</b>", styles["bold"])]
+    why_content += [Paragraph(ascii_safe(f"•  {w}"), styles["body"]) for w in WHY_CHOOSE]
+    why = Table([[why_content]], colWidths=[17 * cm])
+    why.setStyle(TableStyle([
+        ("BACKGROUND", (0, 0), (-1, -1), HexColor("#E8F7F9")),
+        ("BOX", (0, 0), (-1, -1), 0.5, HexColor("#06ACBA")),
+        ("TOPPADDING", (0, 0), (-1, -1), 10),
+        ("BOTTOMPADDING", (0, 0), (-1, -1), 10),
+        ("LEFTPADDING", (0, 0), (-1, -1), 12),
+    ]))
+    story.append(why)
+    story.append(Spacer(1, 0.25 * cm))
+    story.append(Paragraph(
+        "WordPress is our primary development platform. Fully custom solutions are available on request.",
+        styles["body"],
+    ))
 
 
 def _pdf_styles():
@@ -430,24 +650,11 @@ def build_pdf(icons: dict):
         PageBreak(),
     ]
 
-    # Company profile
-    story.append(_pdf_section_row(icons.get("company"), "Company Profile", "Digital services from CoLab Point, Gujrat"))
-    story += [
-        Paragraph(
-            ascii_safe(
-                f"{COMPANY} is the digital services arm of CoLab Point, Gujrat. We build websites, "
-                "e-commerce stores, and run performance marketing campaigns."
-            ),
-            styles["body"],
-        ),
-        Paragraph(
-            "WordPress is our primary development platform. Custom solutions are available on request.",
-            styles["body"],
-        ),
-        Spacer(1, 0.3 * cm),
-        _pdf_section_row(icons.get("website"), "Website Designing & Development"),
-        Spacer(1, 0.2 * cm),
-    ]
+    # Company profile (dedicated designed page)
+    _pdf_company_profile(story, icons, styles)
+    story.append(PageBreak())
+    story.append(_pdf_section_row(icons.get("website"), "Website Designing & Development"))
+    story.append(Spacer(1, 0.2 * cm))
 
     for pkg in WEBSITE_PACKAGES:
         story.append(PageBreak())
