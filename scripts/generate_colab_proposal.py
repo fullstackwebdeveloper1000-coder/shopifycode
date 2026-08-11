@@ -149,7 +149,6 @@ def build():
     line(doc, "Digital Agency Proposal", 20, True, BLACK, center=True, space=16)
     for s in [
         "Website Designing & Development",
-        "Social Media Management",
         "Digital Marketing",
     ]:
         line(doc, s, 15, False, BLACK, center=True, space=6)
@@ -163,7 +162,7 @@ def build():
     line(
         doc,
         f"{COMPANY} delivers website design, WordPress development, e-commerce, branding, "
-        "social media management, SEO, Google Ads, Meta Ads, and business growth solutions.",
+        "SEO, Google Ads, Meta Ads, and business growth solutions.",
         14,
         False,
         BLACK,
@@ -194,14 +193,6 @@ def build():
     line(
         doc,
         "WordPress is our primary platform. Fully custom development is also available on request.",
-        14,
-        space=10,
-    )
-
-    line(
-        doc,
-        "Standard and Premium website packages include social media management at the matching tier. "
-        "Standalone social media and digital marketing packages are also available monthly.",
         14,
         space=10,
     )
@@ -245,13 +236,6 @@ def build():
             "Advanced SEO",
             "Speed optimization",
             "60 days support",
-            "--- Social Media (Standard tier — included) ---",
-            "Facebook, Instagram & LinkedIn management",
-            "15 posts per month",
-            "Captions and hashtags",
-            "Stories and reels planning",
-            "Community management",
-            "Monthly analytics report",
         ],
     )
 
@@ -272,57 +256,6 @@ def build():
             "Premium security and performance optimization",
             "Admin training",
             "90 days priority support",
-            "--- Social Media (Premium tier — included) ---",
-            "Facebook, Instagram, LinkedIn & TikTok management",
-            "25 posts per month",
-            "Daily stories",
-            "Full reels strategy",
-            "Community management",
-            "Weekly performance reports",
-        ],
-    )
-
-    doc.add_page_break()
-    section_title(doc, "Social Media Management")
-    line(
-        doc,
-        "Monthly packages for clients who need social media only (also included in Standard & Premium website packages above).",
-        14,
-        True,
-        BLACK,
-        space=12,
-    )
-
-    monthly_block(
-        doc,
-        "BASIC",
-        "25,000",
-        ["Facebook", "Instagram", "8 posts per month", "Captions", "Hashtags", "Monthly report"],
-    )
-    monthly_block(
-        doc,
-        "STANDARD",
-        "45,000",
-        [
-            "Facebook, Instagram & LinkedIn",
-            "15 posts per month",
-            "Stories",
-            "Reels planning",
-            "Community management",
-            "Analytics report",
-        ],
-    )
-    monthly_block(
-        doc,
-        "PREMIUM",
-        "75,000",
-        [
-            "Facebook, Instagram, LinkedIn & TikTok",
-            "25 posts per month",
-            "Daily stories",
-            "Reels strategy",
-            "Community management",
-            "Weekly reports",
         ],
     )
 
@@ -364,23 +297,6 @@ def build():
     )
 
     doc.add_page_break()
-    section_title(doc, "Add-On Services")
-    addons = [
-        ("Logo Design", "From PKR 15,000"),
-        ("Brand Identity", "From PKR 45,000"),
-        ("Landing Page", "From PKR 35,000"),
-        ("Website Maintenance", "From PKR 8,000 / month"),
-        ("Content Writing", "From PKR 3,500 / page"),
-        ("Graphic Design", "From PKR 2,500"),
-        ("Video Editing", "From PKR 5,000 / minute"),
-        ("SEO Audit", "From PKR 25,000"),
-        ("Product Upload", "From PKR 500 / product"),
-        ("Business Email", "From PKR 5,000"),
-        ("Domain & Hosting", "At cost + PKR 3,000 setup"),
-    ]
-    for s, p in addons:
-        line(doc, f"{s} .............. {p}", 14, False, BLACK, space=6)
-
     section_title(doc, "Contact")
     line(doc, f"Company: {COMPANY}", 14, space=6)
     line(doc, f"Website: {WEB}", 14, space=6)
