@@ -19,7 +19,7 @@ LOGO_URL = "https://colabpoint.com/wp-content/uploads/2024/05/Web-Logo-II-150x14
 
 COMPANY = "CoLab Space Point"
 WEB = "www.colabpoint.com"
-PHONE = "+92 349 7684322  |  +92 332 4384322"
+PHONE = "+92 349 7684322  |  +92 478 986460"
 EMAIL = "colabpoint@gmail.com  |  hello@colabpoint.com"
 ADDRESS = "2nd Floor Anwar Center, Madina Road Near Gymkhana, Gujrat, Pakistan"
 
@@ -198,94 +198,118 @@ def build():
         space=10,
     )
 
+    line(
+        doc,
+        "Standard and Premium website packages include social media management at the matching tier. "
+        "Standalone social media and digital marketing packages are also available monthly.",
+        14,
+        space=10,
+    )
+
     package(
         doc,
         "BASIC WEBSITE",
-        "60,000",
+        "50,000",
         "Small businesses and startups",
         [
             "Professional business website",
             "Up to 5 pages",
-            "Responsive design",
+            "Responsive mobile design",
             "WordPress CMS",
             "Custom UI",
             "Contact form",
             "WhatsApp integration",
-            "Social media integration",
-            "Basic SEO",
-            "Google Analytics",
-            "Speed optimization",
+            "Social media profile links",
+            "Google Analytics setup",
             "SSL configuration",
-            "Security setup",
-            "Training",
             "30 days support",
         ],
-        "IMPORTANT: E-commerce is NOT included in this package.",
+        "IMPORTANT: SEO and e-commerce are NOT included in this package.",
     )
 
     package(
         doc,
         "STANDARD WEBSITE",
-        "120,000",
-        "Growing brands",
+        "80,000",
+        "Growing brands and online sellers",
         [
+            "Everything in Basic Website, plus:",
             "Up to 10 pages",
-            "Premium UI/UX",
-            "Blog",
-            "WooCommerce store",
-            "Product upload",
-            "Payment gateway",
-            "Google Search Console",
+            "Premium UI/UX design",
+            "Blog section",
+            "WooCommerce online store",
+            "Product upload (initial batch)",
+            "Payment gateway integration",
+            "Google Search Console setup",
             "Facebook Pixel",
             "Advanced SEO",
             "Speed optimization",
             "60 days support",
+            "--- Social Media (Standard tier — included) ---",
+            "Facebook, Instagram & LinkedIn management",
+            "15 posts per month",
+            "Captions and hashtags",
+            "Stories and reels planning",
+            "Community management",
+            "Monthly analytics report",
         ],
     )
 
     package(
         doc,
         "PREMIUM WEBSITE",
-        "250,000",
-        "Enterprise clients",
+        "120,000",
+        "Established businesses and enterprises",
         [
+            "Everything in Standard Website, plus:",
             "Unlimited pages (agreed scope)",
             "Fully custom design",
-            "Advanced WooCommerce",
-            "Unlimited products",
-            "Payment gateway",
+            "Advanced WooCommerce setup",
+            "Unlimited product catalog setup",
             "CRM integration",
-            "Booking system",
-            "API integration",
-            "Advanced SEO",
-            "Premium security",
-            "Performance optimization",
+            "Booking / appointment system",
+            "API integrations",
+            "Premium security and performance optimization",
             "Admin training",
-            "90 days support",
+            "90 days priority support",
+            "--- Social Media (Premium tier — included) ---",
+            "Facebook, Instagram, LinkedIn & TikTok management",
+            "25 posts per month",
+            "Daily stories",
+            "Full reels strategy",
+            "Community management",
+            "Weekly performance reports",
         ],
     )
 
     doc.add_page_break()
     section_title(doc, "Social Media Management")
-    line(doc, "Monthly packages — pricing and included services", 14, True, BLACK, space=12)
+    line(
+        doc,
+        "Monthly packages for clients who need social media only (also included in Standard & Premium website packages above).",
+        14,
+        True,
+        BLACK,
+        space=12,
+    )
 
     monthly_block(
         doc,
         "BASIC",
         "25,000",
-        ["Facebook", "Instagram", "12 posts", "Captions", "Hashtags", "Monthly report"],
+        ["Facebook", "Instagram", "8 posts per month", "Captions", "Hashtags", "Monthly report"],
     )
     monthly_block(
         doc,
         "STANDARD",
         "45,000",
         [
-            "Facebook, Instagram, LinkedIn",
-            "20 posts",
+            "Facebook, Instagram & LinkedIn",
+            "15 posts per month",
             "Stories",
             "Reels planning",
             "Community management",
-            "Analytics",
+            "Analytics report",
         ],
     )
     monthly_block(
@@ -293,8 +317,8 @@ def build():
         "PREMIUM",
         "75,000",
         [
-            "Facebook, Instagram, LinkedIn, TikTok",
-            "30+ posts",
+            "Facebook, Instagram, LinkedIn & TikTok",
+            "25 posts per month",
             "Daily stories",
             "Reels strategy",
             "Community management",
@@ -309,13 +333,13 @@ def build():
     monthly_block(
         doc,
         "BASIC",
-        "35,000",
+        "15,000",
         ["Meta Ads", "Audience targeting", "Campaign optimization", "Monthly reporting"],
     )
     monthly_block(
         doc,
         "STANDARD",
-        "65,000",
+        "30,000",
         [
             "Google Ads + Meta Ads",
             "Lead generation",
@@ -327,7 +351,7 @@ def build():
     monthly_block(
         doc,
         "PREMIUM",
-        "120,000",
+        "50,000",
         [
             "Google Ads + Meta Ads",
             "SEO",
