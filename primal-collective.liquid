@@ -54,7 +54,7 @@
             | image_tag:
               class: 'pce-image',
               widths: '640, 900, 1200, 1600, 2000, 2400',
-              sizes: '(max-width: 999px) 978px, 70vw',
+              sizes: '(max-width: 1024px) 978px, 70vw',
               loading: 'lazy',
               alt: image_alt
           }}
@@ -84,7 +84,7 @@
     max-width: none !important;
     margin: 0 !important;
     padding: 0 !important;
-    overflow-x: clip !important;
+    overflow: visible !important;
     background: var(--pce-bg, #050606) !important;
   }
 
@@ -115,21 +115,21 @@
 
   /*
     Figma desktop:
-    - left copy starts on the shared content line
-    - athlete strip bleeds to the RIGHT edge (no right gutter / no empty space)
+    - left copy on content line
+    - athlete strip bleeds to RIGHT edge
   */
   #PrimalCollectiveExact-{{ section.id }} .pce__wrap {
     display: grid;
-    grid-template-columns: minmax(260px, 320px) minmax(0, 1fr);
-    gap: clamp(20px, 2vw, 32px);
+    grid-template-columns: minmax(240px, 300px) minmax(0, 1fr);
+    gap: clamp(16px, 2vw, 28px);
     align-items: stretch;
     width: 100%;
     max-width: none;
-    min-height: 434px;
+    min-height: 420px;
     margin: 0;
     padding-left: max(
-      24px,
-      min(var(--pce-gutter), 8.333vw),
+      20px,
+      min(var(--pce-gutter), 5.5vw),
       calc((100% - var(--pce-frame)) / 2 + var(--pce-gutter))
     );
     padding-right: 0;
@@ -138,7 +138,7 @@
   #PrimalCollectiveExact-{{ section.id }} .pce-copy {
     display: flex;
     min-width: 0;
-    padding: 64px 0 48px;
+    padding: 56px 0 48px;
     flex-direction: column;
     justify-content: center;
   }
@@ -149,21 +149,21 @@
     font-family: {{ heading_font.family }}, {{ heading_font.fallback_families }};
     font-style: {{ heading_font.style }};
     font-weight: 700;
-    font-size: 14px;
-    line-height: 1.5;
-    letter-spacing: 2.2px;
+    font-size: clamp(11px, 1.05vw, 14px);
+    line-height: 1.45;
+    letter-spacing: 0.16em;
     text-transform: uppercase;
   }
 
   #PrimalCollectiveExact-{{ section.id }} .pce-heading {
     width: 100%;
-    max-width: 320px;
-    margin: 28px 0 0;
+    max-width: 11ch;
+    margin: 24px 0 0;
     color: var(--pce-text, #ffffff);
     font-family: {{ heading_font.family }}, {{ heading_font.fallback_families }};
     font-style: {{ heading_font.style }};
     font-weight: 700;
-    font-size: clamp(36px, 3vw, 44px);
+    font-size: clamp(32px, 2.9vw, 44px);
     line-height: 0.95;
     letter-spacing: 0;
     text-transform: uppercase;
@@ -171,13 +171,13 @@
 
   #PrimalCollectiveExact-{{ section.id }} .pce-description {
     width: 100%;
-    max-width: 300px;
-    margin: 22px 0 0;
+    max-width: 32ch;
+    margin: 20px 0 0;
     color: var(--pce-text, #ffffff);
     font-family: {{ body_font.family }}, {{ body_font.fallback_families }};
     font-style: {{ body_font.style }};
     font-weight: 400;
-    font-size: 16px;
+    font-size: clamp(14px, 1.15vw, 16px);
     line-height: 1.5;
   }
 
@@ -185,7 +185,7 @@
     display: inline-flex;
     width: fit-content;
     max-width: 100%;
-    margin-top: 24px;
+    margin-top: 22px;
     padding: 0;
     align-items: center;
     gap: 10px;
@@ -195,9 +195,9 @@
     text-decoration: none;
     font-family: {{ heading_font.family }}, {{ heading_font.fallback_families }};
     font-weight: 700;
-    font-size: 13px;
-    line-height: 1.25;
-    letter-spacing: 1px;
+    font-size: 12px;
+    line-height: 1.3;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
     cursor: pointer;
   }
@@ -227,7 +227,7 @@
   #PrimalCollectiveExact-{{ section.id }} .pce-media {
     position: relative;
     min-width: 0;
-    min-height: 434px;
+    min-height: 420px;
     overflow: hidden;
     background: var(--pce-bg, #050606);
   }
@@ -251,7 +251,7 @@
     display: grid;
     width: 100%;
     height: 100%;
-    min-height: 434px;
+    min-height: 320px;
     place-items: center;
     padding: 24px;
     border: 1px dashed rgba(200, 154, 61, 0.45);
@@ -261,64 +261,35 @@
     text-align: center;
   }
 
-  /* Large laptop / small desktop */
-  @media screen and (max-width: 1366px) and (min-width: 1101px) {
+  /* iPad Pro landscape / smaller desktops */
+  @media screen and (max-width: 1366px) and (min-width: 1025px) {
     #PrimalCollectiveExact-{{ section.id }} {
-      --pce-gutter: 56px;
-    }
-
-    #PrimalCollectiveExact-{{ section.id }} .pce__wrap {
-      grid-template-columns: minmax(240px, 280px) minmax(0, 1fr);
-      min-height: 400px;
-    }
-
-    #PrimalCollectiveExact-{{ section.id }} .pce-copy {
-      padding: 48px 0 40px;
-    }
-
-    #PrimalCollectiveExact-{{ section.id }} .pce-media {
-      min-height: 400px;
-    }
-  }
-
-  /* iPad Pro landscape / medium tablets — keep split, tighter copy */
-  @media screen and (max-width: 1100px) and (min-width: 900px) {
-    #PrimalCollectiveExact-{{ section.id }} {
-      --pce-gutter: 40px;
+      --pce-gutter: 48px;
     }
 
     #PrimalCollectiveExact-{{ section.id }} .pce__wrap {
       grid-template-columns: minmax(220px, 260px) minmax(0, 1fr);
-      gap: 20px;
-      min-height: 360px;
-    }
-
-    #PrimalCollectiveExact-{{ section.id }} .pce-copy {
-      padding: 40px 0 36px;
-    }
-
-    #PrimalCollectiveExact-{{ section.id }} .pce-heading {
-      font-size: clamp(30px, 3.4vw, 38px);
-    }
-
-    #PrimalCollectiveExact-{{ section.id }} .pce-description {
-      font-size: 14px;
+      min-height: 380px;
     }
 
     #PrimalCollectiveExact-{{ section.id }} .pce-media {
-      min-height: 360px;
+      min-height: 380px;
     }
   }
 
   /*
-    iPad Air / portrait tablets & phones:
-    stack copy, then full-bleed athlete strip with horizontal scroll
-    so all 6 portraits stay readable.
+    ≤1024 (iPad Pro portrait, Air, tablets, phones):
+    ALWAYS stack. Scroll strip so athletes stay readable.
   */
-  @media screen and (max-width: 899px) {
+  @media screen and (max-width: 1024px) {
+    #PrimalCollectiveExact-{{ section.id }} {
+      overflow: visible;
+    }
+
     #PrimalCollectiveExact-{{ section.id }} .pce__wrap {
       display: flex;
       flex-direction: column;
+      align-items: stretch;
       gap: 0;
       min-height: 0;
       padding-left: 0;
@@ -327,36 +298,43 @@
 
     #PrimalCollectiveExact-{{ section.id }} .pce-copy {
       width: 100%;
-      padding: 48px clamp(20px, 5vw, 40px) 36px;
+      max-width: 720px;
+      margin: 0;
+      padding: 44px clamp(20px, 4.5vw, 48px) 28px;
       justify-content: flex-start;
     }
 
     #PrimalCollectiveExact-{{ section.id }} .pce-eyebrow {
-      font-size: clamp(11px, 2vw, 13px);
-      letter-spacing: 1.8px;
+      font-size: clamp(11px, 1.8vw, 13px);
+      letter-spacing: 0.14em;
+      line-height: 1.4;
     }
 
     #PrimalCollectiveExact-{{ section.id }} .pce-heading {
-      max-width: 18ch;
-      margin-top: 18px;
-      font-size: clamp(34px, 7vw, 48px);
+      max-width: 12ch;
+      margin-top: 16px;
+      font-size: clamp(34px, 6.5vw, 48px);
+      line-height: 0.96;
     }
 
     #PrimalCollectiveExact-{{ section.id }} .pce-description {
-      max-width: 40ch;
-      margin-top: 18px;
-      font-size: clamp(14px, 2.4vw, 16px);
+      max-width: 38ch;
+      margin-top: 16px;
+      font-size: clamp(14px, 2.2vw, 16px);
     }
 
     #PrimalCollectiveExact-{{ section.id }} .pce-button {
-      margin-top: 22px;
+      margin-top: 20px;
       font-size: 12px;
     }
 
     #PrimalCollectiveExact-{{ section.id }} .pce-media {
+      position: relative;
       width: 100%;
       min-height: 0;
-      height: clamp(260px, 42vw, 360px);
+      height: auto;
+      overflow: visible;
+      background: var(--pce-bg, #050606);
     }
 
     #PrimalCollectiveExact-{{ section.id }} .pce-media-scroll {
@@ -364,33 +342,64 @@
       inset: auto;
       display: block;
       width: 100%;
-      height: 100%;
+      height: clamp(280px, 48vw, 380px);
       overflow-x: auto;
       overflow-y: hidden;
       -webkit-overflow-scrolling: touch;
-      scrollbar-width: thin;
       overscroll-behavior-x: contain;
+      touch-action: pan-x;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(200, 154, 61, 0.55) transparent;
     }
 
+    #PrimalCollectiveExact-{{ section.id }} .pce-media-scroll::-webkit-scrollbar {
+      height: 4px;
+    }
+
+    #PrimalCollectiveExact-{{ section.id }} .pce-media-scroll::-webkit-scrollbar-thumb {
+      background: rgba(200, 154, 61, 0.55);
+      border-radius: 999px;
+    }
+
+    /* Keep native strip ratio; swipe to see all 6 athletes */
     #PrimalCollectiveExact-{{ section.id }} .pce-image {
-      width: auto;
-      min-width: 978px;
-      height: 100%;
-      max-width: none;
+      width: auto !important;
+      height: 100% !important;
+      max-width: none !important;
+      min-width: calc(clamp(280px, 48vw, 380px) * 978 / 434);
+      aspect-ratio: 978 / 434;
       object-fit: cover;
       object-position: left center;
     }
 
     #PrimalCollectiveExact-{{ section.id }} .pce-placeholder {
-      min-height: 260px;
-      min-width: 100%;
+      width: 100%;
+      min-height: 280px;
+      height: 100%;
+    }
+
+    /* Right-edge fade = scroll hint */
+    #PrimalCollectiveExact-{{ section.id }} .pce-media::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 4px;
+      width: 48px;
+      pointer-events: none;
+      background: linear-gradient(
+        90deg,
+        rgba(5, 6, 6, 0) 0%,
+        rgba(5, 6, 6, 0.75) 100%
+      );
     }
   }
 
   /* Phones */
-  @media screen and (max-width: 599px) {
+  @media screen and (max-width: 749px) {
     #PrimalCollectiveExact-{{ section.id }} .pce-copy {
-      padding: 40px 20px 28px;
+      max-width: none;
+      padding: 36px 20px 24px;
     }
 
     #PrimalCollectiveExact-{{ section.id }} .pce-heading {
@@ -401,32 +410,52 @@
     #PrimalCollectiveExact-{{ section.id }} .pce-description {
       max-width: 100%;
       font-size: 14px;
+      line-height: 1.5;
     }
 
-    #PrimalCollectiveExact-{{ section.id }} .pce-media {
-      height: 280px;
+    #PrimalCollectiveExact-{{ section.id }} .pce-button {
+      flex-wrap: wrap;
+      font-size: 11px;
+      letter-spacing: 0.06em;
+    }
+
+    #PrimalCollectiveExact-{{ section.id }} .pce-media-scroll {
+      height: 300px;
     }
 
     #PrimalCollectiveExact-{{ section.id }} .pce-image {
-      min-width: 820px;
+      min-width: calc(300px * 978 / 434);
     }
   }
 
-  @media screen and (max-width: 389px) {
+  @media screen and (max-width: 429px) {
     #PrimalCollectiveExact-{{ section.id }} .pce-copy {
-      padding: 32px 16px 24px;
+      padding: 30px 16px 20px;
+    }
+
+    #PrimalCollectiveExact-{{ section.id }} .pce-eyebrow {
+      font-size: 10px;
+      letter-spacing: 0.12em;
     }
 
     #PrimalCollectiveExact-{{ section.id }} .pce-heading {
       font-size: 28px;
     }
 
-    #PrimalCollectiveExact-{{ section.id }} .pce-media {
-      height: 240px;
+    #PrimalCollectiveExact-{{ section.id }} .pce-description {
+      font-size: 13px;
+    }
+
+    #PrimalCollectiveExact-{{ section.id }} .pce-media-scroll {
+      height: 260px;
     }
 
     #PrimalCollectiveExact-{{ section.id }} .pce-image {
-      min-width: 720px;
+      min-width: calc(260px * 978 / 434);
+    }
+
+    #PrimalCollectiveExact-{{ section.id }} .pce-media::after {
+      width: 36px;
     }
   }
 
