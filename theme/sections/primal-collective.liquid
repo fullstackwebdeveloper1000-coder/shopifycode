@@ -1,0 +1,518 @@
+{% liquid
+  assign heading_font = section.settings.heading_font
+  assign body_font = section.settings.body_font
+  assign image_alt = section.settings.image.alt | default: section.settings.heading
+%}
+
+<section
+  id="PrimalCollectiveExact-{{ section.id }}"
+  class="primal-collective-exact"
+  style="
+    --pce-bg: {{ section.settings.background_color }};
+    --pce-text: {{ section.settings.text_color }};
+    --pce-gold: {{ section.settings.gold_color }};
+  "
+>
+  <div class="pce__wrap">
+    <div class="pce-copy">
+      {% if section.settings.eyebrow != blank %}
+        <p class="pce-eyebrow">{{ section.settings.eyebrow | escape }}</p>
+      {% endif %}
+
+      {% if section.settings.heading != blank %}
+        <h2 class="pce-heading">{{ section.settings.heading | escape }}</h2>
+      {% endif %}
+
+      {% if section.settings.description != blank %}
+        <p class="pce-description">{{ section.settings.description | escape }}</p>
+      {% endif %}
+
+      {% if section.settings.button_label != blank %}
+        <a
+          class="pce-button"
+          {% if section.settings.button_link != blank %}
+            href="{{ section.settings.button_link }}"
+          {% else %}
+            role="link"
+            aria-disabled="true"
+          {% endif %}
+        >
+          <span>{{ section.settings.button_label | escape }}</span>
+          <svg viewBox="0 0 16 16" aria-hidden="true">
+            <path d="M2 8h11M9 4l4 4-4 4"/>
+          </svg>
+        </a>
+      {% endif %}
+    </div>
+
+    <div class="pce-media">
+      <div class="pce-media-scroll">
+        {% if section.settings.image != blank %}
+          {{
+            section.settings.image
+            | image_url: width: 2400
+            | image_tag:
+              class: 'pce-image',
+              widths: '640, 900, 1200, 1600, 2000, 2400',
+              sizes: '(max-width: 999px) 978px, 70vw',
+              loading: 'lazy',
+              alt: image_alt
+          }}
+        {% else %}
+          <div class="pce-placeholder">
+            <span>Upload the Primal Collective athlete strip</span>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% style %}
+  {{ heading_font | font_face: font_display: 'swap' }}
+  {{ body_font | font_face: font_display: 'swap' }}
+
+  #PrimalCollectiveExact-{{ section.id }} {
+    {% render 'pw-align-vars' %}
+    --pce-frame: 1440px;
+    --pce-gutter: 80px;
+  }
+
+  #shopify-section-{{ section.id }} {
+    display: block !important;
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow-x: clip !important;
+    background: var(--pce-bg, #050606) !important;
+  }
+
+  #shopify-section-{{ section.id }} .page-width,
+  #shopify-section-{{ section.id }} > .page-width {
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  #PrimalCollectiveExact-{{ section.id }},
+  #PrimalCollectiveExact-{{ section.id }} *,
+  #PrimalCollectiveExact-{{ section.id }} *::before,
+  #PrimalCollectiveExact-{{ section.id }} *::after {
+    box-sizing: border-box;
+  }
+
+  #PrimalCollectiveExact-{{ section.id }} {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background: var(--pce-bg, #050606);
+    color: var(--pce-text, #ffffff);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /*
+    Figma desktop:
+    - left copy starts on the shared content line
+    - athlete strip bleeds to the RIGHT edge (no right gutter / no empty space)
+  */
+  #PrimalCollectiveExact-{{ section.id }} .pce__wrap {
+    display: grid;
+    grid-template-columns: minmax(260px, 320px) minmax(0, 1fr);
+    gap: clamp(20px, 2vw, 32px);
+    align-items: stretch;
+    width: 100%;
+    max-width: none;
+    min-height: 434px;
+    margin: 0;
+    padding-left: max(
+      24px,
+      min(var(--pce-gutter), 8.333vw),
+      calc((100% - var(--pce-frame)) / 2 + var(--pce-gutter))
+    );
+    padding-right: 0;
+  }
+
+  #PrimalCollectiveExact-{{ section.id }} .pce-copy {
+    display: flex;
+    min-width: 0;
+    padding: 64px 0 48px;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  #PrimalCollectiveExact-{{ section.id }} .pce-eyebrow {
+    margin: 0;
+    color: var(--pce-gold, #c89a3d);
+    font-family: {{ heading_font.family }}, {{ heading_font.fallback_families }};
+    font-style: {{ heading_font.style }};
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 1.5;
+    letter-spacing: 2.2px;
+    text-transform: uppercase;
+  }
+
+  #PrimalCollectiveExact-{{ section.id }} .pce-heading {
+    width: 100%;
+    max-width: 320px;
+    margin: 28px 0 0;
+    color: var(--pce-text, #ffffff);
+    font-family: {{ heading_font.family }}, {{ heading_font.fallback_families }};
+    font-style: {{ heading_font.style }};
+    font-weight: 700;
+    font-size: clamp(36px, 3vw, 44px);
+    line-height: 0.95;
+    letter-spacing: 0;
+    text-transform: uppercase;
+  }
+
+  #PrimalCollectiveExact-{{ section.id }} .pce-description {
+    width: 100%;
+    max-width: 300px;
+    margin: 22px 0 0;
+    color: var(--pce-text, #ffffff);
+    font-family: {{ body_font.family }}, {{ body_font.fallback_families }};
+    font-style: {{ body_font.style }};
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1.5;
+  }
+
+  #PrimalCollectiveExact-{{ section.id }} .pce-button {
+    display: inline-flex;
+    width: fit-content;
+    max-width: 100%;
+    margin-top: 24px;
+    padding: 0;
+    align-items: center;
+    gap: 10px;
+    border: 0;
+    background: transparent;
+    color: var(--pce-gold, #c89a3d);
+    text-decoration: none;
+    font-family: {{ heading_font.family }}, {{ heading_font.fallback_families }};
+    font-weight: 700;
+    font-size: 13px;
+    line-height: 1.25;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+
+  #PrimalCollectiveExact-{{ section.id }} .pce-button svg {
+    width: 16px;
+    height: 16px;
+    flex: 0 0 16px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    transition: transform 0.2s ease;
+  }
+
+  #PrimalCollectiveExact-{{ section.id }} .pce-button:hover svg,
+  #PrimalCollectiveExact-{{ section.id }} .pce-button:focus-visible svg {
+    transform: translateX(3px);
+  }
+
+  #PrimalCollectiveExact-{{ section.id }} .pce-button[aria-disabled='true'] {
+    cursor: default;
+    pointer-events: none;
+  }
+
+  #PrimalCollectiveExact-{{ section.id }} .pce-media {
+    position: relative;
+    min-width: 0;
+    min-height: 434px;
+    overflow: hidden;
+    background: var(--pce-bg, #050606);
+  }
+
+  #PrimalCollectiveExact-{{ section.id }} .pce-media-scroll {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  #PrimalCollectiveExact-{{ section.id }} .pce-image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: left center;
+  }
+
+  #PrimalCollectiveExact-{{ section.id }} .pce-placeholder {
+    display: grid;
+    width: 100%;
+    height: 100%;
+    min-height: 434px;
+    place-items: center;
+    padding: 24px;
+    border: 1px dashed rgba(200, 154, 61, 0.45);
+    color: var(--pce-gold, #c89a3d);
+    font-family: {{ body_font.family }}, {{ body_font.fallback_families }};
+    font-size: 14px;
+    text-align: center;
+  }
+
+  /* Large laptop / small desktop */
+  @media screen and (max-width: 1366px) and (min-width: 1101px) {
+    #PrimalCollectiveExact-{{ section.id }} {
+      --pce-gutter: 56px;
+    }
+
+    #PrimalCollectiveExact-{{ section.id }} .pce__wrap {
+      grid-template-columns: minmax(240px, 280px) minmax(0, 1fr);
+      min-height: 400px;
+    }
+
+    #PrimalCollectiveExact-{{ section.id }} .pce-copy {
+      padding: 48px 0 40px;
+    }
+
+    #PrimalCollectiveExact-{{ section.id }} .pce-media {
+      min-height: 400px;
+    }
+  }
+
+  /* iPad Pro landscape / medium tablets — keep split, tighter copy */
+  @media screen and (max-width: 1100px) and (min-width: 900px) {
+    #PrimalCollectiveExact-{{ section.id }} {
+      --pce-gutter: 40px;
+    }
+
+    #PrimalCollectiveExact-{{ section.id }} .pce__wrap {
+      grid-template-columns: minmax(220px, 260px) minmax(0, 1fr);
+      gap: 20px;
+      min-height: 360px;
+    }
+
+    #PrimalCollectiveExact-{{ section.id }} .pce-copy {
+      padding: 40px 0 36px;
+    }
+
+    #PrimalCollectiveExact-{{ section.id }} .pce-heading {
+      font-size: clamp(30px, 3.4vw, 38px);
+    }
+
+    #PrimalCollectiveExact-{{ section.id }} .pce-description {
+      font-size: 14px;
+    }
+
+    #PrimalCollectiveExact-{{ section.id }} .pce-media {
+      min-height: 360px;
+    }
+  }
+
+  /*
+    iPad Air / portrait tablets & phones:
+    stack copy, then full-bleed athlete strip with horizontal scroll
+    so all 6 portraits stay readable.
+  */
+  @media screen and (max-width: 899px) {
+    #PrimalCollectiveExact-{{ section.id }} .pce__wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      min-height: 0;
+      padding-left: 0;
+      padding-right: 0;
+    }
+
+    #PrimalCollectiveExact-{{ section.id }} .pce-copy {
+      width: 100%;
+      padding: 48px clamp(20px, 5vw, 40px) 36px;
+      justify-content: flex-start;
+    }
+
+    #PrimalCollectiveExact-{{ section.id }} .pce-eyebrow {
+      font-size: clamp(11px, 2vw, 13px);
+      letter-spacing: 1.8px;
+    }
+
+    #PrimalCollectiveExact-{{ section.id }} .pce-heading {
+      max-width: 18ch;
+      margin-top: 18px;
+      font-size: clamp(34px, 7vw, 48px);
+    }
+
+    #PrimalCollectiveExact-{{ section.id }} .pce-description {
+      max-width: 40ch;
+      margin-top: 18px;
+      font-size: clamp(14px, 2.4vw, 16px);
+    }
+
+    #PrimalCollectiveExact-{{ section.id }} .pce-button {
+      margin-top: 22px;
+      font-size: 12px;
+    }
+
+    #PrimalCollectiveExact-{{ section.id }} .pce-media {
+      width: 100%;
+      min-height: 0;
+      height: clamp(260px, 42vw, 360px);
+    }
+
+    #PrimalCollectiveExact-{{ section.id }} .pce-media-scroll {
+      position: relative;
+      inset: auto;
+      display: block;
+      width: 100%;
+      height: 100%;
+      overflow-x: auto;
+      overflow-y: hidden;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: thin;
+      overscroll-behavior-x: contain;
+    }
+
+    #PrimalCollectiveExact-{{ section.id }} .pce-image {
+      width: auto;
+      min-width: 978px;
+      height: 100%;
+      max-width: none;
+      object-fit: cover;
+      object-position: left center;
+    }
+
+    #PrimalCollectiveExact-{{ section.id }} .pce-placeholder {
+      min-height: 260px;
+      min-width: 100%;
+    }
+  }
+
+  /* Phones */
+  @media screen and (max-width: 599px) {
+    #PrimalCollectiveExact-{{ section.id }} .pce-copy {
+      padding: 40px 20px 28px;
+    }
+
+    #PrimalCollectiveExact-{{ section.id }} .pce-heading {
+      max-width: 100%;
+      font-size: clamp(30px, 9vw, 40px);
+    }
+
+    #PrimalCollectiveExact-{{ section.id }} .pce-description {
+      max-width: 100%;
+      font-size: 14px;
+    }
+
+    #PrimalCollectiveExact-{{ section.id }} .pce-media {
+      height: 280px;
+    }
+
+    #PrimalCollectiveExact-{{ section.id }} .pce-image {
+      min-width: 820px;
+    }
+  }
+
+  @media screen and (max-width: 389px) {
+    #PrimalCollectiveExact-{{ section.id }} .pce-copy {
+      padding: 32px 16px 24px;
+    }
+
+    #PrimalCollectiveExact-{{ section.id }} .pce-heading {
+      font-size: 28px;
+    }
+
+    #PrimalCollectiveExact-{{ section.id }} .pce-media {
+      height: 240px;
+    }
+
+    #PrimalCollectiveExact-{{ section.id }} .pce-image {
+      min-width: 720px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    #PrimalCollectiveExact-{{ section.id }} .pce-button svg {
+      transition: none;
+    }
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "Primal Collective V3",
+  "tag": "section",
+  "class": "section-primal-collective-exact",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Athlete strip image",
+      "info": "Upload the athlete strip (about 978×434 or wider). It bleeds to the right edge on desktop."
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Gold top line",
+      "default": "Trusted By Those Who Demand More"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Main heading",
+      "default": "The Primal Collective"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "Elite athletes. Everyday winners. Different journeys. Same mindset."
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Text link label",
+      "default": "Meet The Primal Collective"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Text link"
+    },
+    {
+      "type": "font_picker",
+      "id": "heading_font",
+      "label": "Heading font",
+      "default": "montserrat_n7"
+    },
+    {
+      "type": "font_picker",
+      "id": "body_font",
+      "label": "Body font",
+      "default": "inter_n4"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#050606"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text colour",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "gold_color",
+      "label": "Brand gold",
+      "default": "#C89A3D"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Primal Collective V3"
+    }
+  ]
+}
+{% endschema %}
