@@ -14,8 +14,8 @@
     --pds-button-text: {{ section.settings.button_text_color }};
   "
 >
-  <div class="pw-container pds__wrap">
-    <div class="pds-left">
+  <div class="pds__wrap">
+    <div class="pds-copy">
       <h2>{{ section.settings.left_heading }}</h2>
 
       <ul class="pds-benefits" role="list">
@@ -31,27 +31,7 @@
           </li>
         {% endfor %}
       </ul>
-    </div>
 
-    <div class="pds-media">
-      {% if section.settings.image != blank %}
-        {{
-          section.settings.image
-          | image_url: width: 2400
-          | image_tag:
-            class: 'pds-image',
-            loading: 'eager',
-            fetchpriority: 'high',
-            widths: '800, 1200, 1600, 2000, 2400',
-            sizes: '(min-width: 1100px) 525px, (min-width: 750px) 40vw, 100vw',
-            alt: image_alt
-        }}
-      {% else %}
-        {{ 'lifestyle-1' | placeholder_svg_tag: 'pds-placeholder' }}
-      {% endif %}
-    </div>
-
-    <div class="pds-right">
       <h3>
         {{ section.settings.right_heading }}
         <span>{{ section.settings.right_gold_line }}</span>
@@ -88,6 +68,24 @@
             <span>{{ section.settings.shipping_text }}</span>
           </span>
         </div>
+      {% endif %}
+    </div>
+
+    <div class="pds-media">
+      {% if section.settings.image != blank %}
+        {{
+          section.settings.image
+          | image_url: width: 2400
+          | image_tag:
+            class: 'pds-image',
+            loading: 'eager',
+            fetchpriority: 'high',
+            widths: '800, 1200, 1600, 2000, 2400',
+            sizes: '(min-width: 1025px) 55vw, 100vw',
+            alt: image_alt
+        }}
+      {% else %}
+        {{ 'lifestyle-1' | placeholder_svg_tag: 'pds-placeholder' }}
       {% endif %}
     </div>
   </div>
@@ -135,35 +133,44 @@
     text-rendering: optimizeLegibility;
   }
 
-  #PrimalDailyMatch-{{ section.id }} .pw-container.pds__wrap {
+  /*
+    Desktop:
+    - left copy on shared 1440 content line
+    - lifestyle image bleeds to the RIGHT viewport edge (no right gap)
+  */
+  #PrimalDailyMatch-{{ section.id }} .pds__wrap {
     display: grid;
-    grid-template-columns: minmax(0, 314px) minmax(0, 1fr) minmax(0, 319px);
-    gap: clamp(16px, 2.2vw, 30px);
+    grid-template-columns: minmax(280px, 420px) minmax(0, 1fr);
+    gap: clamp(20px, 2.4vw, 36px);
     align-items: stretch;
     width: 100%;
-    max-width: var(--pw-max);
-    min-height: 320px;
-    margin-inline: auto;
-    padding-inline: var(--pw-gutter);
+    max-width: none;
+    min-height: 520px;
+    margin: 0;
+    padding-left: max(
+      20px,
+      min(var(--pw-gutter), 5.5vw),
+      calc((100% - var(--pw-frame)) / 2 + var(--pw-gutter))
+    );
+    padding-right: 0;
   }
 
-  #PrimalDailyMatch-{{ section.id }} .pds-left {
+  #PrimalDailyMatch-{{ section.id }} .pds-copy {
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
+    justify-content: center;
     min-width: 0;
-    padding-top: 57px;
-    padding-bottom: 24px;
+    padding: 48px 0 48px;
   }
 
-  #PrimalDailyMatch-{{ section.id }} .pds-left h2 {
+  #PrimalDailyMatch-{{ section.id }} .pds-copy h2 {
     margin: 0;
     color: var(--pds-text);
     font-family: {{ heading_font.family }}, sans-serif;
     font-style: {{ heading_font.style }};
     font-weight: 700;
-    font-size: 24px;
-    line-height: 27.5px;
+    font-size: clamp(20px, 1.7vw, 24px);
+    line-height: 1.15;
     letter-spacing: -0.25px;
     text-transform: uppercase;
   }
@@ -188,7 +195,6 @@
     font-weight: 700;
     font-size: 13.5px;
     line-height: 20px;
-    white-space: nowrap;
   }
 
   #PrimalDailyMatch-{{ section.id }} .pds-check,
@@ -210,67 +216,27 @@
     stroke-linejoin: round;
   }
 
-  #PrimalDailyMatch-{{ section.id }} .pds-media {
-    position: relative;
-    min-width: 0;
-    min-height: 320px;
-    overflow: hidden;
-    background: #111;
-  }
-
-  #PrimalDailyMatch-{{ section.id }} .pds-media::before {
-    content: "";
-    position: absolute;
-    z-index: 2;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    width: 42px;
-    pointer-events: none;
-    background: linear-gradient(90deg, var(--pds-bg) 0%, rgba(244, 240, 237, 0) 100%);
-  }
-
-  #PrimalDailyMatch-{{ section.id }} .pds-image,
-  #PrimalDailyMatch-{{ section.id }} .pds-placeholder {
-    display: block;
-    width: 100%;
-    height: 100%;
-    min-height: 320px;
-    max-width: none;
-    object-fit: cover;
-    object-position: center center;
-  }
-
-  #PrimalDailyMatch-{{ section.id }} .pds-right {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    min-width: 0;
-    padding-top: 26px;
-    padding-bottom: 24px;
-  }
-
-  #PrimalDailyMatch-{{ section.id }} .pds-right h3 {
-    margin: 0;
+  #PrimalDailyMatch-{{ section.id }} .pds-copy h3 {
+    margin: 28px 0 0;
     color: var(--pds-text);
     font-family: {{ heading_font.family }}, sans-serif;
     font-style: {{ heading_font.style }};
     font-weight: 700;
-    font-size: 36px;
-    line-height: 34px;
+    font-size: clamp(28px, 2.6vw, 36px);
+    line-height: 1;
     letter-spacing: -0.4px;
     text-transform: uppercase;
   }
 
-  #PrimalDailyMatch-{{ section.id }} .pds-right h3 span {
-    display: block;
-    color: var(--pds-gold);
+  #PrimalDailyMatch-{{ section.id }} .pds-copy h3 span {
+    display: inline;
+    color: var(--pds-text);
   }
 
   #PrimalDailyMatch-{{ section.id }} .pds-description {
     width: 100%;
-    max-width: 282px;
-    margin: 18px 0 0;
+    max-width: 34ch;
+    margin: 16px 0 0;
     color: var(--pds-text);
     font-family: {{ body_font.family }}, sans-serif;
     font-style: {{ body_font.style }};
@@ -281,8 +247,9 @@
 
   #PrimalDailyMatch-{{ section.id }} .pds-button {
     width: 201px;
+    max-width: 100%;
     height: 47px;
-    margin-top: 24px;
+    margin-top: 22px;
     padding: 0 23px;
     display: inline-flex;
     align-items: center;
@@ -298,6 +265,11 @@
     line-height: 1;
     letter-spacing: 0.5px;
     text-transform: uppercase;
+  }
+
+  #PrimalDailyMatch-{{ section.id }} .pds-button[aria-disabled='true'] {
+    cursor: default;
+    pointer-events: none;
   }
 
   #PrimalDailyMatch-{{ section.id }} .pds-arrow {
@@ -356,72 +328,145 @@
     line-height: 15px;
   }
 
-  @media screen and (max-width: 1100px) {
-    #PrimalDailyMatch-{{ section.id }} .pw-container.pds__wrap {
-      grid-template-columns: minmax(0, 260px) minmax(0, 1fr) minmax(0, 280px);
-      gap: 20px;
+  #PrimalDailyMatch-{{ section.id }} .pds-media {
+    position: relative;
+    min-width: 0;
+    min-height: 520px;
+    overflow: hidden;
+    background: #111;
+  }
+
+  /* Soft cream fade where copy meets the photo */
+  #PrimalDailyMatch-{{ section.id }} .pds-media::before {
+    content: "";
+    position: absolute;
+    z-index: 2;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: clamp(48px, 8vw, 110px);
+    pointer-events: none;
+    background: linear-gradient(
+      90deg,
+      var(--pds-bg) 0%,
+      rgba(244, 240, 237, 0.72) 38%,
+      rgba(244, 240, 237, 0) 100%
+    );
+  }
+
+  #PrimalDailyMatch-{{ section.id }} .pds-image,
+  #PrimalDailyMatch-{{ section.id }} .pds-placeholder {
+    position: absolute;
+    inset: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    object-fit: cover;
+    object-position: center center;
+  }
+
+  /* iPad Pro / Air landscape & smaller desktops */
+  @media screen and (max-width: 1366px) and (min-width: 1025px) {
+    #PrimalDailyMatch-{{ section.id }} .pds__wrap {
+      grid-template-columns: minmax(260px, 360px) minmax(0, 1fr);
+      min-height: 460px;
+      gap: 24px;
     }
 
-    #PrimalDailyMatch-{{ section.id }} .pds-left h2 {
-      font-size: 21px;
-      line-height: 24px;
+    #PrimalDailyMatch-{{ section.id }} .pds-media {
+      min-height: 460px;
     }
 
     #PrimalDailyMatch-{{ section.id }} .pds-benefits li {
-      font-size: 12px;
-      white-space: normal;
-    }
-
-    #PrimalDailyMatch-{{ section.id }} .pds-right h3 {
-      font-size: 31px;
-      line-height: 30px;
+      font-size: 12.5px;
     }
   }
 
-  @media screen and (max-width: 749px) {
-    #PrimalDailyMatch-{{ section.id }} .pw-container.pds__wrap {
+  /* Tablet portrait / iPad Air & Pro portrait — stack, image full-bleed */
+  @media screen and (max-width: 1024px) {
+    #PrimalDailyMatch-{{ section.id }} .pds__wrap {
       display: flex;
       flex-direction: column;
       gap: 0;
       min-height: 0;
-      padding-inline: var(--pw-gutter);
+      padding-left: 0;
+      padding-right: 0;
     }
 
-    #PrimalDailyMatch-{{ section.id }} .pds-left,
-    #PrimalDailyMatch-{{ section.id }} .pds-right {
-      padding-top: 0;
-      padding-bottom: 0;
-    }
-
-    #PrimalDailyMatch-{{ section.id }} .pds-left {
-      padding: 40px 0 34px;
-    }
-
-    #PrimalDailyMatch-{{ section.id }} .pds-benefits li {
-      white-space: normal;
+    #PrimalDailyMatch-{{ section.id }} .pds-copy {
+      padding: 48px max(20px, var(--pw-gutter)) 36px;
     }
 
     #PrimalDailyMatch-{{ section.id }} .pds-media {
+      width: 100%;
       min-height: 0;
-      height: min(78vw, 470px);
-    }
-
-    #PrimalDailyMatch-{{ section.id }} .pds-image,
-    #PrimalDailyMatch-{{ section.id }} .pds-placeholder {
-      min-height: 0;
-      height: 100%;
+      height: min(68vw, 560px);
+      aspect-ratio: 16 / 11;
     }
 
     #PrimalDailyMatch-{{ section.id }} .pds-media::before {
       display: none;
     }
 
-    #PrimalDailyMatch-{{ section.id }} .pds-right {
-      padding: 38px 0 45px;
+    #PrimalDailyMatch-{{ section.id }} .pds-image,
+    #PrimalDailyMatch-{{ section.id }} .pds-placeholder {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
     }
 
     #PrimalDailyMatch-{{ section.id }} .pds-description {
       max-width: none;
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    #PrimalDailyMatch-{{ section.id }} .pds-copy {
+      padding: 40px max(20px, var(--pw-gutter)) 28px;
+    }
+
+    #PrimalDailyMatch-{{ section.id }} .pds-copy h2 {
+      font-size: 22px;
+      line-height: 1.2;
+    }
+
+    #PrimalDailyMatch-{{ section.id }} .pds-benefits {
+      gap: 12px;
+    }
+
+    #PrimalDailyMatch-{{ section.id }} .pds-benefits li {
+      font-size: 13px;
+      line-height: 1.35;
+    }
+
+    #PrimalDailyMatch-{{ section.id }} .pds-copy h3 {
+      margin-top: 24px;
+      font-size: 30px;
+    }
+
+    #PrimalDailyMatch-{{ section.id }} .pds-media {
+      height: min(92vw, 480px);
+      aspect-ratio: 4 / 3;
+    }
+
+    #PrimalDailyMatch-{{ section.id }} .pds-button {
+      width: 100%;
+      max-width: 280px;
+    }
+  }
+
+  @media screen and (max-width: 429px) {
+    #PrimalDailyMatch-{{ section.id }} .pds-copy {
+      padding: 32px 20px 24px;
+    }
+
+    #PrimalDailyMatch-{{ section.id }} .pds-media {
+      height: min(100vw, 420px);
+      aspect-ratio: 1 / 1;
     }
   }
 {% endstyle %}
@@ -438,7 +483,8 @@
     {
       "type": "image_picker",
       "id": "image",
-      "label": "Centre image"
+      "label": "Lifestyle image",
+      "info": "Full-bleed on the right (desktop) and full-width on tablet/mobile. Use a wide photo (~1600px+)."
     },
     {
       "type": "text",
@@ -449,19 +495,19 @@
     {
       "type": "text",
       "id": "right_heading",
-      "label": "Right heading first line",
+      "label": "CTA heading first line",
       "default": "One Scoop."
     },
     {
       "type": "text",
       "id": "right_gold_line",
-      "label": "Right heading gold line",
+      "label": "CTA heading second line",
       "default": "Every Day."
     },
     {
       "type": "textarea",
       "id": "description",
-      "label": "Right description",
+      "label": "Description",
       "default": "A simple daily habit designed to help you feel stronger, think sharper and perform at your best."
     },
     {
