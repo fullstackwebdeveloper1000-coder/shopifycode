@@ -1,6 +1,7 @@
 {% liquid
   assign heading_font = section.settings.heading_font
   assign body_font = section.settings.body_font
+  assign image_alt = section.settings.image.alt | default: section.settings.heading
 %}
 
 <section
@@ -44,39 +45,32 @@
       {% endif %}
     </div>
 
-    <div class="pce-athletes" role="list">
-      {% for block in section.blocks %}
-        <article class="pce-card" role="listitem" {{ block.shopify_attributes }}>
-          <div class="pce-card-media">
-            {% if block.settings.image != blank %}
-              {{
-                block.settings.image
-                | image_url: width: 1200
-                | image_tag:
-                  class: 'pce-card-image',
-                  widths: '400, 600, 800, 1000, 1200',
-                  sizes: '(min-width: 1025px) 16vw, 100vw',
-                  loading: 'lazy',
-                  alt: block.settings.name | default: 'Athlete'
-              }}
-            {% else %}
-              {{ 'lifestyle-1' | placeholder_svg_tag: 'pce-card-placeholder' }}
-            {% endif %}
-          </div>
-
-          {% if block.settings.quote != blank %}
-            <p class="pce-card-quote">{{ block.settings.quote | escape }}</p>
+    <div class="pce-media">
+      <div
+        class="pce-media-scroll"
+        tabindex="0"
+        role="region"
+        aria-label="Athlete portraits. Swipe to see more on smaller screens."
+      >
+        <div class="pce-strip">
+          {% if section.settings.image != blank %}
+            {{
+              section.settings.image
+              | image_url: width: 2400
+              | image_tag:
+                class: 'pce-image',
+                widths: '640, 900, 1200, 1600, 2000, 2400',
+                sizes: '(max-width: 1024px) 1600px, 70vw',
+                loading: 'lazy',
+                alt: image_alt
+            }}
+          {% else %}
+            <div class="pce-placeholder">
+              <span>Upload the Primal Collective athlete strip</span>
+            </div>
           {% endif %}
-
-          {% if block.settings.name != blank %}
-            <p class="pce-card-name">{{ block.settings.name | escape }}</p>
-          {% endif %}
-
-          {% if block.settings.title != blank %}
-            <p class="pce-card-title">{{ block.settings.title | escape }}</p>
-          {% endif %}
-        </article>
-      {% endfor %}
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -87,6 +81,7 @@
 
   #PrimalCollectiveExact-{{ section.id }} {
     {% render 'pw-align-vars' %}
+    --pce-strip-ratio: 2.253; /* 978 / 434 */
   }
 
   #shopify-section-{{ section.id }} {
@@ -124,17 +119,15 @@
     -webkit-font-smoothing: antialiased;
   }
 
-  /*
-    Figma desktop:
-    left copy on shared content line | 6 athlete portraits bleed to right edge
-  */
+  /* Desktop: copy on content line, image full to right edge */
   #PrimalCollectiveExact-{{ section.id }} .pce__wrap {
     display: grid;
-    grid-template-columns: minmax(240px, 300px) minmax(0, 1fr);
-    gap: clamp(16px, 1.8vw, 28px);
+    grid-template-columns: minmax(240px, 296px) minmax(0, 1fr);
+    gap: clamp(20px, 2vw, 30px);
     align-items: stretch;
     width: 100%;
     max-width: none;
+    min-height: 434px;
     margin: 0;
     padding-left: max(
       20px,
@@ -235,169 +228,207 @@
     pointer-events: none;
   }
 
-  /* 6 athletes edge-to-edge, no gaps between portraits */
-  #PrimalCollectiveExact-{{ section.id }} .pce-athletes {
-    display: grid;
-    grid-template-columns: repeat(6, minmax(0, 1fr));
-    gap: 0;
+  #PrimalCollectiveExact-{{ section.id }} .pce-media {
+    position: relative;
     min-width: 0;
-    align-self: stretch;
+    min-height: 434px;
+    overflow: hidden;
     background: var(--pce-bg, #050606);
   }
 
-  #PrimalCollectiveExact-{{ section.id }} .pce-card {
-    display: flex;
-    min-width: 0;
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  #PrimalCollectiveExact-{{ section.id }} .pce-card-media {
-    position: relative;
-    width: 100%;
-    aspect-ratio: 3 / 4;
-    overflow: hidden;
-    background: #111;
-  }
-
-  #PrimalCollectiveExact-{{ section.id }} .pce-card-image,
-  #PrimalCollectiveExact-{{ section.id }} .pce-card-placeholder {
+  #PrimalCollectiveExact-{{ section.id }} .pce-media-scroll {
     position: absolute;
     inset: 0;
-    display: block;
     width: 100%;
     height: 100%;
-    max-width: none;
-    object-fit: cover;
-    object-position: center top;
+    overflow: hidden;
   }
 
-  #PrimalCollectiveExact-{{ section.id }} .pce-card-quote,
-  #PrimalCollectiveExact-{{ section.id }} .pce-card-name,
-  #PrimalCollectiveExact-{{ section.id }} .pce-card-title {
-    margin: 0;
-    padding-inline: 10px;
-    font-family: {{ body_font.family }}, {{ body_font.fallback_families }};
-    font-style: {{ body_font.style }};
+  #PrimalCollectiveExact-{{ section.id }} .pce-strip {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
   }
 
-  #PrimalCollectiveExact-{{ section.id }} .pce-card-quote {
-    margin-top: 14px;
-    color: var(--pce-text, #ffffff);
-    font-weight: 400;
-    font-size: 12px;
-    line-height: 1.35;
+  #PrimalCollectiveExact-{{ section.id }} .pce-image,
+  #PrimalCollectiveExact-{{ section.id }} img.pce-image {
+    display: block !important;
+    width: 100% !important;
+    height: 100% !important;
+    max-width: none !important;
+    object-fit: cover !important;
+    object-position: left center !important;
   }
 
-  #PrimalCollectiveExact-{{ section.id }} .pce-card-name {
-    margin-top: 8px;
+  #PrimalCollectiveExact-{{ section.id }} .pce-placeholder {
+    display: grid;
+    width: 100%;
+    height: 100%;
+    min-height: 320px;
+    place-items: center;
+    padding: 24px;
+    border: 1px dashed rgba(200, 154, 61, 0.45);
     color: var(--pce-gold, #c89a3d);
-    font-family: {{ heading_font.family }}, {{ heading_font.fallback_families }};
-    font-weight: 700;
-    font-size: 12px;
-    line-height: 1.2;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
+    font-family: {{ body_font.family }}, {{ body_font.fallback_families }};
+    font-size: 14px;
+    text-align: center;
   }
 
-  #PrimalCollectiveExact-{{ section.id }} .pce-card-title {
-    margin-top: 4px;
-    margin-bottom: 18px;
-    color: rgba(255, 255, 255, 0.78);
-    font-weight: 400;
-    font-size: 11px;
-    line-height: 1.3;
-  }
-
-  /* iPad Pro landscape / smaller desktop — still Figma 2-col */
+  /* Laptop / iPad Pro landscape */
   @media screen and (max-width: 1366px) and (min-width: 1025px) {
     #PrimalCollectiveExact-{{ section.id }} .pce__wrap {
-      grid-template-columns: minmax(210px, 260px) minmax(0, 1fr);
+      grid-template-columns: minmax(220px, 260px) minmax(0, 1fr);
+      min-height: 400px;
+    }
+
+    #PrimalCollectiveExact-{{ section.id }} .pce-media {
+      min-height: 400px;
     }
 
     #PrimalCollectiveExact-{{ section.id }} .pce-heading {
       font-size: 38px;
     }
-
-    #PrimalCollectiveExact-{{ section.id }} .pce-card-quote {
-      font-size: 11px;
-    }
-
-    #PrimalCollectiveExact-{{ section.id }} .pce-card-name {
-      font-size: 11px;
-    }
   }
 
   /*
-    Figma mobile/tablet:
-    copy on top, then each athlete FULL WIDTH stacked
+    Tablet + phone:
+    - copy full width with site gutters
+    - athlete image FULL height, NOT crushed
+    - strip stays wide → swipe to see all 6
   */
   @media screen and (max-width: 1024px) {
+    #PrimalCollectiveExact-{{ section.id }} {
+      overflow: visible;
+      --pce-strip-h: min(420px, 58vw);
+    }
+
+    #shopify-section-{{ section.id }} {
+      overflow: visible !important;
+    }
+
     #PrimalCollectiveExact-{{ section.id }} .pce__wrap {
       display: flex;
       flex-direction: column;
+      align-items: stretch;
       gap: 0;
+      min-height: 0;
       padding-left: 0;
       padding-right: 0;
     }
 
     #PrimalCollectiveExact-{{ section.id }} .pce-copy {
       width: 100%;
+      max-width: none;
+      margin: 0;
       padding: 44px var(--pw-gutter) 28px;
       justify-content: flex-start;
+    }
+
+    #PrimalCollectiveExact-{{ section.id }} .pce-eyebrow {
+      font-size: 13px;
+      letter-spacing: 2px;
+      line-height: 1.4;
     }
 
     #PrimalCollectiveExact-{{ section.id }} .pce-heading {
       max-width: 12ch;
       margin-top: 16px;
       font-size: clamp(34px, 6vw, 44px);
+      line-height: 0.96;
     }
 
     #PrimalCollectiveExact-{{ section.id }} .pce-description {
       max-width: 40ch;
       margin-top: 16px;
+      font-size: 15px;
     }
 
-    #PrimalCollectiveExact-{{ section.id }} .pce-athletes {
-      display: flex;
-      flex-direction: column;
+    #PrimalCollectiveExact-{{ section.id }} .pce-button {
+      margin-top: 20px;
+    }
+
+    #PrimalCollectiveExact-{{ section.id }} .pce-media {
+      position: relative;
       width: 100%;
-      gap: 0;
+      min-height: 0;
+      height: var(--pce-strip-h);
+      overflow: hidden;
     }
 
-    #PrimalCollectiveExact-{{ section.id }} .pce-card {
+    #PrimalCollectiveExact-{{ section.id }} .pce-media-scroll {
+      position: relative;
+      inset: auto;
+      display: block;
       width: 100%;
+      height: 100%;
+      overflow-x: auto;
+      overflow-y: hidden;
+      -webkit-overflow-scrolling: touch;
+      overscroll-behavior-x: contain;
+      touch-action: pan-x;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(200, 154, 61, 0.55) transparent;
     }
 
-    #PrimalCollectiveExact-{{ section.id }} .pce-card-media {
+    #PrimalCollectiveExact-{{ section.id }} .pce-media-scroll::-webkit-scrollbar {
+      height: 4px;
+    }
+
+    #PrimalCollectiveExact-{{ section.id }} .pce-media-scroll::-webkit-scrollbar-thumb {
+      background: rgba(200, 154, 61, 0.55);
+      border-radius: 999px;
+    }
+
+    #PrimalCollectiveExact-{{ section.id }} .pce-strip {
+      position: relative;
+      inset: auto;
+      display: block;
+      height: 100%;
+      width: calc(var(--pce-strip-h) * var(--pce-strip-ratio));
+      min-width: calc(var(--pce-strip-h) * var(--pce-strip-ratio));
+      max-width: none;
+    }
+
+    #PrimalCollectiveExact-{{ section.id }} .pce-image,
+    #PrimalCollectiveExact-{{ section.id }} img.pce-image {
+      position: static !important;
+      display: block !important;
+      width: 100% !important;
+      height: 100% !important;
+      max-width: none !important;
+      object-fit: cover !important;
+      object-position: left center !important;
+    }
+
+    #PrimalCollectiveExact-{{ section.id }} .pce-placeholder {
       width: 100%;
-      aspect-ratio: 4 / 5;
+      height: 100%;
+      min-height: 0;
     }
 
-    #PrimalCollectiveExact-{{ section.id }} .pce-card-quote,
-    #PrimalCollectiveExact-{{ section.id }} .pce-card-name,
-    #PrimalCollectiveExact-{{ section.id }} .pce-card-title {
-      padding-inline: var(--pw-gutter);
-    }
-
-    #PrimalCollectiveExact-{{ section.id }} .pce-card-quote {
-      margin-top: 16px;
-      font-size: 14px;
-    }
-
-    #PrimalCollectiveExact-{{ section.id }} .pce-card-name {
-      margin-top: 10px;
-      font-size: 14px;
-    }
-
-    #PrimalCollectiveExact-{{ section.id }} .pce-card-title {
-      margin-top: 4px;
-      margin-bottom: 28px;
-      font-size: 13px;
+    #PrimalCollectiveExact-{{ section.id }} .pce-media::after {
+      content: '';
+      position: absolute;
+      z-index: 2;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      width: 40px;
+      pointer-events: none;
+      background: linear-gradient(
+        90deg,
+        rgba(5, 6, 6, 0) 0%,
+        rgba(5, 6, 6, 0.7) 100%
+      );
     }
   }
 
   @media screen and (max-width: 749px) {
+    #PrimalCollectiveExact-{{ section.id }} {
+      --pce-strip-h: 360px;
+    }
+
     #PrimalCollectiveExact-{{ section.id }} .pce-copy {
       padding: 36px var(--pw-gutter) 24px;
     }
@@ -410,10 +441,39 @@
     #PrimalCollectiveExact-{{ section.id }} .pce-description {
       max-width: 100%;
       font-size: 14px;
+      line-height: 1.5;
     }
 
-    #PrimalCollectiveExact-{{ section.id }} .pce-card-media {
-      aspect-ratio: 3 / 4;
+    #PrimalCollectiveExact-{{ section.id }} .pce-button {
+      font-size: 11px;
+      letter-spacing: 0.06em;
+    }
+  }
+
+  @media screen and (max-width: 429px) {
+    #PrimalCollectiveExact-{{ section.id }} {
+      --pce-strip-h: 320px;
+    }
+
+    #PrimalCollectiveExact-{{ section.id }} .pce-copy {
+      padding: 30px var(--pw-gutter) 20px;
+    }
+
+    #PrimalCollectiveExact-{{ section.id }} .pce-eyebrow {
+      font-size: 11px;
+      letter-spacing: 1.6px;
+    }
+
+    #PrimalCollectiveExact-{{ section.id }} .pce-heading {
+      font-size: 28px;
+    }
+
+    #PrimalCollectiveExact-{{ section.id }} .pce-description {
+      font-size: 13px;
+    }
+
+    #PrimalCollectiveExact-{{ section.id }} .pce-media::after {
+      width: 28px;
     }
   }
 {% endstyle %}
@@ -423,8 +483,13 @@
   "name": "Primal Collective V3",
   "tag": "section",
   "class": "section-primal-collective-exact",
-  "max_blocks": 6,
   "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Athlete strip image",
+      "info": "Upload athlete strip (~978×434 or wider). Desktop fills to the right edge. Phone/tablet: swipe — athletes stay full size."
+    },
     {
       "type": "text",
       "id": "eyebrow",
@@ -485,90 +550,9 @@
       "default": "#C89A3D"
     }
   ],
-  "blocks": [
-    {
-      "type": "athlete",
-      "name": "Athlete",
-      "settings": [
-        {
-          "type": "image_picker",
-          "id": "image",
-          "label": "Portrait image"
-        },
-        {
-          "type": "text",
-          "id": "quote",
-          "label": "Quote",
-          "default": "Discipline builds freedom."
-        },
-        {
-          "type": "text",
-          "id": "name",
-          "label": "Name",
-          "default": "Kael Voss"
-        },
-        {
-          "type": "text",
-          "id": "title",
-          "label": "Title",
-          "default": "Fitness Coach"
-        }
-      ]
-    }
-  ],
   "presets": [
     {
-      "name": "Primal Collective V3",
-      "blocks": [
-        {
-          "type": "athlete",
-          "settings": {
-            "quote": "Discipline builds freedom.",
-            "name": "Kael Voss",
-            "title": "Fitness Coach"
-          }
-        },
-        {
-          "type": "athlete",
-          "settings": {
-            "quote": "Show up. Then go further.",
-            "name": "Nova Rae",
-            "title": "Pilates Instructor"
-          }
-        },
-        {
-          "type": "athlete",
-          "settings": {
-            "quote": "Strength is a daily choice.",
-            "name": "Jax Orion",
-            "title": "Strength Coach"
-          }
-        },
-        {
-          "type": "athlete",
-          "settings": {
-            "quote": "Calm mind. Fierce body.",
-            "name": "Mira Quinn",
-            "title": "Athlete"
-          }
-        },
-        {
-          "type": "athlete",
-          "settings": {
-            "quote": "Win the morning.",
-            "name": "Theo Lane",
-            "title": "Performance Coach"
-          }
-        },
-        {
-          "type": "athlete",
-          "settings": {
-            "quote": "Consistency is the edge.",
-            "name": "Ava Cruz",
-            "title": "Endurance Athlete"
-          }
-        }
-      ]
+      "name": "Primal Collective V3"
     }
   ]
 }
