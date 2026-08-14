@@ -43,7 +43,7 @@
             loading: 'eager',
             fetchpriority: 'high',
             widths: '800, 1200, 1600, 2000, 2400',
-            sizes: '(min-width: 1025px) 40vw, 100vw',
+            sizes: '(min-width: 1100px) 525px, (min-width: 750px) 40vw, 100vw',
             alt: image_alt
         }}
       {% else %}
@@ -142,7 +142,12 @@
     align-items: stretch;
     width: 100%;
     max-width: var(--pw-max);
-    min-height: 420px;
+    min-height: 320px;
+    margin-inline: auto;
+    padding-inline: var(--pw-gutter);
+  }
+
+  #PrimalDailyMatch-{{ section.id }} .pds-left {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -210,7 +215,6 @@
     align-self: stretch;
     min-width: 0;
     min-height: 320px;
-    height: 100%;
     overflow: hidden;
     background: #111;
   }
@@ -227,7 +231,6 @@
     background: linear-gradient(90deg, var(--pds-bg) 0%, rgba(244, 240, 237, 0) 100%);
   }
 
-  /* Fill the centre column completely (Figma 3-col layout unchanged) */
   #PrimalDailyMatch-{{ section.id }} .pds-image,
   #PrimalDailyMatch-{{ section.id }} .pds-placeholder {
     position: absolute;
@@ -356,56 +359,29 @@
     line-height: 15px;
   }
 
-  /* iPad Pro landscape / smaller desktop — keep Figma 3 columns */
-  @media screen and (max-width: 1366px) and (min-width: 1025px) {
+  @media screen and (max-width: 1100px) {
     #PrimalDailyMatch-{{ section.id }} .pw-container.pds__wrap {
-      grid-template-columns: minmax(0, 280px) minmax(0, 1fr) minmax(0, 300px);
+      grid-template-columns: minmax(0, 260px) minmax(0, 1fr) minmax(0, 280px);
       gap: 20px;
-      min-height: 380px;
-    }
-
-    #PrimalDailyMatch-{{ section.id }} .pds-media {
-      min-height: 380px;
     }
 
     #PrimalDailyMatch-{{ section.id }} .pds-left h2 {
-      font-size: 22px;
-      line-height: 26px;
+      font-size: 21px;
+      line-height: 24px;
     }
 
     #PrimalDailyMatch-{{ section.id }} .pds-benefits li {
-      font-size: 12.5px;
+      font-size: 12px;
       white-space: normal;
     }
 
     #PrimalDailyMatch-{{ section.id }} .pds-right h3 {
-      font-size: 32px;
-      line-height: 31px;
+      font-size: 31px;
+      line-height: 30px;
     }
   }
 
-  @media screen and (max-width: 1100px) and (min-width: 1025px) {
-    #PrimalDailyMatch-{{ section.id }} .pw-container.pds__wrap {
-      grid-template-columns: minmax(0, 240px) minmax(0, 1fr) minmax(0, 260px);
-      gap: 18px;
-    }
-
-    #PrimalDailyMatch-{{ section.id }} .pds-left h2 {
-      font-size: 20px;
-      line-height: 24px;
-    }
-
-    #PrimalDailyMatch-{{ section.id }} .pds-right h3 {
-      font-size: 28px;
-      line-height: 28px;
-    }
-  }
-
-  /*
-    ≤1024 (iPad Pro/Air portrait, tablets, phones):
-    Same Figma content order — left → image → right — stacked.
-    Image goes edge-to-edge; copy keeps gutters.
-  */
+  /* iPad / tablet: keep 3-col as long as space allows, then stack */
   @media screen and (max-width: 1024px) {
     #PrimalDailyMatch-{{ section.id }} .pw-container.pds__wrap {
       display: flex;
@@ -417,7 +393,7 @@
 
     #PrimalDailyMatch-{{ section.id }} .pds-left,
     #PrimalDailyMatch-{{ section.id }} .pds-right {
-      padding: 40px max(20px, var(--pw-gutter)) 34px;
+      padding: 40px var(--pw-gutter) 34px;
     }
 
     #PrimalDailyMatch-{{ section.id }} .pds-benefits li {
@@ -427,8 +403,7 @@
     #PrimalDailyMatch-{{ section.id }} .pds-media {
       width: 100%;
       min-height: 0;
-      height: min(62vw, 520px);
-      aspect-ratio: 16 / 11;
+      height: min(58vw, 480px);
     }
 
     #PrimalDailyMatch-{{ section.id }} .pds-media::before {
@@ -442,33 +417,15 @@
 
   @media screen and (max-width: 749px) {
     #PrimalDailyMatch-{{ section.id }} .pds-left {
-      padding: 36px max(20px, var(--pw-gutter)) 28px;
+      padding: 36px var(--pw-gutter) 28px;
     }
 
     #PrimalDailyMatch-{{ section.id }} .pds-right {
-      padding: 32px max(20px, var(--pw-gutter)) 40px;
-    }
-
-    #PrimalDailyMatch-{{ section.id }} .pds-left h2 {
-      font-size: 22px;
-      line-height: 1.2;
-    }
-
-    #PrimalDailyMatch-{{ section.id }} .pds-right h3 {
-      font-size: 30px;
-      line-height: 1;
+      padding: 32px var(--pw-gutter) 40px;
     }
 
     #PrimalDailyMatch-{{ section.id }} .pds-media {
-      height: min(88vw, 460px);
-      aspect-ratio: 4 / 3;
-    }
-  }
-
-  @media screen and (max-width: 429px) {
-    #PrimalDailyMatch-{{ section.id }} .pds-media {
-      height: min(100vw, 400px);
-      aspect-ratio: 1 / 1;
+      height: min(85vw, 440px);
     }
   }
 {% endstyle %}
