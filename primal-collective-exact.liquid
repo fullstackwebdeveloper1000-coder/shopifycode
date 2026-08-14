@@ -119,15 +119,15 @@
     -webkit-font-smoothing: antialiased;
   }
 
-  /* Desktop: copy on content line, image full to right edge */
+  /* Desktop: copy vertically centered; image full, no top crop */
   #PrimalCollectiveExact-{{ section.id }} .pce__wrap {
     display: grid;
     grid-template-columns: minmax(240px, 296px) minmax(0, 1fr);
     gap: clamp(20px, 2vw, 30px);
-    align-items: stretch;
+    align-items: center;
     width: 100%;
     max-width: none;
-    min-height: 434px;
+    min-height: 0;
     margin: 0;
     padding-left: max(
       20px,
@@ -139,9 +139,10 @@
   #PrimalCollectiveExact-{{ section.id }} .pce-copy {
     display: flex;
     min-width: 0;
-    padding: 56px 0 48px;
+    padding: 40px 0;
     flex-direction: column;
     justify-content: center;
+    align-self: center;
   }
 
   #PrimalCollectiveExact-{{ section.id }} .pce-eyebrow {
@@ -231,40 +232,48 @@
   #PrimalCollectiveExact-{{ section.id }} .pce-media {
     position: relative;
     min-width: 0;
-    min-height: 434px;
+    width: 100%;
+    height: auto;
     overflow: hidden;
     background: var(--pce-bg, #050606);
+    align-self: center;
   }
 
   #PrimalCollectiveExact-{{ section.id }} .pce-media-scroll {
-    position: absolute;
-    inset: 0;
+    position: relative;
+    inset: auto;
+    display: block;
     width: 100%;
-    height: 100%;
+    height: auto;
     overflow: hidden;
   }
 
   #PrimalCollectiveExact-{{ section.id }} .pce-strip {
-    position: absolute;
-    inset: 0;
+    position: relative;
+    inset: auto;
+    display: block;
     width: 100%;
-    height: 100%;
+    height: auto;
   }
 
+  /*
+    Show the FULL strip (heads + bottom captions).
+    Do not force a taller box with object-fit:cover — that crops the top.
+  */
   #PrimalCollectiveExact-{{ section.id }} .pce-image,
   #PrimalCollectiveExact-{{ section.id }} img.pce-image {
     display: block !important;
     width: 100% !important;
-    height: 100% !important;
+    height: auto !important;
     max-width: none !important;
-    object-fit: cover !important;
-    object-position: left center !important;
+    object-fit: contain !important;
+    object-position: top left !important;
+    vertical-align: top;
   }
 
   #PrimalCollectiveExact-{{ section.id }} .pce-placeholder {
     display: grid;
     width: 100%;
-    height: 100%;
     min-height: 320px;
     place-items: center;
     padding: 24px;
@@ -279,11 +288,6 @@
   @media screen and (max-width: 1366px) and (min-width: 1025px) {
     #PrimalCollectiveExact-{{ section.id }} .pce__wrap {
       grid-template-columns: minmax(220px, 260px) minmax(0, 1fr);
-      min-height: 400px;
-    }
-
-    #PrimalCollectiveExact-{{ section.id }} .pce-media {
-      min-height: 400px;
     }
 
     #PrimalCollectiveExact-{{ section.id }} .pce-heading {
