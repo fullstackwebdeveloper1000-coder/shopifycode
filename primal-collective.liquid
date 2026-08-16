@@ -321,7 +321,8 @@
   @media screen and (max-width: 1024px) {
     #PrimalCollectiveExact-{{ section.id }} {
       overflow: visible;
-      --pce-strip-h: min(400px, 52vw);
+      /* Keep athletes readable; grow wider than viewport → swipe */
+      --pce-min-h: 360px;
     }
 
     #shopify-section-{{ section.id }} {
@@ -373,13 +374,13 @@
     #PrimalCollectiveExact-{{ section.id }} .pce-media {
       width: 100%;
       min-height: 0;
-      height: var(--pce-strip-h);
+      height: auto;
       overflow: hidden;
     }
 
     #PrimalCollectiveExact-{{ section.id }} .pce-media-scroll {
       width: 100%;
-      height: 100%;
+      height: auto;
       overflow-x: auto;
       overflow-y: hidden;
       -webkit-overflow-scrolling: touch;
@@ -398,18 +399,21 @@
       border-radius: 999px;
     }
 
+    /*
+      width = max(100vw, minHeight × ratio)
+      → iPad fills the row edge-to-edge when it fits
+      → phone keeps min height and swipes (no crush)
+      aspect-ratio keeps TOP/BOTTOM edges — never crops
+    */
     #PrimalCollectiveExact-{{ section.id }} .pce-strip {
       display: block;
-      height: 100%;
-      width: calc(var(--pce-strip-h) * var(--pce-ratio));
-      min-width: calc(var(--pce-strip-h) * var(--pce-ratio));
+      width: max(100%, calc(var(--pce-min-h) * var(--pce-ratio)));
+      min-width: max(100%, calc(var(--pce-min-h) * var(--pce-ratio)));
       max-width: none;
+      height: auto;
+      aspect-ratio: 978 / 434;
     }
 
-    /*
-      Exact strip box ratio + fill = full image, no crop.
-      Swipe horizontally to see all six athletes at readable size.
-    */
     #PrimalCollectiveExact-{{ section.id }} .pce-image,
     #PrimalCollectiveExact-{{ section.id }} img.pce-image {
       width: 100% !important;
@@ -426,7 +430,10 @@
       aspect-ratio: auto;
       min-height: 0;
     }
+  }
 
+  /* Phones / small tablets — swipe hint fade when strip overflows */
+  @media screen and (max-width: 899px) {
     #PrimalCollectiveExact-{{ section.id }} .pce-media::after {
       content: '';
       position: absolute;
@@ -447,7 +454,7 @@
   /* Phones */
   @media screen and (max-width: 749px) {
     #PrimalCollectiveExact-{{ section.id }} {
-      --pce-strip-h: min(340px, 78vw);
+      --pce-min-h: 320px;
     }
 
     #PrimalCollectiveExact-{{ section.id }} .pce-copy {
@@ -474,7 +481,7 @@
 
   @media screen and (max-width: 429px) {
     #PrimalCollectiveExact-{{ section.id }} {
-      --pce-strip-h: 300px;
+      --pce-min-h: 300px;
     }
 
     #PrimalCollectiveExact-{{ section.id }} .pce-copy {
