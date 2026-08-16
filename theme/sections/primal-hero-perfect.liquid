@@ -1,0 +1,516 @@
+{% liquid
+  assign heading_font = section.settings.heading_font
+  assign display_font = section.settings.display_font
+  assign hero_alt = section.settings.hero_image.alt | default: 'Primal Win pouch with greens powder and gold scoop'
+  assign hero_sizes = '(min-width: 1440px) 1010px, (min-width: 1025px) 770px, 100%'
+  assign hero_widths = '900, 1200, 1600, 1800, 2200'
+%}
+
+<section
+  id="PrimalHeroPerfect-{{ section.id }}"
+  class="primal-hero-perfect"
+>
+  <div class="pw-container primal-container-{{ section.id }}">
+    <div class="primal-text-col-{{ section.id }}">
+      {% if section.settings.kicker_text != blank %}
+        <div class="primal-kicker-{{ section.id }}">
+          {{ section.settings.kicker_text }}
+        </div>
+      {% endif %}
+
+      <h2 class="primal-heading-{{ section.id }}">
+        FOR THOSE<br>
+        WHO WANT<br>
+        <span class="gold">TO WIN.</span>
+      </h2>
+
+      <hr class="primal-divider-{{ section.id }}">
+
+      {% if section.settings.sub_text_1 != blank %}
+        <div class="primal-sub1-{{ section.id }}">
+          {{ section.settings.sub_text_1 | newline_to_br }}
+        </div>
+      {% endif %}
+
+      {% if section.settings.sub_text_2 != blank %}
+        <div class="primal-sub2-{{ section.id }}">
+          {{ section.settings.sub_text_2 }}
+        </div>
+      {% endif %}
+
+      <div class="primal-btn-row-{{ section.id }}">
+        <a
+          class="primal-btn-main-{{ section.id }}"
+          {% if section.settings.btn_link != blank %}
+            href="{{ section.settings.btn_link }}"
+          {% else %}
+            role="link"
+            aria-disabled="true"
+          {% endif %}
+        >
+          <span>GET PRIMAL WIN</span>
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            aria-hidden="true"
+          >
+            <path
+              d="M5 12h14M12 5l7 7-7 7"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </a>
+
+        <a
+          class="primal-play-wrap-{{ section.id }}"
+          {% if section.settings.watch_video_url != blank %}
+            href="{{ section.settings.watch_video_url }}"
+            target="_blank"
+            rel="noopener"
+          {% else %}
+            role="link"
+            aria-disabled="true"
+          {% endif %}
+        >
+          <span class="primal-play-btn-{{ section.id }}" aria-hidden="true">
+            <svg
+              viewBox="0 0 16 21"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M15.8215 10.0682L0 20.1364V0L15.8215 10.0682Z"
+                fill="currentColor"
+              />
+            </svg>
+          </span>
+
+          <span class="primal-play-text-{{ section.id }}">
+            {{ section.settings.watch_video_text }}
+          </span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="primal-bg-image-{{ section.id }}">
+    {% if section.settings.hero_image != blank %}
+      {{
+        section.settings.hero_image
+        | image_url: width: 2200
+        | image_tag:
+          class: 'primal-hero-image',
+          loading: 'eager',
+          preload: true,
+          widths: hero_widths,
+          sizes: hero_sizes,
+          width: section.settings.hero_image.width,
+          height: section.settings.hero_image.height,
+          alt: hero_alt
+      }}
+    {% else %}
+      {{
+        'hero-pouch.png'
+        | asset_img_url: width: 2200
+        | image_tag:
+          class: 'primal-hero-image',
+          loading: 'eager',
+          preload: true,
+          widths: hero_widths,
+          sizes: hero_sizes,
+          width: 770,
+          height: 620,
+          alt: hero_alt
+      }}
+    {% endif %}
+  </div>
+</section>
+
+{% style %}
+  {{ heading_font | font_face: font_display: 'swap' }}
+  {{ display_font | font_face: font_display: 'swap' }}
+
+  #PrimalHeroPerfect-{{ section.id }} {
+    {% render 'pw-align-vars' %}
+  }
+
+  #shopify-section-{{ section.id }} {
+    display: block !important;
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: #FAF8F5 !important;
+    overflow-x: clip !important;
+  }
+
+  #shopify-section-{{ section.id }} .page-width,
+  #shopify-section-{{ section.id }} > .page-width {
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  #PrimalHeroPerfect-{{ section.id }} {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 620px;
+    margin: 0;
+    padding: 0;
+    background: #FAF8F5;
+    overflow-x: clip;
+  }
+
+  #PrimalHeroPerfect-{{ section.id }} *,
+  #PrimalHeroPerfect-{{ section.id }} *::before,
+  #PrimalHeroPerfect-{{ section.id }} *::after {
+    box-sizing: border-box;
+  }
+
+  #PrimalHeroPerfect-{{ section.id }} .pw-container.primal-container-{{ section.id }} {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: stretch;
+    width: 100%;
+    max-width: var(--pw-max);
+    height: 100%;
+    margin-inline: auto;
+    padding-inline: var(--pw-gutter);
+    padding-block: 0;
+    overflow: visible;
+  }
+
+  #PrimalHeroPerfect-{{ section.id }} .primal-bg-image-{{ section.id }} {
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    right: 0;
+    width: calc(770px + max(0px, (100vw - var(--pw-max)) / 2));
+    min-width: 52%;
+    height: 100%;
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  #PrimalHeroPerfect-{{ section.id }} .primal-bg-image-{{ section.id }} .primal-hero-image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    object-fit: cover;
+    object-position: right center;
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 30%);
+    mask-image: linear-gradient(to right, transparent 0%, #000 30%);
+  }
+
+  #PrimalHeroPerfect-{{ section.id }} .primal-text-col-{{ section.id }} {
+    position: relative;
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    max-width: 660px;
+    margin: 0;
+    padding: 64px 0 60px;
+  }
+
+  #PrimalHeroPerfect-{{ section.id }} .primal-kicker-{{ section.id }} {
+    margin: 0 0 15px;
+    color: #C89A3D;
+    font-family: {{ heading_font.family }}, sans-serif;
+    font-style: {{ heading_font.style }};
+    font-weight: 700;
+    font-size: 13px;
+    line-height: 1;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+  }
+
+  #PrimalHeroPerfect-{{ section.id }} .primal-heading-{{ section.id }} {
+    margin: 0 0 20px;
+    color: #1F2326;
+    font-family: {{ display_font.family }}, sans-serif;
+    font-style: {{ display_font.style }};
+    font-weight: 900;
+    font-size: 82px;
+    line-height: 86px;
+    letter-spacing: 0;
+    text-transform: uppercase;
+  }
+
+  #PrimalHeroPerfect-{{ section.id }} .primal-heading-{{ section.id }} .gold {
+    color: #C89A3D;
+  }
+
+  #PrimalHeroPerfect-{{ section.id }} .primal-divider-{{ section.id }} {
+    display: block;
+    width: 64px;
+    height: 3px;
+    margin: 0 0 25px;
+    padding: 0;
+    border: 0;
+    background: #C89A3D;
+    opacity: 1;
+  }
+
+  #PrimalHeroPerfect-{{ section.id }} .primal-sub1-{{ section.id }} {
+    margin: 0 0 15px;
+    color: #1F2326;
+    font-family: {{ heading_font.family }}, sans-serif;
+    font-style: {{ heading_font.style }};
+    font-weight: 700;
+    font-size: 22px;
+    line-height: 29.7px;
+    letter-spacing: .3px;
+    text-transform: uppercase;
+  }
+
+  #PrimalHeroPerfect-{{ section.id }} .primal-sub2-{{ section.id }} {
+    margin: 0 0 35px;
+    color: #C89A3D;
+    font-family: {{ heading_font.family }}, sans-serif;
+    font-style: {{ heading_font.style }};
+    font-weight: 700;
+    font-size: 22px;
+    line-height: 1;
+    letter-spacing: .5px;
+    text-transform: uppercase;
+  }
+
+  #PrimalHeroPerfect-{{ section.id }} .primal-btn-row-{{ section.id }} {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    gap: 24px;
+    margin: 0;
+    padding: 0;
+  }
+
+  #PrimalHeroPerfect-{{ section.id }} .primal-btn-main-{{ section.id }} {
+    display: inline-flex;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    height: 52px;
+    padding: 0 26px;
+    border: 0;
+    border-radius: 10px;
+    background: #C89A3D;
+    color: #1F2326;
+    font-family: {{ heading_font.family }}, sans-serif;
+    font-style: {{ heading_font.style }};
+    font-weight: 700;
+    font-size: 13px;
+    line-height: 1;
+    letter-spacing: 1.5px;
+    text-decoration: none;
+    text-transform: uppercase;
+    white-space: nowrap;
+    transition: background-color .3s ease;
+  }
+
+  #PrimalHeroPerfect-{{ section.id }} .primal-btn-main-{{ section.id }}:hover {
+    background: #B58932;
+  }
+
+  #PrimalHeroPerfect-{{ section.id }} .primal-play-wrap-{{ section.id }} {
+    display: inline-flex;
+    flex: 0 0 auto;
+    align-items: center;
+    gap: 16px;
+    color: #1F2326;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  #PrimalHeroPerfect-{{ section.id }} a[aria-disabled="true"] {
+    cursor: default;
+  }
+
+  #PrimalHeroPerfect-{{ section.id }} .primal-play-btn-{{ section.id }} {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    flex: 0 0 48px;
+    border: 1px solid #1F2326;
+    border-radius: 50%;
+    background: transparent;
+    color: #1F2326;
+    transition:
+      background-color .3s ease,
+      color .3s ease;
+  }
+
+  #PrimalHeroPerfect-{{ section.id }} .primal-play-btn-{{ section.id }} svg {
+    display: block;
+    width: 15.82px;
+    height: 20.14px;
+    margin-left: 3px;
+  }
+
+  #PrimalHeroPerfect-{{ section.id }} .primal-play-wrap-{{ section.id }}:hover .primal-play-btn-{{ section.id }} {
+    background: #1F2326;
+    color: #FAF8F5;
+  }
+
+  #PrimalHeroPerfect-{{ section.id }} .primal-play-text-{{ section.id }} {
+    color: #1F2326;
+    font-family: {{ heading_font.family }}, sans-serif;
+    font-style: {{ heading_font.style }};
+    font-weight: 700;
+    font-size: 13px;
+    line-height: 1;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  @media screen and (max-width: 1024px) {
+    #PrimalHeroPerfect-{{ section.id }} {
+      height: auto;
+    }
+
+    #PrimalHeroPerfect-{{ section.id }} .pw-container.primal-container-{{ section.id }} {
+      flex-direction: column-reverse;
+      height: auto;
+      padding-inline: var(--pw-gutter);
+    }
+
+    #PrimalHeroPerfect-{{ section.id }} .primal-bg-image-{{ section.id }} {
+      position: relative;
+      right: auto;
+      width: 100%;
+      min-width: 0;
+      height: 400px;
+      pointer-events: auto;
+    }
+
+    #PrimalHeroPerfect-{{ section.id }} .primal-bg-image-{{ section.id }} .primal-hero-image {
+      -webkit-mask-image: none;
+      mask-image: none;
+    }
+
+    #PrimalHeroPerfect-{{ section.id }} .primal-text-col-{{ section.id }} {
+      width: 100%;
+      max-width: none;
+      padding: 50px 0;
+    }
+
+    #PrimalHeroPerfect-{{ section.id }} .primal-heading-{{ section.id }} {
+      font-size: 48px;
+      line-height: 52px;
+    }
+
+    #PrimalHeroPerfect-{{ section.id }} .primal-btn-row-{{ section.id }} {
+      flex-wrap: wrap;
+    }
+  }
+
+  @media screen and (max-width: 480px) {
+    #PrimalHeroPerfect-{{ section.id }} .primal-bg-image-{{ section.id }} {
+      height: 330px;
+    }
+
+    #PrimalHeroPerfect-{{ section.id }} .primal-heading-{{ section.id }} {
+      font-size: 42px;
+      line-height: 46px;
+    }
+
+    #PrimalHeroPerfect-{{ section.id }} .primal-sub1-{{ section.id }},
+    #PrimalHeroPerfect-{{ section.id }} .primal-sub2-{{ section.id }} {
+      font-size: 18px;
+    }
+
+    #PrimalHeroPerfect-{{ section.id }} .primal-btn-row-{{ section.id }} {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    #PrimalHeroPerfect-{{ section.id }} .primal-btn-main-{{ section.id }},
+    #PrimalHeroPerfect-{{ section.id }} .primal-play-btn-{{ section.id }} {
+      transition: none;
+    }
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "Primal Hero Perfect",
+  "tag": "section",
+  "class": "section-primal-hero-perfect",
+  "enabled_on": {
+    "templates": ["index"]
+  },
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "hero_image",
+      "label": "Right Side Image"
+    },
+    {
+      "type": "text",
+      "id": "kicker_text",
+      "label": "Small Top Text",
+      "default": "CLEAN INGREDIENTS. REAL RESULTS."
+    },
+    {
+      "type": "textarea",
+      "id": "sub_text_1",
+      "label": "Black Subtext",
+      "default": "MORE ENERGY. SHARPER FOCUS.\nSTRONGER BODY. UNSTOPPABLE YOU."
+    },
+    {
+      "type": "text",
+      "id": "sub_text_2",
+      "label": "Gold Subtext",
+      "default": "ONE SCOOP. EVERY DAY."
+    },
+    {
+      "type": "url",
+      "id": "btn_link",
+      "label": "Get Primal Win Link"
+    },
+    {
+      "type": "text",
+      "id": "watch_video_text",
+      "label": "Watch Video Button Text",
+      "default": "WATCH VIDEO"
+    },
+    {
+      "type": "url",
+      "id": "watch_video_url",
+      "label": "Watch Video Link"
+    },
+    {
+      "type": "font_picker",
+      "id": "heading_font",
+      "label": "Montserrat Font",
+      "default": "montserrat_n7"
+    },
+    {
+      "type": "font_picker",
+      "id": "display_font",
+      "label": "Main Heading Font",
+      "default": "inter_n9"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Primal Hero Perfect"
+    }
+  ]
+}
+{% endschema %}

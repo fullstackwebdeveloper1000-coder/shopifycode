@@ -1,0 +1,374 @@
+<section id="PwScienceHero-{{ section.id }}" class="hero">
+  <div class="container hero-in">
+    <div class="hero-copy">
+      <h1 class="hero-head">Your Potential.<br>Powered By <span class="gold">Science.</span></h1>
+      <hr class="hero-rule">
+      <p class="hero-lead">The right ingredients. The right forms. The right doses.</p>
+      <div class="hero-feats">
+        <div class="hero-feat">
+          <span class="ic" aria-hidden="true">
+            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="12" cy="12" r="2.2"/><ellipse cx="12" cy="12" rx="10" ry="4.4"/><ellipse cx="12" cy="12" rx="10" ry="4.4" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="10" ry="4.4" transform="rotate(120 12 12)"/></svg>
+          </span>
+          <h4>Science Backed</h4>
+          <p>Every ingredient is chosen for a reason.</p>
+        </div>
+        <div class="hero-feat">
+          <span class="ic" aria-hidden="true">
+            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M9 3h6M10 3v6l-5 8.5A2 2 0 0 0 6.7 21h10.6a2 2 0 0 0 1.7-3.5L14 9V3" stroke-linejoin="round"/></svg>
+          </span>
+          <h4>Clinically Inspired</h4>
+          <p>Formulated using the latest research.</p>
+        </div>
+        <div class="hero-feat">
+          <span class="ic" aria-hidden="true">
+            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 3l7 3v6c0 5-3 8-7 10-4-2-7-5-7-10V6l7-3Z" stroke-linejoin="round"/><path d="M9 12l2 2 4-4.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+          <h4>Immunity Support</h4>
+          <p>Key nutrients for daily defence &amp; vitality.</p>
+        </div>
+        <div class="hero-feat">
+          <span class="ic" aria-hidden="true">
+            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4.5"/><path d="M12 1v4M12 19v4M1 12h4M19 12h4" stroke-linecap="round"/></svg>
+          </span>
+          <h4>Focused &amp; Every Scoop</h4>
+          <p>Superior ingredients that work together.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-shot-wrap">
+    {%- if section.settings.image != blank -%}
+      {{
+        section.settings.image
+        | image_url: width: 1600
+        | image_tag:
+          class: 'hero-shot',
+          loading: 'eager',
+          alt: 'Primal Win pouch',
+          width: section.settings.image.width,
+          height: section.settings.image.height,
+          widths: '800, 1200, 1600',
+          sizes: '(min-width: 961px) 500px, 100vw'
+      }}
+    {%- elsif section.settings.fallback_image_url != blank -%}
+      <img
+        class="hero-shot"
+        src="{{ section.settings.fallback_image_url }}"
+        alt="Primal Win pouch"
+        loading="eager"
+        width="500"
+        height="500"
+      >
+    {%- endif -%}
+  </div>
+</section>
+
+{% style %}
+  @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800;900&family=Inter:wght@400;500;600&display=swap');
+
+  #shopify-section-{{ section.id }} {
+    margin: 0 !important;
+    padding: 0 !important;
+    max-width: none !important;
+  }
+
+  #PwScienceHero-{{ section.id }},
+  #PwScienceHero-{{ section.id }} * {
+    box-sizing: border-box;
+  }
+
+  #PwScienceHero-{{ section.id }} {
+    position: relative;
+    overflow: hidden;
+    min-height: 520px;
+    background: {{ section.settings.background_color }};
+    color: #1f2326;
+    font-family: 'Inter', Inter, system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  #PwScienceHero-{{ section.id }}::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background: linear-gradient(
+      90deg,
+      {{ section.settings.background_color }} 0%,
+      {{ section.settings.background_color }} 28%,
+      {{ section.settings.background_color | color_modify: 'alpha', 0.72 }} 36%,
+      {{ section.settings.background_color | color_modify: 'alpha', 0.32 }} 44%,
+      {{ section.settings.background_color | color_modify: 'alpha', 0.08 }} 50%,
+      transparent 56%
+    );
+  }
+
+  #PwScienceHero-{{ section.id }} .container {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 0 48px;
+  }
+
+  #PwScienceHero-{{ section.id }} .hero-in {
+    position: relative;
+    z-index: 2;
+    padding: 56px 0 40px;
+  }
+
+  #PwScienceHero-{{ section.id }} .hero-copy {
+    position: relative;
+    z-index: 2;
+    max-width: 600px;
+    margin: 0;
+    padding: 0;
+  }
+
+  #PwScienceHero-{{ section.id }} .hero-head {
+    font-family: 'Montserrat', Montserrat, system-ui, sans-serif;
+    font-weight: 900;
+    font-size: 66px;
+    line-height: 0.98;
+    letter-spacing: -1px;
+    text-transform: uppercase;
+    color: #1f2326;
+    margin: 0;
+  }
+
+  #PwScienceHero-{{ section.id }} .hero-head .gold {
+    color: #c89a3d;
+  }
+
+  #PwScienceHero-{{ section.id }} .hero-rule {
+    width: 60px;
+    height: 3px;
+    background: #c89a3d;
+    border: 0;
+    margin: 22px 0 18px;
+  }
+
+  #PwScienceHero-{{ section.id }} .hero-lead {
+    font-size: 20px;
+    line-height: 1.4;
+    color: #1f2326;
+    margin: 0 0 34px;
+  }
+
+  #PwScienceHero-{{ section.id }} .hero-feats {
+    display: flex;
+    gap: 0;
+  }
+
+  #PwScienceHero-{{ section.id }} .hero-feat {
+    padding: 0 26px;
+    max-width: 210px;
+  }
+
+  #PwScienceHero-{{ section.id }} .hero-feat + .hero-feat {
+    border-left: 1px solid rgba(31, 35, 38, 0.14);
+  }
+
+  #PwScienceHero-{{ section.id }} .hero-feat .ic {
+    color: #c89a3d;
+    margin-bottom: 12px;
+    display: block;
+    line-height: 0;
+  }
+
+  #PwScienceHero-{{ section.id }} .hero-feat .ic svg {
+    display: block;
+    width: 30px;
+    height: 30px;
+  }
+
+  #PwScienceHero-{{ section.id }} .hero-feat h4 {
+    font-family: 'Montserrat', Montserrat, system-ui, sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 0.4px;
+    text-transform: uppercase;
+    margin: 0 0 7px;
+    line-height: 1.2;
+    color: #1f2326;
+  }
+
+  #PwScienceHero-{{ section.id }} .hero-feat p {
+    font-size: 12.5px;
+    line-height: 1.5;
+    color: #737a80;
+    margin: 0;
+  }
+
+  #PwScienceHero-{{ section.id }} .hero-feat:first-child {
+    padding-left: 0;
+  }
+
+  #PwScienceHero-{{ section.id }} .hero-shot-wrap {
+    position: absolute;
+    z-index: 0;
+    right: -20px;
+    bottom: 0;
+    line-height: 0;
+  }
+
+  #PwScienceHero-{{ section.id }} .hero-shot {
+    height: 500px;
+    width: auto;
+    max-width: none !important;
+    display: block;
+    border: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    background: transparent !important;
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 16%);
+    mask-image: linear-gradient(to right, transparent 0%, #000 16%);
+  }
+
+  @media screen and (max-width: 1180px) {
+    #PwScienceHero-{{ section.id }} .container {
+      padding: 0 34px;
+    }
+
+    #PwScienceHero-{{ section.id }} .hero-head {
+      font-size: 5.6vw;
+    }
+
+    #PwScienceHero-{{ section.id }} .hero-copy {
+      max-width: 54%;
+    }
+  }
+
+  @media screen and (max-width: 960px) {
+    #PwScienceHero-{{ section.id }} {
+      min-height: 0;
+      padding-bottom: 36px;
+    }
+
+    #PwScienceHero-{{ section.id }}::after {
+      display: none;
+    }
+
+    #PwScienceHero-{{ section.id }} .container {
+      padding: 0 22px;
+    }
+
+    #PwScienceHero-{{ section.id }} .hero-in {
+      padding: 40px 0 0;
+    }
+
+    #PwScienceHero-{{ section.id }} .hero-head {
+      font-size: 44px;
+    }
+
+    #PwScienceHero-{{ section.id }} .hero-copy {
+      max-width: 100%;
+    }
+
+    #PwScienceHero-{{ section.id }} .hero-lead {
+      font-size: 18px;
+      margin-bottom: 28px;
+    }
+
+    #PwScienceHero-{{ section.id }} .hero-feats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px 16px;
+    }
+
+    #PwScienceHero-{{ section.id }} .hero-feat {
+      max-width: none;
+      padding: 0;
+      border-left: 0;
+    }
+
+    #PwScienceHero-{{ section.id }} .hero-feat:first-child {
+      padding-left: 0;
+    }
+
+    #PwScienceHero-{{ section.id }} .hero-shot-wrap {
+      position: static;
+      right: auto;
+      bottom: auto;
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 24px 22px 0;
+    }
+
+    #PwScienceHero-{{ section.id }} .hero-shot {
+      height: auto;
+      width: 100%;
+      max-width: 420px !important;
+      margin: 0 auto;
+      -webkit-mask-image: none;
+      mask-image: none;
+    }
+  }
+
+  @media screen and (max-width: 560px) {
+    #PwScienceHero-{{ section.id }} .hero-in {
+      padding-top: 32px;
+    }
+
+    #PwScienceHero-{{ section.id }} .hero-head {
+      font-size: 38px;
+      line-height: 1;
+    }
+
+    #PwScienceHero-{{ section.id }} .hero-lead {
+      font-size: 16px;
+      margin-bottom: 24px;
+    }
+
+    #PwScienceHero-{{ section.id }} .hero-feats {
+      gap: 20px 12px;
+    }
+
+    #PwScienceHero-{{ section.id }} .hero-feat h4 {
+      font-size: 12px;
+    }
+
+    #PwScienceHero-{{ section.id }} .hero-feat p {
+      font-size: 11.5px;
+    }
+
+    #PwScienceHero-{{ section.id }} .hero-shot-wrap {
+      padding-top: 20px;
+    }
+
+    #PwScienceHero-{{ section.id }} .hero-shot {
+      max-width: 100% !important;
+    }
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "Science Hero",
+  "tag": "section",
+  "class": "pw-science-hero-section",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Product image (upload mockup.png)"
+    },
+    {
+      "type": "text",
+      "id": "fallback_image_url",
+      "label": "Or paste image URL"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#EFE5DD"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Science Hero"
+    }
+  ]
+}
+{% endschema %}

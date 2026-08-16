@@ -1,0 +1,277 @@
+<section id="PwGpwHero-{{ section.id }}" class="gpw-hero">
+  <div class="pw-container gpw-hero-grid">
+    <div class="gpw-hero-copy">
+      <h1 class="gpw-hero-head">For Those<br>Who Want<br>To Win<span class="sq">.</span></h1>
+      <p class="gpw-hero-tag">Feel Stronger. Think Sharper. Live Better.</p>
+      <hr class="gpw-hero-rule">
+      <p class="gpw-hero-sub">Designed for people who want more from life.</p>
+      <div class="gpw-badges">
+        <div class="gpw-badge">
+          <span class="gpw-bcirc" aria-hidden="true">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 19c8 0 14-5 14-14-8 0-14 5-14 14Z"/><path d="M6 18c3-4 6-6 10-8"/></svg>
+          </span>
+          <p>Premium<br>Ingredients</p>
+        </div>
+        <span class="gpw-bdiv" aria-hidden="true"></span>
+        <div class="gpw-badge">
+          <span class="gpw-bcirc" aria-hidden="true">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6M10 3v6l-4.5 8A2 2 0 0 0 7.3 20h9.4a2 2 0 0 0 1.8-3L14 9V3"/></svg>
+          </span>
+          <p>Science<br>Backed</p>
+        </div>
+        <span class="gpw-bdiv" aria-hidden="true"></span>
+        <div class="gpw-badge">
+          <span class="gpw-bcirc" aria-hidden="true">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 3v5c0 5-3.4 8-8 10-4.6-2-8-5-8-10V6l8-3Z"/><path d="M9 12l2 2 4-4"/></svg>
+          </span>
+          <p>Third-Party<br>Tested</p>
+        </div>
+        <span class="gpw-bdiv" aria-hidden="true"></span>
+        <div class="gpw-badge">
+          <span class="gpw-bcirc" aria-hidden="true">
+            <svg width="26" height="18" viewBox="0 0 60 40"><rect width="60" height="40" fill="#0d0f11"/><path d="M0 0l60 40M60 0L0 40" stroke="#C89A3D" stroke-width="6"/><path d="M30 0v40M0 20h60" stroke="#C89A3D" stroke-width="9"/></svg>
+          </span>
+          <p>Manufactured<br>In The UK</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="gpw-hero-media">
+      {%- liquid
+        assign hero_alt = 'Primal Win — 40 active ingredients greens & performance formula'
+        assign hero_sizes = '(min-width: 860px) 560px, 100vw'
+        assign hero_widths = '400, 560, 800, 1200, 1600'
+      -%}
+
+      {%- if section.settings.image != blank -%}
+        {{
+          section.settings.image
+          | image_url: width: 1600
+          | image_tag:
+            class: 'gpw-hero-shot',
+            alt: hero_alt,
+            loading: 'eager',
+            preload: true,
+            widths: hero_widths,
+            sizes: hero_sizes,
+            width: section.settings.image.width,
+            height: section.settings.image.height
+        }}
+      {%- else -%}
+        {{
+          'hero-pouch.png'
+          | asset_img_url: width: 1600
+          | image_tag:
+            class: 'gpw-hero-shot',
+            alt: hero_alt,
+            loading: 'eager',
+            preload: true,
+            widths: hero_widths,
+            sizes: hero_sizes,
+            width: 560,
+            height: 560
+        }}
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% style %}
+  @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800;900&family=Inter:wght@400;500;600&display=swap');
+
+  #shopify-section-{{ section.id }} {
+    margin: 0 !important;
+    padding: 0 !important;
+    max-width: none !important;
+  }
+
+  #PwGpwHero-{{ section.id }},
+  #PwGpwHero-{{ section.id }} * {
+    box-sizing: border-box;
+  }
+
+  #PwGpwHero-{{ section.id }} {
+    background: linear-gradient(180deg, #f1e9e1, #ebe1d7);
+    overflow: hidden;
+    font-family: 'Inter', Inter, system-ui, sans-serif !important;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  {% render 'pw-align-vars' %}
+
+  #PwGpwHero-{{ section.id }} .pw-container {
+    width: 100%;
+    max-width: var(--pw-max);
+    margin-inline: auto;
+    padding-inline: var(--pw-gutter);
+    box-sizing: border-box;
+  }
+
+  #PwGpwHero-{{ section.id }} .gpw-hero-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    align-items: center;
+    padding: 56px 0 44px;
+  }
+
+  #PwGpwHero-{{ section.id }} .gpw-hero-head {
+    font-family: 'Montserrat', Montserrat, system-ui, sans-serif !important;
+    font-weight: 900 !important;
+    font-size: 82px !important;
+    line-height: 0.9 !important;
+    letter-spacing: -1.5px;
+    text-transform: uppercase;
+    color: #1f2326 !important;
+    margin: 0;
+  }
+
+  #PwGpwHero-{{ section.id }} .gpw-hero-head .sq {
+    color: #c89a3d;
+  }
+
+  #PwGpwHero-{{ section.id }} .gpw-hero-tag {
+    font-family: 'Montserrat', Montserrat, system-ui, sans-serif !important;
+    font-weight: 800 !important;
+    font-size: 21px !important;
+    letter-spacing: 0.2px;
+    color: #c89a3d !important;
+    margin: 22px 0 0;
+  }
+
+  #PwGpwHero-{{ section.id }} .gpw-hero-rule {
+    width: 60px;
+    height: 3px;
+    background: #c89a3d;
+    border: 0;
+    margin: 20px 0 18px;
+  }
+
+  #PwGpwHero-{{ section.id }} .gpw-hero-sub {
+    font-family: 'Montserrat', Montserrat, system-ui, sans-serif !important;
+    font-weight: 700 !important;
+    font-size: 17px !important;
+    color: #1f2326 !important;
+    margin: 0 0 26px;
+  }
+
+  #PwGpwHero-{{ section.id }} .gpw-badges {
+    display: flex;
+    align-items: flex-start;
+    gap: 6px;
+  }
+
+  #PwGpwHero-{{ section.id }} .gpw-badge {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    flex: 1;
+    gap: 10px;
+  }
+
+  #PwGpwHero-{{ section.id }} .gpw-bcirc {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: #14171a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #c89a3d;
+  }
+
+  #PwGpwHero-{{ section.id }} .gpw-badge p {
+    font-family: 'Montserrat', Montserrat, system-ui, sans-serif !important;
+    font-weight: 700 !important;
+    font-size: 11px !important;
+    letter-spacing: 0.4px;
+    text-transform: uppercase;
+    color: #1f2326 !important;
+    margin: 0;
+    line-height: 1.25;
+  }
+
+  #PwGpwHero-{{ section.id }} .gpw-bdiv {
+    width: 1px;
+    align-self: stretch;
+    background: rgba(31, 35, 38, 0.15);
+    margin: 6px 2px 24px;
+  }
+
+  #PwGpwHero-{{ section.id }} .gpw-hero-media {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #PwGpwHero-{{ section.id }} .gpw-hero-shot {
+    width: 100%;
+    max-width: 560px;
+    border-radius: 14px;
+    display: block;
+    border: 0 !important;
+    box-shadow: none !important;
+    height: auto;
+  }
+
+  @media screen and (max-width: 1080px) {
+    #PwGpwHero-{{ section.id }} .gpw-hero-head {
+      font-size: 64px !important;
+    }
+  }
+
+  @media screen and (max-width: 860px) {
+    #PwGpwHero-{{ section.id }} .gpw-hero-grid {
+      grid-template-columns: 1fr;
+      gap: 28px;
+      padding-top: 40px;
+    }
+
+    #PwGpwHero-{{ section.id }} .gpw-hero-media {
+      order: -1;
+    }
+  }
+
+  @media screen and (max-width: 560px) {
+    /* gutter handled by --pw-gutter */
+
+    #PwGpwHero-{{ section.id }} .gpw-hero-head {
+      font-size: 48px !important;
+    }
+
+    #PwGpwHero-{{ section.id }} .gpw-badges {
+      flex-wrap: wrap;
+      gap: 16px 6px;
+    }
+
+    #PwGpwHero-{{ section.id }} .gpw-badge {
+      flex: 0 0 40%;
+    }
+
+    #PwGpwHero-{{ section.id }} .gpw-bdiv {
+      display: none;
+    }
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "GPW Hero",
+  "tag": "section",
+  "class": "pw-gpw-hero-section",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Pouch image",
+      "info": "Upload hero-pouch.png here. If empty, theme uses hero-pouch.png from Assets via asset_img_url."
+    }
+  ],
+  "presets": [
+    {
+      "name": "GPW Hero"
+    }
+  ]
+}
+{% endschema %}

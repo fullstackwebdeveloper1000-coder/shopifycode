@@ -1,0 +1,16 @@
+{
+  "sections": {
+    "story-hero": {
+      "type": "primal-story-hero",
+      "settings": {}
+    },
+    "story-pipette": {
+      "type": "prmal-pipette",
+      "settings": {}
+    }
+  },
+  "order": [
+    "story-hero",
+    "story-pipette"
+  ]
+}

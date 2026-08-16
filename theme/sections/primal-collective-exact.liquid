@@ -1,0 +1,610 @@
+{% liquid
+  assign heading_font = section.settings.heading_font
+  assign body_font = section.settings.body_font
+  assign image_alt = section.settings.image.alt | default: section.settings.heading
+%}
+
+<section
+  id="PrimalCollectiveExact-{{ section.id }}"
+  class="primal-collective-exact"
+  style="
+    --pce-bg: {{ section.settings.background_color }};
+    --pce-text: {{ section.settings.text_color }};
+    --pce-gold: {{ section.settings.gold_color }};
+  "
+>
+  <div class="pce__wrap">
+    <div class="pce-copy">
+      {% if section.settings.eyebrow != blank %}
+        <p class="pce-eyebrow">{{ section.settings.eyebrow | escape }}</p>
+      {% endif %}
+
+      {% if section.settings.heading != blank %}
+        <h2 class="pce-heading">{{ section.settings.heading | escape }}</h2>
+      {% endif %}
+
+      {% if section.settings.description != blank %}
+        <p class="pce-description">{{ section.settings.description | escape }}</p>
+      {% endif %}
+
+      {% if section.settings.button_label != blank %}
+        <a
+          class="pce-button"
+          {% if section.settings.button_link != blank %}
+            href="{{ section.settings.button_link }}"
+          {% else %}
+            role="link"
+            aria-disabled="true"
+          {% endif %}
+        >
+          <span>{{ section.settings.button_label | escape }}</span>
+          <svg viewBox="0 0 16 16" aria-hidden="true">
+            <path d="M2 8h11M9 4l4 4-4 4"/>
+          </svg>
+        </a>
+      {% endif %}
+    </div>
+
+    <div class="pce-media">
+      <div
+        class="pce-media-scroll"
+        tabindex="0"
+        role="region"
+        aria-label="Athlete portraits. Swipe to see more on smaller screens."
+      >
+        <div class="pce-strip">
+          {% if section.settings.image != blank %}
+            {{
+              section.settings.image
+              | image_url: width: 2400
+              | image_tag:
+                class: 'pce-image',
+                widths: '640, 900, 1200, 1600, 2000, 2400',
+                sizes: '(max-width: 899px) 1600px, 978px',
+                loading: 'lazy',
+                alt: image_alt
+            }}
+          {% else %}
+            <div class="pce-placeholder">
+              <span>Upload the Primal Collective athlete strip</span>
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% style %}
+  {{ heading_font | font_face: font_display: 'swap' }}
+  {{ body_font | font_face: font_display: 'swap' }}
+
+  #PrimalCollectiveExact-{{ section.id }} {
+    {% render 'pw-align-vars' %}
+    --pce-gutter: 80px;
+    --pce-ratio: 978 / 434;
+  }
+
+  #shopify-section-{{ section.id }} {
+    display: block !important;
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow-x: clip !important;
+    background: var(--pce-bg, #050606) !important;
+  }
+
+  #shopify-section-{{ section.id }} .page-width,
+  #shopify-section-{{ section.id }} > .page-width {
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  #PrimalCollectiveExact-{{ section.id }},
+  #PrimalCollectiveExact-{{ section.id }} *,
+  #PrimalCollectiveExact-{{ section.id }} *::before,
+  #PrimalCollectiveExact-{{ section.id }} *::after {
+    box-sizing: border-box;
+  }
+
+  #PrimalCollectiveExact-{{ section.id }} {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background: var(--pce-bg, #050606);
+    color: var(--pce-text, #fff);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  #PrimalCollectiveExact-{{ section.id }} .pce__wrap {
+    display: grid;
+    grid-template-columns: minmax(0, 296px) minmax(0, 1fr);
+    gap: 30px;
+    align-items: stretch;
+    width: 100%;
+    max-width: none;
+    min-height: 434px;
+    margin: 0;
+    padding-left: max(
+      20px,
+      var(--pce-gutter),
+      calc((100% - var(--pw-frame)) / 2 + var(--pce-gutter))
+    );
+    padding-right: 0;
+  }
+
+  #PrimalCollectiveExact-{{ section.id }} .pce-copy {
+    display: flex;
+    min-width: 0;
+    padding: 71px 0 40px;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+
+  #PrimalCollectiveExact-{{ section.id }} .pce-eyebrow {
+    margin: 0;
+    color: var(--pce-gold, #c89a3d);
+    font-family: {{ heading_font.family }}, {{ heading_font.fallback_families }};
+    font-style: {{ heading_font.style }};
+    font-weight: 700;
+    font-size: 15px;
+    line-height: 24px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    overflow-wrap: anywhere;
+  }
+
+  #PrimalCollectiveExact-{{ section.id }} .pce-heading {
+    width: 100%;
+    max-width: 296px;
+    margin: 38px 0 0;
+    color: var(--pce-text, #fff);
+    font-family: {{ heading_font.family }}, {{ heading_font.fallback_families }};
+    font-style: {{ heading_font.style }};
+    font-weight: 700;
+    font-size: 44px;
+    line-height: 41.8px;
+    letter-spacing: 0;
+    text-transform: uppercase;
+    overflow-wrap: anywhere;
+  }
+
+  #PrimalCollectiveExact-{{ section.id }} .pce-description {
+    width: 100%;
+    max-width: 280px;
+    margin: 28px 0 0;
+    color: var(--pce-text, #fff);
+    font-family: {{ body_font.family }}, {{ body_font.fallback_families }};
+    font-style: {{ body_font.style }};
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    overflow-wrap: anywhere;
+  }
+
+  #PrimalCollectiveExact-{{ section.id }} .pce-button {
+    display: inline-flex;
+    width: min(100%, 292px);
+    max-width: 100%;
+    height: 49px;
+    margin-top: 24px;
+    padding: 0 14px 0 10px;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    border: 1px solid var(--pce-gold, #c89a3d);
+    border-radius: 8px;
+    background: transparent;
+    color: var(--pce-gold, #c89a3d);
+    text-decoration: none;
+    font-family: {{ heading_font.family }}, {{ heading_font.fallback_families }};
+    font-style: {{ heading_font.style }};
+    font-weight: 700;
+    font-size: 13px;
+    line-height: 1;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  #PrimalCollectiveExact-{{ section.id }} .pce-button svg {
+    width: 16px;
+    height: 16px;
+    flex: 0 0 16px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  #PrimalCollectiveExact-{{ section.id }} .pce-button:hover,
+  #PrimalCollectiveExact-{{ section.id }} .pce-button:focus-visible {
+    background: var(--pce-gold, #c89a3d);
+    color: #050606;
+  }
+
+  #PrimalCollectiveExact-{{ section.id }} .pce-button[aria-disabled='true'] {
+    cursor: default;
+    pointer-events: none;
+  }
+
+  #PrimalCollectiveExact-{{ section.id }} .pce-media {
+    position: relative;
+    min-width: 0;
+    min-height: 434px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    background: var(--pce-bg, #050606);
+  }
+
+  #PrimalCollectiveExact-{{ section.id }} .pce-media-scroll {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    min-height: 434px;
+    min-width: 0;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
+
+  #PrimalCollectiveExact-{{ section.id }} .pce-strip {
+    position: relative;
+    width: 100%;
+    max-width: 978px;
+    height: auto;
+    aspect-ratio: var(--pce-ratio);
+    flex: 0 1 978px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
+
+  #PrimalCollectiveExact-{{ section.id }} .pce-image,
+  #PrimalCollectiveExact-{{ section.id }} img.pce-image {
+    display: block !important;
+    width: 100% !important;
+    height: auto !important;
+    max-width: 100% !important;
+    object-fit: contain !important;
+    object-position: right center !important;
+  }
+
+  #PrimalCollectiveExact-{{ section.id }} .pce-placeholder {
+    display: grid;
+    width: 100%;
+    aspect-ratio: var(--pce-ratio);
+    place-items: center;
+    padding: 24px;
+    border: 1px dashed rgba(200, 154, 61, 0.45);
+    color: var(--pce-gold, #c89a3d);
+    font-family: {{ body_font.family }}, {{ body_font.fallback_families }};
+    font-size: 14px;
+    text-align: center;
+  }
+
+  @media screen and (max-width: 1199px) and (min-width: 900px) {
+    #PrimalCollectiveExact-{{ section.id }} {
+      --pce-gutter: clamp(34px, 5vw, 60px);
+    }
+
+    #PrimalCollectiveExact-{{ section.id }} .pce__wrap {
+      grid-template-columns: minmax(0, 260px) minmax(0, 1fr);
+      gap: 24px;
+      min-height: 380px;
+    }
+
+    #PrimalCollectiveExact-{{ section.id }} .pce-copy {
+      padding: 56px 0 36px;
+    }
+
+    #PrimalCollectiveExact-{{ section.id }} .pce-heading {
+      margin-top: 28px;
+      font-size: clamp(34px, 3.5vw, 40px);
+      line-height: 0.95;
+    }
+
+    #PrimalCollectiveExact-{{ section.id }} .pce-description {
+      margin-top: 20px;
+      font-size: clamp(14px, 1.5vw, 16px);
+    }
+
+    #PrimalCollectiveExact-{{ section.id }} .pce-media,
+    #PrimalCollectiveExact-{{ section.id }} .pce-media-scroll {
+      min-height: 380px;
+    }
+
+    #PrimalCollectiveExact-{{ section.id }} .pce-strip {
+      max-width: 100%;
+    }
+  }
+
+  @media screen and (max-width: 899px) {
+    #PrimalCollectiveExact-{{ section.id }} {
+      overflow: visible;
+    }
+
+    #shopify-section-{{ section.id }} {
+      overflow: visible !important;
+    }
+
+    #PrimalCollectiveExact-{{ section.id }} .pce__wrap {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      max-width: none;
+      min-height: 0;
+      margin: 0;
+      padding: 0;
+      gap: 0;
+    }
+
+    #PrimalCollectiveExact-{{ section.id }} .pce-copy {
+      width: 100%;
+      padding: clamp(36px, 6vw, 52px) var(--pw-gutter) clamp(24px, 5vw, 38px);
+      justify-content: flex-start;
+    }
+
+    #PrimalCollectiveExact-{{ section.id }} .pce-eyebrow {
+      font-size: clamp(11px, 1.7vw, 14px);
+      line-height: 1.45;
+      letter-spacing: clamp(1.5px, 0.3vw, 2.2px);
+    }
+
+    #PrimalCollectiveExact-{{ section.id }} .pce-heading {
+      max-width: 12ch;
+      margin-top: 14px;
+      font-size: clamp(34px, 6.5vw, 48px);
+      line-height: 0.96;
+    }
+
+    #PrimalCollectiveExact-{{ section.id }} .pce-description {
+      max-width: 42ch;
+      margin-top: 22px;
+      font-size: clamp(14px, 2.2vw, 16px);
+      line-height: 1.5;
+    }
+
+    #PrimalCollectiveExact-{{ section.id }} .pce-button {
+      margin-top: 24px;
+    }
+
+    #PrimalCollectiveExact-{{ section.id }} .pce-media {
+      width: 100%;
+      min-height: 0;
+      height: auto;
+      overflow: visible;
+      display: block;
+    }
+
+    #PrimalCollectiveExact-{{ section.id }} .pce-media-scroll {
+      position: relative;
+      display: block;
+      width: 100%;
+      min-height: 0;
+      height: clamp(260px, 52vw, 340px);
+      overflow-x: auto;
+      overflow-y: hidden;
+      -webkit-overflow-scrolling: touch;
+      overscroll-behavior-x: contain;
+      touch-action: pan-x;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(200, 154, 61, 0.55) transparent;
+    }
+
+    #PrimalCollectiveExact-{{ section.id }} .pce-media-scroll::-webkit-scrollbar {
+      height: 4px;
+    }
+
+    #PrimalCollectiveExact-{{ section.id }} .pce-media-scroll::-webkit-scrollbar-thumb {
+      background: rgba(200, 154, 61, 0.55);
+      border-radius: 999px;
+    }
+
+    #PrimalCollectiveExact-{{ section.id }} .pce-strip {
+      width: max-content;
+      max-width: none;
+      height: 100%;
+      aspect-ratio: auto;
+      flex: none;
+      display: block;
+    }
+
+    #PrimalCollectiveExact-{{ section.id }} .pce-image,
+    #PrimalCollectiveExact-{{ section.id }} img.pce-image {
+      width: auto !important;
+      height: 100% !important;
+      max-width: none !important;
+      min-width: calc(clamp(260px, 52vw, 340px) * 978 / 434);
+      aspect-ratio: var(--pce-ratio);
+      object-fit: contain !important;
+      object-position: left center !important;
+    }
+
+    #PrimalCollectiveExact-{{ section.id }} .pce-placeholder {
+      width: calc(clamp(260px, 52vw, 340px) * 978 / 434);
+      min-height: clamp(260px, 52vw, 340px);
+      height: 100%;
+      aspect-ratio: auto;
+    }
+
+    #PrimalCollectiveExact-{{ section.id }} .pce-media::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 4px;
+      width: 48px;
+      pointer-events: none;
+      background: linear-gradient(90deg, rgba(5, 6, 6, 0) 0%, rgba(5, 6, 6, 0.8) 100%);
+    }
+  }
+
+  @media screen and (max-width: 599px) {
+    #PrimalCollectiveExact-{{ section.id }} .pce-copy {
+      padding: 32px var(--pw-gutter) 26px;
+    }
+
+    #PrimalCollectiveExact-{{ section.id }} .pce-heading {
+      max-width: 100%;
+      font-size: clamp(29px, 9vw, 40px);
+    }
+
+    #PrimalCollectiveExact-{{ section.id }} .pce-description {
+      max-width: 100%;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    #PrimalCollectiveExact-{{ section.id }} .pce-button {
+      width: 100%;
+      min-height: 46px;
+      height: auto;
+      padding: 12px 14px 12px 10px;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+    }
+
+    #PrimalCollectiveExact-{{ section.id }} .pce-media-scroll {
+      height: 300px;
+    }
+
+    #PrimalCollectiveExact-{{ section.id }} .pce-image,
+    #PrimalCollectiveExact-{{ section.id }} img.pce-image {
+      min-width: calc(300px * 978 / 434);
+    }
+
+    #PrimalCollectiveExact-{{ section.id }} .pce-placeholder {
+      width: calc(300px * 978 / 434);
+      min-height: 300px;
+    }
+  }
+
+  @media screen and (max-width: 429px) {
+    #PrimalCollectiveExact-{{ section.id }} .pce-copy {
+      padding: 28px var(--pw-gutter) 22px;
+    }
+
+    #PrimalCollectiveExact-{{ section.id }} .pce-eyebrow {
+      font-size: 10px;
+      letter-spacing: 0.12em;
+    }
+
+    #PrimalCollectiveExact-{{ section.id }} .pce-heading {
+      font-size: 28px;
+    }
+
+    #PrimalCollectiveExact-{{ section.id }} .pce-description {
+      font-size: 13px;
+    }
+
+    #PrimalCollectiveExact-{{ section.id }} .pce-media-scroll {
+      height: 260px;
+    }
+
+    #PrimalCollectiveExact-{{ section.id }} .pce-image,
+    #PrimalCollectiveExact-{{ section.id }} img.pce-image {
+      min-width: calc(260px * 978 / 434);
+    }
+
+    #PrimalCollectiveExact-{{ section.id }} .pce-placeholder {
+      width: calc(260px * 978 / 434);
+      min-height: 260px;
+    }
+
+    #PrimalCollectiveExact-{{ section.id }} .pce-media::after {
+      width: 36px;
+    }
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "Primal Collective Final",
+  "tag": "section",
+  "class": "section-primal-collective-exact",
+  "enabled_on": {
+    "templates": ["index"]
+  },
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Athlete strip image",
+      "info": "Upload athlete strip (~978×434). Desktop: full strip visible, bleeds right. Tablet/phone: swipe horizontally."
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Gold top line",
+      "default": "Trusted By Those Who Demand More"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Main heading",
+      "default": "The Primal Collective"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "Elite athletes. Everyday winners. Different journeys. Same mindset."
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "Meet The Primal Collective"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "font_picker",
+      "id": "heading_font",
+      "label": "Heading font",
+      "default": "montserrat_n7"
+    },
+    {
+      "type": "font_picker",
+      "id": "body_font",
+      "label": "Body font",
+      "default": "inter_n4"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#050606"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text colour",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "gold_color",
+      "label": "Brand gold",
+      "default": "#C89A3D"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Primal Collective Final"
+    }
+  ]
+}
+{% endschema %}

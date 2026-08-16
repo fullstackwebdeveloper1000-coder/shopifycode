@@ -1,0 +1,11 @@
+{
+  "sections": {
+    "gpw-hero": {
+      "type": "primal-gpw-hero",
+      "settings": {}
+    }
+  },
+  "order": [
+    "gpw-hero"
+  ]
+}
