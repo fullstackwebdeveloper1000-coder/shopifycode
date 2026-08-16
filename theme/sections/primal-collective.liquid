@@ -14,7 +14,7 @@
   "
 >
   <div class="pce__shell">
-    <div class="pw-container pce__stage">
+    <div class="pw-container pce__grid">
       <div class="pce-copy">
         {% if section.settings.eyebrow != blank %}
           <p class="pce-eyebrow">{{ section.settings.eyebrow | escape }}</p>
@@ -45,31 +45,31 @@
           </a>
         {% endif %}
       </div>
-    </div>
 
-    <div class="pce-media">
-      <div
-        class="pce-media-scroll"
-        tabindex="0"
-        role="region"
-        aria-label="Athlete portraits"
-      >
-        {% if section.settings.image != blank %}
-          {{
-            section.settings.image
-            | image_url: width: 2400
-            | image_tag:
-              class: 'pce-image',
-              widths: '640, 900, 1200, 1600, 2000, 2400',
-              sizes: '(max-width: 899px) 100vw, (max-width: 1199px) 55vw, 70vw',
-              loading: 'lazy',
-              alt: image_alt
-          }}
-        {% else %}
-          <div class="pce-placeholder">
-            <span>Upload the Primal Collective athlete strip</span>
-          </div>
-        {% endif %}
+      <div class="pce-media">
+        <div
+          class="pce-media-scroll"
+          tabindex="0"
+          role="region"
+          aria-label="Athlete portraits"
+        >
+          {% if section.settings.image != blank %}
+            {{
+              section.settings.image
+              | image_url: width: 2400
+              | image_tag:
+                class: 'pce-image',
+                widths: '640, 900, 1200, 1600, 2000, 2400',
+                sizes: '(max-width: 1024px) 100vw, (max-width: 1199px) 55vw, 70vw',
+                loading: 'lazy',
+                alt: image_alt
+            }}
+          {% else %}
+            <div class="pce-placeholder">
+              <span>Upload the Primal Collective athlete strip</span>
+            </div>
+          {% endif %}
+        </div>
       </div>
     </div>
   </div>
@@ -83,13 +83,9 @@
     {% render 'pw-align-vars' %}
     --pce-copy-width: 296px;
     --pce-copy-gap: 30px;
+    --pce-strip-height: 434px;
     --pce-ratio: 978 / 434;
-    --pce-media-left: calc(
-      max(0px, (100vw - var(--pw-max)) / 2)
-      + var(--pw-gutter)
-      + var(--pce-copy-width)
-      + var(--pce-copy-gap)
-    );
+    --pce-bleed-right: max(0px, (100vw - var(--pw-max)) / 2);
   }
 
   #shopify-section-{{ section.id }} {
@@ -98,7 +94,8 @@
     max-width: none !important;
     margin: 0 !important;
     padding: 0 !important;
-    overflow: hidden !important;
+    overflow-x: clip !important;
+    overflow-y: visible !important;
     background: var(--pce-bg, #050606) !important;
   }
 
@@ -131,22 +128,20 @@
   #PrimalCollectiveExact-{{ section.id }} .pce__shell {
     position: relative;
     width: 100%;
-    min-height: 434px;
-    overflow: hidden;
+    overflow: visible;
   }
 
-  /* Same alignment shell as Primal Exact Header */
-  #PrimalCollectiveExact-{{ section.id }} .pw-container.pce__stage {
-    position: relative;
-    z-index: 2;
+  /* Header-aligned grid: copy column + image column that bleeds right */
+  #PrimalCollectiveExact-{{ section.id }} .pw-container.pce__grid {
+    display: grid;
+    grid-template-columns: minmax(0, var(--pce-copy-width)) minmax(0, 1fr);
+    gap: var(--pce-copy-gap);
+    align-items: center;
     width: 100%;
     max-width: var(--pw-max);
-    min-height: 434px;
+    min-height: var(--pce-strip-height);
     margin-inline: auto;
     padding-inline: var(--pw-gutter);
-    display: flex;
-    align-items: center;
-    pointer-events: none;
   }
 
   #PrimalCollectiveExact-{{ section.id }} .pce-copy {
@@ -157,7 +152,6 @@
     padding: 56px 0 48px;
     flex-direction: column;
     justify-content: center;
-    pointer-events: auto;
   }
 
   #PrimalCollectiveExact-{{ section.id }} .pce-eyebrow {
@@ -247,18 +241,15 @@
     pointer-events: none;
   }
 
-  /* Athlete strip bleeds to the right viewport edge */
+  /* Bleed athlete strip to the right viewport edge — never clip heads */
   #PrimalCollectiveExact-{{ section.id }} .pce-media {
-    position: absolute;
-    z-index: 1;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: var(--pce-media-left);
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
+    position: relative;
     min-width: 0;
+    width: calc(100% + var(--pce-bleed-right));
+    margin-right: calc(-1 * var(--pce-bleed-right));
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
     background: var(--pce-bg, #050606);
   }
 
@@ -274,9 +265,9 @@
     width: 100% !important;
     height: auto !important;
     max-width: 100% !important;
-    aspect-ratio: var(--pce-ratio);
+    max-height: var(--pce-strip-height) !important;
     object-fit: contain !important;
-    object-position: left center !important;
+    object-position: left top !important;
   }
 
   #PrimalCollectiveExact-{{ section.id }} .pce-placeholder {
@@ -293,15 +284,10 @@
   }
 
   /* Compact laptop / iPad Pro landscape */
-  @media screen and (max-width: 1199px) and (min-width: 900px) {
+  @media screen and (max-width: 1199px) and (min-width: 1025px) {
     #PrimalCollectiveExact-{{ section.id }} {
       --pce-copy-width: min(260px, 30vw);
       --pce-copy-gap: 24px;
-    }
-
-    #PrimalCollectiveExact-{{ section.id }} .pce__shell,
-    #PrimalCollectiveExact-{{ section.id }} .pw-container.pce__stage {
-      min-height: auto;
     }
 
     #PrimalCollectiveExact-{{ section.id }} .pce-copy {
@@ -313,8 +299,8 @@
     }
   }
 
-  /* iPad portrait and phones — stack, keep header gutter on copy */
-  @media screen and (max-width: 899px) {
+  /* iPad Pro portrait and below — stack like Figma */
+  @media screen and (max-width: 1024px) {
     #PrimalCollectiveExact-{{ section.id }} {
       overflow: visible;
     }
@@ -323,17 +309,12 @@
       overflow: visible !important;
     }
 
-    #PrimalCollectiveExact-{{ section.id }} .pce__shell {
+    #PrimalCollectiveExact-{{ section.id }} .pw-container.pce__grid {
       display: flex;
       flex-direction: column;
-      min-height: 0;
-      overflow: visible;
-    }
-
-    #PrimalCollectiveExact-{{ section.id }} .pw-container.pce__stage {
+      gap: 0;
       min-height: 0;
       padding-inline: var(--pw-gutter);
-      pointer-events: auto;
     }
 
     #PrimalCollectiveExact-{{ section.id }} .pce-copy {
@@ -367,12 +348,8 @@
     }
 
     #PrimalCollectiveExact-{{ section.id }} .pce-media {
-      position: relative;
-      top: auto;
-      right: auto;
-      bottom: auto;
-      left: auto;
       width: 100%;
+      margin-right: 0;
       min-height: 0;
       height: auto;
       overflow: visible;
@@ -388,8 +365,9 @@
       width: 100% !important;
       height: auto !important;
       max-width: 100% !important;
+      max-height: none !important;
       object-fit: contain !important;
-      object-position: center center !important;
+      object-position: center top !important;
     }
   }
 
