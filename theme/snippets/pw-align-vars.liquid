@@ -1,0 +1,26 @@
+{%- comment -%}
+  Primal Win — shared alignment tokens
+  Site width: 1440px (client standard)
+  Zoom-safe: same max + gutter on every section; no scale-up; no 100vw bleed
+  Wrap inside a section selector in {% style %}:
+  #YourSection-{{ section.id }} { {% render 'pw-align-vars' %} }
+{%- endcomment -%}
+  --pw-frame: 1440px;
+  --pw-max: 1440px;
+  --pw-gutter: 80px;
+
+  @media screen and (max-width: 1366px) {
+    --pw-gutter: 48px;
+  }
+
+  @media screen and (max-width: 1024px) {
+    --pw-gutter: 32px;
+  }
+
+  @media screen and (max-width: 749px) {
+    --pw-gutter: 20px;
+  }
+
+  @media screen and (max-width: 429px) {
+    --pw-gutter: 16px;
+  }
