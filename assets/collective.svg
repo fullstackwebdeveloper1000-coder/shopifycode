@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="978" height="434" viewBox="0 0 978 434" fill="none">
+  <rect width="978" height="434" fill="#0B0D0C"/>
+  <g font-family="Montserrat,Arial,sans-serif">
+  <rect x="18" y="18" width="150" height="398" rx="10" fill="#1A201C" stroke="#C89A3D" stroke-opacity=".25"/>
+  <rect x="38" y="48" width="110" height="220" rx="8" fill="#2A332E"/>
+  <circle cx="93.0" cy="120" r="36" fill="#3A463F"/>
+  <text x="93.0" y="310" text-anchor="middle" fill="#C89A3D" font-size="13" font-weight="700">Moses</text>
+  <text x="93.0" y="332" text-anchor="middle" fill="#EDEBE7" font-size="11">Athlete</text>
+  <rect x="180" y="18" width="150" height="398" rx="10" fill="#1A201C" stroke="#C89A3D" stroke-opacity=".25"/>
+  <rect x="200" y="48" width="110" height="220" rx="8" fill="#2A332E"/>
+  <circle cx="255.0" cy="120" r="36" fill="#3A463F"/>
+  <text x="255.0" y="310" text-anchor="middle" fill="#C89A3D" font-size="13" font-weight="700">Ben</text>
+  <text x="255.0" y="332" text-anchor="middle" fill="#EDEBE7" font-size="11">Athlete</text>
+  <rect x="342" y="18" width="150" height="398" rx="10" fill="#1A201C" stroke="#C89A3D" stroke-opacity=".25"/>
+  <rect x="362" y="48" width="110" height="220" rx="8" fill="#2A332E"/>
+  <circle cx="417.0" cy="120" r="36" fill="#3A463F"/>
+  <text x="417.0" y="310" text-anchor="middle" fill="#C89A3D" font-size="13" font-weight="700">Tom</text>
+  <text x="417.0" y="332" text-anchor="middle" fill="#EDEBE7" font-size="11">Athlete</text>
+  <rect x="504" y="18" width="150" height="398" rx="10" fill="#1A201C" stroke="#C89A3D" stroke-opacity=".25"/>
+  <rect x="524" y="48" width="110" height="220" rx="8" fill="#2A332E"/>
+  <circle cx="579.0" cy="120" r="36" fill="#3A463F"/>
+  <text x="579.0" y="310" text-anchor="middle" fill="#C89A3D" font-size="13" font-weight="700">Adam</text>
+  <text x="579.0" y="332" text-anchor="middle" fill="#EDEBE7" font-size="11">Athlete</text>
+  <rect x="666" y="18" width="150" height="398" rx="10" fill="#1A201C" stroke="#C89A3D" stroke-opacity=".25"/>
+  <rect x="686" y="48" width="110" height="220" rx="8" fill="#2A332E"/>
+  <circle cx="741.0" cy="120" r="36" fill="#3A463F"/>
+  <text x="741.0" y="310" text-anchor="middle" fill="#C89A3D" font-size="13" font-weight="700">Molly</text>
+  <text x="741.0" y="332" text-anchor="middle" fill="#EDEBE7" font-size="11">Athlete</text>
+  <rect x="828" y="18" width="150" height="398" rx="10" fill="#1A201C" stroke="#C89A3D" stroke-opacity=".25"/>
+  <rect x="848" y="48" width="110" height="220" rx="8" fill="#2A332E"/>
+  <circle cx="903.0" cy="120" r="36" fill="#3A463F"/>
+  <text x="903.0" y="310" text-anchor="middle" fill="#C89A3D" font-size="13" font-weight="700">Rio</text>
+  <text x="903.0" y="332" text-anchor="middle" fill="#EDEBE7" font-size="11">Athlete</text>
+  </g>
+</svg>

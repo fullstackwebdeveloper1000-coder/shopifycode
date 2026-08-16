@@ -95,20 +95,49 @@
   .ing-body p{font-size:13px;line-height:1.5;color:var(--slate);margin:0 0 14px;min-height:76px;}
   .learn{font-family:var(--font-head);font-weight:700;font-size:12px;letter-spacing:1px;text-transform:uppercase;color:var(--gold);display:inline-flex;align-items:center;gap:8px;}
 
-  /* ---------- Primal Collective ---------- */
-  .collective{background:#050606;color:var(--white);}
-  .coll-grid{display:grid;grid-template-columns:0.9fr 2.6fr;gap:30px;padding:56px 0;align-items:center;}
-  .coll-intro .eyebrow{color:var(--gold);}
-  .coll-intro h2{font-family:var(--font-head);font-weight:900;font-size:44px;line-height:0.95;text-transform:uppercase;color:var(--white);margin:0 0 18px;}
-  .coll-intro p{font-size:15px;line-height:1.6;color:#C7CBce;margin:0 0 24px;max-width:280px;}
-  .btn-ghost{display:inline-flex;align-items:center;gap:12px;white-space:nowrap;font-family:var(--font-head);font-weight:700;font-size:12px;letter-spacing:0.8px;color:var(--gold);border:1.5px solid var(--gold);border-radius:8px;padding:13px 20px;text-transform:uppercase;}
-  .ath-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:14px;}
-  .coll-img{width:100%;border-radius:10px;display:block;}
-  .ath-card .ath-photo{aspect-ratio:3/4;border-radius:10px;background:linear-gradient(160deg,#3a4038,#101311);position:relative;overflow:hidden;margin-bottom:14px;}
-  .ath-photo .sil{position:absolute;left:50%;bottom:0;transform:translateX(-50%);color:rgba(255,255,255,0.12);}
-  .ath-quote{font-size:13px;line-height:1.45;color:#EDEBE7;margin:0 0 10px;font-style:italic;min-height:56px;}
-  .ath-name{font-family:var(--font-head);font-weight:800;font-size:13px;letter-spacing:0.6px;text-transform:uppercase;color:var(--gold);margin:0 0 3px;}
-  .ath-role{font-size:12px;color:var(--slate);margin:0;}
+  /* ---------- Primal Collective (Figma: 1440 frame, full-bleed strip) ---------- */
+  .collective{background:#050606;color:var(--white);overflow:visible;}
+  .coll-grid{
+    display:grid;
+    grid-template-columns:minmax(240px,296px) minmax(0,1fr);
+    gap:clamp(20px,2vw,30px);
+    align-items:center;
+    max-width:none;
+    margin:0;
+    padding:48px 0;
+    padding-left:max(20px, calc((100% - 1440px) / 2 + var(--gutter)));
+    padding-right:0;
+  }
+  .coll-intro{min-width:0;}
+  .coll-intro .eyebrow{color:var(--gold);font-size:15px;line-height:24px;margin:0;}
+  .coll-intro h2{font-family:var(--font-head);font-weight:700;font-size:44px;line-height:0.95;text-transform:uppercase;color:var(--white);margin:28px 0 0;max-width:11ch;}
+  .coll-intro p{font-size:16px;line-height:24px;color:var(--white);margin:22px 0 0;max-width:32ch;}
+  .btn-ghost{display:inline-flex;align-items:center;gap:12px;width:max-content;max-width:100%;min-height:49px;margin-top:24px;white-space:nowrap;font-family:var(--font-head);font-weight:700;font-size:12px;letter-spacing:0.08em;color:var(--gold);border:1px solid var(--gold);border-radius:8px;padding:14px 16px 14px 12px;text-transform:uppercase;}
+  .coll-media{min-width:0;width:100%;}
+  .coll-img{width:100%;height:auto;max-width:100%;display:block;object-fit:contain;object-position:center right;border-radius:0;}
+  @media (max-width:1366px) and (min-width:1025px){
+    .coll-grid{grid-template-columns:minmax(220px,260px) minmax(0,1fr);gap:24px;}
+    .coll-intro h2{font-size:clamp(34px,3.2vw,40px);}
+    .coll-intro p{font-size:15px;line-height:22px;}
+  }
+  @media (max-width:1024px){
+    .coll-grid{display:flex;flex-direction:column;align-items:stretch;gap:0;padding:0;}
+    .coll-intro{padding:clamp(36px,5vw,52px) var(--gutter) clamp(24px,4vw,36px);}
+    .coll-intro .eyebrow{font-size:clamp(12px,1.5vw,14px);}
+    .coll-intro h2{max-width:12ch;margin-top:16px;font-size:clamp(34px,5.5vw,44px);}
+    .coll-intro p{max-width:42ch;margin-top:16px;font-size:clamp(14px,2vw,16px);line-height:1.5;}
+    .btn-ghost{margin-top:20px;}
+    .coll-img{object-position:center center;}
+  }
+  @media (max-width:749px){
+    .coll-intro{padding:32px var(--gutter) 22px;}
+    .coll-intro h2{max-width:100%;font-size:clamp(28px,8.5vw,40px);}
+    .coll-intro p{max-width:100%;font-size:14px;}
+    .btn-ghost{min-height:46px;margin-top:18px;font-size:11px;}
+  }
+  @media (max-width:560px){
+    :root{--gutter:20px;}
+  }
 
   /* ---------- Daily habit ---------- */
   .habit{padding:0;}
@@ -227,16 +256,18 @@
 
   <!-- PRIMAL COLLECTIVE -->
   <section class="collective">
-    <div class="container coll-grid">
+    <div class="coll-grid">
       <div class="coll-intro">
-        <p class="eyebrow">Trusted By Those<br>Who Demand More</p>
-        <h2>The Primal<br>Collective</h2>
+        <p class="eyebrow">Trusted By Those Who Demand More</p>
+        <h2>The Primal Collective</h2>
         <p>Elite athletes. Everyday winners. Different journeys. Same mindset.</p>
         <a class="btn-ghost" href="#">Meet The Primal Collective
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
         </a>
       </div>
-      <img class="coll-img" src="assets/collective.png" alt="The Primal Collective — Moses Itauma, Ben Whittaker, Tom Stoltman, Adam Azim, Molly McCann, Rio Ngumoha">
+      <div class="coll-media">
+        <img class="coll-img" src="assets/collective.svg" alt="The Primal Collective — Moses Itauma, Ben Whittaker, Tom Stoltman, Adam Azim, Molly McCann, Rio Ngumoha" width="978" height="434">
+      </div>
     </div>
   </section>
 
