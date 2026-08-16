@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Primal Collective — breakpoint frames</title>
+  <style>
+    body { margin: 0; background: #111; color: #ddd; font-family: system-ui, sans-serif; }
+    h1 { font-size: 16px; margin: 16px 20px 8px; font-weight: 600; }
+    .grid { display: grid; gap: 28px; padding: 12px 20px 40px; }
+    .frame { background: #1a1a1a; border: 1px solid #333; border-radius: 10px; overflow: hidden; }
+    .frame h2 { margin: 0; padding: 10px 14px; font-size: 13px; font-weight: 600; border-bottom: 1px solid #333; color: #c89a3d; }
+    .frame iframe { display: block; width: 100%; border: 0; background: #050606; }
+  </style>
+</head>
+<body>
+  <h1>Primal Collective responsive QA — gold TOP/BOTTOM edge bars must stay visible (no crop)</h1>
+  <div class="grid">
+    <div class="frame">
+      <h2>1. Web 1440</h2>
+      <iframe src="primal-collective-frame.html" width="1440" height="520" style="width:1440px;max-width:100%;height:520px"></iframe>
+    </div>
+    <div class="frame">
+      <h2>2. iPad Pro landscape 1366</h2>
+      <iframe src="primal-collective-frame.html" width="1366" height="480" style="width:1366px;max-width:100%;height:480px"></iframe>
+    </div>
+    <div class="frame">
+      <h2>3. iPad 1024 (stacked + swipe)</h2>
+      <iframe src="primal-collective-frame.html" width="1024" height="720" style="width:1024px;max-width:100%;height:720px"></iframe>
+    </div>
+    <div class="frame">
+      <h2>4. Mobile 390 (stacked + swipe)</h2>
+      <iframe src="primal-collective-frame.html" width="390" height="780" style="width:390px;height:780px"></iframe>
+    </div>
+  </div>
+</body>
+</html>
