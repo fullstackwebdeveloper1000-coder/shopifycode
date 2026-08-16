@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Collective mobile check</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400&family=Montserrat:wght@700&display=swap" rel="stylesheet"/>
+<style>
+:root{--pw-gutter:20px;--pce-bg:#050606;--pce-text:#fff;--pce-gold:#c89a3d;--pce-strip-h:min(360px,72vw)}
+*{box-sizing:border-box}body{margin:0;background:#050606;color:#fff;font-family:Inter,sans-serif}
+.pce__wrap{display:flex;flex-direction:column}
+.pce-copy{padding:32px var(--pw-gutter) 22px}
+.pce-eyebrow{margin:0;color:var(--pce-gold);font-family:Montserrat,sans-serif;font-weight:700;font-size:12px;letter-spacing:1.8px;text-transform:uppercase}
+.pce-heading{margin:16px 0 0;font-family:Montserrat,sans-serif;font-weight:700;font-size:32px;line-height:.96;text-transform:uppercase}
+.pce-description{margin:16px 0 0;font-size:14px;line-height:1.5}
+.pce-button{display:inline-flex;margin-top:20px;min-height:46px;padding:12px 14px 12px 10px;align-items:center;gap:12px;border:1px solid var(--pce-gold);border-radius:8px;color:var(--pce-gold);text-decoration:none;font-family:Montserrat,sans-serif;font-weight:700;font-size:11px;letter-spacing:.08em;text-transform:uppercase}
+.pce-button svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.5}
+.pce-media{position:relative;width:100%;height:var(--pce-strip-h);overflow:hidden}
+.pce-media-scroll{width:100%;height:100%;overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch}
+.pce-strip{width:calc(var(--pce-strip-h)*978/434);min-width:calc(var(--pce-strip-h)*978/434);height:100%}
+.pce-image{display:block;width:100%;height:100%;object-fit:fill}
+.pce-media::after{content:"";position:absolute;top:0;right:0;bottom:0;width:36px;pointer-events:none;background:linear-gradient(90deg,rgba(5,6,6,0),rgba(5,6,6,.75))}
+</style></head><body>
+<section>
+  <div class="pce__wrap">
+    <div class="pce-copy">
+      <p class="pce-eyebrow">Trusted By Those Who Demand More</p>
+      <h2 class="pce-heading">The Primal Collective</h2>
+      <p class="pce-description">Elite athletes. Everyday winners. Different journeys. Same mindset.</p>
+      <a class="pce-button" href="#"><span>Meet The Primal Collective</span>
+        <svg viewBox="0 0 16 16"><path d="M2 8h11M9 4l4 4-4 4"/></svg></a>
+    </div>
+    <div class="pce-media">
+      <div class="pce-media-scroll">
+        <div class="pce-strip">
+          <img class="pce-image" src="athlete-strip.png" alt="athletes" width="978" height="434"/>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+</body></html>

@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Primal Collective — responsive preview</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400&family=Montserrat:wght@700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --pw-frame: 1440px;
+      --pw-max: 1440px;
+      --pw-gutter: 48px;
+      --pce-bg: #050606;
+      --pce-text: #ffffff;
+      --pce-gold: #c89a3d;
+      --pce-ratio: 978 / 434;
+    }
+    @media screen and (max-width: 1180px) { :root { --pw-gutter: 34px; } }
+    @media screen and (max-width: 860px) { :root { --pw-gutter: 22px; } }
+    @media screen and (max-width: 560px) { :root { --pw-gutter: 20px; } }
+
+    * , *::before, *::after { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: #111;
+      color: #fff;
+      font-family: Inter, sans-serif;
+    }
+    .toolbar {
+      position: sticky; top: 0; z-index: 10;
+      display: flex; flex-wrap: wrap; gap: 8px; align-items: center;
+      padding: 12px 16px; background: #1a1a1a; border-bottom: 1px solid #333;
+      font-size: 13px;
+    }
+    .toolbar button {
+      border: 1px solid #555; background: #222; color: #eee;
+      padding: 8px 12px; border-radius: 6px; cursor: pointer;
+    }
+    .toolbar button.active { border-color: #c89a3d; color: #c89a3d; }
+    .frame-wrap {
+      margin: 24px auto;
+      background: #000;
+      box-shadow: 0 0 0 1px #333;
+      transition: width .2s ease;
+      width: 1440px;
+      max-width: 100%;
+      overflow: hidden;
+    }
+    .label { padding: 8px 16px; font-size: 12px; color: #aaa; }
+    .ref {
+      margin: 24px auto; max-width: 1440px; padding: 0 16px 40px;
+    }
+    .ref img { width: 100%; height: auto; display: block; border: 1px solid #333; }
+
+    /* ===== Section CSS (mirrors liquid) ===== */
+    #PrimalCollectiveExact-preview {
+      width: 100%;
+      margin: 0;
+      padding: 0;
+      overflow: visible;
+      background: var(--pce-bg);
+      color: var(--pce-text);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    #PrimalCollectiveExact-preview .pce__wrap {
+      display: grid;
+      grid-template-columns: minmax(220px, 296px) minmax(0, 1fr);
+      gap: 30px;
+      align-items: center;
+      width: 100%;
+      max-width: none;
+      margin: 0;
+      padding-left: max(
+        20px,
+        calc((100% - var(--pw-frame, 1440px)) / 2 + var(--pw-gutter, 48px))
+      );
+      padding-right: 0;
+    }
+
+    #PrimalCollectiveExact-preview .pce-copy {
+      display: flex;
+      min-width: 0;
+      flex-direction: column;
+      justify-content: center;
+      padding: 48px 0;
+    }
+
+    #PrimalCollectiveExact-preview .pce-eyebrow {
+      margin: 0;
+      color: var(--pce-gold);
+      font-family: Montserrat, sans-serif;
+      font-weight: 700;
+      font-size: 15px;
+      line-height: 24px;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+    }
+
+    #PrimalCollectiveExact-preview .pce-heading {
+      width: 100%;
+      max-width: 11ch;
+      margin: 28px 0 0;
+      color: var(--pce-text);
+      font-family: Montserrat, sans-serif;
+      font-weight: 700;
+      font-size: 44px;
+      line-height: 0.95;
+      letter-spacing: 0;
+      text-transform: uppercase;
+    }
+
+    #PrimalCollectiveExact-preview .pce-description {
+      width: 100%;
+      max-width: 32ch;
+      margin: 22px 0 0;
+      color: var(--pce-text);
+      font-family: Inter, sans-serif;
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 24px;
+    }
+
+    #PrimalCollectiveExact-preview .pce-button {
+      display: inline-flex;
+      width: max-content;
+      max-width: 100%;
+      min-height: 49px;
+      margin-top: 24px;
+      padding: 14px 16px 14px 12px;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      border: 1px solid var(--pce-gold);
+      border-radius: 8px;
+      background: transparent;
+      color: var(--pce-gold);
+      text-decoration: none;
+      font-family: Montserrat, sans-serif;
+      font-weight: 700;
+      font-size: 12px;
+      line-height: 1.3;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    #PrimalCollectiveExact-preview .pce-button svg {
+      width: 16px; height: 16px; flex: 0 0 16px;
+      fill: none; stroke: currentColor; stroke-width: 1.5;
+      stroke-linecap: round; stroke-linejoin: round;
+    }
+
+    #PrimalCollectiveExact-preview .pce-media,
+    #PrimalCollectiveExact-preview .pce-media-scroll,
+    #PrimalCollectiveExact-preview .pce-strip {
+      position: relative;
+      min-width: 0;
+      width: 100%;
+      height: auto;
+      overflow: visible;
+      background: var(--pce-bg);
+    }
+
+    #PrimalCollectiveExact-preview .pce-image {
+      display: block !important;
+      width: 100% !important;
+      max-width: 100% !important;
+      height: auto !important;
+      max-height: none !important;
+      object-fit: contain !important;
+      object-position: center right !important;
+    }
+
+    @media screen and (max-width: 1366px) and (min-width: 750px) {
+      #PrimalCollectiveExact-preview .pce__wrap {
+        grid-template-columns: minmax(180px, 28vw) minmax(0, 1fr);
+        gap: clamp(16px, 2vw, 28px);
+      }
+      #PrimalCollectiveExact-preview .pce-copy { padding-block: clamp(28px, 4vw, 44px); }
+      #PrimalCollectiveExact-preview .pce-heading { font-size: clamp(30px, 3.4vw, 42px); }
+      #PrimalCollectiveExact-preview .pce-description { font-size: clamp(13px, 1.35vw, 16px); line-height: 1.45; }
+    }
+
+    @media screen and (max-width: 749px) {
+      #PrimalCollectiveExact-preview .pce__wrap {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0;
+        padding-left: 0;
+        padding-right: 0;
+      }
+      #PrimalCollectiveExact-preview .pce-copy {
+        width: 100%;
+        padding: 32px var(--pw-gutter, 20px) 22px;
+        justify-content: flex-start;
+      }
+      #PrimalCollectiveExact-preview .pce-heading {
+        max-width: 100%;
+        margin-top: 16px;
+        font-size: clamp(30px, 8.5vw, 40px);
+        line-height: 0.96;
+      }
+      #PrimalCollectiveExact-preview .pce-description {
+        max-width: 100%;
+        margin-top: 16px;
+        font-size: 14px;
+        line-height: 1.5;
+      }
+      #PrimalCollectiveExact-preview .pce-button { margin-top: 20px; min-height: 46px; font-size: 11px; }
+      #PrimalCollectiveExact-preview .pce-image { object-position: center center !important; }
+    }
+
+    @media screen and (max-width: 429px) {
+      #PrimalCollectiveExact-preview .pce-copy { padding: 28px var(--pw-gutter, 16px) 18px; }
+      #PrimalCollectiveExact-preview .pce-heading { font-size: 28px; }
+      #PrimalCollectiveExact-preview .pce-description { font-size: 13px; }
+    }
+  
+    body.clean .toolbar, body.clean .label, body.clean .ref { display:none !important; }
+    body.clean .frame-wrap { margin:0 !important; width:100% !important; max-width:none !important; box-shadow:none !important; }
+    body.clean { background:#050606; }
+</style>
+</head>
+<body class="clean">
+  <div class="toolbar">
+    <strong>Viewport:</strong>
+    <button type="button" data-w="1440" class="active">Web 1440</button>
+    <button type="button" data-w="1024">iPad 1024</button>
+    <button type="button" data-w="1366">iPad Pro 1366</button>
+    <button type="button" data-w="390">Mobile 390</button>
+    <span id="sizeLabel">1440px</span>
+  </div>
+
+  <div class="label">Live section preview</div>
+  <div class="frame-wrap" id="frame">
+    <section id="PrimalCollectiveExact-preview" class="primal-collective-exact">
+      <div class="pce__wrap">
+        <div class="pce-copy">
+          <p class="pce-eyebrow">Trusted By Those Who Demand More</p>
+          <h2 class="pce-heading">The Primal Collective</h2>
+          <p class="pce-description">Elite athletes. Everyday winners. Different journeys. Same mindset.</p>
+          <a class="pce-button" href="#">
+            <span>Meet The Primal Collective</span>
+            <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 8h11M9 4l4 4-4 4"/></svg>
+          </a>
+        </div>
+        <div class="pce-media">
+          <div class="pce-media-scroll">
+            <div class="pce-strip">
+              <img class="pce-image" src="athlete-strip.png" alt="Athlete strip" width="978" height="434" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div class="ref">
+    <div class="label">Figma reference (homepage band)</div>
+    <img src="figma-reference.png" alt="Figma Primal Collective reference" />
+  </div>
+
+  <script>
+    const frame = document.getElementById('frame');
+    const label = document.getElementById('sizeLabel');
+    document.querySelectorAll('.toolbar button').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.toolbar button').forEach((b) => b.classList.remove('active'));
+        btn.classList.add('active');
+        const w = btn.dataset.w;
+        frame.style.width = w + 'px';
+        label.textContent = w + 'px';
+      });
+    });
+  </script>
+</body>
+</html>
