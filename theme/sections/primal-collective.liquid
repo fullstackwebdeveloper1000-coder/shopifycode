@@ -47,29 +47,22 @@
       </div>
 
       <div class="pce-media">
-        <div
-          class="pce-media-scroll"
-          tabindex="0"
-          role="region"
-          aria-label="Athlete portraits"
-        >
-          {% if section.settings.image != blank %}
-            {{
-              section.settings.image
-              | image_url: width: 2400
-              | image_tag:
-                class: 'pce-image',
-                widths: '640, 900, 1200, 1600, 2000, 2400',
-                sizes: '(max-width: 1024px) 100vw, (max-width: 1199px) 55vw, 70vw',
-                loading: 'lazy',
-                alt: image_alt
-            }}
-          {% else %}
-            <div class="pce-placeholder">
-              <span>Upload the Primal Collective athlete strip</span>
-            </div>
-          {% endif %}
-        </div>
+        {% if section.settings.image != blank %}
+          {{
+            section.settings.image
+            | image_url: width: 2400
+            | image_tag:
+              class: 'pce-image',
+              widths: '640, 900, 1200, 1600, 2000, 2400',
+              sizes: '(max-width: 899px) 100vw, calc(100vw - 326px)',
+              loading: 'lazy',
+              alt: image_alt
+          }}
+        {% else %}
+          <div class="pce-placeholder">
+            <span>Upload the Primal Collective athlete strip</span>
+          </div>
+        {% endif %}
       </div>
     </div>
   </div>
@@ -83,8 +76,6 @@
     {% render 'pw-align-vars' %}
     --pce-copy-width: 296px;
     --pce-copy-gap: 30px;
-    --pce-strip-height: 434px;
-    --pce-ratio: 978 / 434;
     --pce-bleed-right: max(0px, (100vw - var(--pw-max)) / 2);
   }
 
@@ -94,8 +85,7 @@
     max-width: none !important;
     margin: 0 !important;
     padding: 0 !important;
-    overflow-x: clip !important;
-    overflow-y: visible !important;
+    overflow: visible !important;
     background: var(--pce-bg, #050606) !important;
   }
 
@@ -118,7 +108,7 @@
     width: 100%;
     margin: 0;
     padding: 0;
-    overflow: hidden;
+    overflow: visible;
     background: var(--pce-bg, #050606);
     color: var(--pce-text, #fff);
     -webkit-font-smoothing: antialiased;
@@ -126,32 +116,36 @@
   }
 
   #PrimalCollectiveExact-{{ section.id }} .pce__shell {
-    position: relative;
     width: 100%;
     overflow: visible;
   }
 
-  /* Header-aligned grid: copy column + image column that bleeds right */
+  /*
+    Figma web (1440):
+    - copy on the same content line as the header logo
+    - 296px copy + 30px gap
+    - athlete strip fills remaining width and bleeds to the viewport right edge
+    - section height follows the image — never crop heads
+  */
   #PrimalCollectiveExact-{{ section.id }} .pw-container.pce__grid {
     display: grid;
-    grid-template-columns: minmax(0, var(--pce-copy-width)) minmax(0, 1fr);
+    grid-template-columns: var(--pce-copy-width) minmax(0, 1fr);
     gap: var(--pce-copy-gap);
     align-items: center;
     width: 100%;
     max-width: var(--pw-max);
-    min-height: var(--pce-strip-height);
     margin-inline: auto;
-    padding-inline: var(--pw-gutter);
+    padding-left: var(--pw-gutter);
+    padding-right: 0;
   }
 
   #PrimalCollectiveExact-{{ section.id }} .pce-copy {
     display: flex;
     width: 100%;
-    max-width: var(--pce-copy-width);
     min-width: 0;
-    padding: 56px 0 48px;
+    padding: 71px 0 40px;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
   }
 
   #PrimalCollectiveExact-{{ section.id }} .pce-eyebrow {
@@ -169,14 +163,14 @@
 
   #PrimalCollectiveExact-{{ section.id }} .pce-heading {
     width: 100%;
-    max-width: 11ch;
-    margin: 28px 0 0;
+    max-width: 296px;
+    margin: 38px 0 0;
     color: var(--pce-text, #fff);
     font-family: {{ heading_font.family }}, {{ heading_font.fallback_families }};
     font-style: {{ heading_font.style }};
     font-weight: 700;
     font-size: 44px;
-    line-height: 0.95;
+    line-height: 41.8px;
     letter-spacing: 0;
     text-transform: uppercase;
     overflow-wrap: anywhere;
@@ -184,8 +178,8 @@
 
   #PrimalCollectiveExact-{{ section.id }} .pce-description {
     width: 100%;
-    max-width: 32ch;
-    margin: 22px 0 0;
+    max-width: 280px;
+    margin: 28px 0 0;
     color: var(--pce-text, #fff);
     font-family: {{ body_font.family }}, {{ body_font.fallback_families }};
     font-style: {{ body_font.style }};
@@ -197,11 +191,10 @@
 
   #PrimalCollectiveExact-{{ section.id }} .pce-button {
     display: inline-flex;
-    width: max-content;
-    max-width: 100%;
-    min-height: 49px;
+    width: min(100%, 292px);
+    height: 49px;
     margin-top: 24px;
-    padding: 14px 16px 14px 12px;
+    padding: 0 14px 0 10px;
     align-items: center;
     justify-content: space-between;
     gap: 12px;
@@ -213,9 +206,9 @@
     font-family: {{ heading_font.family }}, {{ heading_font.fallback_families }};
     font-style: {{ heading_font.style }};
     font-weight: 700;
-    font-size: 12px;
-    line-height: 1.3;
-    letter-spacing: 0.08em;
+    font-size: 13px;
+    line-height: 1;
+    letter-spacing: 1px;
     text-transform: uppercase;
   }
 
@@ -241,22 +234,13 @@
     pointer-events: none;
   }
 
-  /* Bleed athlete strip to the right viewport edge — never clip heads */
   #PrimalCollectiveExact-{{ section.id }} .pce-media {
     position: relative;
     min-width: 0;
     width: calc(100% + var(--pce-bleed-right));
     margin-right: calc(-1 * var(--pce-bleed-right));
-    display: flex;
-    align-items: flex-start;
-    justify-content: flex-start;
+    overflow: visible;
     background: var(--pce-bg, #050606);
-  }
-
-  #PrimalCollectiveExact-{{ section.id }} .pce-media-scroll {
-    width: 100%;
-    min-width: 0;
-    display: block;
   }
 
   #PrimalCollectiveExact-{{ section.id }} .pce-image,
@@ -264,16 +248,16 @@
     display: block !important;
     width: 100% !important;
     height: auto !important;
-    max-width: 100% !important;
-    max-height: var(--pce-strip-height) !important;
+    max-width: none !important;
+    max-height: none !important;
     object-fit: contain !important;
-    object-position: left top !important;
+    object-position: left center !important;
   }
 
   #PrimalCollectiveExact-{{ section.id }} .pce-placeholder {
     display: grid;
     width: 100%;
-    aspect-ratio: var(--pce-ratio);
+    aspect-ratio: 978 / 434;
     place-items: center;
     padding: 24px;
     border: 1px dashed rgba(200, 154, 61, 0.45);
@@ -283,44 +267,37 @@
     text-align: center;
   }
 
-  /* Compact laptop / iPad Pro landscape */
-  @media screen and (max-width: 1199px) and (min-width: 1025px) {
+  /* Laptop / iPad Pro landscape — keep Figma two-column, scale type only */
+  @media screen and (max-width: 1199px) and (min-width: 900px) {
     #PrimalCollectiveExact-{{ section.id }} {
-      --pce-copy-width: min(260px, 30vw);
-      --pce-copy-gap: 24px;
+      --pce-copy-width: min(260px, 28vw);
+      --pce-copy-gap: 20px;
     }
 
     #PrimalCollectiveExact-{{ section.id }} .pce-copy {
-      padding-block: 44px;
+      padding: 48px 0 36px;
     }
 
     #PrimalCollectiveExact-{{ section.id }} .pce-heading {
-      font-size: clamp(34px, 3.7vw, 42px);
+      font-size: clamp(32px, 3.4vw, 40px);
+      line-height: 0.95;
+      margin-top: 28px;
     }
   }
 
-  /* iPad Pro portrait and below — stack like Figma */
-  @media screen and (max-width: 1024px) {
-    #PrimalCollectiveExact-{{ section.id }} {
-      overflow: visible;
-    }
-
-    #shopify-section-{{ section.id }} {
-      overflow: visible !important;
-    }
-
+  /* iPad portrait / phones — stack, full strip, header gutter */
+  @media screen and (max-width: 899px) {
     #PrimalCollectiveExact-{{ section.id }} .pw-container.pce__grid {
       display: flex;
       flex-direction: column;
       gap: 0;
-      min-height: 0;
-      padding-inline: var(--pw-gutter);
+      padding-left: var(--pw-gutter);
+      padding-right: var(--pw-gutter);
     }
 
     #PrimalCollectiveExact-{{ section.id }} .pce-copy {
       max-width: none;
-      padding: clamp(36px, 6vw, 56px) 0 clamp(28px, 5vw, 42px);
-      justify-content: flex-start;
+      padding: clamp(36px, 6vw, 56px) 0 clamp(24px, 4vw, 36px);
     }
 
     #PrimalCollectiveExact-{{ section.id }} .pce-eyebrow {
@@ -339,41 +316,32 @@
     #PrimalCollectiveExact-{{ section.id }} .pce-description {
       max-width: 42ch;
       margin-top: 16px;
-      font-size: clamp(14px, 2vw, 16px);
-      line-height: 1.5;
     }
 
     #PrimalCollectiveExact-{{ section.id }} .pce-button {
+      width: max-content;
+      max-width: 100%;
+      height: auto;
+      min-height: 49px;
       margin-top: 20px;
+      padding: 14px 16px 14px 12px;
     }
 
     #PrimalCollectiveExact-{{ section.id }} .pce-media {
-      width: 100%;
-      margin-right: 0;
-      min-height: 0;
-      height: auto;
-      overflow: visible;
-    }
-
-    #PrimalCollectiveExact-{{ section.id }} .pce-media-scroll {
-      width: 100%;
-      overflow: visible;
+      width: calc(100% + (var(--pw-gutter) * 2));
+      margin-left: calc(-1 * var(--pw-gutter));
+      margin-right: calc(-1 * var(--pw-gutter));
     }
 
     #PrimalCollectiveExact-{{ section.id }} .pce-image,
     #PrimalCollectiveExact-{{ section.id }} img.pce-image {
-      width: 100% !important;
-      height: auto !important;
-      max-width: 100% !important;
-      max-height: none !important;
-      object-fit: contain !important;
-      object-position: center top !important;
+      object-position: center center !important;
     }
   }
 
   @media screen and (max-width: 599px) {
     #PrimalCollectiveExact-{{ section.id }} .pce-copy {
-      padding: 32px 0 26px;
+      padding: 32px 0 22px;
     }
 
     #PrimalCollectiveExact-{{ section.id }} .pce-heading {
@@ -384,18 +352,17 @@
     #PrimalCollectiveExact-{{ section.id }} .pce-description {
       max-width: 100%;
       font-size: 14px;
-      line-height: 1.5;
     }
 
     #PrimalCollectiveExact-{{ section.id }} .pce-button {
       min-height: 46px;
-      font-size: 11px;
+      font-size: 12px;
     }
   }
 
   @media screen and (max-width: 429px) {
     #PrimalCollectiveExact-{{ section.id }} .pce-copy {
-      padding: 28px 0 22px;
+      padding: 28px 0 18px;
     }
 
     #PrimalCollectiveExact-{{ section.id }} .pce-heading {
@@ -418,7 +385,7 @@
       "type": "image_picker",
       "id": "image",
       "label": "Athlete strip image",
-      "info": "Upload athlete strip (~978×434 or wider). Desktop bleeds to the right edge. Tablet/mobile shows the full strip without cropping."
+      "info": "Upload the Figma athlete strip (six portraits in one image). Desktop matches the 1440 web frame and never crops heads."
     },
     {
       "type": "text",
