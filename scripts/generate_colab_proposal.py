@@ -186,7 +186,8 @@ MARKETING_PACKAGES = [
     ),
 ]
 
-LOGO_URL = "https://colabpoint.com/wp-content/uploads/2024/05/Web-Logo-II.png"
+LOCAL_LOGO = ASSETS / "logo.png"
+LOGO_URL = None  # use LOCAL_LOGO (new brand logo)
 BANNER_URL = "https://colabpoint.com/wp-content/uploads/2024/06/popup-bg-1-1024x374-1.jpg"
 
 # Small content-related icons (~96px)
@@ -205,6 +206,8 @@ ICONS = {
 
 def fetch_icon(key: str) -> Path | None:
     ASSETS.mkdir(parents=True, exist_ok=True)
+    if key == "logo" and LOCAL_LOGO.exists() and LOCAL_LOGO.stat().st_size > 500:
+        return LOCAL_LOGO
     ext = ".jpg" if key == "banner" else ".png"
     dest = ASSETS / f"{key}{ext}"
     if dest.exists() and dest.stat().st_size > 500:
@@ -229,15 +232,15 @@ def fetch_all_icons() -> dict:
 
 
 def prepare_cover_logo(logo_path: Path) -> Path:
-    """Logo on navy — Web-Logo-II is light grey and fades on white backgrounds."""
+    """Cover navy band — new logo has dark text, use white backing."""
     from PIL import Image
 
     dest = ASSETS / "logo_cover.png"
     if dest.exists() and dest.stat().st_mtime >= logo_path.stat().st_mtime:
         return dest
     im = Image.open(logo_path).convert("RGBA")
-    pad_x, pad_y = 56, 36
-    canvas = Image.new("RGBA", (im.size[0] + pad_x * 2, im.size[1] + pad_y * 2), (4, 36, 60, 255))
+    pad_x, pad_y = 36, 22
+    canvas = Image.new("RGBA", (im.size[0] + pad_x * 2, im.size[1] + pad_y * 2), (255, 255, 255, 255))
     canvas.paste(im, (pad_x, pad_y), im)
     canvas.save(dest, "PNG")
     return dest
