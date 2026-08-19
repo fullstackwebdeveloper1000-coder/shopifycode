@@ -1,0 +1,102 @@
+================================================================================
+  JUBELAY BRAND KIT — GOOGLE DRIVE UPLOAD GUIDE
+================================================================================
+
+Yeh folder Google Drive ke liye ready hai. Sab files upload karo aur
+Google Docs mein open kar sakte ho.
+
+================================================================================
+  FOLDER STRUCTURE
+================================================================================
+
+jubelay-google-drive/
+├── Documents/                          ← Google Docs mein open honge
+│   ├── JUBELAY-Shopify-Complete-Guide.docx   (Poora store guide)
+│   ├── JUBELAY-Brand-Guidelines.docx         (Colors, fonts, logo)
+│   └── JUBELAY-README-Start-Here.docx        (Quick start)
+├── Images/                             ← Google Drive par direct upload
+│   ├── jubelay-logo-mens-womens-primary.png  (Main logo)
+│   ├── jubelay-logo-mens-womens-monogram.png (Monogram logo)
+│   ├── jubelay-logo-mens-womens-dark.png     (Dark logo)
+│   ├── jubelay-logo-primary.png
+│   ├── jubelay-homepage-mockup.png
+│   ├── jubelay-product-page-mockup.png
+│   ├── jubelay-brand-colors-design-system.png
+│   └── jubelay-instagram-post-template.png
+└── GOOGLE-DRIVE-UPLOAD-GUIDE.txt       ← Yeh file
+
+================================================================================
+  METHOD 1: GOOGLE DRIVE WEBSITE (Easiest)
+================================================================================
+
+Step 1: Browser mein jao → https://drive.google.com
+Step 2: Login karo apne Google account se
+Step 3: "New" button click karo → "Folder upload"
+Step 4: "jubelay-google-drive" folder select karo
+Step 5: Upload complete hone ka wait karo
+
+DOCX files ko Google Docs mein convert karne ke liye:
+  → File par right-click → "Open with" → "Google Docs"
+
+================================================================================
+  METHOD 2: ZIP UPLOAD (Faster)
+================================================================================
+
+Step 1: "jubelay-google-drive.zip" file upload karo Google Drive par
+Step 2: Zip par right-click → "Open with" → "Google Drive" (extract)
+Step 3: Ya download karke extract karo locally
+
+================================================================================
+  METHOD 3: MOBILE (Phone se)
+================================================================================
+
+Step 1: Zip file apne phone par bhejo (WhatsApp/email)
+Step 2: Google Drive app kholo
+Step 3: "+" button → "Upload" → zip file select karo
+Step 4: Extract karo Drive app mein
+
+================================================================================
+  GOOGLE DOCS CONVERSION
+================================================================================
+
+.docx files Google Drive par upload karne ke baad:
+
+1. File par double-click karo
+2. "Open with Google Docs" select karo
+3. Ab yeh Google Doc ban jayega — edit, share, collaborate kar sakte ho
+
+Images (.png) directly Google Drive par preview hongi — convert ki zaroorat nahi.
+
+================================================================================
+  RECOMMENDED GOOGLE DRIVE FOLDER STRUCTURE
+================================================================================
+
+Apne Google Drive mein aise organize karo:
+
+📁 JUBELAY Brand Kit
+  📁 01 - Documents (Google Docs)
+  📁 02 - Logos
+  📁 03 - Design Mockups
+  📁 04 - Social Media Templates
+
+================================================================================
+  SHARE WITH TEAM
+================================================================================
+
+Google Drive par folder upload ke baad:
+  → Folder par right-click → "Share"
+  → Email add karo ya "Anyone with link" set karo
+  → "Viewer" ya "Editor" permission do
+
+================================================================================
+  BRAND QUICK INFO
+================================================================================
+
+Brand:     JUBELAY
+Tagline:   Style Made Simple
+Product:   Mens & Womens Fashion
+Domain:    jubelay.pk
+Colors:    #2C2C2C (Black) + #C9A96E (Gold)
+Instagram: @jubelay.pk
+
+================================================================================
