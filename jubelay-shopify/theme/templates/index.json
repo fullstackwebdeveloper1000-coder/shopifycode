@@ -1,0 +1,97 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero",
+      "settings": {
+        "eyebrow": "Style Made Simple",
+        "heading": "Premium Instant Hijabs",
+        "subheading": "Effortless elegance for every occasion — ready in seconds",
+        "button_label": "Shop Now"
+      }
+    },
+    "featured-collections": {
+      "type": "featured-collections",
+      "blocks": {
+        "c1": { "type": "collection", "settings": { "title": "Everyday Essentials" } },
+        "c2": { "type": "collection", "settings": { "title": "Premium Collection" } },
+        "c3": { "type": "collection", "settings": { "title": "Best Sellers" } }
+      },
+      "block_order": ["c1", "c2", "c3"],
+      "settings": {
+        "eyebrow": "Shop by style",
+        "heading": "Featured Collections"
+      }
+    },
+    "featured-products": {
+      "type": "featured-products",
+      "settings": {
+        "eyebrow": "Customer favourites",
+        "heading": "Best Sellers",
+        "products_to_show": 4,
+        "button_label": "View all"
+      }
+    },
+    "why-jubelay": {
+      "type": "why-jubelay",
+      "blocks": {
+        "t1": { "type": "item", "settings": { "icon": "truck", "title": "Free COD Delivery", "text": "Across Pakistan" } },
+        "t2": { "type": "item", "settings": { "icon": "quality", "title": "Premium Quality", "text": "Luxury you can feel" } },
+        "t3": { "type": "item", "settings": { "icon": "returns", "title": "Easy Returns", "text": "Hassle-free 3-day returns" } },
+        "t4": { "type": "item", "settings": { "icon": "support", "title": "Customer Support", "text": "WhatsApp help, fast replies" } }
+      },
+      "block_order": ["t1", "t2", "t3", "t4"],
+      "settings": {
+        "eyebrow": "The JUBELAY promise",
+        "heading": "Why JUBELAY"
+      }
+    },
+    "brand-story": {
+      "type": "brand-story",
+      "settings": {
+        "eyebrow": "Our story",
+        "heading": "Style Made Simple",
+        "text": "<p>JUBELAY was born for every woman who wants to feel confident in her hijab — without complicated styling. Our Instant Jersey Hijab Sets slip on in seconds, stay put all day, and arrive with magnetic pins and a branded pouch.</p>",
+        "button_label": "About us"
+      }
+    },
+    "testimonials": {
+      "type": "testimonials",
+      "blocks": {
+        "q1": {
+          "type": "quote",
+          "settings": {
+            "quote": "Best hijab ever — ready in seconds and the fabric is so soft.",
+            "author": "Ayesha, Lahore"
+          }
+        },
+        "q2": {
+          "type": "quote",
+          "settings": {
+            "quote": "COD was easy and delivery was fast. Ordering my second colour!",
+            "author": "Fatima, Karachi"
+          }
+        },
+        "q3": {
+          "type": "quote",
+          "settings": {
+            "quote": "Magnetic pins are a game changer. No more holes in my scarves.",
+            "author": "Sara, Islamabad"
+          }
+        }
+      },
+      "block_order": ["q1", "q2", "q3"],
+      "settings": {
+        "eyebrow": "Loved across Pakistan",
+        "heading": "What customers say"
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "featured-collections",
+    "featured-products",
+    "why-jubelay",
+    "brand-story",
+    "testimonials"
+  ]
+}

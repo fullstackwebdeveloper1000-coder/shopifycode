@@ -1,0 +1,56 @@
+<section class="page-width cart-page">
+  <h1>Your cart</h1>
+
+  {%- if cart.item_count == 0 -%}
+    <div class="cart-empty">
+      <p>Your cart is empty.</p>
+      <a class="btn" href="{{ routes.all_products_collection_url }}">Continue shopping</a>
+    </div>
+  {%- else -%}
+    <form action="{{ routes.cart_url }}" method="post">
+      <table class="cart-table">
+        <thead>
+          <tr>
+            <th>Product</th>
+            <th>Price</th>
+            <th>Qty</th>
+            <th>Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          {%- for item in cart.items -%}
+            <tr>
+              <td>
+                <a href="{{ item.url }}">{{ item.product.title }}</a>
+                {%- unless item.product.has_only_default_variant -%}
+                  <div style="color:var(--color-muted);font-size:.85rem;">{{ item.variant.title }}</div>
+                {%- endunless -%}
+                <a href="{{ item.url_to_remove }}" style="font-size:.8rem;color:var(--color-muted);">Remove</a>
+              </td>
+              <td>{{ item.final_price | money }}</td>
+              <td>
+                <input type="number" name="updates[]" value="{{ item.quantity }}" min="0" style="width:64px;padding:.4rem;">
+              </td>
+              <td>{{ item.final_line_price | money }}</td>
+            </tr>
+          {%- endfor -%}
+        </tbody>
+      </table>
+
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;margin-top:1.5rem;">
+        <button class="btn btn--outline" type="submit" name="update">Update cart</button>
+        <div style="text-align:right;">
+          <p style="font-size:1.2rem;margin:0 0 .75rem;"><strong>Subtotal:</strong> {{ cart.total_price | money }}</p>
+          <button class="btn" type="submit" name="checkout">Checkout · COD available</button>
+        </div>
+      </div>
+    </form>
+  {%- endif -%}
+</section>
+
+{% schema %}
+{
+  "name": "Cart",
+  "settings": []
+}
+{% endschema %}

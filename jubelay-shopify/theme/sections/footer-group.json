@@ -1,0 +1,15 @@
+{
+  "type": "footer",
+  "name": "Footer group",
+  "sections": {
+    "footer": {
+      "type": "footer",
+      "settings": {
+        "show_payment_icons": true,
+        "newsletter_heading": "Get 10% off your first order",
+        "newsletter_text": "Join the JUBELAY list — styling tips + early access."
+      }
+    }
+  },
+  "order": ["footer"]
+}

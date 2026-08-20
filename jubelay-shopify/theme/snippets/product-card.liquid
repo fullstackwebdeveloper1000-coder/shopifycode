@@ -1,0 +1,26 @@
+{% doc %}
+  Renders a product card for grids.
+  @param {product} product - Product object
+{% enddoc %}
+
+<article class="product-card reveal">
+  <a href="{{ product.url }}">
+    <div class="product-card__media">
+      {%- if product.featured_media -%}
+        {%- assign card_alt = product.featured_media.alt | default: product.title -%}
+        {{
+          product.featured_media
+          | image_url: width: 800
+          | image_tag: loading: 'lazy', widths: '300, 500, 800', alt: card_alt
+        }}
+      {%- endif -%}
+    </div>
+    <h3 class="product-card__title">{{ product.title }}</h3>
+    <p class="product-card__price">
+      {{ product.price | money }}
+      {%- if product.compare_at_price > product.price -%}
+        <s style="opacity:.6;margin-left:.35rem;">{{ product.compare_at_price | money }}</s>
+      {%- endif -%}
+    </p>
+  </a>
+</article>

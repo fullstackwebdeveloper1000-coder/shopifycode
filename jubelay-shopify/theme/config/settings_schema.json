@@ -1,0 +1,148 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "JUBELAY",
+    "theme_version": "1.0.0",
+    "theme_author": "JUBELAY",
+    "theme_documentation_url": "https://jubelay.pk",
+    "theme_support_url": "https://jubelay.pk/pages/contact"
+  },
+  {
+    "name": "Brand colors",
+    "settings": [
+      {
+        "type": "color",
+        "id": "color_background",
+        "label": "Background",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "color",
+        "id": "color_background_2",
+        "label": "Background 2 (cream)",
+        "default": "#F5F0EB"
+      },
+      {
+        "type": "color",
+        "id": "color_text",
+        "label": "Text",
+        "default": "#333333"
+      },
+      {
+        "type": "color",
+        "id": "color_heading",
+        "label": "Headings",
+        "default": "#2C2C2C"
+      },
+      {
+        "type": "color",
+        "id": "color_accent",
+        "label": "Accent (gold)",
+        "default": "#C9A96E"
+      },
+      {
+        "type": "color",
+        "id": "color_button",
+        "label": "Button background",
+        "default": "#2C2C2C"
+      },
+      {
+        "type": "color",
+        "id": "color_button_text",
+        "label": "Button text",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "color",
+        "id": "color_footer_bg",
+        "label": "Footer background",
+        "default": "#2C2C2C"
+      },
+      {
+        "type": "color",
+        "id": "color_footer_text",
+        "label": "Footer text",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "color",
+        "id": "color_muted",
+        "label": "Muted / captions",
+        "default": "#8B8178"
+      }
+    ]
+  },
+  {
+    "name": "Typography",
+    "settings": [
+      {
+        "type": "font_picker",
+        "id": "font_heading",
+        "label": "Heading font",
+        "default": "playfair_display_n7"
+      },
+      {
+        "type": "font_picker",
+        "id": "font_body",
+        "label": "Body font",
+        "default": "assistant_n4"
+      }
+    ]
+  },
+  {
+    "name": "Logo & header",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "logo",
+        "label": "Logo"
+      },
+      {
+        "type": "range",
+        "id": "logo_width",
+        "min": 80,
+        "max": 280,
+        "step": 10,
+        "unit": "px",
+        "label": "Logo width",
+        "default": 160
+      },
+      {
+        "type": "text",
+        "id": "tagline",
+        "label": "Tagline under logo",
+        "default": "Style Made Simple"
+      }
+    ]
+  },
+  {
+    "name": "Social & WhatsApp",
+    "settings": [
+      {
+        "type": "text",
+        "id": "social_instagram",
+        "label": "Instagram URL",
+        "default": "https://instagram.com/jubelay.pk"
+      },
+      {
+        "type": "text",
+        "id": "social_tiktok",
+        "label": "TikTok URL",
+        "default": "https://tiktok.com/@jubelay.pk"
+      },
+      {
+        "type": "text",
+        "id": "social_facebook",
+        "label": "Facebook URL",
+        "default": "https://facebook.com/jubelayofficial"
+      },
+      {
+        "type": "text",
+        "id": "whatsapp_number",
+        "label": "WhatsApp number (with country code)",
+        "default": "923000000000",
+        "info": "Replace with your real business number"
+      }
+    ]
+  }
+]

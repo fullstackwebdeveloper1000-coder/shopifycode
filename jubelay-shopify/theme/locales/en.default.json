@@ -1,0 +1,21 @@
+{
+  "general": {
+    "404": {
+      "title": "Page not found",
+      "subtext": "This page doesn’t exist.",
+      "link": "Continue shopping"
+    }
+  },
+  "products": {
+    "product": {
+      "add_to_cart": "Add to cart",
+      "sold_out": "Sold out"
+    }
+  },
+  "cart": {
+    "general": {
+      "title": "Your cart",
+      "empty": "Your cart is empty."
+    }
+  }
+}

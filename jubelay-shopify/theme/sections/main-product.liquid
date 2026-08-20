@@ -1,0 +1,78 @@
+<section class="page-width">
+  <div class="product">
+    <div class="product__media">
+      {%- if product.featured_media -%}
+        {{
+          product.featured_media
+          | image_url: width: 1400
+          | image_tag: loading: 'eager', widths: '600, 900, 1400', alt: product.featured_media.alt | default: product.title
+        }}
+      {%- endif -%}
+    </div>
+
+    <div class="product__info">
+      <h1 class="product__title">{{ product.title }}</h1>
+      <p class="product__price">{{ product.selected_or_first_available_variant.price | money }}</p>
+
+      {%- if product.description != blank -%}
+        <div class="rte">{{ product.description }}</div>
+      {%- endif -%}
+
+      <ul class="product__trust">
+        <li>Free COD Delivery</li>
+        <li>2–5 Days Delivery</li>
+        <li>Easy 3-Day Returns</li>
+        <li>WhatsApp Support</li>
+      </ul>
+
+      {% form 'product', product, class: 'product-form' %}
+        <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+
+        {%- unless product.has_only_default_variant -%}
+          {%- for option in product.options_with_values -%}
+            <label>
+              {{ option.name }}
+              <select name="options[{{ option.name | escape }}]" style="display:block;width:100%;margin-top:.35rem;padding:.65rem;">
+                {%- for value in option.values -%}
+                  <option
+                    value="{{ value | escape }}"
+                    {% if option.selected_value == value %}selected{% endif %}
+                  >
+                    {{ value }}
+                  </option>
+                {%- endfor -%}
+              </select>
+            </label>
+          {%- endfor -%}
+        {%- endunless -%}
+
+        <div class="product-form__qty">
+          <label for="Quantity-{{ section.id }}">Qty</label>
+          <input
+            id="Quantity-{{ section.id }}"
+            type="number"
+            name="quantity"
+            min="1"
+            value="1"
+          >
+        </div>
+
+        <button class="btn" type="submit" name="add" {% unless product.selected_or_first_available_variant.available %}disabled{% endunless %}>
+          {%- if product.selected_or_first_available_variant.available -%}
+            Add to cart
+          {%- else -%}
+            Sold out
+          {%- endif -%}
+        </button>
+      {% endform %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Product information",
+  "settings": [],
+  "disabled_on": { "groups": ["header", "footer"] }
+}
+{% endschema %}

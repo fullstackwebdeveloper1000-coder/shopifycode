@@ -1,0 +1,44 @@
+{
+  "current": {
+    "color_background": "#FFFFFF",
+    "color_background_2": "#F5F0EB",
+    "color_text": "#333333",
+    "color_heading": "#2C2C2C",
+    "color_accent": "#C9A96E",
+    "color_button": "#2C2C2C",
+    "color_button_text": "#FFFFFF",
+    "color_footer_bg": "#2C2C2C",
+    "color_footer_text": "#FFFFFF",
+    "color_muted": "#8B8178",
+    "font_heading": "playfair_display_n7",
+    "font_body": "assistant_n4",
+    "tagline": "Style Made Simple",
+    "social_instagram": "https://instagram.com/jubelay.pk",
+    "social_tiktok": "https://tiktok.com/@jubelay.pk",
+    "social_facebook": "https://facebook.com/jubelayofficial",
+    "whatsapp_number": "923000000000",
+    "logo_width": 160,
+    "sections": {
+      "announcement-bar": {
+        "type": "announcement-bar",
+        "settings": {
+          "text": "Cash on Delivery Available Nationwide  |  Free Shipping on Orders Above Rs. 2,000",
+          "link": "shopify://collections/all"
+        }
+      },
+      "header": {
+        "type": "header",
+        "settings": {}
+      },
+      "footer": {
+        "type": "footer",
+        "settings": {
+          "show_payment_icons": true,
+          "newsletter_heading": "Get 10% off your first order",
+          "newsletter_text": "Join the JUBELAY list — styling tips + early access."
+        }
+      }
+    },
+    "content_for_index": []
+  }
+}
