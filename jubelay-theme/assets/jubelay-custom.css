@@ -1,0 +1,67 @@
+/* JUBELAY Brand Custom Styles — Gold accents & typography */
+
+:root {
+  --jubelay-black: #2C2C2C;
+  --jubelay-gold: #C9A96E;
+  --jubelay-cream: #F5F0EB;
+  --jubelay-grey: #8B8178;
+}
+
+/* Announcement bar gold accent */
+.announcement-bar {
+  background-color: var(--jubelay-black) !important;
+  color: #FFFFFF !important;
+}
+
+.announcement-bar__message {
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
+/* Sale badges in gold */
+.badge--sale {
+  background-color: var(--jubelay-gold) !important;
+  color: var(--jubelay-black) !important;
+}
+
+/* Button hover with gold accent */
+.button--primary:hover,
+.shopify-payment-button__button:hover {
+  opacity: 0.9;
+}
+
+/* Section headings */
+h1, h2, .h1, .h2 {
+  font-family: var(--font-heading-family);
+  color: var(--jubelay-black);
+}
+
+/* Trust badges on product pages */
+.product__text .icon-checkmark {
+  color: var(--jubelay-gold);
+}
+
+/* Footer subtle cream background */
+.footer {
+  background-color: var(--jubelay-cream);
+}
+
+/* COD badge styling */
+.jubelay-cod-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: var(--jubelay-cream);
+  border: 1px solid var(--jubelay-gold);
+  border-radius: 4px;
+  font-size: 0.875rem;
+  color: var(--jubelay-black);
+  margin-top: 1rem;
+}
+
+.jubelay-cod-badge::before {
+  content: "✓";
+  color: var(--jubelay-gold);
+  font-weight: bold;
+}

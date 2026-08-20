@@ -1,0 +1,26 @@
+{
+  "name": "jubelay-shopify-store",
+  "version": "1.0.0",
+  "description": "JUBELAY Pakistan Shopify store — modest fashion hijabs",
+  "scripts": {
+    "shopify": "shopify",
+    "theme:push": "shopify theme push --path jubelay-theme",
+    "store:setup": "bash jubelay-shopify/scripts/setup-store.sh",
+    "pages:create": "node jubelay-shopify/scripts/create-pages.mjs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fullstackwebdeveloper1000-coder/shopifycode.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/fullstackwebdeveloper1000-coder/shopifycode/issues"
+  },
+  "homepage": "https://github.com/fullstackwebdeveloper1000-coder/shopifycode#readme",
+  "dependencies": {
+    "@shopify/cli": "^4.7.0",
+    "@shopify/theme": "^3.58.2"
+  }
+}
