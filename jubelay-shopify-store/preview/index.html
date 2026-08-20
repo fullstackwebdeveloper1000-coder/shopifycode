@@ -1,0 +1,497 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>JUBELAY — Style Made Simple | Premium Instant Hijabs Pakistan</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --black: #2C2C2C;
+      --gold: #C9A96E;
+      --white: #FFFFFF;
+      --cream: #F5F0EB;
+      --grey: #8B8178;
+      --text: #333333;
+      --maxw: 1180px;
+      --gutter: 24px;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body {
+      font-family: 'Assistant', system-ui, sans-serif;
+      color: var(--text);
+      background: var(--white);
+      -webkit-font-smoothing: antialiased;
+    }
+    img { max-width: 100%; display: block; }
+    a { text-decoration: none; color: inherit; }
+
+    .announce {
+      background: var(--black);
+      color: var(--white);
+      text-align: center;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+      padding: 10px 16px;
+    }
+    .announce span { color: var(--gold); }
+
+    .nav {
+      background: var(--white);
+      border-bottom: 1px solid rgba(44,44,44,0.08);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    .nav-in {
+      max-width: var(--maxw);
+      margin: 0 auto;
+      padding: 0 var(--gutter);
+      height: 72px;
+      display: flex;
+      align-items: center;
+      gap: 32px;
+    }
+    .logo { height: 36px; width: auto; }
+    .nav-links {
+      display: flex;
+      gap: 28px;
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.4px;
+      text-transform: uppercase;
+    }
+    .nav-cta { margin-left: auto; display: flex; align-items: center; gap: 16px; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-family: inherit;
+      font-weight: 700;
+      font-size: 13px;
+      letter-spacing: 0.6px;
+      text-transform: uppercase;
+      border: 0;
+      border-radius: 4px;
+      padding: 14px 24px;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+    .btn:hover { opacity: 0.88; }
+    .btn-dark { background: var(--black); color: var(--white); }
+    .btn-gold { background: var(--gold); color: var(--black); }
+    .btn-outline {
+      background: transparent;
+      color: var(--black);
+      border: 1.5px solid var(--black);
+    }
+
+    .hero {
+      background: var(--cream);
+      padding: 56px 0 0;
+    }
+    .hero-grid {
+      max-width: var(--maxw);
+      margin: 0 auto;
+      padding: 0 var(--gutter) 48px;
+      display: grid;
+      grid-template-columns: 1fr 1.1fr;
+      gap: 40px;
+      align-items: center;
+    }
+    .eyebrow {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin: 0 0 12px;
+    }
+    .hero h1 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(40px, 5vw, 56px);
+      line-height: 1.05;
+      color: var(--black);
+      margin: 0 0 16px;
+    }
+    .hero p {
+      font-size: 17px;
+      line-height: 1.6;
+      color: var(--grey);
+      margin: 0 0 28px;
+      max-width: 440px;
+    }
+    .badges { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 28px; }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+      text-transform: uppercase;
+      background: var(--white);
+      border: 1px solid rgba(44,44,44,0.12);
+      border-radius: 999px;
+      padding: 8px 14px;
+      color: var(--black);
+    }
+    .badge .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--gold); }
+    .hero-img {
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 24px 60px -24px rgba(44,44,44,0.25);
+    }
+
+    .section { padding: 64px 0; }
+    .section-cream { background: var(--cream); }
+    .container {
+      max-width: var(--maxw);
+      margin: 0 auto;
+      padding: 0 var(--gutter);
+    }
+    .section-head {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    .section-head h2 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 34px;
+      color: var(--black);
+      margin: 0 0 10px;
+    }
+    .section-head p { color: var(--grey); margin: 0; font-size: 16px; }
+
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+    }
+    .product-card {
+      background: var(--white);
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid rgba(44,44,44,0.08);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .product-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 40px -20px rgba(44,44,44,0.2);
+    }
+    .product-img {
+      aspect-ratio: 4/5;
+      background: linear-gradient(160deg, #e8e2db, #d4cdc4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+    .swatch {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      border: 3px solid var(--white);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+    }
+    .product-tag {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      background: var(--gold);
+      color: var(--black);
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      padding: 5px 10px;
+      border-radius: 4px;
+    }
+    .product-body { padding: 16px; }
+    .product-body h3 {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--black);
+      margin: 0 0 6px;
+      line-height: 1.35;
+    }
+    .price {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--black);
+    }
+    .price s {
+      color: var(--grey);
+      font-weight: 500;
+      font-size: 13px;
+      margin-left: 6px;
+    }
+
+    .why-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+    }
+    .why-card {
+      text-align: center;
+      padding: 28px 20px;
+      background: var(--white);
+      border-radius: 10px;
+      border: 1px solid rgba(44,44,44,0.06);
+    }
+    .why-card .icon {
+      width: 48px;
+      height: 48px;
+      margin: 0 auto 14px;
+      border-radius: 50%;
+      background: var(--cream);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+    }
+    .why-card h4 {
+      font-size: 14px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+      margin: 0 0 8px;
+      color: var(--black);
+    }
+    .why-card p { font-size: 13px; line-height: 1.5; color: var(--grey); margin: 0; }
+
+    .cta-band {
+      background: var(--black);
+      color: var(--white);
+      text-align: center;
+      padding: 56px 24px;
+    }
+    .cta-band h2 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 36px;
+      margin: 0 0 12px;
+    }
+    .cta-band p { color: #ccc; margin: 0 0 24px; font-size: 16px; }
+    .cta-band .code {
+      display: inline-block;
+      margin-top: 16px;
+      font-size: 13px;
+      color: var(--gold);
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+
+    .footer {
+      background: var(--black);
+      color: #ccc;
+      padding: 48px 0 24px;
+    }
+    .foot-grid {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr 1fr 1fr;
+      gap: 32px;
+      margin-bottom: 40px;
+    }
+    .foot-logo { height: 32px; margin-bottom: 14px; filter: brightness(0) invert(1); }
+    .foot-col h5 {
+      color: var(--white);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin: 0 0 14px;
+    }
+    .foot-col a {
+      display: block;
+      font-size: 14px;
+      margin-bottom: 10px;
+      color: #aaa;
+    }
+    .foot-col a:hover { color: var(--gold); }
+    .foot-bottom {
+      border-top: 1px solid rgba(255,255,255,0.1);
+      padding-top: 20px;
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+      color: var(--grey);
+    }
+
+    .preview-note {
+      background: #fff8e6;
+      border: 1px solid #f0d78c;
+      border-radius: 8px;
+      padding: 14px 18px;
+      margin: 24px auto;
+      max-width: var(--maxw);
+      font-size: 14px;
+      color: #6b5a2a;
+    }
+    .preview-note strong { color: #4a3d1a; }
+    .preview-note a { color: var(--black); font-weight: 700; text-decoration: underline; }
+
+    @media (max-width: 900px) {
+      .hero-grid { grid-template-columns: 1fr; }
+      .product-grid { grid-template-columns: repeat(2, 1fr); }
+      .why-grid { grid-template-columns: repeat(2, 1fr); }
+      .foot-grid { grid-template-columns: 1fr 1fr; }
+      .nav-links { display: none; }
+    }
+    @media (max-width: 520px) {
+      .product-grid, .why-grid, .foot-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="announce">
+    <span>COD</span> available nationwide &nbsp;·&nbsp; <span>Free shipping</span> on orders above Rs. 2,000
+  </div>
+
+  <nav class="nav">
+    <div class="nav-in">
+      <a href="#"><img class="logo" src="../../jubelay-brand-kit/images/jubelay-logo-primary.png" alt="JUBELAY"></a>
+      <div class="nav-links">
+        <a href="#shop">Shop</a>
+        <a href="#why">Why JUBELAY</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+      </div>
+      <div class="nav-cta">
+        <a class="btn btn-dark" href="#shop">Shop Now</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
+    <div class="preview-note">
+      <strong>Local preview</strong> — yeh research ke mutabiq JUBELAY storefront ka design hai.
+      Live Shopify store: <a href="https://8rgs5j-x9.myshopify.com" target="_blank" rel="noopener">8rgs5j-x9.myshopify.com</a>
+      · Setup guide: <code>jubelay-shopify-store/README.md</code>
+    </div>
+  </div>
+
+  <section class="hero">
+    <div class="hero-grid">
+      <div>
+        <p class="eyebrow">Premium Instant Hijabs</p>
+        <h1>Style Made Simple</h1>
+        <p>Ready-to-wear jersey hijab sets with built-in cap and magnetic pins. Slip on elegance in seconds — no pins, no slipping, no fuss.</p>
+        <div class="badges">
+          <span class="badge"><span class="dot"></span> COD Pakistan</span>
+          <span class="badge"><span class="dot"></span> Free size</span>
+          <span class="badge"><span class="dot"></span> 2–5 day delivery</span>
+        </div>
+        <a class="btn btn-dark" href="#shop">Shop Instant Hijabs →</a>
+      </div>
+      <div class="hero-img">
+        <img src="../../jubelay-brand-kit/images/jubelay-homepage-mockup.png" alt="JUBELAY homepage design mockup">
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="shop">
+    <div class="container">
+      <div class="section-head">
+        <p class="eyebrow">Best Sellers</p>
+        <h2>Instant Jersey Hijab Sets</h2>
+        <p>PKR 1,799 each · Includes magnetic pins + branded pouch</p>
+      </div>
+      <div class="product-grid">
+        <article class="product-card">
+          <div class="product-img"><span class="product-tag">Bestseller</span><div class="swatch" style="background:#1a1a1a"></div></div>
+          <div class="product-body"><h3>Instant Jersey Hijab Set — Black</h3><div class="price">Rs. 1,799 <s>2,299</s></div></div>
+        </article>
+        <article class="product-card">
+          <div class="product-img"><div class="swatch" style="background:#d4c4a8"></div></div>
+          <div class="product-body"><h3>Instant Jersey Hijab Set — Beige</h3><div class="price">Rs. 1,799 <s>2,299</s></div></div>
+        </article>
+        <article class="product-card">
+          <div class="product-img"><div class="swatch" style="background:#c9a0a0"></div></div>
+          <div class="product-body"><h3>Instant Jersey Hijab Set — Dusty Rose</h3><div class="price">Rs. 1,799 <s>2,299</s></div></div>
+        </article>
+        <article class="product-card">
+          <div class="product-img"><div class="swatch" style="background:#5c6b4a"></div></div>
+          <div class="product-body"><h3>Instant Jersey Hijab Set — Olive Green</h3><div class="price">Rs. 1,799 <s>2,299</s></div></div>
+        </article>
+        <article class="product-card">
+          <div class="product-img"><div class="swatch" style="background:#1e2a4a"></div></div>
+          <div class="product-body"><h3>Instant Jersey Hijab Set — Navy Blue</h3><div class="price">Rs. 1,799 <s>2,299</s></div></div>
+        </article>
+        <article class="product-card">
+          <div class="product-img"><div class="swatch" style="background:linear-gradient(135deg,#C9A96E,#e8d5b0)"></div></div>
+          <div class="product-body"><h3>Magnetic Hijab Pin Set (6 pcs)</h3><div class="price">Rs. 499 <s>699</s></div></div>
+        </article>
+        <article class="product-card">
+          <div class="product-img"><div class="swatch" style="background:#f0ebe4;border:2px dashed #ccc"></div></div>
+          <div class="product-body"><h3>Hijab Underscarf Cap — 2 Pack</h3><div class="price">Rs. 399 <s>549</s></div></div>
+        </article>
+        <article class="product-card">
+          <div class="product-img"><span class="product-tag">Save Rs. 498</span><div class="swatch" style="background:linear-gradient(135deg,#2C2C2C 50%,#C9A96E 50%)"></div></div>
+          <div class="product-body"><h3>Starter Bundle (Hijab + Pins + Cap)</h3><div class="price">Rs. 2,199 <s>2,697</s></div></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-cream" id="why">
+    <div class="container">
+      <div class="section-head">
+        <h2>Why JUBELAY?</h2>
+        <p>Modest fashion made effortless for Pakistani women</p>
+      </div>
+      <div class="why-grid">
+        <div class="why-card"><div class="icon">⚡</div><h4>Ready in Seconds</h4><p>Built-in cap — just slip on and go. No complicated styling.</p></div>
+        <div class="why-card"><div class="icon">🧲</div><h4>Magnetic Pins</h4><p>Secure hold without damaging your favourite fabrics.</p></div>
+        <div class="why-card"><div class="icon">📦</div><h4>COD Nationwide</h4><p>Cash on delivery across Pakistan. Pay when you receive.</p></div>
+        <div class="why-card"><div class="icon">✨</div><h4>Premium Jersey</h4><p>95% cotton, 5% spandex — soft, breathable, stays in place.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-band" id="about">
+    <h2>Join The JUBELAY Community</h2>
+    <p>Be the first to know about new colours, offers and styling tips.</p>
+    <a class="btn btn-gold" href="#contact">Get 10% Off — Sign Up</a>
+    <div class="code">Use code JUBELAY10 at checkout</div>
+  </section>
+
+  <footer class="footer" id="contact">
+    <div class="container">
+      <div class="foot-grid">
+        <div>
+          <img class="foot-logo" src="../../jubelay-brand-kit/images/jubelay-logo-primary.png" alt="JUBELAY">
+          <p style="font-size:14px;line-height:1.6;margin:0;color:#aaa;">Style Made Simple.<br>Premium instant hijabs for Pakistani women.</p>
+        </div>
+        <div class="foot-col">
+          <h5>Shop</h5>
+          <a href="#shop">Instant Hijabs</a>
+          <a href="#shop">Accessories</a>
+          <a href="#shop">Bundles & Sets</a>
+        </div>
+        <div class="foot-col">
+          <h5>Help</h5>
+          <a href="#">FAQ</a>
+          <a href="#">Shipping & Delivery</a>
+          <a href="#">Returns & Exchange</a>
+        </div>
+        <div class="foot-col">
+          <h5>Connect</h5>
+          <a href="#">@jubelay.pk</a>
+          <a href="#">WhatsApp Business</a>
+          <a href="#">jubelay.pk</a>
+        </div>
+      </div>
+      <div class="foot-bottom">
+        <span>© 2026 JUBELAY. All rights reserved.</span>
+        <span>Made for Pakistan 🇵🇰</span>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

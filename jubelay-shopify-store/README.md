@@ -35,10 +35,18 @@ shopify store info --store 8rgs5j-x9.myshopify.com --json
 - **Hero:** “Style Made Simple” + SHOP NOW → Instant Hijabs
 - **Discount:** `JUBELAY10` = 10% off once per customer
 
+## Local preview (no Shopify login needed)
+
+```bash
+python3 serve.py
+# Open http://127.0.0.1:4322/jubelay-shopify-store/preview/index.html
+```
+
 ## Repo package
 
 | Path | Purpose |
 |------|---------|
+| `preview/index.html` | Local storefront preview with brand colors + product grid |
 | `products.csv` | Re-import catalog into any Shopify store |
 | `pages/*.html` | Page body HTML (already pushed live) |
 | `scripts/setup_store.py` | Re-run product/collection/page setup via CLI |
