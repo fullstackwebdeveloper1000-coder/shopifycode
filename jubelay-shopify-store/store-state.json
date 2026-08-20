@@ -1,0 +1,33 @@
+{
+  "store": "8rgs5j-x9.myshopify.com",
+  "products": {
+    "hijabs": [
+      "gid://shopify/Product/10770330517796",
+      "gid://shopify/Product/10770330648868",
+      "gid://shopify/Product/10770330747172",
+      "gid://shopify/Product/10770330943780",
+      "gid://shopify/Product/10770331107620"
+    ],
+    "pins": "gid://shopify/Product/10770331173156",
+    "cap": "gid://shopify/Product/10770331238692",
+    "bundle": "gid://shopify/Product/10770331271460"
+  },
+  "collections": {
+    "instant-hijabs": "gid://shopify/Collection/660120142116",
+    "hijab-accessories": "gid://shopify/Collection/660120207652",
+    "bundles-sets": "gid://shopify/Collection/660120240420",
+    "new-arrivals": "gid://shopify/Collection/660120273188",
+    "best-sellers": "gid://shopify/Collection/660120305956"
+  },
+  "pages": {
+    "about-us": "gid://shopify/Page/166360875300",
+    "contact": "gid://shopify/Page/166360776996",
+    "faq": "gid://shopify/Page/166360908068",
+    "shipping": "gid://shopify/Page/166360940836",
+    "returns": "gid://shopify/Page/166360973604",
+    "privacy-policy": "gid://shopify/Page/166361006372",
+    "terms": "gid://shopify/Page/166361039140"
+  },
+  "publicationId": "gid://shopify/Publication/322001994020",
+  "locationId": "gid://shopify/Location/117401682212"
+}
